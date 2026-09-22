@@ -111,7 +111,7 @@
         <div id="feed-grid" class="row g-4">
             <div class="text-center py-5 text-secondary">
                 <i class="fa-solid fa-images fs-1 mb-3 text-info"></i>
-                <p>Click "Fetch Visual AI Feed" to generate your slikoviti pregled.</p>
+                <p>Click "Fetch Visual AI Feed" to generate your visual summary.</p>
             </div>
         </div>
     </div>
@@ -140,7 +140,7 @@
                 const response = await fetch(`${API_BASE}/api/feed?topics=${activeTopics.join(",")}`);
                 const data = await response.json();
 
-                if (data.success && data.items) {
+                if (data.success && data.items && data.items.length > 0) {
                     grid.innerHTML = data.items.map(item => `
                         <div class="col-md-6 col-lg-4">
                             <div class="card card-custom h-100">
@@ -157,9 +157,11 @@
                             </div>
                         </div>
                     `).join('');
+                } else {
+                    grid.innerHTML = `<div class="alert alert-warning w-100 text-center">No visual cards available for selected topics. Try selecting Crypto or Travel.</div>`;
                 }
             } catch (err) {
-                grid.innerHTML = `<div class="alert alert-danger w-100">Failed to render visual feed.</div>`;
+                grid.innerHTML = `<div class="alert alert-danger w-100 text-center">Backend is starting up, please click again in a few seconds.</div>`;
             } finally {
                 spinner.classList.add("d-none");
             }
