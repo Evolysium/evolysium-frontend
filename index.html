@@ -7,7 +7,7 @@
 
     <!-- Meta Tags -->
     <meta name="title" content="Evolysium AI — Live Social Trend Radar">
-    <meta name="description" content="Catch viral trends before they blow up across TikTok, IG Reels, Reddit, X, and LinkedIn with Evolysium AI.">
+    <meta name="description" content="Catch viral trends before they blow up across TikTok, IG Reels, Reddit, X, and LinkedIn.">
 
     <!-- Frameworks & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -184,8 +184,8 @@
     <div class="container py-5">
         <div class="row justify-content-center text-center mb-4">
             <div class="col-lg-9">
-                <span class="badge bg-info text-dark fw-bold px-3 py-2 rounded-pill text-uppercase mb-3">⚡ Live Social Radar</span>
-                <h1 class="display-4 hero-title mb-3">Catch Viral Trends Before They Blow Up 🚀</h1>
+                <span class="badge bg-info text-dark fw-bold px-3 py-2 rounded-pill text-uppercase mb-3">⚡ LIVE SOCIAL RADAR</span>
+                <h1 class="display-4 hero-title mb-3">Catch Viral Trends <br>Before They Blow Up 🚀</h1>
                 <p class="text-secondary fs-5">See what's trending right now across TikTok, IG Reels, Reddit, X, and LinkedIn — with real creator engagement stats.</p>
             </div>
         </div>
@@ -201,7 +201,7 @@
             <div class="col-6 col-md-4">
                 <div class="stat-card text-center">
                     <div class="fw-bold fs-3" style="color: #a855f7;"><i class="fa-solid fa-chart-line me-1"></i> 99.4%</div>
-                    <div class="text-secondary small">Virality Match Score</div>
+                    <div class="text-secondary small">Virality Score</div>
                 </div>
             </div>
         </div>
@@ -320,15 +320,16 @@
         let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "gaming", "lifestyle"];
 
-        // Diverse video streams so every card looks unique
+        // Različiti videozapisi za svaku karticu
         const UNIQUE_VIDEOS = [
             "https://assets.mixkit.co/videos/preview/mixkit-vertical-stream-of-a-futuristic-city-40129-large.mp4",
             "https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-green-screen-41525-large.mp4",
             "https://vjs.zencdn.net/v/oceans.mp4",
+            "https://assets.mixkit.co/videos/preview/mixkit-young-woman-working-on-a-laptop-40131-large.mp4",
             "https://media.w3.org/2010/05/sintel/trailer.mp4"
         ];
 
-        // Diverse high quality photos
+        // Različite slike visoke kvalitete
         const UNIQUE_IMAGES = [
             "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop",
@@ -341,9 +342,9 @@
             "Viral Hook Pattern Taking Over Reels",
             "Next-Gen AI Workflow for Creators",
             "Top Performing Video Format This Week",
-            "How Top Founders Build in Public",
+            "How Top Creators Drive 1M+ Views",
             "Hidden Gem Community Trend Going Mainstream",
-            "Secret Visual Style Hitting 2M+ Views"
+            "Secret Visual Style Spikes Engagement 3x"
         ];
 
         function toggleSelection(type, value, btn) {
@@ -386,7 +387,7 @@
                     platform: platform,
                     category: category,
                     title: title,
-                    summary: `Curated viral post trending on ${platform.toUpperCase()} with extremely high creator engagement (${likes} likes).`,
+                    summary: `Curated viral post trending on ${platform.toUpperCase()} with extremely high engagement (${likes} likes).`,
                     videoUrl: UNIQUE_VIDEOS[i % UNIQUE_VIDEOS.length],
                     image: UNIQUE_IMAGES[i % UNIQUE_IMAGES.length],
                     url: `https://www.${platform === 'x' ? 'x.com' : platform + '.com'}`,
@@ -426,8 +427,8 @@
 
                 grid.innerHTML = displayItems.map((item, index) => {
                     const isVideo = item.platform === "tiktok" || item.platform === "instagram" || item.videoUrl;
-                    const videoSrc = item.videoUrl || UNIQUE_VIDEOS[index % UNIQUE_VIDEOS.length];
-                    const mediaImg = (item.image && !item.image.includes("chip")) ? item.image : UNIQUE_IMAGES[index % UNIQUE_IMAGES.length];
+                    const videoSrc = UNIQUE_VIDEOS[index % UNIQUE_VIDEOS.length];
+                    const mediaImg = UNIQUE_IMAGES[index % UNIQUE_IMAGES.length];
 
                     const mediaElement = isVideo ? `
                         <div class="media-container">
