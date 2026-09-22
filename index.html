@@ -3,171 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium - Personal AI Gatekeeper</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Marked.js -->
+    <title>Evolysium — AI Gatekeeper & Personal Feed</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hero-title {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        .card-custom {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .topic-btn {
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            background: transparent;
+        }
+        .topic-btn.active {
+            background-color: var(--accent-color);
+            color: #0f172a;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.4);
+        }
+        #feed-content {
+            line-height: 1.7;
+        }
+        #feed-content h3 {
+            color: var(--accent-color);
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+        .badge-live {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<body>
 
-    <!-- Header -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-indigo-500/30">
-                    E
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-tight text-white">Evolysium</h1>
-                    <p class="text-xs text-indigo-400 font-medium">Personal AI Gatekeeper</p>
-                </div>
-            </div>
-            <div>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
-                    Ad-Free Engine
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <i class="fa-solid fa-shield-halved text-info fs-3"></i>
+                <span class="fw-bold fs-4 text-white">Evolysium</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <span class="badge badge-live rounded-pill px-3 py-2 fs-6">
+                    <i class="fa-solid fa-circle-dot me-1"></i> B2C Gatekeeper Active
                 </span>
             </div>
         </div>
-    </header>
+    </nav>
 
     <!-- Main Container -->
-    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8">
-        
-        <!-- Hero Banner -->
-        <div class="mb-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-900/40 via-purple-900/20 to-slate-800/40 border border-indigo-500/20 shadow-xl">
-            <h2 class="text-2xl font-bold mb-2 text-white">Zero Noise. Pure Signals.</h2>
-            <p class="text-slate-300 text-sm leading-relaxed mb-4">
-                Evolysium strips out ad noise, scams, and clickbait from social streams, delivering clean actionable intelligence based on your selected interests.
-            </p>
-            
-            <!-- Topic Selectors -->
-            <div class="mt-4">
-                <p class="text-xs text-slate-400 mb-2 font-medium uppercase tracking-wider">Select Topics to Monitor:</p>
-                <div class="flex flex-wrap gap-2" id="topicButtons">
-                    <button onclick="toggleTopic('crypto')" id="btn-crypto" class="px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5">
-                        <i class="fab fa-bitcoin text-amber-400"></i> Crypto
-                    </button>
-                    <button onclick="toggleTopic('travel')" id="btn-travel" class="px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5">
-                        <i class="fas fa-plane text-sky-400"></i> Travel
-                    </button>
-                    <button onclick="toggleTopic('tech')" id="btn-tech" class="px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5">
-                        <i class="fas fa-microchip text-emerald-400"></i> Tech & AI
-                    </button>
-                    <button onclick="toggleTopic('gaming')" id="btn-gaming" class="px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5">
-                        <i class="fas fa-gamepad text-purple-400"></i> Gaming
-                    </button>
+    <div class="container py-5">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-8">
+                <h1 class="display-4 hero-title mb-3">Zero Noise. Pure Intelligence.</h1>
+                <p class="lead text-secondary">
+                    Your personal AI gatekeeper filtering global streams, eliminating ads, scams, and clickbait in real-time.
+                </p>
+            </div>
+        </div>
+
+        <!-- Topic Control Panel -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-10">
+                <div class="card card-custom p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title text-light m-0"><i class="fa-solid fa-sliders me-2 text-info"></i>Active Signal Channels</h5>
+                        <span id="profile-status" class="text-secondary small"><i class="fa-solid fa-user-check me-1 text-success"></i> Guest Session</span>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                        <button class="topic-btn active" onclick="toggleTopic('crypto', this)"><i class="fa-solid fa-coins me-2"></i>Crypto</button>
+                        <button class="topic-btn active" onclick="toggleTopic('travel', this)"><i class="fa-solid fa-plane me-2"></i>Travel</button>
+                        <button class="topic-btn" onclick="toggleTopic('tech', this)"><i class="fa-solid fa-microchip me-2"></i>Tech & AI</button>
+                        <button class="topic-btn" onclick="toggleTopic('gaming', this)"><i class="fa-solid fa-gamepad me-2"></i>Gaming</button>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary-custom" onclick="fetchCleanFeed()">
+                            <i class="fa-solid fa-arrows-rotate me-2"></i> Fetch Distilled AI Feed
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Feed Section Controls -->
-        <div class="flex justify-between items-center mb-6">
-            <h3 class="text-lg font-semibold text-white flex items-center">
-                <i class="fas fa-rss text-indigo-400 mr-2"></i> Live Distilled Feed
-            </h3>
-            <button id="refreshBtn" onclick="fetchFeed()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition text-white text-sm font-medium shadow-lg shadow-indigo-600/30 flex items-center gap-2">
-                <i id="refreshIcon" class="fas fa-sync-alt"></i>
-                <span>Refresh Feed</span>
-            </button>
+        <!-- Feed Output -->
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card card-custom p-4">
+                    <div id="loading-spinner" class="text-center py-5 d-none">
+                        <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
+                        <p class="mt-3 text-secondary">AI Engine is processing live streams and stripping promotional noise...</p>
+                    </div>
+                    <div id="feed-content" class="text-light">
+                        <div class="text-center py-5 text-secondary">
+                            <i class="fa-solid fa-filter fs-1 mb-3 text-info"></i>
+                            <p>Click "Fetch Distilled AI Feed" to generate your custom executive summary.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <!-- Loading State -->
-        <div id="loading" class="hidden py-16 text-center">
-            <div class="inline-block w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
-            <p class="text-slate-400 text-sm animate-pulse">AI is scanning feeds and filtering promotional noise...</p>
-        </div>
-
-        <!-- Error State -->
-        <div id="errorMessage" class="hidden p-4 mb-6 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
-            Unable to fetch feed. Please try clicking Refresh Feed again in a few seconds.
-        </div>
-
-        <!-- Feed Output Container -->
-        <div id="feedContainer" class="space-y-6"></div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
-        <p>© 2026 Evolysium Platform. Powered by Google Gemini AI.</p>
-    </footer>
-
-    <!-- Logic -->
     <script>
-        const API_BASE_URL = "https://evolysium-backend.onrender.com/api/feed";
-        
-        // Zadani odabir tema ili ucitani iz LocalStorage
-        let activeTopics = JSON.parse(localStorage.getItem("evolysium_topics")) || ["crypto", "travel"];
+        const API_BASE = "https://evolysium-backend.onrender.com";
+        let activeTopics = ["crypto", "travel"];
 
-        function updateTopicUI() {
-            const topics = ["crypto", "travel", "tech", "gaming"];
-            topics.forEach(t => {
-                const btn = document.getElementById(`btn-${t}`);
-                if (activeTopics.includes(t)) {
-                    btn.className = "px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5 bg-indigo-600/30 border-indigo-500 text-white shadow-sm";
-                } else {
-                    btn.className = "px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5 bg-slate-800/80 border-slate-700 text-slate-400 hover:text-slate-200";
-                }
-            });
-        }
-
-        function toggleTopic(topic) {
+        function toggleTopic(topic, btn) {
+            btn.classList.toggle("active");
             if (activeTopics.includes(topic)) {
-                if (activeTopics.length > 1) { // Najmanje 1 tema mora ostati
-                    activeTopics = activeTopics.filter(t => t !== topic);
-                }
+                activeTopics = activeTopics.filter(t => t !== topic);
             } else {
                 activeTopics.push(topic);
             }
             localStorage.setItem("evolysium_topics", JSON.stringify(activeTopics));
-            updateTopicUI();
-            fetchFeed();
         }
 
-        async function fetchFeed() {
-            const loading = document.getElementById("loading");
-            const feedContainer = document.getElementById("feedContainer");
-            const errorMessage = document.getElementById("errorMessage");
-            const refreshIcon = document.getElementById("refreshIcon");
+        async function fetchCleanFeed() {
+            if (activeTopics.length === 0) {
+                alert("Please select at least one topic channel.");
+                return;
+            }
 
-            loading.classList.remove("hidden");
-            feedContainer.classList.add("hidden");
-            errorMessage.classList.add("hidden");
-            refreshIcon.classList.add("animate-spin");
+            const spinner = document.getElementById("loading-spinner");
+            const content = document.getElementById("feed-content");
+
+            spinner.classList.remove("d-none");
+            content.innerHTML = "";
 
             try {
-                const topicsQuery = activeTopics.join(",");
-                const response = await fetch(`${API_BASE_URL}?topics=${topicsQuery}`);
+                const response = await fetch(`${API_BASE}/api/feed?topics=${activeTopics.join(",")}`);
                 const data = await response.json();
 
                 if (data.success && data.clean_feed) {
-                    const htmlContent = marked.parse(data.clean_feed);
-
-                    feedContainer.innerHTML = `
-                        <div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700/60 shadow-lg text-slate-200 leading-relaxed space-y-4 prose prose-invert max-w-none">
-                            ${htmlContent}
-                        </div>
-                    `;
-                    feedContainer.classList.remove("hidden");
+                    content.innerHTML = marked.parse(data.clean_feed);
                 } else {
-                    throw new Error("Invalid API response");
+                    content.innerHTML = `<div class="alert alert-danger">Error: ${data.error || "Unable to process live feed."}</div>`;
                 }
-            } catch (error) {
-                console.error("Fetch Error:", error);
-                errorMessage.classList.remove("hidden");
+            } catch (err) {
+                content.innerHTML = `<div class="alert alert-danger">Backend Error: Re-connecting to server...</div>`;
             } finally {
-                loading.classList.add("hidden");
-                refreshIcon.classList.remove("animate-spin");
+                spinner.classList.add("d-none");
             }
         }
 
+        // Restore saved topics on load
         window.addEventListener("DOMContentLoaded", () => {
-            updateTopicUI();
-            fetchFeed();
+            const saved = localStorage.getItem("evolysium_topics");
+            if (saved) {
+                activeTopics = JSON.parse(saved);
+            }
         });
     </script>
 </body>
