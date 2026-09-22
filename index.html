@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolysium - Tvoj AI Gatekeeper</title>
+    <!-- Tailwind CSS CDN za moderan dizajn -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome za ikonice -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js za prikaz Markdown teksta iz AI-ja -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Zaglavlje / Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-indigo-500/30">
+                    E
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Evolysium</h1>
+                    <p class="text-xs text-indigo-400 font-medium">Personal AI Gatekeeper</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+                    Bez Oglasa
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Glavni sadržaj -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8">
+        
+        <!-- Hero / Opisna kartica -->
+        <div class="mb-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-900/40 via-purple-900/20 to-slate-800/40 border border-indigo-500/20 shadow-xl">
+            <h2 class="text-2xl font-bold mb-2 text-white">Čisti AI Feed bez oglasnog šuma</h2>
+            <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                Evolysium filtrira objave s društvenih mreža (Reddit, X), automatski uklanja sve reklame, sponzorirane objave i prevare te izdvaja samo ključne informacije.
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300"><i class="fab fa-bitcoin text-amber-400 mr-1"></i> Kriptovalute</span>
+                <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300"><i class="fas fa-plane text-sky-400 mr-1"></i> Putovanja</span>
+                <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300"><i class="fas fa-shield-alt text-indigo-400 mr-1"></i> 100% Očišćeno</span>
+            </div>
+        </div>
+
+        <!-- Akcije / Osvježi dugme -->
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-lg font-semibold text-white flex items-center">
+                <i class="fas fa-rss text-indigo-400 mr-2"></i> Najnoviji Sažetak
+            </h3>
+            <button id="refreshBtn" onclick="fetchFeed()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition text-white text-sm font-medium shadow-lg shadow-indigo-600/30 flex items-center gap-2">
+                <i id="refreshIcon" class="fas fa-sync-alt"></i>
+                <span>Osvježi Feed</span>
+            </button>
+        </div>
+
+        <!-- Pokazatelj učitavanja (Loading Spinner) -->
+        <div id="loading" class="hidden py-16 text-center">
+            <div class="inline-block w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
+            <p class="text-slate-400 text-sm animate-pulse">AI analizira društvene mreže i uklanja oglase...</p>
+        </div>
+
+        <!-- Prikaz Greške -->
+        <div id="errorMessage" class="hidden p-4 mb-6 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
+            Došlo je do pogreške prilikom dohvaćanja feeda.
+        </div>
+
+        <!-- Sadržaj Feeda -->
+        <div id="feedContainer" class="space-y-6">
+            <!-- AI Sažetak će se generirati ovdje -->
+        </div>
+
+    </main>
+
+    <!-- Podnožje / Footer -->
+    <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 Evolysium. Pokreće Google Gemini AI.</p>
+    </footer>
+
+    <!-- JavaScript logika -->
+    <script>
+        const API_URL = "https://evolysium-backend.onrender.com/api/feed";
+
+        async function fetchFeed() {
+            const loading = document.getElementById("loading");
+            const feedContainer = document.getElementById("feedContainer");
+            const errorMessage = document.getElementById("errorMessage");
+            const refreshIcon = document.getElementById("refreshIcon");
+
+            // Postavi stanje učitavanja
+            loading.classList.remove("hidden");
+            feedContainer.classList.add("hidden");
+            errorMessage.classList.add("hidden");
+            refreshIcon.classList.add("animate-spin");
+
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+
+                if (data.success && data.clean_feed) {
+                    // Pretvori Markdown iz AI-ja u HTML
+                    const htmlContent = marked.parse(data.clean_feed);
+
+                    feedContainer.innerHTML = `
+                        <div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700/60 shadow-lg text-slate-200 leading-relaxed space-y-4 prose prose-invert max-w-none">
+                            ${htmlContent}
+                        </div>
+                    `;
+                    feedContainer.classList.remove("hidden");
+                } else {
+                    throw new Error("Neispravan odgovor");
+                }
+            } catch (error) {
+                console.error("Greška:", error);
+                errorMessage.classList.remove("hidden");
+            } finally {
+                loading.classList.add("hidden");
+                refreshIcon.classList.remove("animate-spin");
+            }
+        }
+
+        // Automatsko učitavanje pri otvaranju stranice
+        window.addEventListener("DOMContentLoaded", fetchFeed);
+    </script>
+</body>
+</html>
