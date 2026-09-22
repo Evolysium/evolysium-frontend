@@ -121,6 +121,10 @@
             border: 2px solid var(--accent-color);
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
         }
+        .pricing-card.enterprise {
+            border: 1px solid #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -214,7 +218,7 @@
 
     <!-- Pricing Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background-color: #0f172a; border: 1px solid rgba(255,255,255,0.2);">
                 <div class="modal-header border-secondary">
                     <h5 class="modal-title fw-bold text-info"><i class="fa-solid fa-tags me-2"></i>Evolysium Subscription Plans</h5>
@@ -222,7 +226,8 @@
                 </div>
                 <div class="modal-body py-4">
                     <div class="row g-3">
-                        <div class="col-md-4">
+                        <!-- Free Plan -->
+                        <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-3 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <h6 class="fw-bold text-uppercase text-secondary">Free</h6>
@@ -236,7 +241,9 @@
                                 <button class="btn btn-outline-light btn-sm w-100 mt-3" disabled>Current Plan</button>
                             </div>
                         </div>
-                        <div class="col-md-4">
+
+                        <!-- Pro Plan -->
+                        <div class="col-md-6 col-lg-3">
                             <div class="pricing-card featured p-3 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <span class="badge bg-info text-dark rounded-pill mb-1">POPULAR</span>
@@ -252,7 +259,9 @@
                                 <button class="btn btn-info btn-sm fw-bold w-100 mt-3">Upgrade to Pro</button>
                             </div>
                         </div>
-                        <div class="col-md-4">
+
+                        <!-- Business Plan -->
+                        <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-3 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <h6 class="fw-bold text-uppercase text-warning">Business</h6>
@@ -267,6 +276,25 @@
                                 <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-3">Get Business</button>
                             </div>
                         </div>
+
+                        <!-- Enterprise Plan -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="pricing-card enterprise p-3 text-center h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <span class="badge bg-purple text-light rounded-pill mb-1" style="background-color: #a855f7;">AGENCY</span>
+                                    <h6 class="fw-bold text-uppercase" style="color: #c084fc;">Enterprise / VIP</h6>
+                                    <h3 class="fw-bold my-2">€79.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <ul class="list-unstyled text-start small mt-3">
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Everything in Business</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i><strong>API & Webhooks Access</strong></li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Custom Gemini AI Prompts</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Multi-user Team Accounts</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-outline-secondary btn-sm fw-bold w-100 mt-3" style="border-color: #a855f7; color: #c084fc;">Contact Sales</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
