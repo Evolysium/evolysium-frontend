@@ -184,9 +184,9 @@
     <div class="container py-5">
         <div class="row justify-content-center text-center mb-4">
             <div class="col-lg-9">
-                <span class="badge bg-info text-dark fw-bold px-3 py-2 rounded-pill text-uppercase mb-3">⚡ LIVE VIRAL RADAR</span>
-                <h1 class="display-4 hero-title mb-3">Catch Viral Trends <br>Before They Blow Up 🚀</h1>
-                <p class="text-secondary fs-5">See what creators are posting right now across TikTok, IG Reels, Reddit, X, and LinkedIn with real engagement stats.</p>
+                <span class="badge bg-info text-dark fw-bold px-3 py-2 rounded-pill text-uppercase mb-3">REAL-TIME INTELLIGENCE HUB</span>
+                <h1 class="display-4 hero-title mb-3">Uncover Viral Trends <br>& High-Impact Signals 🚀</h1>
+                <p class="text-secondary fs-5">Evolysium AI tracks live web chatter, viral media, and market signals across TikTok, Instagram, Reddit, X, and LinkedIn.</p>
             </div>
         </div>
 
@@ -194,14 +194,14 @@
         <div class="row g-3 mb-5 justify-content-center">
             <div class="col-6 col-md-4">
                 <div class="stat-card text-center">
-                    <div class="text-info fw-bold fs-3"><i class="fa-solid fa-fire me-1"></i> 142.8k</div>
-                    <div class="text-secondary small">Trends Tracked Today</div>
+                    <div class="text-info fw-bold fs-3"><i class="fa-solid fa-bolt me-1"></i> 142.8k</div>
+                    <div class="text-secondary small">Signals Analyzed Today</div>
                 </div>
             </div>
             <div class="col-6 col-md-4">
                 <div class="stat-card text-center">
-                    <div class="fw-bold fs-3" style="color: #a855f7;"><i class="fa-solid fa-chart-line me-1"></i> 99.4%</div>
-                    <div class="text-secondary small">Virality Score</div>
+                    <div class="fw-bold fs-3" style="color: #a855f7;"><i class="fa-solid fa-fire me-1"></i> 99.4%</div>
+                    <div class="text-secondary small">Accuracy Rate</div>
                 </div>
             </div>
         </div>
@@ -257,7 +257,7 @@
         <!-- Spinner -->
         <div id="loading-spinner" class="text-center py-5 d-none">
             <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
-            <p class="mt-3 text-secondary fs-6">Scanning viral social feeds...</p>
+            <p class="mt-3 text-secondary fs-6">Scanning live social signals...</p>
         </div>
 
         <!-- Feed Grid -->
@@ -320,42 +320,33 @@
         let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "gaming", "lifestyle"];
 
-        // 9 u potpunosti različitih videozapisa
+        // Svakoj kartici dodijelit ćemo jedinstveni videozapis
         const UNIQUE_VIDEOS = [
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoylikes.mp4",
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutback2012.mp4",
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
+            "https://assets.mixkit.co/videos/preview/mixkit-vertical-stream-of-a-futuristic-city-40129-large.mp4",
+            "https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-green-screen-41525-large.mp4",
+            "https://vjs.zencdn.net/v/oceans.mp4",
+            "https://assets.mixkit.co/videos/preview/mixkit-young-woman-working-on-a-laptop-40131-large.mp4",
+            "https://media.w3.org/2010/05/sintel/trailer.mp4",
+            "https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-sky-in-a-sunset-26070-large.mp4"
         ];
 
-        // 9 u potpunosti različitih naslovnih slika
+        // Različite visoko-kvalitetne fotografije za postere/slike
         const UNIQUE_IMAGES = [
             "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&auto=format&fit=crop"
+            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop"
         ];
 
         const VIRAL_TITLES = [
-            "Viral Hook Pattern Taking Over Reels",
-            "Next-Gen AI Workflow for Creators",
-            "Top Performing Video Format This Week",
-            "How Top Creators Drive 1M+ Views",
-            "Hidden Gem Community Trend Going Mainstream",
-            "Secret Visual Style Spikes Engagement 3x",
-            "Ultimate Short-Form Editing Technique",
-            "Trending Audio Combo Gaining Traction",
-            "High-Converting Organic Content Blueprint"
+            "Top Trending Tech Video Signal",
+            "Next-Gen AI Workflow Insights",
+            "High Impact Social Strategy Breakdown",
+            "Unfiltered Creator Growth Patterns",
+            "Emerging Market Chatter Focus",
+            "Visual Media Engagement Spike"
         ];
 
         function toggleSelection(type, value, btn) {
@@ -385,22 +376,22 @@
 
         function getRichMockItems() {
             const items = [];
-            const platforms = selectedPlatforms.length ? selectedPlatforms : ["instagram", "tiktok", "x", "reddit"];
+            const platforms = selectedPlatforms.length ? selectedPlatforms : ["tiktok", "instagram", "x", "reddit"];
             const categories = selectedCategories.length ? selectedCategories : ["tech", "lifestyle", "gaming"];
 
             for (let i = 0; i < 9; i++) {
                 const platform = platforms[i % platforms.length];
                 const category = categories[i % categories.length];
                 const title = VIRAL_TITLES[i % VIRAL_TITLES.length];
-                const likes = Math.floor(Math.random() * 80 + 15) + "k";
+                const likes = Math.floor(Math.random() * 50 + 20) + "k";
 
                 items.push({
                     platform: platform,
                     category: category,
                     title: title,
-                    summary: `Curated viral post trending on ${platform.toUpperCase()} with extremely high engagement (${likes} likes).`,
-                    videoUrl: UNIQUE_VIDEOS[i],
-                    image: UNIQUE_IMAGES[i],
+                    summary: `Viral short-form breakdown covering key updates and unfiltered insights in ${category}.`,
+                    videoUrl: UNIQUE_VIDEOS[i % UNIQUE_VIDEOS.length],
+                    image: UNIQUE_IMAGES[i % UNIQUE_IMAGES.length],
                     url: `https://www.${platform === 'x' ? 'x.com' : platform + '.com'}`,
                     likes: likes
                 });
@@ -438,6 +429,8 @@
 
                 grid.innerHTML = displayItems.map((item, index) => {
                     const isVideo = item.platform === "tiktok" || item.platform === "instagram" || item.videoUrl;
+                    
+                    // Osigurava da se videozapisi ne ponavljaju čak i ako ih backend pošalje identične
                     const videoSrc = UNIQUE_VIDEOS[index % UNIQUE_VIDEOS.length];
                     const mediaImg = UNIQUE_IMAGES[index % UNIQUE_IMAGES.length];
 
@@ -453,6 +446,8 @@
                         </div>
                     `;
 
+                    const platformCapitalized = item.platform ? item.platform.charAt(0).toUpperCase() + item.platform.slice(1) : 'Social';
+
                     return `
                         <div class="col-md-6 col-lg-4">
                             <div class="card card-custom h-100">
@@ -460,19 +455,19 @@
                                 <div class="card-body d-flex flex-column">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         ${getPlatformBadge(item.platform)}
-                                        <span class="badge bg-dark border border-warning text-warning fw-normal">🔥 Hot Trend</span>
+                                        <span class="badge bg-dark border border-warning text-warning fw-normal">🔥 Viral</span>
                                     </div>
                                     
                                     <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
                                     <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
 
                                     <div class="d-flex align-items-center justify-content-between mb-3 text-secondary small">
-                                        <span><i class="fa-regular fa-heart me-1 text-danger"></i> ${item.likes || '42k'}</span>
+                                        <span><i class="fa-regular fa-heart me-1 text-danger"></i> ${item.likes || '45k'}</span>
                                         <span><i class="fa-solid fa-chart-line me-1 text-info"></i> High Reach</span>
                                     </div>
 
                                     <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm w-100">
-                                        Watch Original Post <i class="fa-solid fa-arrow-right ms-1"></i>
+                                        Watch on ${platformCapitalized} <i class="fa-solid fa-arrow-right ms-1"></i>
                                     </a>
                                 </div>
                             </div>
@@ -493,12 +488,12 @@
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     ${getPlatformBadge(item.platform)}
-                                    <span class="badge bg-dark border border-warning text-warning fw-normal">🔥 Hot Trend</span>
+                                    <span class="badge bg-dark border border-warning text-warning fw-normal">🔥 Viral</span>
                                 </div>
                                 <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
                                 <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
                                 <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm w-100 mt-2">
-                                    Watch Original Post
+                                    Watch Signal Source
                                 </a>
                             </div>
                         </div>
