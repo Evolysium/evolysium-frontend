@@ -629,71 +629,75 @@
                 if (displayItems.length === 0) {
                     displayItems = getRichMockItems();
                 }
+grid.innerHTML = displayItems.map(item => {
+    const isTikTok = item.platform === "tiktok";
+    const isInstagram = item.platform === "instagram";
+    const videoSrc = reliableVideoStreams[item.category] || reliableVideoStreams["tech"];
 
-                grid.innerHTML = displayItems.map(item => {
-                    const isTikTok = item.platform === "tiktok";
-                    const isInstagram = item.platform === "instagram";
-                    const videoSrc = reliableVideoStreams[item.category] || reliableVideoStreams["tech"];
+    let mediaImage = item.image;
+    if (!mediaImage || mediaImage.includes("photo-1518770660439") || mediaImage.includes("chip")) {
+        mediaImage = getRandomImage(item.category);
+    }
 
-                    // Ensure high quality image fallback
-                    let mediaImage = item.image;
-                    if (!mediaImage || mediaImage.includes("photo-1518770660439") || mediaImage.includes("chip")) {
-                        mediaImage = getRandomImage(item.category);
-                    }
+    let cardClass = "";
+    if (isTikTok) cardClass = "card-tiktok";
+    if (isInstagram) cardClass = "card-instagram";
 
-                    let cardClass = "";
-                    if (isTikTok) cardClass = "card-tiktok";
-                    if (isInstagram) cardClass = "card-instagram";
+    const mediaElement = (isTikTok || isInstagram) ? `
+        <div class="media-container">
+            <video controls playsinline loop preload="metadata" poster="${mediaImage}">
+                <source src="${videoSrc}" type="video/mp4">
+            </video>
+        </div>
+    ` : `
+        <div class="media-container">
+            <img src="${mediaImage}" alt="Trending visual" onerror="this.src='${getRandomImage('tech')}'">
+        </div>
+    `;
 
-                    const mediaElement = (isTikTok || isInstagram) ? `
-                        <div class="media-container">
-                            <video controls playsinline loop preload="metadata" poster="${mediaImage}">
-                                <source src="${videoSrc}" type="video/mp4">
-                            </video>
+    let buttonText = "View Source";
+    let buttonClass = "btn-outline-info";
+
+    if (isTikTok) {
+        buttonText = '<i class="fa-brands fa-tiktok me-1"></i> Watch on TikTok';
+        buttonClass = "btn-outline-danger";
+    } else if (isInstagram) {
+        buttonText = '<i class="fa-brands fa-instagram me-1"></i> Watch Reel on Instagram';
+        buttonClass = "btn-outline-warning";
+    }
+
+    // Backend metadata badges
+    const sourceBadge = item.source ? `<div class="text-info small fw-semibold mb-1"><i class="fa-solid fa-satellite-dish me-1"></i>${item.source}</div>` : '';
+    const sentimentBadge = item.sentiment ? `<span class="badge bg-dark border border-secondary text-light fw-normal" style="font-size: 0.7rem;">${item.sentiment}</span>` : '';
+    const scoreBadge = item.score ? `<span class="badge bg-info text-dark fw-bold" style="font-size: 0.7rem;"><i class="fa-solid fa-bolt me-1"></i>${item.score} pts</span>` : '';
+
+    return `
+        <div class="col-md-6 col-lg-4">
+            <div class="card card-custom ${cardClass} h-100">
+                ${mediaElement}
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        ${getPlatformBadge(item.platform)}
+                        <div class="d-flex gap-1">
+                            ${sentimentBadge}
+                            ${scoreBadge}
                         </div>
-                    ` : `
-                        <div class="media-container">
-                            <img src="${mediaImage}" alt="Trending visual" onerror="this.src='${getRandomImage('tech')}'">
-                        </div>
-                    `;
+                    </div>
+                    
+                    ${sourceBadge}
+                    
+                    <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
+                    <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
 
-                    let buttonText = "View Source";
-                    let buttonClass = "btn-outline-info";
+                    <a href="${item.url}" target="_blank" class="btn ${buttonClass} btn-sm w-100 mt-2">
+                        ${buttonText}
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+}).join('');
 
-                    if (isTikTok) {
-                        buttonText = '<i class="fa-brands fa-tiktok me-1"></i> Watch on TikTok';
-                        buttonClass = "btn-outline-danger";
-                    } else if (isInstagram) {
-                        buttonText = '<i class="fa-brands fa-instagram me-1"></i> Watch Reel on Instagram';
-                        buttonClass = "btn-outline-warning";
-                    }
-
-                    return `
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card card-custom ${cardClass} h-100">
-                                ${mediaElement}
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        ${getPlatformBadge(item.platform)}
-                                        <span class="badge bg-dark border border-info text-info fw-normal"><i class="fa-solid fa-fire me-1 text-warning"></i> Viral</span>
-                                    </div>
-                                    
-                                    <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
-                                    <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-
-                                    <div class="d-flex align-items-center justify-content-between mb-2 fs-7 text-secondary">
-                                        <small><i class="fa-regular fa-heart me-1 text-danger"></i> ${item.likes || '45k'}</small>
-                                        <small><i class="fa-regular fa-eye me-1 text-info"></i> High Reach</small>
-                                    </div>
-
-                                    <a href="${item.url}" target="_blank" class="btn ${buttonClass} btn-sm w-100 mt-1">
-                                        ${buttonText}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
 
             } catch (err) {
                 // In case backend is cold-starting or unavailable, display rich feed immediately
