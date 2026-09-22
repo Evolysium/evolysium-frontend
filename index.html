@@ -88,6 +88,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .chip-btn {
@@ -160,7 +161,7 @@
 </head>
 <body>
 
-    <!-- Zaglavlje -->
+    <!-- Header Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-3" href="#">
@@ -180,7 +181,7 @@
         </div>
     </nav>
 
-    <!-- Glavna Hero Sekcija -->
+    <!-- Main Hero Section -->
     <div class="container py-5">
         <div class="row justify-content-center text-center mb-4">
             <div class="col-lg-9">
@@ -190,7 +191,7 @@
             </div>
         </div>
 
-        <!-- Metrika -->
+        <!-- Stat Counter -->
         <div class="row g-3 mb-5 justify-content-center">
             <div class="col-6 col-md-4">
                 <div class="stat-card text-center">
@@ -206,12 +207,12 @@
             </div>
         </div>
 
-        <!-- Kontrole i Filteri -->
+        <!-- Controls & Filters -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-10">
                 <div class="card card-custom p-4 p-md-5">
                     
-                    <!-- Pretraživanje -->
+                    <!-- Search Input -->
                     <div class="mb-4">
                         <label class="text-uppercase text-info fw-bold small mb-2 d-block">
                             <i class="fa-solid fa-magnifying-glass me-2"></i>Search Topics, Hooks, or Hashtags
@@ -221,7 +222,7 @@
 
                     <hr class="border-secondary opacity-25">
 
-                    <!-- Platforme -->
+                    <!-- Platform Filters -->
                     <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>Platforms</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="chip-btn active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok me-1"></i> TikTok</button>
@@ -233,7 +234,7 @@
 
                     <hr class="border-secondary opacity-25">
 
-                    <!-- Kategorije -->
+                    <!-- Category Filters -->
                     <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-layer-group me-2"></i>Categories</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="chip-btn active" onclick="toggleSelection('category', 'tech', this)"><i class="fa-solid fa-microchip me-1"></i> Tech & AI</button>
@@ -254,75 +255,75 @@
             </div>
         </div>
 
-        <!-- Mreža za prikaz trendova -->
+        <!-- Feed Grid -->
         <div id="feed-grid" class="row g-4">
-            <!-- Dinamički se puni putem JS-a -->
+            <!-- Dynamically populated via JS -->
         </div>
 
-        <!-- Indikator učitavanja pri skrolanju -->
-        <div id="loading-spinner" class="text-center py-5">
+        <!-- Infinite Scroll Spinner -->
+        <div id="loading-spinner" class="text-center py-5 d-none">
             <div class="spinner-border text-info" style="width: 2.5rem; height: 2.5rem;" role="status"></div>
             <p class="mt-2 text-secondary small">Loading more viral trends...</p>
         </div>
     </div>
 
-    <!-- Modal za Pretplatničke Pakete (Točno 4 Paketa) -->
+    <!-- Pricing Modal (4 Plans, ALL English) -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
                 <div class="modal-header border-secondary">
-                    <h5 class="modal-title fw-bold text-info"><i class="fa-solid fa-tags me-2"></i>Evolysium Pro Plans</h5>
+                    <h5 class="modal-title fw-bold text-info"><i class="fa-solid fa-tags me-2"></i>Evolysium Pro Membership</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body py-4">
                     <div class="row g-3">
                         
-                        <!-- Paket 1: Free -->
+                        <!-- Plan 1: Free -->
                         <div class="col-md-6 col-lg-3">
                             <div class="stat-card p-4 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <h6 class="fw-bold text-uppercase text-secondary">Free Starter</h6>
                                     <h3 class="fw-bold my-2">€0 <small class="fs-6 text-secondary">/mo</small></h3>
-                                    <p class="small text-secondary mt-3">Osnovni pregled trendova i dnevnih signala na društvenim mrežama.</p>
+                                    <p class="small text-secondary mt-3">Basic overview of daily social trends and introductory signals across major platforms.</p>
                                 </div>
-                                <button class="btn btn-outline-light btn-sm w-100 mt-4" disabled>Trenutni paket</button>
+                                <button class="btn btn-outline-light btn-sm w-100 mt-4" disabled>Current Plan</button>
                             </div>
                         </div>
 
-                        <!-- Paket 2: Creator Pro -->
+                        <!-- Plan 2: Creator Pro -->
                         <div class="col-md-6 col-lg-3">
                             <div class="stat-card p-4 text-center h-100 border-info d-flex flex-column justify-content-between">
                                 <div>
-                                    <span class="badge bg-info text-dark rounded-pill mb-2">NAJPOPULARNIJE</span>
+                                    <span class="badge bg-info text-dark rounded-pill mb-2">MOST POPULAR</span>
                                     <h6 class="fw-bold text-uppercase text-info">Creator Pro</h6>
                                     <h3 class="fw-bold my-2">€9.99 <small class="fs-6 text-secondary">/mo</small></h3>
-                                    <p class="small text-secondary mt-3">Neograničen pristup videozapisima, viralnim udicama i upozorenjima u stvarnom vremenu.</p>
+                                    <p class="small text-secondary mt-3">Full access to high-impact video hooks, real-time viral alerts, and trending sound trackers.</p>
                                 </div>
-                                <button class="btn btn-info btn-sm fw-bold w-100 mt-4">Nadogradi na Pro</button>
+                                <button class="btn btn-info btn-sm fw-bold w-100 mt-4">Upgrade to Pro</button>
                             </div>
                         </div>
 
-                        <!-- Paket 3: Growth -->
+                        <!-- Plan 3: Growth -->
                         <div class="col-md-6 col-lg-3">
                             <div class="stat-card p-4 text-center h-100 d-flex flex-column justify-content-between" style="border-color: #a855f7;">
                                 <div>
-                                    <h6 class="fw-bold text-uppercase" style="color: #a855f7;">Growth</h6>
+                                    <h6 class="fw-bold text-uppercase" style="color: #a855f7;">Growth Scale</h6>
                                     <h3 class="fw-bold my-2">€19.99 <small class="fs-6 text-secondary">/mo</small></h3>
-                                    <p class="small text-secondary mt-3">Napredno praćenje konkurencije, izvoz podataka i analiza rastućih hashtagova.</p>
+                                    <p class="small text-secondary mt-3">Advanced competitor intelligence, CSV data export, and viral hashtag prediction models.</p>
                                 </div>
-                                <button class="btn btn-sm fw-bold w-100 mt-4 text-white" style="background: #a855f7;">Odaberi Growth</button>
+                                <button class="btn btn-sm fw-bold w-100 mt-4 text-white" style="background: #a855f7;">Get Growth</button>
                             </div>
                         </div>
 
-                        <!-- Paket 4: Agency / Enterprise -->
+                        <!-- Plan 4: Agency / Enterprise -->
                         <div class="col-md-6 col-lg-3">
                             <div class="stat-card p-4 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
-                                    <h6 class="fw-bold text-uppercase text-warning">Agency</h6>
+                                    <h6 class="fw-bold text-uppercase text-warning">Agency & Team</h6>
                                     <h3 class="fw-bold my-2">€39.99 <small class="fs-6 text-secondary">/mo</small></h3>
-                                    <p class="small text-secondary mt-3">Puni analitički timski pristup, posvećeni API te prilagođena izvješća za klijente.</p>
+                                    <p class="small text-secondary mt-3">Multi-seat team workspace, custom real-time API integrations, and white-label reporting.</p>
                                 </div>
-                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-4">Kontaktiraj nas</button>
+                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-4">Contact Sales</button>
                             </div>
                         </div>
 
@@ -338,7 +339,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logika -->
+    <!-- JavaScript Logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
@@ -346,43 +347,43 @@
         let isLoading = false;
         let itemCounter = 0;
 
-        // Baza provjerenih i funkcionalnih videozapisa (svakom trendu pridružuje se drugačiji video)
+        // Reliable CDN Video Pool (Fast loading + reliable across mobile browsers)
         const VIDEO_POOL = [
+            {
+                video: "https://vjs.zencdn.net/v/oceans.mp4",
+                poster: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop"
+            },
             {
                 video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
                 poster: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop"
             },
             {
                 video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                poster: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop"
-            },
-            {
-                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                 poster: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&auto=format&fit=crop"
             },
             {
-                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoylikes.mp4",
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                 poster: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop"
             },
             {
-                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoylikes.mp4",
                 poster: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop"
             },
             {
-                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
                 poster: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop"
             }
         ];
 
         const TREND_TITLES = [
-            "Top Trending Tech Video Signal",
-            "Next-Gen AI Workflow Insights",
-            "High Impact Social Strategy Breakdown",
-            "Unfiltered Creator Growth Patterns",
-            "Emerging Market Chatter Focus",
-            "Visual Media Engagement Spike",
-            "Viral Storytelling Framework",
-            "Automated Content Pipeline Model"
+            "AI Short-Form Hook Breakout",
+            "Next-Gen Workflow Automation Insights",
+            "High Impact Viral Content Strategy",
+            "Unfiltered Creator Growth Signal",
+            "Emerging Market Chatter Spikes",
+            "Visual Media Engagement Blueprint",
+            "Organic Hook & Retention Framework",
+            "Automated Social Media Pipeline"
         ];
 
         function toggleSelection(type, value, btn) {
@@ -427,7 +428,7 @@
                     platform: platform,
                     category: category,
                     title: title,
-                    summary: `Viral short-form breakdown covering key updates and insights in ${category}.`,
+                    summary: `Viral short-form breakdown covering key updates, audience hooks, and growth insights in ${category}.`,
                     videoUrl: media.video,
                     posterUrl: media.poster,
                     url: `https://www.${platform === 'x' ? 'x.com' : platform + '.com'}`,
@@ -496,7 +497,7 @@
             }, 300);
         }
 
-        // Beskonačno skrolanje (Infinite Scroll)
+        // Infinite Scroll Listener
         window.addEventListener("scroll", () => {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) {
                 loadMoreContent();
