@@ -1,174 +1,285 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium — Personalized AI Stream</title>
+    <title>Evolysium — Personalized AI Gatekeeper & Signal Curation</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Evolysium — Personalized AI Gatekeeper">
+    <meta name="description" content="AI platforma za filtriranje signala, uklanjanje šuma i kuriranje medijskog sadržaja u stvarnom vremenu s TikToka, Reddita, X-a i LinkedIna.">
+    <meta name="keywords" content="AI gatekeeper, signal curation, content filter, trend analytics, Evolysium, AI feeds">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evolysium.github.io/evolysium-frontend/">
+    <meta property="og:title" content="Evolysium — Personalized AI Gatekeeper">
+    <meta property="og:description" content="Personalizirani AI alat za filtriranje i agregaciju najvažnijih mrežnih signala.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop">
+
+    <!-- Google Structured Data (Schema.org / Sitelinks) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Evolysium",
+      "operatingSystem": "Web",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "lowPrice": "0",
+        "highPrice": "79.99",
+        "offerCount": "4"
+      },
+      "url": "https://evolysium.github.io/evolysium-frontend/",
+      "logo": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&auto=format&fit=crop"
+    }
+    </script>
+
+    <!-- Frameworks & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --text-color: #f8fafc;
+            --bg-main: #0a0f1d;
+            --card-bg: rgba(18, 26, 47, 0.75);
+            --accent-cyan: #38bdf8;
+            --accent-purple: #a855f7;
+            --border-glow: rgba(56, 189, 248, 0.2);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        .navbar {
-            background-color: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        /* Glassmorphism Navbar */
+        .navbar-custom {
+            background: rgba(10, 15, 29, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
+
+        /* Brand Logo Design */
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
         .hero-title {
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
+            letter-spacing: -1px;
         }
+
         .card-custom {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .card-custom:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2);
+            transform: translateY(-6px);
+            border-color: var(--border-glow);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.15);
         }
+
         .card-tiktok {
-            border: 1px solid rgba(255, 0, 80, 0.4);
+            border: 1px solid rgba(255, 0, 80, 0.3);
         }
+
         .media-container {
-            height: 240px;
+            height: 220px;
             position: relative;
             background-color: #000;
             overflow: hidden;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
+
         .media-container img, .media-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         .chip-btn {
-            border-radius: 20px;
-            padding: 6px 16px;
-            font-size: 0.88rem;
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 0.85rem;
             font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-color);
-            background: transparent;
-            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.25s ease;
         }
+
+        .chip-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--text-main);
+        }
+
         .chip-btn.active {
-            background-color: var(--accent-color);
-            color: #0f172a;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
-        }
-        .chip-platform.active {
-            background-color: #818cf8;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2));
             color: #ffffff;
-            border-color: #818cf8;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
         }
+
         .btn-primary-custom {
-            background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
             border: none;
             color: white;
             font-weight: 700;
-            padding: 12px 28px;
-            border-radius: 12px;
+            padding: 14px 32px;
+            border-radius: 14px;
+            box-shadow: 0 0 20px rgba(2, 132, 199, 0.4);
+            transition: all 0.3s ease;
         }
-        .badge-tiktok { background-color: #ff0050; color: white; }
-        .badge-x { background-color: #000000; color: white; border: 1px solid #333; }
-        .badge-linkedin { background-color: #0a66c2; color: white; }
-        .badge-reddit { background-color: #ff4500; color: white; }
-        
+
+        .btn-primary-custom:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
+        }
+
+        /* Platform Badges */
+        .badge-tiktok { background-color: #ff0050; }
+        .badge-x { background-color: #000000; border: 1px solid #333; }
+        .badge-linkedin { background-color: #0a66c2; }
+        .badge-reddit { background-color: #ff4500; }
+
         .ai-score-bar {
             height: 6px;
-            border-radius: 3px;
+            border-radius: 4px;
             background-color: rgba(255, 255, 255, 0.1);
             overflow: hidden;
         }
+
         .ai-score-fill {
             height: 100%;
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
         }
+
         .search-input {
-            background-color: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(10, 15, 29, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            border-radius: 10px;
-            padding: 10px 16px;
+            border-radius: 12px;
+            padding: 12px 20px;
         }
+
         .search-input:focus {
-            background-color: rgba(15, 23, 42, 0.9);
-            border-color: var(--accent-color);
+            background-color: rgba(10, 15, 29, 0.95);
+            border-color: var(--accent-cyan);
             color: white;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
         }
+
+        /* Pricing Card Styling */
         .pricing-card {
-            background-color: #1e293b;
+            background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+            border-radius: 18px;
         }
+
         .pricing-card.featured {
-            border: 2px solid var(--accent-color);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
         }
+
         .pricing-card.enterprise {
-            border: 1px solid #a855f7;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+            border: 1px solid var(--accent-purple);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(5, 8, 16, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-cyan);
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top navbar-dark py-3">
+    <!-- Header Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom py-3">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-                <i class="fa-solid fa-shield-halved text-info fs-3"></i>
-                <span class="fw-bold fs-4 text-white">Evolysium</span>
+            <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-atom text-white fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="fw-bold fs-4 text-white tracking-tight" style="line-height: 1;">Evolysium</span>
+                    <small class="text-secondary" style="font-size: 0.68rem; letter-spacing: 1px;">AI GATEKEEPER</small>
+                </div>
             </a>
+
             <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-outline-info btn-sm fw-bold rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                    <i class="fa-solid fa-gem me-1"></i> Pricing & Plans
+                <button class="btn btn-outline-info btn-sm fw-bold rounded-pill px-3 py-2" data-bs-toggle="modal" data-bs-target="#pricingModal">
+                    <i class="fa-solid fa-gem me-1"></i> Pretplatnički Paketi
                 </button>
-                <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">v1.2 AI</span>
+                <span class="badge bg-dark border border-info text-info rounded-pill px-3 py-2 fw-bold">v1.3 PRO</span>
             </div>
         </div>
     </nav>
 
-    <div class="container py-4">
-        <div class="row justify-content-center text-center mb-4">
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center text-center mb-5">
             <div class="col-lg-8">
-                <h1 class="display-5 hero-title mb-2">Personalized AI Gatekeeper</h1>
-                <p class="text-secondary">AI-driven signal filtering & live media curation.</p>
+                <h1 class="display-4 hero-title mb-3">Pametno Filtriranje Signala i Trendova</h1>
+                <p class="text-secondary fs-5">Evolysium AI uklanja medijski šum, analizira kvalitetu te vam isporučuje samo najvažnije objave iz više izvora.</p>
             </div>
         </div>
 
-        <!-- Controls Section -->
-        <div class="row justify-content-center mb-4">
+        <!-- Filter Controls -->
+        <div class="row justify-content-center mb-5">
             <div class="col-lg-10">
-                <div class="card card-custom p-4">
+                <div class="card card-custom p-4 p-md-5">
                     
-                    <!-- Search Bar -->
+                    <!-- Pretraživanje -->
                     <div class="mb-4">
                         <label class="text-uppercase text-info fw-bold small mb-2 d-block">
-                            <i class="fa-solid fa-magnifying-glass me-2"></i>AI Keyword Search (Optional)
+                            <i class="fa-solid fa-magnifying-glass me-2"></i>AI Pretraga po Ključnim Riječima
                         </label>
-                        <input type="text" id="keyword-search" class="form-control search-input" placeholder="e.g. LLM, Bitcoin, Python, Glitch, Security...">
+                        <input type="text" id="keyword-search" class="form-control search-input" placeholder="Upišite npr. LLM, Bitcoin, AI Security, Web3, Gaming...">
                     </div>
 
                     <hr class="border-secondary opacity-25">
 
-                    <!-- 1. Select Platforms -->
-                    <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>1. Select Platforms</h6>
+                    <!-- 1. Odabir Platformi -->
+                    <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>1. Izvor Platforme</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="chip-btn chip-platform active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok me-1"></i> TikTok</button>
                         <button class="chip-btn chip-platform active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien me-1"></i> Reddit</button>
@@ -178,23 +289,23 @@
 
                     <hr class="border-secondary opacity-25">
 
-                    <!-- 2. Content Categories -->
-                    <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-layer-group me-2"></i>2. Content Categories</h6>
+                    <!-- 2. Tematske Kategorije -->
+                    <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-layer-group me-2"></i>2. Tematske Kategorije</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
-                        <button class="chip-btn active" onclick="toggleSelection('category', 'tech', this)"><i class="fa-solid fa-microchip me-1"></i> Tech & AI</button>
+                        <button class="chip-btn active" onclick="toggleSelection('category', 'tech', this)"><i class="fa-solid fa-microchip me-1"></i> Tehnologija & AI</button>
                         <button class="chip-btn active" onclick="toggleSelection('category', 'gaming', this)"><i class="fa-solid fa-gamepad me-1"></i> Gaming</button>
                         <button class="chip-btn" onclick="toggleSelection('category', 'lifestyle', this)"><i class="fa-solid fa-heart me-1"></i> Lifestyle</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'funny', this)"><i class="fa-solid fa-face-laugh-squint me-1"></i> Funny</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'luxury', this)"><i class="fa-solid fa-gem me-1"></i> Luxury</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'architecture', this)"><i class="fa-solid fa-building me-1"></i> Architecture</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'crypto', this)"><i class="fa-solid fa-coins me-1"></i> Crypto</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'travel', this)"><i class="fa-solid fa-plane me-1"></i> Travel</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', '18plus', this)"><i class="fa-solid fa-user-lock me-1"></i> 18+ Content <span class="badge bg-danger ms-1" style="font-size: 0.65rem;">PRO</span></button>
+                        <button class="chip-btn" onclick="toggleSelection('category', 'funny', this)"><i class="fa-solid fa-face-laugh-squint me-1"></i> Zabava</button>
+                        <button class="chip-btn" onclick="toggleSelection('category', 'luxury', this)"><i class="fa-solid fa-gem me-1"></i> Luksuz</button>
+                        <button class="chip-btn" onclick="toggleSelection('category', 'architecture', this)"><i class="fa-solid fa-building me-1"></i> Arhitektura</button>
+                        <button class="chip-btn" onclick="toggleSelection('category', 'crypto', this)"><i class="fa-solid fa-coins me-1"></i> Kripto</button>
+                        <button class="chip-btn" onclick="toggleSelection('category', 'travel', this)"><i class="fa-solid fa-plane me-1"></i> Putovanja</button>
+                        <button class="chip-btn" onclick="toggleSelection('category', '18plus', this)"><i class="fa-solid fa-user-lock me-1"></i> 18+ Sadržaj <span class="badge bg-danger ms-1" style="font-size: 0.65rem;">PRO</span></button>
                     </div>
 
-                    <div class="text-center">
-                        <button class="btn btn-primary-custom" onclick="fetchCustomFeed()">
-                            <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Generate AI Stream
+                    <div class="text-center pt-2">
+                        <button class="btn btn-primary-custom btn-lg w-100 w-md-auto" onclick="fetchCustomFeed()">
+                            <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Pokreni AI Stream
                         </button>
                     </div>
 
@@ -202,16 +313,17 @@
             </div>
         </div>
 
-        <!-- Feed Grid -->
+        <!-- Spinner -->
         <div id="loading-spinner" class="text-center py-5 d-none">
             <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
-            <p class="mt-3 text-secondary">Analyzing signals with Gemini AI & calculating quality scores...</p>
+            <p class="mt-3 text-secondary">Analiziram izvore pomoću Gemini AI modela i izračunavam rezultate...</p>
         </div>
 
+        <!-- Feed Grid -->
         <div id="feed-grid" class="row g-4">
             <div class="text-center py-5 text-secondary">
                 <i class="fa-solid fa-sliders fs-1 mb-3 text-info"></i>
-                <p>Select your criteria above and click "Generate AI Stream".</p>
+                <p>Odaberite platforme i kategorije iznad, pa kliknite "Pokreni AI Stream".</p>
             </div>
         </div>
     </div>
@@ -219,79 +331,78 @@
     <!-- Pricing Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content text-light" style="background-color: #0f172a; border: 1px solid rgba(255,255,255,0.2);">
+            <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
                 <div class="modal-header border-secondary">
-                    <h5 class="modal-title fw-bold text-info"><i class="fa-solid fa-tags me-2"></i>Evolysium Subscription Plans</h5>
+                    <h5 class="modal-title fw-bold text-info"><i class="fa-solid fa-tags me-2"></i>Evolysium Pretplatnički Model</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-4">
                     <div class="row g-3">
-                        <!-- Free Plan -->
+                        <!-- Free -->
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-3 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <h6 class="fw-bold text-uppercase text-secondary">Free</h6>
-                                    <h3 class="fw-bold my-2">€0 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <h3 class="fw-bold my-2">€0 <small class="fs-6 text-secondary">/mj</small></h3>
                                     <ul class="list-unstyled text-start small mt-3 text-secondary">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>3 Platforms max</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Basic Categories</li>
-                                        <li><i class="fa-solid fa-xmark text-danger me-2"></i>18+ Content Locked</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Do 3 platforme</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Osnovne kategorije</li>
+                                        <li><i class="fa-solid fa-xmark text-danger me-2"></i>18+ Sadržaj zaključan</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-light btn-sm w-100 mt-3" disabled>Current Plan</button>
+                                <button class="btn btn-outline-light btn-sm w-100 mt-3" disabled>Trenutni Paket</button>
                             </div>
                         </div>
 
-                        <!-- Pro Plan -->
+                        <!-- Pro -->
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card featured p-3 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
-                                    <span class="badge bg-info text-dark rounded-pill mb-1">POPULAR</span>
+                                    <span class="badge bg-info text-dark rounded-pill mb-1">NAJPOPULARNIJE</span>
                                     <h6 class="fw-bold text-uppercase text-info">Pro / Personal</h6>
-                                    <h3 class="fw-bold my-2">€9.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <h3 class="fw-bold my-2">€9.99 <small class="fs-6 text-secondary">/mj</small></h3>
                                     <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>All Platforms</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i><strong>Includes 18+ Content</strong></li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Keyword Search</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Bookmarks / Saved</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Sve platforme</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i><strong>Uključen 18+ Sadržaj</strong></li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Pretraga po ključnim riječima</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Spremanje omiljenih objava</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-info btn-sm fw-bold w-100 mt-3">Upgrade to Pro</button>
+                                <button class="btn btn-info btn-sm fw-bold w-100 mt-3">Nadogradi na Pro</button>
                             </div>
                         </div>
 
-                        <!-- Business Plan -->
+                        <!-- Business -->
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-3 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <h6 class="fw-bold text-uppercase text-warning">Business</h6>
-                                    <h3 class="fw-bold my-2">€29.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <h3 class="fw-bold my-2">€29.99 <small class="fs-6 text-secondary">/mj</small></h3>
                                     <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Everything in Pro</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Sve mogućnosti iz Pro</li>
                                         <li><i class="fa-solid fa-check text-info me-2"></i>Analytics Dashboard</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>PDF/CSV Export</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>24/7 VIP Support</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Izvoz podataka (PDF/CSV)</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>24/7 Podrška</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-3">Get Business</button>
+                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-3">Aktiviraj Business</button>
                             </div>
                         </div>
 
-                        <!-- Enterprise Plan -->
+                        <!-- Enterprise -->
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card enterprise p-3 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <span class="badge bg-purple text-light rounded-pill mb-1" style="background-color: #a855f7;">AGENCY</span>
                                     <h6 class="fw-bold text-uppercase" style="color: #c084fc;">Enterprise / VIP</h6>
-                                    <h3 class="fw-bold my-2">€79.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <h3 class="fw-bold my-2">€79.99 <small class="fs-6 text-secondary">/mj</small></h3>
                                     <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Everything in Business</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i><strong>API & Webhooks Access</strong></li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Custom Gemini AI Prompts</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Multi-user Team Accounts</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Ekskluzivni API pristup</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Prilagođeni AI promptovi</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Višekorisnički timski računi</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-secondary btn-sm fw-bold w-100 mt-3" style="border-color: #a855f7; color: #c084fc;">Contact Sales</button>
+                                <button class="btn btn-outline-secondary btn-sm fw-bold w-100 mt-3" style="border-color: #a855f7; color: #c084fc;">Kontaktirajte Prodaju</button>
                             </div>
                         </div>
 
@@ -301,6 +412,66 @@
         </div>
     </div>
 
+    <!-- Modal za Uvjete Korištenja -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-info fw-bold"><i class="fa-solid fa-file-contract me-2"></i>Uvjeti Korištenja (Terms of Service)</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body small text-secondary">
+                    <h6>1. Opće Odredbe</h6>
+                    <p>Dobrodošli na Evolysium. Korištenjem ove platforme prihvaćate ove Uvjete korištenja. Evolysium služi kao AI agregator i gatekeeper za analizu javnih sadržaja s društvenih mreža.</p>
+                    <h6>2. Odgovornost za Sadržaj i 18+ Pristup</h6>
+                    <p>Sadržaj kategorije 18+ namijenjen je isključivo punoljetnim osobama. Evolysium ne direktno ugošćuje autorski zaštićeni materijal već agregira javne poveznice i sažetke generirane umjetnom inteligencijom.</p>
+                    <h6>3. Pretplate i Povrat Sredstava</h6>
+                    <p>Korisnici mogu otkazati pretplatu u bilo kojem trenutku. Povrat sredstava vrši se u roku od 14 dana sukladno propisima Europske unije o zaštiti potrošača.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal za Pravila Privatnosti -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-info fw-bold"><i class="fa-solid fa-user-shield me-2"></i>Pravila Privatnosti (Privacy Policy & GDPR)</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body small text-secondary">
+                    <h6>1. Prikupljanje Podataka</h6>
+                    <p>Evolysium poštuje vašu privatnost. Prikupljamo samo osnovne tehničke podatke (kolačiće i odabrane postavke filtriranja) potrebne za pružanje usluge.</p>
+                    <h6>2. GDPR Prava Korisnika</h6>
+                    <p>Kao korisnik iz Europske unije, imate pravo u svakom trenutku zatražiti uvid, izmjenu ili potpuno brisanje svojih podataka iz našeg sustava.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer / Podnožje -->
+    <footer class="py-4">
+        <div class="container">
+            <div class="row align-items-center justify-content-between g-3">
+                <div class="col-md-6 text-center text-md-start">
+                    <span class="fw-bold text-white me-2">Evolysium AI</span>
+                    <small class="text-secondary">&copy; 2026. Sva prava pridržana.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3 small">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Uvjeti Korištenja</a>
+                        <span class="text-secondary">•</span>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privatnost & GDPR</a>
+                        <span class="text-secondary">•</span>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#pricingModal">Paketi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_BASE = "https://evolysium-backend.onrender.com";
@@ -345,7 +516,7 @@
 
         async function fetchCustomFeed() {
             if (selectedPlatforms.length === 0 || selectedCategories.length === 0) {
-                alert("Please select at least one platform and one content category.");
+                alert("Molimo odaberite barem jednu platformu i jednu kategoriju.");
                 return;
             }
 
@@ -397,10 +568,10 @@
                                         <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
                                         <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
                                         
-                                        <!-- AI Quality Score Indicator -->
+                                        <!-- AI Quality Score -->
                                         <div class="mt-2 mb-3">
                                             <div class="d-flex justify-content-between align-items-center small mb-1">
-                                                <span class="text-secondary opacity-75" style="font-size: 0.75rem;">AI Quality Score</span>
+                                                <span class="text-secondary opacity-75" style="font-size: 0.75rem;">AI Ocjena Kvalitete</span>
                                                 <span class="text-info fw-bold" style="font-size: 0.8rem;">${score}%</span>
                                             </div>
                                             <div class="ai-score-bar">
@@ -409,7 +580,7 @@
                                         </div>
 
                                         <a href="${item.url}" target="_blank" class="btn ${isTikTok ? 'btn-outline-danger' : 'btn-outline-info'} btn-sm w-100">
-                                            ${isTikTok ? '<i class="fa-brands fa-tiktok me-1"></i> Open on TikTok' : 'Open Signal'}
+                                            ${isTikTok ? '<i class="fa-brands fa-tiktok me-1"></i> Otvori na TikTok-u' : 'Otvori Izvor'}
                                         </a>
                                     </div>
                                 </div>
@@ -417,10 +588,10 @@
                         `;
                     }).join('');
                 } else {
-                    grid.innerHTML = `<div class="alert alert-warning w-100 text-center">No signals matching your filters. Try clearing search keywords or selecting more categories.</div>`;
+                    grid.innerHTML = `<div class="alert alert-warning w-100 text-center">Nema objava koje odgovaraju vašoj pretrazi. Pokušajte izmijeniti ključne riječi ili odabrati više kategorija.</div>`;
                 }
             } catch (err) {
-                grid.innerHTML = `<div class="alert alert-danger w-100 text-center">Connecting to AI engine... Please try again in a few seconds.</div>`;
+                grid.innerHTML = `<div class="alert alert-danger w-100 text-center">Povezivanje s AI poslužiteljem... Pokušajte ponovno za nekoliko sekundi.</div>`;
             } finally {
                 spinner.classList.add("d-none");
             }
