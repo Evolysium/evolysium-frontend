@@ -41,8 +41,21 @@
             transform: translateY(-5px);
             box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2);
         }
-        .card-img-top {
-            height: 180px;
+        .card-tiktok {
+            border: 1px solid rgba(255, 0, 80, 0.4);
+        }
+        .card-tiktok:hover {
+            box-shadow: 0 12px 30px rgba(255, 0, 80, 0.3);
+        }
+        .media-container {
+            height: 260px;
+            position: relative;
+            background-color: #000;
+            overflow: hidden;
+        }
+        .media-container img, .media-container video {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
         .chip-btn {
@@ -88,7 +101,7 @@
                 <i class="fa-solid fa-shield-halved text-info fs-3"></i>
                 <span class="fw-bold fs-4 text-white">Evolysium</span>
             </a>
-            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">Multi-Platform Control</span>
+            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">Live Video Streams</span>
         </div>
     </nav>
 
@@ -96,7 +109,7 @@
         <div class="row justify-content-center text-center mb-4">
             <div class="col-lg-8">
                 <h1 class="display-5 hero-title mb-2">Personalized AI Gatekeeper</h1>
-                <p class="text-secondary">Select your favorite platforms and content categories to build your ad-free stream.</p>
+                <p class="text-secondary">Select your favorite platforms and content categories to build your stream with live TikTok videos.</p>
             </div>
         </div>
 
@@ -143,7 +156,7 @@
         <!-- Feed Grid -->
         <div id="loading-spinner" class="text-center py-5 d-none">
             <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
-            <p class="mt-3 text-secondary">Filtering multi-platform content streams...</p>
+            <p class="mt-3 text-secondary">Loading video streams & content signals...</p>
         </div>
 
         <div id="feed-grid" class="row g-4">
@@ -158,6 +171,19 @@
         const API_BASE = "https://evolysium-backend.onrender.com";
         let selectedPlatforms = ["tiktok", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "gaming"];
+
+        // Stabilni video izvori za TikTok reprodukciju u pozadini
+        const tiktokVideoStreams = {
+            "tech": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+            "gaming": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+            "lifestyle": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+            "funny": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoylikes.mp4",
+            "luxury": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+            "architecture": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+            "crypto": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+            "travel": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+            "18plus": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
+        };
 
         function toggleSelection(type, value, btn) {
             btn.classList.toggle("active");
@@ -201,22 +227,43 @@
                 const data = await response.json();
 
                 if (data.success && data.items && data.items.length > 0) {
-                    grid.innerHTML = data.items.map(item => `
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card card-custom h-100">
-                                <img src="${item.image}" class="card-img-top" alt="Content Image">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        ${getPlatformBadge(item.platform)}
-                                        <span class="badge bg-dark border border-secondary text-info text-uppercase">${item.category}</span>
+                    grid.innerHTML = data.items.map(item => {
+                        const isTikTok = item.platform === "tiktok";
+                        const videoSrc = tiktokVideoStreams[item.category] || tiktokVideoStreams["tech"];
+
+                        // Prikaz videa za TikTok, a slika za ostale platforme (Reddit, X, LinkedIn)
+                        const mediaElement = isTikTok ? `
+                            <div class="media-container">
+                                <video autoplay loop muted playsinline controls>
+                                    <source src="${videoSrc}" type="video/mp4">
+                                    Your browser does not support video play.
+                                </video>
+                            </div>
+                        ` : `
+                            <div class="media-container">
+                                <img src="${item.image}" alt="Content visual">
+                            </div>
+                        `;
+
+                        return `
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card card-custom ${isTikTok ? 'card-tiktok' : ''} h-100">
+                                    ${mediaElement}
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            ${getPlatformBadge(item.platform)}
+                                            <span class="badge bg-dark border border-secondary text-info text-uppercase">${item.category}</span>
+                                        </div>
+                                        <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
+                                        <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
+                                        <a href="${item.url}" target="_blank" class="btn ${isTikTok ? 'btn-outline-danger' : 'btn-outline-info'} btn-sm mt-3 w-100">
+                                            ${isTikTok ? '<i class="fa-brands fa-tiktok me-1"></i> Watch on TikTok' : 'Open Signal'}
+                                        </a>
                                     </div>
-                                    <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
-                                    <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-                                    <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm mt-3 w-100">Open Signal</a>
                                 </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 } else {
                     grid.innerHTML = `<div class="alert alert-warning w-100 text-center">No signals found for this combination. Try selecting additional categories.</div>`;
                 }
