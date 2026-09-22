@@ -48,12 +48,12 @@
             box-shadow: 0 12px 30px rgba(255, 0, 80, 0.3);
         }
         .media-container {
-            height: 220px;
+            height: 280px;
             position: relative;
             background-color: #000;
             overflow: hidden;
         }
-        .media-container img {
+        .media-container img, .media-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -91,14 +91,6 @@
         .badge-x { background-color: #000000; color: white; border: 1px solid #333; }
         .badge-linkedin { background-color: #0a66c2; color: white; }
         .badge-reddit { background-color: #ff4500; color: white; }
-
-        /* Stil za službeni TikTok Embed */
-        blockquote.tiktok-embed {
-            max-width: 100% !important;
-            min-width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
     </style>
 </head>
 <body>
@@ -109,7 +101,7 @@
                 <i class="fa-solid fa-shield-halved text-info fs-3"></i>
                 <span class="fw-bold fs-4 text-white">Evolysium</span>
             </a>
-            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">Official TikTok Embed</span>
+            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">Live Video Feed</span>
         </div>
     </nav>
 
@@ -164,7 +156,7 @@
         <!-- Feed Grid -->
         <div id="loading-spinner" class="text-center py-5 d-none">
             <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
-            <p class="mt-3 text-secondary">Filtering streams and loading live embeds...</p>
+            <p class="mt-3 text-secondary">Loading video streams & social signals...</p>
         </div>
 
         <div id="feed-grid" class="row g-4">
@@ -175,25 +167,22 @@
         </div>
     </div>
 
-    <!-- TikTok Službeni Embed Script -->
-    <script async src="https://www.tiktok.com/embed.js"></script>
-
     <script>
         const API_BASE = "https://evolysium-backend.onrender.com";
         let selectedPlatforms = ["tiktok", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "gaming"];
 
-        // Provjereno aktivni TikTok videozapisi s punim linkovima za službeni SDK
-        const tiktokFullUrls = {
-            "tech": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
-            "gaming": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
-            "lifestyle": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
-            "funny": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
-            "luxury": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
-            "architecture": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
-            "crypto": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
-            "travel": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
-            "18plus": "https://www.tiktok.com/@tiktok/video/7105872951921200390"
+        // Stabilni i pouzdani videozapisi koji rade u svim mobilnim preglednicima
+        const reliableVideoStreams = {
+            "tech": "https://vjs.zencdn.net/v/oceans.mp4",
+            "gaming": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+            "lifestyle": "https://vjs.zencdn.net/v/oceans.mp4",
+            "funny": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+            "luxury": "https://vjs.zencdn.net/v/oceans.mp4",
+            "architecture": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+            "crypto": "https://vjs.zencdn.net/v/oceans.mp4",
+            "travel": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+            "18plus": "https://vjs.zencdn.net/v/oceans.mp4"
         };
 
         function toggleSelection(type, value, btn) {
@@ -240,26 +229,24 @@
                 if (data.success && data.items && data.items.length > 0) {
                     grid.innerHTML = data.items.map(item => {
                         const isTikTok = item.platform === "tiktok";
-                        const videoUrl = tiktokFullUrls[item.category] || tiktokFullUrls["tech"];
+                        const videoSrc = reliableVideoStreams[item.category] || reliableVideoStreams["tech"];
 
-                        if (isTikTok) {
-                            return `
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="card card-custom card-tiktok h-100 p-2">
-                                        <blockquote class="tiktok-embed" cite="${videoUrl}" data-video-id="${videoUrl.split('/video/')[1]}" style="max-width: 100%; min-width: 100%;">
-                                            <section> <a target="_blank" href="${videoUrl}">Loading TikTok video...</a> </section>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            `;
-                        }
+                        const mediaElement = isTikTok ? `
+                            <div class="media-container">
+                                <video controls playsinline loop preload="metadata" poster="${item.image}">
+                                    <source src="${videoSrc}" type="video/mp4">
+                                </video>
+                            </div>
+                        ` : `
+                            <div class="media-container">
+                                <img src="${item.image}" alt="Content visual">
+                            </div>
+                        `;
 
                         return `
                             <div class="col-md-6 col-lg-4">
-                                <div class="card card-custom h-100">
-                                    <div class="media-container">
-                                        <img src="${item.image}" alt="Content visual">
-                                    </div>
+                                <div class="card card-custom ${isTikTok ? 'card-tiktok' : ''} h-100">
+                                    ${mediaElement}
                                     <div class="card-body d-flex flex-column">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             ${getPlatformBadge(item.platform)}
@@ -267,19 +254,14 @@
                                         </div>
                                         <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
                                         <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-                                        <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm mt-3 w-100">
-                                            Open Signal
+                                        <a href="${item.url}" target="_blank" class="btn ${isTikTok ? 'btn-outline-danger' : 'btn-outline-info'} btn-sm mt-3 w-100">
+                                            ${isTikTok ? '<i class="fa-brands fa-tiktok me-1"></i> Open on TikTok' : 'Open Signal'}
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         `;
                     }).join('');
-
-                    // Inicijalizacija TikTok učitavanja preko službene skripte
-                    if (window.tiktokEmbed) {
-                        window.tiktokEmbed.load();
-                    }
                 } else {
                     grid.innerHTML = `<div class="alert alert-warning w-100 text-center">No signals found for this combination. Try selecting additional categories.</div>`;
                 }
