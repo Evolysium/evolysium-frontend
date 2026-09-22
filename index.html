@@ -44,11 +44,8 @@
         .card-tiktok {
             border: 1px solid rgba(255, 0, 80, 0.4);
         }
-        .card-tiktok:hover {
-            box-shadow: 0 12px 30px rgba(255, 0, 80, 0.3);
-        }
         .media-container {
-            height: 280px;
+            height: 240px;
             position: relative;
             background-color: #000;
             overflow: hidden;
@@ -91,6 +88,30 @@
         .badge-x { background-color: #000000; color: white; border: 1px solid #333; }
         .badge-linkedin { background-color: #0a66c2; color: white; }
         .badge-reddit { background-color: #ff4500; color: white; }
+        
+        .ai-score-bar {
+            height: 6px;
+            border-radius: 3px;
+            background-color: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        .ai-score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+        }
+        .search-input {
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 10px;
+            padding: 10px 16px;
+        }
+        .search-input:focus {
+            background-color: rgba(15, 23, 42, 0.9);
+            border-color: var(--accent-color);
+            color: white;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -101,7 +122,7 @@
                 <i class="fa-solid fa-shield-halved text-info fs-3"></i>
                 <span class="fw-bold fs-4 text-white">Evolysium</span>
             </a>
-            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">Live Video Feed</span>
+            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">AI Gatekeeper v1.1</span>
         </div>
     </nav>
 
@@ -109,7 +130,7 @@
         <div class="row justify-content-center text-center mb-4">
             <div class="col-lg-8">
                 <h1 class="display-5 hero-title mb-2">Personalized AI Gatekeeper</h1>
-                <p class="text-secondary">Stream live videos and social signals filtered directly through AI.</p>
+                <p class="text-secondary">AI-driven signal filtering & live media curation.</p>
             </div>
         </div>
 
@@ -118,6 +139,16 @@
             <div class="col-lg-10">
                 <div class="card card-custom p-4">
                     
+                    <!-- Search Bar -->
+                    <div class="mb-4">
+                        <label class="text-uppercase text-info fw-bold small mb-2 d-block">
+                            <i class="fa-solid fa-magnifying-glass me-2"></i>AI Keyword Search (Optional)
+                        </label>
+                        <input type="text" id="keyword-search" class="form-control search-input" placeholder="e.g. LLM, Bitcoin, Python, Glitch, Security...">
+                    </div>
+
+                    <hr class="border-secondary opacity-25">
+
                     <!-- 1. Select Platforms -->
                     <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>1. Select Platforms</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
@@ -140,7 +171,6 @@
                         <button class="chip-btn" onclick="toggleSelection('category', 'architecture', this)"><i class="fa-solid fa-building me-1"></i> Architecture</button>
                         <button class="chip-btn" onclick="toggleSelection('category', 'crypto', this)"><i class="fa-solid fa-coins me-1"></i> Crypto</button>
                         <button class="chip-btn" onclick="toggleSelection('category', 'travel', this)"><i class="fa-solid fa-plane me-1"></i> Travel</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', '18plus', this)"><i class="fa-solid fa-triangle-exclamation me-1"></i> 18+ Content</button>
                     </div>
 
                     <div class="text-center">
@@ -156,13 +186,13 @@
         <!-- Feed Grid -->
         <div id="loading-spinner" class="text-center py-5 d-none">
             <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
-            <p class="mt-3 text-secondary">Loading video streams & social signals...</p>
+            <p class="mt-3 text-secondary">Analyzing signals with Gemini AI & calculating quality scores...</p>
         </div>
 
         <div id="feed-grid" class="row g-4">
             <div class="text-center py-5 text-secondary">
                 <i class="fa-solid fa-sliders fs-1 mb-3 text-info"></i>
-                <p>Choose your platforms and categories, then click "Generate AI Stream".</p>
+                <p>Select your criteria above and click "Generate AI Stream".</p>
             </div>
         </div>
     </div>
@@ -172,7 +202,6 @@
         let selectedPlatforms = ["tiktok", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "gaming"];
 
-        // Stabilni i pouzdani videozapisi koji rade u svim mobilnim preglednicima
         const reliableVideoStreams = {
             "tech": "https://vjs.zencdn.net/v/oceans.mp4",
             "gaming": "https://media.w3.org/2010/05/sintel/trailer.mp4",
@@ -181,8 +210,7 @@
             "luxury": "https://vjs.zencdn.net/v/oceans.mp4",
             "architecture": "https://media.w3.org/2010/05/sintel/trailer.mp4",
             "crypto": "https://vjs.zencdn.net/v/oceans.mp4",
-            "travel": "https://media.w3.org/2010/05/sintel/trailer.mp4",
-            "18plus": "https://vjs.zencdn.net/v/oceans.mp4"
+            "travel": "https://media.w3.org/2010/05/sintel/trailer.mp4"
         };
 
         function toggleSelection(type, value, btn) {
@@ -215,6 +243,7 @@
                 return;
             }
 
+            const searchQuery = document.getElementById("keyword-search").value.trim();
             const spinner = document.getElementById("loading-spinner");
             const grid = document.getElementById("feed-grid");
 
@@ -222,7 +251,11 @@
             grid.innerHTML = "";
 
             try {
-                const url = `${API_BASE}/api/feed?platforms=${selectedPlatforms.join(",")}&categories=${selectedCategories.join(",")}`;
+                let url = `${API_BASE}/api/feed?platforms=${selectedPlatforms.join(",")}&categories=${selectedCategories.join(",")}`;
+                if (searchQuery) {
+                    url += `&search=${encodeURIComponent(searchQuery)}`;
+                }
+
                 const response = await fetch(url);
                 const data = await response.json();
 
@@ -230,6 +263,8 @@
                     grid.innerHTML = data.items.map(item => {
                         const isTikTok = item.platform === "tiktok";
                         const videoSrc = reliableVideoStreams[item.category] || reliableVideoStreams["tech"];
+                        const score = item.score || 85;
+                        const sentiment = item.sentiment || "High Signal";
 
                         const mediaElement = isTikTok ? `
                             <div class="media-container">
@@ -250,11 +285,24 @@
                                     <div class="card-body d-flex flex-column">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             ${getPlatformBadge(item.platform)}
-                                            <span class="badge bg-dark border border-secondary text-info text-uppercase">${item.category}</span>
+                                            <span class="badge bg-dark border border-info text-info fw-normal"><i class="fa-solid fa-brain me-1"></i>${sentiment}</span>
                                         </div>
+                                        
                                         <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
                                         <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-                                        <a href="${item.url}" target="_blank" class="btn ${isTikTok ? 'btn-outline-danger' : 'btn-outline-info'} btn-sm mt-3 w-100">
+                                        
+                                        <!-- AI Quality Score Indicator -->
+                                        <div class="mt-2 mb-3">
+                                            <div class="d-flex justify-content-between align-items-center small mb-1">
+                                                <span class="text-secondary opacity-75" style="font-size: 0.75rem;">AI Quality Score</span>
+                                                <span class="text-info fw-bold" style="font-size: 0.8rem;">${score}%</span>
+                                            </div>
+                                            <div class="ai-score-bar">
+                                                <div class="ai-score-fill" style="width: ${score}%;"></div>
+                                            </div>
+                                        </div>
+
+                                        <a href="${item.url}" target="_blank" class="btn ${isTikTok ? 'btn-outline-danger' : 'btn-outline-info'} btn-sm w-100">
                                             ${isTikTok ? '<i class="fa-brands fa-tiktok me-1"></i> Open on TikTok' : 'Open Signal'}
                                         </a>
                                     </div>
@@ -263,7 +311,7 @@
                         `;
                     }).join('');
                 } else {
-                    grid.innerHTML = `<div class="alert alert-warning w-100 text-center">No signals found for this combination. Try selecting additional categories.</div>`;
+                    grid.innerHTML = `<div class="alert alert-warning w-100 text-center">No signals matching your filters. Try clearing search keywords or selecting more categories.</div>`;
                 }
             } catch (err) {
                 grid.innerHTML = `<div class="alert alert-danger w-100 text-center">Connecting to AI engine... Please try again in a few seconds.</div>`;
