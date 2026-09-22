@@ -78,13 +78,13 @@
         }
 
         .media-container {
-            height: 250px;
+            height: 260px;
             position: relative;
             background-color: #0b0f19;
             overflow: hidden;
         }
 
-        .media-container img, .media-container video {
+        .media-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -148,7 +148,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
-            padding: 15px;
+            padding: 20px;
         }
 
         footer {
@@ -160,7 +160,7 @@
 </head>
 <body>
 
-    <!-- Header Navigation -->
+    <!-- Zaglavlje -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-3" href="#">
@@ -180,7 +180,7 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Glavna Hero Sekcija -->
     <div class="container py-5">
         <div class="row justify-content-center text-center mb-4">
             <div class="col-lg-9">
@@ -190,7 +190,7 @@
             </div>
         </div>
 
-        <!-- Live Metrics Bar -->
+        <!-- Metrika -->
         <div class="row g-3 mb-5 justify-content-center">
             <div class="col-6 col-md-4">
                 <div class="stat-card text-center">
@@ -206,12 +206,12 @@
             </div>
         </div>
 
-        <!-- Filter Controls -->
+        <!-- Kontrole i Filteri -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-10">
                 <div class="card card-custom p-4 p-md-5">
                     
-                    <!-- Search -->
+                    <!-- Pretraživanje -->
                     <div class="mb-4">
                         <label class="text-uppercase text-info fw-bold small mb-2 d-block">
                             <i class="fa-solid fa-magnifying-glass me-2"></i>Search Topics, Hooks, or Hashtags
@@ -221,7 +221,7 @@
 
                     <hr class="border-secondary opacity-25">
 
-                    <!-- Platforms -->
+                    <!-- Platforme -->
                     <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>Platforms</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="chip-btn active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok me-1"></i> TikTok</button>
@@ -233,7 +233,7 @@
 
                     <hr class="border-secondary opacity-25">
 
-                    <!-- Categories -->
+                    <!-- Kategorije -->
                     <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-layer-group me-2"></i>Categories</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="chip-btn active" onclick="toggleSelection('category', 'tech', this)"><i class="fa-solid fa-microchip me-1"></i> Tech & AI</button>
@@ -245,7 +245,7 @@
                     </div>
 
                     <div class="text-center pt-2">
-                        <button class="btn btn-primary-custom btn-lg w-100 w-md-auto" onclick="fetchCustomFeed()">
+                        <button class="btn btn-primary-custom btn-lg w-100 w-md-auto" onclick="resetAndFetchFeed()">
                             <i class="fa-solid fa-bolt me-2"></i> Explore Viral Feed
                         </button>
                     </div>
@@ -254,19 +254,19 @@
             </div>
         </div>
 
-        <!-- Spinner -->
-        <div id="loading-spinner" class="text-center py-5 d-none">
-            <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
-            <p class="mt-3 text-secondary fs-6">Scanning live social signals...</p>
+        <!-- Mreža za prikaz trendova -->
+        <div id="feed-grid" class="row g-4">
+            <!-- Dinamički se puni putem JS-a -->
         </div>
 
-        <!-- Feed Grid -->
-        <div id="feed-grid" class="row g-4">
-            <!-- Dynamically populated -->
+        <!-- Indikator učitavanja pri skrolanju -->
+        <div id="loading-spinner" class="text-center py-5">
+            <div class="spinner-border text-info" style="width: 2.5rem; height: 2.5rem;" role="status"></div>
+            <p class="mt-2 text-secondary small">Loading more viral trends...</p>
         </div>
     </div>
 
-    <!-- Pricing Modal -->
+    <!-- Modal za Pretplatničke Pakete (Točno 4 Paketa) -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
@@ -276,31 +276,56 @@
                 </div>
                 <div class="modal-body py-4">
                     <div class="row g-3">
-                        <div class="col-md-4">
-                            <div class="stat-card p-4 text-center h-100">
-                                <h6 class="fw-bold text-uppercase text-secondary">Free</h6>
-                                <h3 class="fw-bold my-2">€0 <small class="fs-6 text-secondary">/mo</small></h3>
-                                <p class="small text-secondary">Basic trend feed & standard social signals.</p>
-                                <button class="btn btn-outline-light btn-sm w-100 mt-3" disabled>Current Plan</button>
+                        
+                        <!-- Paket 1: Free -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card p-4 text-center h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h6 class="fw-bold text-uppercase text-secondary">Free Starter</h6>
+                                    <h3 class="fw-bold my-2">€0 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <p class="small text-secondary mt-3">Osnovni pregled trendova i dnevnih signala na društvenim mrežama.</p>
+                                </div>
+                                <button class="btn btn-outline-light btn-sm w-100 mt-4" disabled>Trenutni paket</button>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="stat-card p-4 text-center h-100 border-info">
-                                <span class="badge bg-info text-dark rounded-pill mb-2">MOST POPULAR</span>
-                                <h6 class="fw-bold text-uppercase text-info">Creator Pro</h6>
-                                <h3 class="fw-bold my-2">€9.99 <small class="fs-6 text-secondary">/mo</small></h3>
-                                <p class="small text-secondary">Full access to TikTok & IG Reels videos, real-time alerts & viral hooks.</p>
-                                <button class="btn btn-info btn-sm fw-bold w-100 mt-3">Upgrade to Pro</button>
+
+                        <!-- Paket 2: Creator Pro -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card p-4 text-center h-100 border-info d-flex flex-column justify-content-between">
+                                <div>
+                                    <span class="badge bg-info text-dark rounded-pill mb-2">NAJPOPULARNIJE</span>
+                                    <h6 class="fw-bold text-uppercase text-info">Creator Pro</h6>
+                                    <h3 class="fw-bold my-2">€9.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <p class="small text-secondary mt-3">Neograničen pristup videozapisima, viralnim udicama i upozorenjima u stvarnom vremenu.</p>
+                                </div>
+                                <button class="btn btn-info btn-sm fw-bold w-100 mt-4">Nadogradi na Pro</button>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="stat-card p-4 text-center h-100">
-                                <h6 class="fw-bold text-uppercase text-warning">Agency</h6>
-                                <h3 class="fw-bold my-2">€29.99 <small class="fs-6 text-secondary">/mo</small></h3>
-                                <p class="small text-secondary">Analytics dashboard, team seats & CSV export features.</p>
-                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-3">Get Agency Plan</button>
+
+                        <!-- Paket 3: Growth -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card p-4 text-center h-100 d-flex flex-column justify-content-between" style="border-color: #a855f7;">
+                                <div>
+                                    <h6 class="fw-bold text-uppercase" style="color: #a855f7;">Growth</h6>
+                                    <h3 class="fw-bold my-2">€19.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <p class="small text-secondary mt-3">Napredno praćenje konkurencije, izvoz podataka i analiza rastućih hashtagova.</p>
+                                </div>
+                                <button class="btn btn-sm fw-bold w-100 mt-4 text-white" style="background: #a855f7;">Odaberi Growth</button>
                             </div>
                         </div>
+
+                        <!-- Paket 4: Agency / Enterprise -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card p-4 text-center h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h6 class="fw-bold text-uppercase text-warning">Agency</h6>
+                                    <h3 class="fw-bold my-2">€39.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <p class="small text-secondary mt-3">Puni analitički timski pristup, posvećeni API te prilagođena izvješća za klijente.</p>
+                                </div>
+                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-4">Kontaktiraj nas</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -313,40 +338,51 @@
         </div>
     </footer>
 
-    <!-- JavaScript logic -->
+    <!-- JavaScript Logika -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const API_BASE = "https://evolysium-backend.onrender.com";
         let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "gaming", "lifestyle"];
+        let isLoading = false;
+        let itemCounter = 0;
 
-        // Svakoj kartici dodijelit ćemo jedinstveni videozapis
-        const UNIQUE_VIDEOS = [
-            "https://assets.mixkit.co/videos/preview/mixkit-vertical-stream-of-a-futuristic-city-40129-large.mp4",
-            "https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-green-screen-41525-large.mp4",
-            "https://vjs.zencdn.net/v/oceans.mp4",
-            "https://assets.mixkit.co/videos/preview/mixkit-young-woman-working-on-a-laptop-40131-large.mp4",
-            "https://media.w3.org/2010/05/sintel/trailer.mp4",
-            "https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-sky-in-a-sunset-26070-large.mp4"
+        // Baza provjerenih i funkcionalnih videozapisa (svakom trendu pridružuje se drugačiji video)
+        const VIDEO_POOL = [
+            {
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                poster: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop"
+            },
+            {
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                poster: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop"
+            },
+            {
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                poster: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&auto=format&fit=crop"
+            },
+            {
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoylikes.mp4",
+                poster: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop"
+            },
+            {
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+                poster: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop"
+            },
+            {
+                video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+                poster: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop"
+            }
         ];
 
-        // Različite visoko-kvalitetne fotografije za postere/slike
-        const UNIQUE_IMAGES = [
-            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop"
-        ];
-
-        const VIRAL_TITLES = [
+        const TREND_TITLES = [
             "Top Trending Tech Video Signal",
             "Next-Gen AI Workflow Insights",
             "High Impact Social Strategy Breakdown",
             "Unfiltered Creator Growth Patterns",
             "Emerging Market Chatter Focus",
-            "Visual Media Engagement Spike"
+            "Visual Media Engagement Spike",
+            "Viral Storytelling Framework",
+            "Automated Content Pipeline Model"
         ];
 
         function toggleSelection(type, value, btn) {
@@ -374,24 +410,26 @@
             }
         }
 
-        function getRichMockItems() {
+        function generateMoreItems(count = 6) {
             const items = [];
-            const platforms = selectedPlatforms.length ? selectedPlatforms : ["tiktok", "instagram", "x", "reddit"];
+            const platforms = selectedPlatforms.length ? selectedPlatforms : ["tiktok", "instagram", "x", "reddit", "linkedin"];
             const categories = selectedCategories.length ? selectedCategories : ["tech", "lifestyle", "gaming"];
 
-            for (let i = 0; i < 9; i++) {
-                const platform = platforms[i % platforms.length];
-                const category = categories[i % categories.length];
-                const title = VIRAL_TITLES[i % VIRAL_TITLES.length];
-                const likes = Math.floor(Math.random() * 50 + 20) + "k";
+            for (let i = 0; i < count; i++) {
+                itemCounter++;
+                const platform = platforms[itemCounter % platforms.length];
+                const category = categories[itemCounter % categories.length];
+                const title = TREND_TITLES[itemCounter % TREND_TITLES.length];
+                const likes = Math.floor(Math.random() * 60 + 15) + "k";
+                const media = VIDEO_POOL[itemCounter % VIDEO_POOL.length];
 
                 items.push({
                     platform: platform,
                     category: category,
                     title: title,
-                    summary: `Viral short-form breakdown covering key updates and unfiltered insights in ${category}.`,
-                    videoUrl: UNIQUE_VIDEOS[i % UNIQUE_VIDEOS.length],
-                    image: UNIQUE_IMAGES[i % UNIQUE_IMAGES.length],
+                    summary: `Viral short-form breakdown covering key updates and insights in ${category}.`,
+                    videoUrl: media.video,
+                    posterUrl: media.poster,
                     url: `https://www.${platform === 'x' ? 'x.com' : platform + '.com'}`,
                     likes: likes
                 });
@@ -399,90 +437,19 @@
             return items;
         }
 
-        async function fetchCustomFeed() {
-            const searchQuery = document.getElementById("keyword-search").value.trim();
-            const spinner = document.getElementById("loading-spinner");
+        function appendItemsToGrid(items) {
             const grid = document.getElementById("feed-grid");
-
-            spinner.classList.remove("d-none");
-            grid.innerHTML = "";
-
-            try {
-                let url = `${API_BASE}/api/feed?platforms=${selectedPlatforms.join(",")}&categories=${selectedCategories.join(",")}&limit=30`;
-                if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
-
-                const response = await fetch(url);
-                const data = await response.json();
-
-                let displayItems = [];
-
-                if (data.success && data.items && data.items.length > 0) {
-                    displayItems = data.items.filter(item => 
-                        !item.title.includes("No Matching Signals") && 
-                        !item.summary.includes("adjusting your search")
-                    );
-                }
-
-                if (displayItems.length === 0) {
-                    displayItems = getRichMockItems();
-                }
-
-                grid.innerHTML = displayItems.map((item, index) => {
-                    const isVideo = item.platform === "tiktok" || item.platform === "instagram" || item.videoUrl;
-                    
-                    // Osigurava da se videozapisi ne ponavljaju čak i ako ih backend pošalje identične
-                    const videoSrc = UNIQUE_VIDEOS[index % UNIQUE_VIDEOS.length];
-                    const mediaImg = UNIQUE_IMAGES[index % UNIQUE_IMAGES.length];
-
-                    const mediaElement = isVideo ? `
-                        <div class="media-container">
-                            <video controls playsinline loop muted poster="${mediaImg}">
-                                <source src="${videoSrc}" type="video/mp4">
-                            </video>
-                        </div>
-                    ` : `
-                        <div class="media-container">
-                            <img src="${mediaImg}" alt="Viral Post">
-                        </div>
-                    `;
-
-                    const platformCapitalized = item.platform ? item.platform.charAt(0).toUpperCase() + item.platform.slice(1) : 'Social';
-
-                    return `
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card card-custom h-100">
-                                ${mediaElement}
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        ${getPlatformBadge(item.platform)}
-                                        <span class="badge bg-dark border border-warning text-warning fw-normal">🔥 Viral</span>
-                                    </div>
-                                    
-                                    <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
-                                    <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-
-                                    <div class="d-flex align-items-center justify-content-between mb-3 text-secondary small">
-                                        <span><i class="fa-regular fa-heart me-1 text-danger"></i> ${item.likes || '45k'}</span>
-                                        <span><i class="fa-solid fa-chart-line me-1 text-info"></i> High Reach</span>
-                                    </div>
-
-                                    <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm w-100">
-                                        Watch on ${platformCapitalized} <i class="fa-solid fa-arrow-right ms-1"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-
-            } catch (err) {
-                const fallbackItems = getRichMockItems();
-                grid.innerHTML = fallbackItems.map((item, index) => `
+            
+            items.forEach(item => {
+                const platformCapitalized = item.platform.charAt(0).toUpperCase() + item.platform.slice(1);
+                
+                const cardHTML = `
                     <div class="col-md-6 col-lg-4">
                         <div class="card card-custom h-100">
                             <div class="media-container">
-                                <video controls playsinline loop muted poster="${item.image}">
+                                <video controls playsinline loop muted poster="${item.posterUrl}">
                                     <source src="${item.videoUrl}" type="video/mp4">
+                                    Your browser does not support the video tag.
                                 </video>
                             </div>
                             <div class="card-body d-flex flex-column">
@@ -490,21 +457,55 @@
                                     ${getPlatformBadge(item.platform)}
                                     <span class="badge bg-dark border border-warning text-warning fw-normal">🔥 Viral</span>
                                 </div>
+                                
                                 <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
                                 <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-                                <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm w-100 mt-2">
-                                    Watch Signal Source
+
+                                <div class="d-flex align-items-center justify-content-between mb-3 text-secondary small">
+                                    <span><i class="fa-regular fa-heart me-1 text-danger"></i> ${item.likes}</span>
+                                    <span><i class="fa-solid fa-chart-line me-1 text-info"></i> High Reach</span>
+                                </div>
+
+                                <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm w-100">
+                                    Watch on ${platformCapitalized} <i class="fa-solid fa-arrow-right ms-1"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                `).join('');
-            } finally {
-                spinner.classList.add("d-none");
-            }
+                `;
+                grid.insertAdjacentHTML('beforeend', cardHTML);
+            });
         }
 
-        document.addEventListener("DOMContentLoaded", fetchCustomFeed);
+        function resetAndFetchFeed() {
+            document.getElementById("feed-grid").innerHTML = "";
+            itemCounter = 0;
+            loadMoreContent();
+        }
+
+        function loadMoreContent() {
+            if (isLoading) return;
+            isLoading = true;
+            document.getElementById("loading-spinner").classList.remove("d-none");
+
+            setTimeout(() => {
+                const newItems = generateMoreItems(6);
+                appendItemsToGrid(newItems);
+                isLoading = false;
+                document.getElementById("loading-spinner").classList.add("d-none");
+            }, 300);
+        }
+
+        // Beskonačno skrolanje (Infinite Scroll)
+        window.addEventListener("scroll", () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) {
+                loadMoreContent();
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            resetAndFetchFeed();
+        });
     </script>
 </body>
 </html>
