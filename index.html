@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Marked.js for Markdown parsing -->
+    <!-- Marked.js -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
@@ -25,7 +25,7 @@
                     <p class="text-xs text-indigo-400 font-medium">Personal AI Gatekeeper</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
+            <div>
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
                     Ad-Free Engine
@@ -41,12 +41,26 @@
         <div class="mb-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-900/40 via-purple-900/20 to-slate-800/40 border border-indigo-500/20 shadow-xl">
             <h2 class="text-2xl font-bold mb-2 text-white">Zero Noise. Pure Signals.</h2>
             <p class="text-slate-300 text-sm leading-relaxed mb-4">
-                Evolysium filters social streams (Reddit, X), automatically stripping out ads, sponsored content, and scams to deliver distilled actionable intelligence.
+                Evolysium strips out ad noise, scams, and clickbait from social streams, delivering clean actionable intelligence based on your selected interests.
             </p>
-            <div class="flex flex-wrap gap-2 text-xs">
-                <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300"><i class="fab fa-bitcoin text-amber-400 mr-1"></i> Crypto</span>
-                <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300"><i class="fas fa-plane text-sky-400 mr-1"></i> Travel</span>
-                <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300"><i class="fas fa-shield-alt text-indigo-400 mr-1"></i> 100% Filtered</span>
+            
+            <!-- Topic Selectors -->
+            <div class="mt-4">
+                <p class="text-xs text-slate-400 mb-2 font-medium uppercase tracking-wider">Select Topics to Monitor:</p>
+                <div class="flex flex-wrap gap-2" id="topicButtons">
+                    <button onclick="toggleTopic('crypto')" id="btn-crypto" class="px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5">
+                        <i class="fab fa-bitcoin text-amber-400"></i> Crypto
+                    </button>
+                    <button onclick="toggleTopic('travel')" id="btn-travel" class="px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5">
+                        <i class="fas fa-plane text-sky-400"></i> Travel
+                    </button>
+                    <button onclick="toggleTopic('tech')" id="btn-tech" class="px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5">
+                        <i class="fas fa-microchip text-emerald-400"></i> Tech & AI
+                    </button>
+                    <button onclick="toggleTopic('gaming')" id="btn-gaming" class="px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5">
+                        <i class="fas fa-gamepad text-purple-400"></i> Gaming
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -64,12 +78,12 @@
         <!-- Loading State -->
         <div id="loading" class="hidden py-16 text-center">
             <div class="inline-block w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
-            <p class="text-slate-400 text-sm animate-pulse">AI is scanning streams and purging ad noise...</p>
+            <p class="text-slate-400 text-sm animate-pulse">AI is scanning feeds and filtering promotional noise...</p>
         </div>
 
         <!-- Error State -->
         <div id="errorMessage" class="hidden p-4 mb-6 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
-            Unable to fetch feed. Please check backend status.
+            Unable to fetch feed. Please try clicking Refresh Feed again in a few seconds.
         </div>
 
         <!-- Feed Output Container -->
@@ -84,7 +98,35 @@
 
     <!-- Logic -->
     <script>
-        const API_URL = "https://evolysium-backend.onrender.com/api/feed";
+        const API_BASE_URL = "https://evolysium-backend.onrender.com/api/feed";
+        
+        // Zadani odabir tema ili ucitani iz LocalStorage
+        let activeTopics = JSON.parse(localStorage.getItem("evolysium_topics")) || ["crypto", "travel"];
+
+        function updateTopicUI() {
+            const topics = ["crypto", "travel", "tech", "gaming"];
+            topics.forEach(t => {
+                const btn = document.getElementById(`btn-${t}`);
+                if (activeTopics.includes(t)) {
+                    btn.className = "px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5 bg-indigo-600/30 border-indigo-500 text-white shadow-sm";
+                } else {
+                    btn.className = "px-3.5 py-1.5 rounded-xl border text-xs font-medium transition flex items-center gap-1.5 bg-slate-800/80 border-slate-700 text-slate-400 hover:text-slate-200";
+                }
+            });
+        }
+
+        function toggleTopic(topic) {
+            if (activeTopics.includes(topic)) {
+                if (activeTopics.length > 1) { // Najmanje 1 tema mora ostati
+                    activeTopics = activeTopics.filter(t => t !== topic);
+                }
+            } else {
+                activeTopics.push(topic);
+            }
+            localStorage.setItem("evolysium_topics", JSON.stringify(activeTopics));
+            updateTopicUI();
+            fetchFeed();
+        }
 
         async function fetchFeed() {
             const loading = document.getElementById("loading");
@@ -98,7 +140,8 @@
             refreshIcon.classList.add("animate-spin");
 
             try {
-                const response = await fetch(API_URL);
+                const topicsQuery = activeTopics.join(",");
+                const response = await fetch(`${API_BASE_URL}?topics=${topicsQuery}`);
                 const data = await response.json();
 
                 if (data.success && data.clean_feed) {
@@ -122,7 +165,10 @@
             }
         }
 
-        window.addEventListener("DOMContentLoaded", fetchFeed);
+        window.addEventListener("DOMContentLoaded", () => {
+            updateTopicUI();
+            fetchFeed();
+        });
     </script>
 </body>
 </html>
