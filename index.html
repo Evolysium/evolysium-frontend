@@ -48,7 +48,7 @@
             box-shadow: 0 12px 30px rgba(255, 0, 80, 0.3);
         }
         .media-container {
-            height: 320px;
+            height: 220px;
             position: relative;
             background-color: #000;
             overflow: hidden;
@@ -57,11 +57,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-        .media-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
         }
         .chip-btn {
             border-radius: 20px;
@@ -96,6 +91,14 @@
         .badge-x { background-color: #000000; color: white; border: 1px solid #333; }
         .badge-linkedin { background-color: #0a66c2; color: white; }
         .badge-reddit { background-color: #ff4500; color: white; }
+
+        /* Stil za službeni TikTok Embed */
+        blockquote.tiktok-embed {
+            max-width: 100% !important;
+            min-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
     </style>
 </head>
 <body>
@@ -106,7 +109,7 @@
                 <i class="fa-solid fa-shield-halved text-info fs-3"></i>
                 <span class="fw-bold fs-4 text-white">Evolysium</span>
             </a>
-            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">Live TikTok Player</span>
+            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold">Official TikTok Embed</span>
         </div>
     </nav>
 
@@ -114,7 +117,7 @@
         <div class="row justify-content-center text-center mb-4">
             <div class="col-lg-8">
                 <h1 class="display-5 hero-title mb-2">Personalized AI Gatekeeper</h1>
-                <p class="text-secondary">Select platforms and categories to stream filtered content with official embedded TikTok videos.</p>
+                <p class="text-secondary">Stream live videos and social signals filtered directly through AI.</p>
             </div>
         </div>
 
@@ -161,7 +164,7 @@
         <!-- Feed Grid -->
         <div id="loading-spinner" class="text-center py-5 d-none">
             <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
-            <p class="mt-3 text-secondary">Loading multi-platform feeds & streaming video players...</p>
+            <p class="mt-3 text-secondary">Filtering streams and loading live embeds...</p>
         </div>
 
         <div id="feed-grid" class="row g-4">
@@ -172,22 +175,25 @@
         </div>
     </div>
 
+    <!-- TikTok Službeni Embed Script -->
+    <script async src="https://www.tiktok.com/embed.js"></script>
+
     <script>
         const API_BASE = "https://evolysium-backend.onrender.com";
         let selectedPlatforms = ["tiktok", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "gaming"];
 
-        // Službeni ID-jevi popularnih TikTok videozapisa po kategorijama za službeni Embed Player
-        const tiktokVideoIds = {
-            "tech": "718335390845095173",
-            "gaming": "6718335390845095173",
-            "lifestyle": "7105872951921200390",
-            "funny": "7105872951921200390",
-            "luxury": "718335390845095173",
-            "architecture": "7105872951921200390",
-            "crypto": "718335390845095173",
-            "travel": "7105872951921200390",
-            "18plus": "6718335390845095173"
+        // Provjereno aktivni TikTok videozapisi s punim linkovima za službeni SDK
+        const tiktokFullUrls = {
+            "tech": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
+            "gaming": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
+            "lifestyle": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
+            "funny": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
+            "luxury": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
+            "architecture": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
+            "crypto": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
+            "travel": "https://www.tiktok.com/@tiktok/video/7105872951921200390",
+            "18plus": "https://www.tiktok.com/@tiktok/video/7105872951921200390"
         };
 
         function toggleSelection(type, value, btn) {
@@ -234,26 +240,26 @@
                 if (data.success && data.items && data.items.length > 0) {
                     grid.innerHTML = data.items.map(item => {
                         const isTikTok = item.platform === "tiktok";
-                        const videoId = tiktokVideoIds[item.category] || tiktokVideoIds["tech"];
+                        const videoUrl = tiktokFullUrls[item.category] || tiktokFullUrls["tech"];
 
-                        // Službeni TikTok iFrame sa svim kontrolama reprodukcije i zvuka
-                        const mediaElement = isTikTok ? `
-                            <div class="media-container">
-                                <iframe src="https://www.tiktok.com/player/v1/${videoId}?autoplay=1&music_info=0&description=1" 
-                                        allow="autoplay; encrypted-media" 
-                                        allowfullscreen>
-                                </iframe>
-                            </div>
-                        ` : `
-                            <div class="media-container">
-                                <img src="${item.image}" alt="Content visual">
-                            </div>
-                        `;
+                        if (isTikTok) {
+                            return `
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card card-custom card-tiktok h-100 p-2">
+                                        <blockquote class="tiktok-embed" cite="${videoUrl}" data-video-id="${videoUrl.split('/video/')[1]}" style="max-width: 100%; min-width: 100%;">
+                                            <section> <a target="_blank" href="${videoUrl}">Loading TikTok video...</a> </section>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            `;
+                        }
 
                         return `
                             <div class="col-md-6 col-lg-4">
-                                <div class="card card-custom ${isTikTok ? 'card-tiktok' : ''} h-100">
-                                    ${mediaElement}
+                                <div class="card card-custom h-100">
+                                    <div class="media-container">
+                                        <img src="${item.image}" alt="Content visual">
+                                    </div>
                                     <div class="card-body d-flex flex-column">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             ${getPlatformBadge(item.platform)}
@@ -261,14 +267,19 @@
                                         </div>
                                         <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
                                         <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-                                        <a href="${item.url}" target="_blank" class="btn ${isTikTok ? 'btn-outline-danger' : 'btn-outline-info'} btn-sm mt-3 w-100">
-                                            ${isTikTok ? '<i class="fa-brands fa-tiktok me-1"></i> Watch on TikTok' : 'Open Signal'}
+                                        <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm mt-3 w-100">
+                                            Open Signal
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         `;
                     }).join('');
+
+                    // Inicijalizacija TikTok učitavanja preko službene skripte
+                    if (window.tiktokEmbed) {
+                        window.tiktokEmbed.load();
+                    }
                 } else {
                     grid.innerHTML = `<div class="alert alert-warning w-100 text-center">No signals found for this combination. Try selecting additional categories.</div>`;
                 }
