@@ -1,1032 +1,764 @@
 <!DOCTYPE html>
-<html lang="hr">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium — Discover What's Popping Right Now</title>
-
-    <meta name="title" content="Evolysium — Social Vibe & Trend Discovery">
-    <meta name="description" content="Tvoj dnevni puls viralnih trendova, lifestyle kreacija i tech/gaming momenta. Bez šuma, samo najbolje priče.">
-
-    <!-- Frameworks & Fonts -->
+    <title>Evolysium — FYP Vibe & Trend Discovery</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #0c0a15;
-            --bg-card: rgba(22, 18, 38, 0.72);
-            --pink-pop: #ff2a85;
-            --cyan-pop: #00f0ff;
-            --gold-pop: #ffd700;
-            --text-main: #ffffff;
-            --text-muted: #a09cb0;
+            --bg-primary: #090710;
+            --bg-secondary: #141122;
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #ec4899;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(255, 42, 133, 0.16) 0%, transparent 45%),
-                radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 45%);
-            background-attachment: fixed;
-            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        h1, h2, h3, h4, h5, .brand-name {
-            font-family: 'Outfit', sans-serif;
-        }
-
-        /* Navbar */
-        .navbar-custom {
-            background: rgba(12, 10, 21, 0.82);
-            backdrop-filter: blur(20px);
+        /* Top Brand Header matching UI */
+        .evolysium-navbar {
+            background: rgba(9, 7, 16, 0.9);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .brand-pill {
-            background: linear-gradient(135deg, var(--pink-pop), #7928ca);
+        .brand-logo-box {
             width: 44px;
             height: 44px;
             border-radius: 14px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 25px rgba(255, 42, 133, 0.4);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
         }
 
-        /* Hero section */
-        .hero-headline {
+        .brand-title {
+            font-family: 'Outfit', sans-serif;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #fff 30%, #ff85b3 70%, var(--cyan-pop) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 1.2px;
+            color: #fff;
+            font-size: 1.35rem;
+            text-decoration: none;
         }
 
-        /* Story / Vibe strip */
-        .vibe-strip {
-            display: flex;
-            gap: 14px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: none;
+        .fyp-badge {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
         }
-        .vibe-strip::-webkit-scrollbar { display: none; }
 
-        .vibe-item {
+        .membership-btn {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+            border-radius: 9999px;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .membership-btn:hover {
+            border-color: var(--accent-primary);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Workspace container */
+        .feed-wrapper {
+            max-width: 680px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Search & Refresh Section */
+        .control-panel {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            min-width: 72px;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
         }
 
-        .vibe-ring {
-            width: 66px;
-            height: 66px;
-            border-radius: 50%;
-            padding: 3px;
-            background: linear-gradient(45deg, var(--pink-pop), var(--gold-pop));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.25s ease;
-        }
-
-        .vibe-ring img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid var(--bg-main);
-        }
-
-        .vibe-item:hover .vibe-ring { transform: scale(1.08); }
-
-        /* Chips / Filter Pills */
-        .social-pill {
-            border-radius: 999px;
-            padding: 10px 22px;
-            font-weight: 600;
-            font-size: 0.88rem;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.04);
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .social-pill:hover {
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .social-pill.active {
-            background: linear-gradient(135deg, var(--pink-pop), #9b51e0);
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 8px 20px rgba(255, 42, 133, 0.35);
-        }
-
-        /* Feed Cards */
-        .social-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(18px);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 24px;
-            overflow: hidden;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
-            cursor: pointer;
-        }
-
-        .social-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 42, 133, 0.4);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 42, 133, 0.18);
-        }
-
-        .feed-media {
-            height: 280px;
+        .search-input-wrapper {
             position: relative;
-            background: #110e1d;
         }
-
-        .feed-media img, .feed-media video {
+        .search-input-wrapper input {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            padding: 0.75rem 1.25rem 0.75rem 2.8rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input-wrapper input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.25);
+        }
+        .search-input-wrapper i {
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
         }
 
-        .creator-tag {
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(10px);
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: 0.78rem;
+        .refresh-btn {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            border: none;
+            color: #fff;
+            border-radius: 9999px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(255,255,255,0.12);
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .refresh-btn:active {
+            transform: scale(0.98);
         }
 
-        .action-icon-btn {
-            background: rgba(255,255,255,0.06);
-            border: none;
-            color: var(--text-muted);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+        /* Pill Grids (Platforms & Categories) */
+        .pills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-pill {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            font-size: 0.825rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
+            gap: 0.4rem;
+        }
+        .filter-pill.active, .filter-pill:hover {
+            background: rgba(139, 92, 246, 0.2);
+            color: #fff;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
+        }
+        .filter-pill.vault-pill {
+            border-color: rgba(236, 72, 153, 0.4);
+            color: #f472b6;
+        }
+        .filter-pill.vault-pill.active {
+            background: rgba(236, 72, 153, 0.25);
+            border-color: #ec4899;
+        }
+
+        /* Post Cards */
+        .post-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .post-card:hover {
+            border-color: rgba(139, 92, 246, 0.35);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-primary);
+        }
+
+        .platform-badge {
+            font-size: 0.72rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-tiktok { background: rgba(0, 242, 234, 0.15); color: #00f2ea; }
+        .badge-instagram { background: rgba(225, 48, 108, 0.15); color: #e1306c; }
+        .badge-x { background: rgba(255, 255, 255, 0.1); color: #f8fafc; }
+        .badge-reddit { background: rgba(255, 69, 0, 0.15); color: #ff4500; }
+        .badge-linkedin { background: rgba(10, 102, 194, 0.15); color: #0a66c2; }
+        .badge-vault { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+
+        .media-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+            aspect-ratio: 9/16;
+            max-height: 720px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            transition: 0.2s;
+            overflow: hidden;
         }
-        .action-icon-btn:hover {
-            background: rgba(255, 42, 133, 0.2);
-            color: var(--pink-pop);
-        }
+        .media-container.landscape { aspect-ratio: 16/9; max-height: 420px; }
+        .media-container video, .media-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        .search-box {
-            background: rgba(18, 14, 30, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            color: #fff;
-            padding: 14px 20px;
+        .video-overlay-play {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
         }
-        .search-box:focus {
-            background: rgba(18, 14, 30, 0.98);
-            border-color: var(--pink-pop);
-            box-shadow: 0 0 20px rgba(255, 42, 133, 0.25);
-            color: #fff;
-            outline: none;
-        }
-
-        .btn-vibe {
-            background: linear-gradient(135deg, var(--pink-pop), #7928ca);
-            border: none;
+        .play-icon-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            font-weight: 700;
-            padding: 14px 32px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(255, 42, 133, 0.35);
+            font-size: 1.5rem;
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
         }
 
-        .pricing-box {
-            background: rgba(22, 18, 38, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            transition: 0.3s;
-        }
-        .pricing-box.hot {
-            border: 2px solid var(--pink-pop);
-            box-shadow: 0 0 35px rgba(255, 42, 133, 0.25);
-        }
+        .post-body { padding: 1rem 1.25rem; }
+        .post-caption { font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 0.75rem; }
+        .post-tags span { color: var(--accent-primary); font-weight: 500; margin-right: 0.5rem; font-size: 0.825rem; }
 
-        /* Toast container */
-        #live-toast-container {
+        .post-footer-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        .action-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .action-btn:hover { color: var(--accent-secondary); }
+
+        .loader-sentinel { text-align: center; padding: 2rem 0; color: var(--text-secondary); }
+
+        /* Clean Footer */
+        .evolysium-footer {
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--bg-primary);
+            padding: 2rem 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.825rem;
+        }
+        .evolysium-footer .footer-links {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .evolysium-footer a { color: var(--text-secondary); text-decoration: none; }
+        .evolysium-footer a:hover { color: var(--text-primary); }
+
+        /* Toast feedback */
+        .refresh-toast {
             position: fixed;
             bottom: 24px;
-            right: 24px;
-            z-index: 1080;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(139, 92, 246, 0.95);
+            color: white;
+            padding: 0.65rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2000;
         }
-        .live-toast {
-            background: rgba(18, 14, 30, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            border-radius: 16px;
-            padding: 12px 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: slideInRight 0.3s ease;
-            max-width: 320px;
-        }
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        .refresh-toast.show { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none" href="#">
-                <div class="brand-pill">
-                    <i class="fa-solid fa-sparkles text-white fs-5"></i>
+    <!-- Top App Header -->
+    <header class="evolysium-navbar">
+        <div class="container d-flex align-items-center justify-content-between py-2 px-3">
+            <div class="d-flex align-items-center gap-2.5">
+                <div class="brand-logo-box">
+                    <i class="fa-solid fa-bolt text-white fs-5"></i>
                 </div>
                 <div>
-                    <span class="brand-name fw-bold fs-4 text-white">Evolysium</span>
-                    <span class="badge text-white ms-2 rounded-pill font-mono" style="font-size: 0.65rem; background: var(--pink-pop);">FYP VIBE</span>
+                    <a class="brand-title" href="#">Evolysium</a>
+                    <div class="d-flex align-items-center gap-1.5 mt-0.5">
+                        <span class="fyp-badge">FYP Vibe</span>
+                    </div>
                 </div>
+            </div>
+            <a href="#membership" class="membership-btn" data-bs-toggle="modal" data-bs-target="#vaultModal">
+                <i class="fa-solid fa-crown text-warning"></i> Membership
             </a>
-            <div class="d-flex align-items-center gap-2">
-                <div id="vip-export-toolbar" class="d-none d-flex gap-2">
-                    <button class="social-pill py-1 px-3 text-warning border-warning" onclick="exportFeedData('json')" title="Export Alpha JSON">
-                        <i class="fa-solid fa-file-code"></i> JSON
-                    </button>
-                    <button class="social-pill py-1 px-3 text-info border-info" onclick="exportFeedData('csv')" title="Export Alpha CSV">
-                        <i class="fa-solid fa-file-csv"></i> CSV
-                    </button>
-                </div>
-                <!-- TOČKA 5: Notifikacijski gumb -->
-                <button class="social-pill position-relative py-2 px-3" data-bs-toggle="modal" data-bs-target="#notificationModal" onclick="clearNotificationBadge()">
-                    <i class="fa-solid fa-bell text-info"></i>
-                    <span id="notif-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">3</span>
-                </button>
-                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                    <i class="fa-solid fa-crown text-warning"></i> Membership
-                </button>
-            </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Content -->
-    <div class="container py-4">
-        
-        <!-- Stories / Vibe Hub Strip -->
-        <div class="mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="small text-secondary fw-semibold">🔥 Trending Vibe Stories</div>
-                <button class="social-pill py-1 px-3" style="font-size: 0.78rem;" data-bs-toggle="modal" data-bs-target="#storyModal">
-                    <i class="fa-solid fa-plus" style="color:var(--pink-pop)"></i> Objavi Story
-                </button>
+    <!-- Main Workspace -->
+    <main class="feed-wrapper">
+        <!-- Search & Refresh Control Block -->
+        <div class="control-panel">
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search keywords, creators, or vibes..." oninput="handleSearch(this.value)">
             </div>
-            <div class="vibe-strip" id="vibe-strip-container"></div>
+            <button class="refresh-btn" id="refreshFeedBtn" onclick="triggerManualRefresh()">
+                <i class="fa-solid fa-arrows-rotate"></i> Refresh Feed Stream
+            </button>
         </div>
 
-        <!-- Hero welcome -->
-        <div class="text-center my-4 py-3">
-            <h1 class="hero-headline display-4 mb-2">Što se danas vrti na FYP-u?</h1>
-            <p class="text-secondary">Najbolji TikTok, Reels, Reddit & Creator sadržaj na jednom mjestu, filtriran po tvom ukusu.</p>
+        <!-- Filter Pills Grid (Platforms + Categories + Vault) -->
+        <div class="pills-grid" id="filterPillsContainer">
+            <button class="filter-pill active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All Pulses</button>
+            <button class="filter-pill" data-filter="TikTok"><i class="fa-brands fa-tiktok"></i> TikTok</button>
+            <button class="filter-pill" data-filter="Instagram"><i class="fa-brands fa-instagram"></i> Instagram</button>
+            <button class="filter-pill" data-filter="Reddit"><i class="fa-brands fa-reddit-alien"></i> Reddit</button>
+            <button class="filter-pill" data-filter="X"><i class="fa-brands fa-x-twitter"></i> X / Twitter</button>
+            <button class="filter-pill" data-filter="LinkedIn"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</button>
+            <button class="filter-pill" data-filter="Tech & AI"><i class="fa-solid fa-laptop-code"></i> Tech & AI</button>
+            <button class="filter-pill" data-filter="Lifestyle"><i class="fa-solid fa-bolt"></i> Lifestyle</button>
+            <button class="filter-pill" data-filter="Luxury"><i class="fa-solid fa-gem"></i> Luxury</button>
+            <button class="filter-pill" data-filter="Gaming"><i class="fa-solid fa-gamepad"></i> Gaming</button>
+            <button class="filter-pill" data-filter="Travel"><i class="fa-solid fa-plane"></i> Travel</button>
+            <button class="filter-pill" data-filter="Entertainment"><i class="fa-solid fa-fire"></i> Entertainment</button>
+            <button class="filter-pill vault-pill" data-filter="18+ Vault"><i class="fa-solid fa-lock"></i> Creator Vault 18+</button>
         </div>
 
-        <!-- Interactive Filters & Search -->
-        <div class="social-card p-4 mb-5" style="cursor: default;">
-            <div class="row g-3 align-items-center">
-                <div class="col-lg-6">
-                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Pretraži ključne riječi, creatore, teme...">
-                </div>
-                <div class="col-lg-6 text-lg-end">
-                    <button class="btn btn-vibe px-4 py-3 w-100 w-lg-auto" onclick="resetAndFetchFeed()">
-                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Osvježi Feed
-                    </button>
-                </div>
-            </div>
+        <!-- Dynamic Feed Stream -->
+        <section id="vibeFeedStream">
+            <!-- Rendered cards go here -->
+        </section>
 
-            <hr class="border-secondary opacity-25 my-4">
-
-            <!-- Platform filter chips -->
-            <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="social-pill active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok"></i> TikTok</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram"></i> Instagram</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien"></i> Reddit</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter"></i> X / Twitter</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'linkedin', this)"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</button>
-            </div>
-
-            <!-- Category chips -->
-            <div class="d-flex flex-wrap gap-2">
-                <button class="social-pill active" onclick="toggleSelection('category', 'tech', this)">💻 Tech & AI</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'lifestyle', this)">⚡ Lifestyle</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'luxury', this)">🏎️ Luxury</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
-                <button class="social-pill" onclick="toggleSelection('category', 'travel', this)">✈️ Travel</button>
-                <button class="social-pill" onclick="toggleSelection('category', 'funny', this)">🔥 Entertainment</button>
-                <button class="social-pill" onclick="toggleSelection('category', '18plus', this)">🔞 Creator Vault</button>
-            </div>
+        <!-- Infinite Scroll Sentinel -->
+        <div id="loaderSentinel" class="loader-sentinel">
+            <div class="spinner-border spinner-border-sm text-purple mb-2" role="status" style="color: #8b5cf6;"></div>
+            <p class="small mb-0 text-secondary">Loading deeper infinite vibe stream...</p>
         </div>
+    </main>
 
-        <!-- Feed Grid -->
-        <div id="feed-grid" class="row g-4"></div>
-
-        <!-- Infinite Scroll Sentinel & Loader -->
-        <div id="infinite-sentinel" class="text-center py-5 d-none">
-            <div class="spinner-border text-info" role="status"></div>
-            <p class="mt-2 text-secondary small font-mono">Učitavam beskonačni cross-platform vibe stream...</p>
-        </div>
-    </div>
-
-    <!-- Live Toast Container -->
-    <div id="live-toast-container"></div>
-
-    <!-- TOČKA 5: Notification Center Modal -->
-    <div class="modal fade" id="notificationModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
-                <div class="modal-header border-0 pt-4 px-4">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-bell text-info me-2"></i>Live Vibe Feed Aktivnosti</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div id="notifications-list" class="d-flex flex-column gap-3">
-                        <!-- Popunjava se JS-om -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOČKA 4: Post Detail & Comments Modal -->
-    <div class="modal fade" id="postDetailModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
-                <div class="modal-header border-0 pt-4 px-4">
-                    <div class="d-flex align-items-center gap-2">
-                        <span id="modal-post-platform" class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">PLATFORM</span>
-                        <span id="modal-post-creator" class="small text-secondary fw-semibold">@creator</span>
-                    </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div id="modal-post-media" class="feed-media rounded-4 mb-3 overflow-hidden"></div>
-                    <h4 id="modal-post-title" class="fw-bold mb-3">Naslov objave</h4>
-                    <div class="d-flex justify-content-between align-items-center pb-3 border-bottom border-secondary border-opacity-25 mb-3">
-                        <div class="d-flex gap-3 text-secondary small">
-                            <span><i class="fa-regular fa-heart me-1 text-pink-pop"></i><span id="modal-post-likes">0</span></span>
-                            <span><i class="fa-regular fa-comment me-1"></i><span id="modal-post-comments-count">0</span></span>
-                        </div>
-                        <button class="social-pill py-1 px-3 small" onclick="alert('Link kopiran u međuspremnik!')">
-                            <i class="fa-solid fa-share-nodes"></i> Share Vibe
-                        </button>
-                    </div>
-                    <div class="small text-secondary mb-2 fw-semibold">Live Community Vibe / Komentari:</div>
-                    <div id="modal-post-comments-list" class="d-flex flex-column gap-2" style="max-height: 200px; overflow-y: auto;">
-                        <!-- Dinamički komentari -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Membership Modal -->
-    <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
-                <div class="modal-header border-0 pt-4 px-4">
-                    <div>
-                        <h4 class="fw-bold mb-0">Evolysium Membership</h4>
-                        <p class="text-secondary small mb-0">Izaberi svoj prirodni layer. Sigurna naplata s enkripcijom.</p>
-                    </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="row g-3">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3">
-                                <div>
-                                    <span class="badge bg-secondary rounded-pill mb-2">Free Vibe</span>
-                                    <h5>Free Vibe</h5>
-                                    <h3 class="fw-bold my-2">€0 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
-                                    <ul class="list-unstyled text-secondary small mb-4">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Osnovni feed</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-outline-light w-100 rounded-pill py-2 small" disabled>Trenutni Plan</button>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3">
-                                <div>
-                                    <span class="badge rounded-pill mb-2" style="background:#7928ca;">PRO PASS</span>
-                                    <h5>Creator Spark</h5>
-                                    <h3 class="fw-bold my-2">€9.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
-                                    <ul class="list-unstyled text-light small mb-4">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2"></i>Full 5-platform feed</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-outline-light w-100 rounded-pill py-2 small" onclick="initCheckout('Creator Spark', 9.99, false)">Odaberi Spark</button>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3" style="border-color: rgba(255,42,133,0.5);">
-                                <div>
-                                    <span class="badge rounded-pill mb-2 bg-danger">18+ VAULT</span>
-                                    <h5>Midnight Access</h5>
-                                    <h3 class="fw-bold my-2">€14.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
-                                    <ul class="list-unstyled text-light small mb-4">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i>Age-verified uncensored</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-danger w-100 rounded-pill py-2 small" onclick="verifyAgeAndCheckout('Midnight Access', 14.99, true)">Otključaj Midnight</button>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="pricing-box hot h-100 d-flex flex-column justify-content-between p-3">
-                                <div>
-                                    <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">WHALE / ALL</span>
-                                    <h5>Inner Circle / VIP</h5>
-                                    <h3 class="fw-bold my-2">€29.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
-                                    <ul class="list-unstyled text-light small mb-4">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Export alpha (JSON/CSV)</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-vibe w-100 rounded-pill py-2 small" onclick="verifyAgeAndCheckout('Inner Circle / VIP', 29.99, true)">Pridruži se VIP-u</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sigurni naplatni panel -->
-                    <div id="checkout-panel" class="mt-4 p-4 rounded-4 d-none" style="background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.15);">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="mb-0" id="checkout-title">Sigurna naplata</h5>
-                            <span class="badge bg-success"><i class="fa-solid fa-lock me-1"></i>SSL Encrypted</span>
-                        </div>
-                        <p class="text-secondary small mb-3" id="checkout-desc">Odabran paket: ...</p>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label small text-secondary">Email za račun / token</label>
-                                <input type="email" id="checkout-email" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="tvoj@email.com">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-secondary">Način plaćanja</label>
-                                <select id="checkout-method" class="form-select form-select-sm bg-dark text-light border-secondary">
-                                    <option value="stripe">Stripe (Kartica / Apple Pay / Google Pay)</option>
-                                    <option value="crypto">Crypto (USDT / USDC / ETH)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-3 text-end">
-                            <button class="btn btn-secondary btn-sm rounded-pill px-3 me-2" onclick="cancelCheckout()">Odustani</button>
-                            <button class="btn btn-vibe btn-sm rounded-pill px-4" onclick="completePaymentSimulation()">Plati sigurno (€<span id="checkout-price">0</span>)</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal za objavu Storyja -->
-    <div class="modal fade" id="storyModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-light" style="background: #110e1d; border-radius: 24px; border: 1px solid rgba(255,255,255,0.15);">
-                <div class="modal-header border-0 pt-4 px-4">
-                    <h5 class="fw-bold mb-0">Objavi novi Story</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="form-label small text-secondary">Tvoj Creator / Handle</label>
-                        <input type="text" id="story-creator" class="form-control bg-dark text-light border-secondary" value="@ti_creator">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small text-secondary">Naziv / Vibe naslov</label>
-                        <input type="text" id="story-title" class="form-control bg-dark text-light border-secondary" placeholder="Npr. Noćni pogled s balkona...">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small text-secondary">Kategorija</label>
-                        <select id="story-cat" class="form-select bg-dark text-light border-secondary">
-                            <option value="tech">Tech & AI</option>
-                            <option value="lifestyle">Lifestyle</option>
-                            <option value="luxury">Luxury</option>
-                            <option value="gaming">Gaming</option>
-                            <option value="travel">Travel</option>
-                            <option value="funny">Entertainment</option>
-                            <option value="18plus">18+ Vault</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small text-secondary">URL slike / vizuala za story</label>
-                        <input type="url" id="story-image" class="form-control bg-dark text-light border-secondary" placeholder="https://images.unsplash.com/...">
-                    </div>
-                    <button class="btn btn-vibe w-100 rounded-pill py-2.5" onclick="publishStory()">Objavi na Vibe Strip</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="py-4 text-center text-secondary small">
+    <!-- Clean Legal Footer matching rule 5 -->
+    <footer class="evolysium-footer">
         <div class="container">
-            Copyright Evolysium 2026 &bull; Privacy Policy &bull; Legal Disclaimer &bull; GDPR
+            <p class="mb-1 fw-medium text-light">Copyright Evolysium 2026</p>
+            <div class="footer-links">
+                <a href="#privacy" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('privacy')">Privacy Policy</a>
+                <a href="#legal" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('disclaimer')">Legal Disclaimer</a>
+                <a href="#gdpr" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('gdpr')">GDPR</a>
+            </div>
         </div>
     </footer>
 
-    <!-- Logic -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
-        let selectedCategories = ["tech", "lifestyle", "luxury", "gaming"];
-        let isLoadingInfinite = false;
-        let infiniteBatchCount = 1;
-        let currentFeedItems = [];
-        let unreadNotifCount = 3;
+    <!-- Legal Modal -->
+    <div class="modal fade" id="legalModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark border border-secondary text-light">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title fw-bold" id="legalModalTitle">Evolysium Legal</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="legalModalBody"></div>
+            </div>
+        </div>
+    </div>
 
-        let notificationsData = [
-            { id: 1, text: "🔥 @viral_node je prešao 100k pregleda na M4 Max testu", time: "2 min ago" },
-            { id: 2, text: "🔞 Novi 18+ Vault drop u Midnight kategoriji", time: "15 min ago" },
-            { id: 3, text: "💬 @alex_dev je komentirao tvoj pohranjeni trend", time: "1h ago" }
+    <!-- Membership / 18+ Vault Access Modal -->
+    <div class="modal fade" id="vaultModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark border border-pink text-light" style="border-color: rgba(236,72,153,0.4);">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title fw-bold text-pink" style="color:#f472b6;"><i class="fa-solid fa-lock me-2"></i> Evolysium Creator Vault (18+)</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-secondary mb-3">Access exclusive uncompressed creator feeds, VIP streams, and high-tier patron visual drops.</p>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-pink text-light border border-pink" style="border-color:#ec4899;" onclick="unlockVaultAccess()">Verify Age (18+) & Unlock Tier 1</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refresh Feedback Toast -->
+    <div class="refresh-toast" id="refreshToast">
+        <i class="fa-solid fa-check-circle me-1"></i> Feed stream refreshed with latest live pulses!
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        /*************************************************************************
+         * EVOLYSIUM COMPLETE ENGINE (ALL ENGLISH, INFINITE SCROLL, LIVE REFRESH)
+         *************************************************************************/
+
+        const masterPool = [
+            {
+                id: 'tt-101',
+                platform: 'TikTok',
+                category: 'Tech & AI',
+                author: '@neonsynth_vibe',
+                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop',
+                type: 'video',
+                mediaUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                thumbnailUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&fit=crop',
+                aspect: 'portrait',
+                caption: 'Late night cyberpunk desk setup tour 2026 ✨ RGB ambient lighting transformation. #setup #cyberpunk #vibe',
+                tags: ['#setup', '#cyberpunk', '#vibe'],
+                likes: '48.2K',
+                comments: '1,420'
+            },
+            {
+                id: 'ig-202',
+                platform: 'Instagram',
+                category: 'Luxury',
+                author: 'atelier.monochrome',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop',
+                type: 'image',
+                mediaUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&fit=crop',
+                aspect: 'landscape',
+                caption: 'Matte carbon architecture and silhouette precision under underground garage lights.',
+                tags: ['#luxury', '#automotive', '#design'],
+                likes: '29.4K',
+                comments: '512'
+            },
+            {
+                id: 'x-303',
+                platform: 'X',
+                category: 'Tech & AI',
+                author: 'Alex / VibeResearch',
+                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop',
+                type: 'text',
+                caption: 'Real-time AI agent interface generation changes frontend architecture rules permanently. Infinite scroll stability without DOM bloat is mandatory.',
+                tags: ['#AI', '#frontend', '#architecture'],
+                likes: '12.8K',
+                comments: '912'
+            },
+            {
+                id: 'rd-404',
+                platform: 'Reddit',
+                category: 'Tech & AI',
+                author: 'u/retro_hardware_vault',
+                avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=120&h=120&fit=crop',
+                type: 'image',
+                mediaUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900&fit=crop',
+                aspect: 'landscape',
+                caption: 'Custom rack server and homelab clean fiber optic run after 6 months of cable management.',
+                tags: ['#homelab', '#selfhosted', '#hardware'],
+                likes: '6.3K',
+                comments: '521'
+            },
+            {
+                id: 'li-505',
+                platform: 'LinkedIn',
+                category: 'Tech & AI',
+                author: 'Elena Vance — Principal Product Lead',
+                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop',
+                type: 'video',
+                mediaUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                thumbnailUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&fit=crop',
+                aspect: 'landscape',
+                caption: 'Why cross-platform trend aggregation requires clean modular data streams and edge caching.',
+                tags: ['#productmanagement', '#leadership', '#tech'],
+                likes: '3.1K',
+                comments: '189'
+            },
+            {
+                id: 'vault-606',
+                platform: '18+ Vault',
+                category: '18+ Vault',
+                author: 'Sora_VaultVIP',
+                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop',
+                type: 'image',
+                mediaUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&fit=crop',
+                aspect: 'portrait',
+                caption: 'Private uncompressed aesthetic drop #04 — Neon Noir Studio Session.',
+                tags: ['#exclusive', '#vault18', '#uncensored'],
+                likes: '84.5K',
+                comments: '3,100',
+                vaultLocked: true
+            }
         ];
 
-        const richVisualLibrary = {
-            "tech": [
-                "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&auto=format&fit=crop"
-            ],
-            "lifestyle": [
-                "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=900&auto=format&fit=crop"
-            ],
-            "luxury": [
-                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1563720223185-11003d516935?w=900&auto=format&fit=crop"
-            ],
-            "gaming": [
-                "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900&auto=format&fit=crop"
-            ],
-            "travel": [
-                "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&auto=format&fit=crop"
-            ],
-            "funny": [
-                "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop"
-            ],
-            "18plus": [
-                "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&auto=format&fit=crop"
-            ]
+        let currentFilter = 'all';
+        let searchQuery = '';
+        let feedData = [];
+        let batchIdx = 1;
+        const feedStreamEl = document.getElementById('vibeFeedStream');
+        const sentinelEl = document.getElementById('loaderSentinel');
+
+        function generateBatch() {
+            batchIdx++;
+            return masterPool.map((item, i) => ({
+                ...item,
+                id: `${item.id}-batch-${batchIdx}-${i}`,
+                likes: `${(Math.random() * 45 + 5).toFixed(1)}K`
+            }));
+        }
+
+        function renderCard(post) {
+            const badgeClass = `badge-${post.platform.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+            let mediaHtml = '';
+
+            if (post.type === 'video') {
+                mediaHtml = `
+                    <div class="media-container ${post.aspect === 'landscape' ? 'landscape' : ''}">
+                        <video class="vibe-video-player" poster="${post.thumbnailUrl}" preload="none" playsinline loop muted>
+                            <source src="${post.mediaUrl}" type="video/mp4">
+                        </video>
+                        <div class="video-overlay-play" onclick="togglePlay(this)">
+                            <div class="play-icon-circle"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                    </div>
+                `;
+            } else if (post.type === 'image') {
+                const blurClass = post.vaultLocked ? 'filter: blur(14px);' : '';
+                mediaHtml = `
+                    <div class="media-container ${post.aspect === 'landscape' ? 'landscape' : ''}">
+                        <img src="${post.mediaUrl}" alt="Post media" loading="lazy" style="${blurClass}">
+                        ${post.vaultLocked ? `
+                            <div class="position-absolute inset-0 d-flex flex-column align-items-center justify-content-center bg-dark bg-opacity-75">
+                                <i class="fa-solid fa-lock text-pink fs-3 mb-2" style="color:#f472b6;"></i>
+                                <span class="small fw-semibold text-light">Vault Exclusive — Membership Required</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+
+            const tagsHtml = (post.tags || []).map(t => `<span>${t}</span>`).join(' ');
+
+            return `
+                <article class="post-card" data-platform="${post.platform}" data-category="${post.category}">
+                    <div class="post-header">
+                        <div class="author-info">
+                            <img src="${post.avatar}" alt="Avatar" class="author-avatar" loading="lazy">
+                            <div>
+                                <h6 class="mb-0 fw-semibold text-light">${post.author}</h6>
+                                <small class="text-secondary">${post.platform} • Live pulse</small>
+                            </div>
+                        </div>
+                        <span class="platform-badge ${badgeClass}">${post.platform}</span>
+                    </div>
+
+                    ${mediaHtml}
+
+                    <div class="post-body">
+                        <p class="post-caption">${post.caption}</p>
+                        <div class="post-tags">${tagsHtml}</div>
+                    </div>
+
+                    <div class="post-footer-actions">
+                        <div class="d-flex gap-4">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <i class="fa-regular fa-heart"></i> <span>${post.likes}</span>
+                            </button>
+                            <button class="action-btn">
+                                <i class="fa-regular fa-comment"></i> <span>${post.comments || '120'}</span>
+                            </button>
+                        </div>
+                        <button class="action-btn" title="Share">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </button>
+                    </div>
+                </article>
+            `;
+        }
+
+        window.togglePlay = function(overlayEl) {
+            const video = overlayEl.parentElement.querySelector('video');
+            if (video.paused) {
+                video.play();
+                video.muted = false;
+                overlayEl.style.opacity = '0';
+            } else {
+                video.pause();
+                overlayEl.style.opacity = '1';
+            }
         };
 
-        const demoVideoPool = [
-            "https://vjs.zencdn.net/v/oceans.mp4"
-        ];
-
-        const baseHumanStories = [
-            { id: 1, creator: "@lucas_builds", title: "Setup od €4,000 koji ruši internet tjedna", cat: "tech", platform: "tiktok", likes: "142k", comments: "1.2k" },
-            { id: 2, creator: "@elena_vibe", title: "Zašto se svi vraćaju minimalističkom stanu u centru", cat: "luxury", platform: "instagram", likes: "89k", comments: "940" },
-            { id: 3, creator: "@neoproto", title: "Ovaj AI alat mi štedi 4 sata dnevno bez zajebancije", cat: "tech", platform: "x", likes: "34k", comments: "510" },
-            { id: 4, creator: "@retro_gamer_hq", title: "Hidden gem igra koju nitko ne igra, a bolja je od AAA naslova", cat: "gaming", platform: "reddit", likes: "18.5k", comments: "830" },
-            { id: 5, creator: "@corp_pulse", title: "Zašto remote-first modeli mijenjaju strukturu leadershipa u EU", cat: "lifestyle", platform: "linkedin", likes: "12.1k", comments: "310" }
-        ];
-
-        let humanStories = [...baseHumanStories];
-        let customStories = JSON.parse(localStorage.getItem('evolysium_custom_stories') || '[]');
-
-        const defaultStories = [
-            { label: "AI & Gear", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200", cat: "tech" },
-            { label: "Daily Inspo", img: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=200", cat: "lifestyle" },
-            { label: "Estates", img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=200", cat: "luxury" },
-            { label: "Gaming", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200", cat: "gaming" },
-            { label: "Getaways", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200", cat: "travel" },
-            { label: "Memes/Fun", img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200", cat: "funny" }
-        ];
-
-        let activePlanData = null;
-
-        function checkVipStatus() {
-            const tier = localStorage.getItem('evolysium_tier');
-            const toolbar = document.getElementById('vip-export-toolbar');
-            if (tier === 'Inner Circle / VIP') {
-                toolbar.classList.remove('d-none');
+        window.toggleLike = function(btn) {
+            const i = btn.querySelector('i');
+            if (i.classList.contains('fa-regular')) {
+                i.classList.remove('fa-regular');
+                i.classList.add('fa-solid');
+                i.style.color = '#ec4899';
             } else {
-                toolbar.classList.add('d-none');
+                i.classList.remove('fa-solid');
+                i.classList.add('fa-regular');
+                i.style.color = '';
             }
-        }
+        };
 
-        function renderNotifications() {
-            const list = document.getElementById('notifications-list');
-            if (!list) return;
-            list.innerHTML = notificationsData.map(n => `
-                <div class="p-3 rounded-4 bg-dark bg-opacity-70 border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
-                    <span class="small text-light">${n.text}</span>
-                    <span class="font-mono text-secondary" style="font-size:0.7rem;">${n.time}</span>
-                </div>
-            `).join('');
-            const badge = document.getElementById('notif-badge');
-            if (badge) {
-                badge.innerText = unreadNotifCount;
-                badge.style.display = unreadNotifCount > 0 ? 'inline-block' : 'none';
+        function applyFeedFilter() {
+            let filtered = feedData;
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(item => 
+                    item.platform.toLowerCase() === currentFilter.toLowerCase() ||
+                    item.category.toLowerCase() === currentFilter.toLowerCase()
+                );
             }
-        }
-
-        function clearNotificationBadge() {
-            unreadNotifCount = 0;
-            renderNotifications();
-        }
-
-        function pushLiveToast(text) {
-            const container = document.getElementById('live-toast-container');
-            if (!container) return;
-            const toastEl = document.createElement('div');
-            toastEl.className = 'live-toast';
-            toastEl.innerHTML = `
-                <i class="fa-solid fa-bolt text-info fs-5"></i>
-                <div class="small text-light">${text}</div>
-            `;
-            container.appendChild(toastEl);
-            setTimeout(() => {
-                toastEl.style.transition = 'opacity 0.4s ease';
-                toastEl.style.opacity = '0';
-                setTimeout(() => toastEl.remove(), 400);
-            }, 4500);
-
-            notificationsData.unshift({ id: Date.now(), text, time: 'upravo sada' });
-            unreadNotifCount++;
-            renderNotifications();
-        }
-
-        // Simulacija live real-time događaja svakih 18 sekundi
-        function startLiveSimulation() {
-            const events = [
-                "⚡ TikTok post od @nexus_pulse upravo probio 50k lajkova",
-                "💬 Novi AI bot thread komentiran na X/Twitteru",
-                "🔥 Vibe Trend alert: Porast potražnje za 'Luxury' vizualima",
-                "🔞 Novi age-verified media payload u 18+ Vault-u"
-            ];
-            setInterval(() => {
-                const randomEvent = events[Math.floor(Math.random() * events.length)];
-                pushLiveToast(randomEvent);
-            }, 18000);
-        }
-
-        function renderVibeStrip() {
-            const container = document.getElementById('vibe-strip-container');
-            if (!container) return;
-
-            let html = defaultStories.map(item => `
-                <div class="vibe-item" onclick="filterByTopic('${item.cat}')">
-                    <div class="vibe-ring"><img src="${item.img}" alt="${item.label}"></div>
-                    <span class="small mt-1 text-light">${item.label}</span>
-                </div>
-            `).join('');
-
-            customStories.forEach(s => {
-                html += `
-                    <div class="vibe-item" onclick="filterByTopic('${s.cat}')" title="${s.title}">
-                        <div class="vibe-ring" style="background: linear-gradient(45deg, #00f0ff, #ff2a85);">
-                            <img src="${s.img || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200'}" alt="User story">
-                        </div>
-                        <span class="small mt-1 text-light text-truncate" style="max-width: 65px;">${s.creator}</span>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-        }
-
-        function publishStory() {
-            const creator = document.getElementById('story-creator').value.trim() || '@creator';
-            const title = document.getElementById('story-title').value.trim() || 'Novi story';
-            const cat = document.getElementById('story-cat').value;
-            const imgInput = document.getElementById('story-image').value.trim();
-            const img = imgInput || richVisualLibrary[cat]?.[0] || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200';
-
-            const newStory = { creator, title, cat, img };
-            customStories.unshift(newStory);
-            localStorage.setItem('evolysium_custom_stories', JSON.stringify(customStories));
-
-            humanStories.unshift({
-                id: Date.now(),
-                creator: creator,
-                title: title,
-                cat: cat,
-                platform: 'instagram',
-                likes: '1k',
-                comments: '42'
-            });
-
-            renderVibeStrip();
-            resetAndFetchFeed();
-
-            const modalEl = document.getElementById('storyModal');
-            const modalInstance = bootstrap.Modal.getInstance(modalEl);
-            if (modalInstance) modalInstance.hide();
-
-            document.getElementById('story-title').value = '';
-            document.getElementById('story-image').value = '';
-            pushLiveToast(`✨ Novi story objavio/la ${creator}`);
-        }
-
-        function verifyAgeAndCheckout(planName, price, requires18) {
-            if (requires18) {
-                const confirmed = confirm("🔞 OVAJ PAKET SADRŽI MIDNIGHT / 18+ VAULT SADRŽAJ.\nPotvrđuješ li da imaš 18+ godina i da je u tvojoj jurisdikciji dozvoljen pristup ovakvom sadržaju?");
-                if (!confirmed) return;
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(item => 
+                    item.caption.toLowerCase().includes(q) ||
+                    item.author.toLowerCase().includes(q) ||
+                    (item.tags && item.tags.some(t => t.toLowerCase().includes(q)))
+                );
             }
-            initCheckout(planName, price, requires18);
+            feedStreamEl.innerHTML = filtered.map(renderCard).join('') || `<div class="text-center py-5 text-secondary">No matching vibe streams found. Try refreshing or clearing search.</div>`;
         }
 
-        function initCheckout(planName, price, is18Plus) {
-            activePlanData = { planName, price, is18Plus };
-            document.getElementById('checkout-title').innerText = `Checkout: ${planName}`;
-            document.getElementById('checkout-desc').innerText = `Cijena pretplate: €${price}/mjesečno. ${is18Plus ? 'Uključuje age-verified 18+ vault token.' : ''}`;
-            document.getElementById('checkout-price').innerText = price;
-            document.getElementById('checkout-panel').classList.remove('d-none');
-        }
+        window.handleSearch = function(val) {
+            searchQuery = val;
+            applyFeedFilter();
+        };
 
-        function cancelCheckout() {
-            document.getElementById('checkout-panel').classList.add('d-none');
-            activePlanData = null;
-        }
-
-        function completePaymentSimulation() {
-            const email = document.getElementById('checkout-email').value;
-            if (!email || !email.includes('@')) {
-                alert('Unesi važeću email adresu!');
-                return;
-            }
-            localStorage.setItem('evolysium_tier', activePlanData.planName);
-            localStorage.setItem('evolysium_vault_18', activePlanData.is18Plus ? 'true' : 'false');
+        // Real functional feed refresh
+        window.triggerManualRefresh = function() {
+            const btn = document.getElementById('refreshFeedBtn');
+            const icon = btn.querySelector('i');
+            icon.classList.add('fa-spin');
             
-            alert(`✅ Plaćanje uspješno!\nAktivan paket: ${activePlanData.planName}\nToken spremljen.`);
-            cancelCheckout();
-            bootstrap.Modal.getInstance(document.getElementById('pricingModal')).hide();
-            checkVipStatus();
-            pushLiveToast(`👑 Aktivirana pretplata: ${activePlanData.planName}`);
-        }
-
-        function toggleSelection(type, value, btn) {
-            btn.classList.toggle("active");
-            let list = (type === 'platform') ? selectedPlatforms : selectedCategories;
-            list = list.includes(value) ? list.filter(item => item !== value) : [...list, value];
-            if (type === 'platform') selectedPlatforms = list;
-            else selectedCategories = list;
-            resetAndFetchFeed();
-        }
-
-        function filterByTopic(cat) {
-            selectedCategories = [cat];
-            document.querySelectorAll('.social-pill').forEach(p => p.classList.remove('active'));
-            resetAndFetchFeed();
-        }
-
-        function getRandomPic(category) {
-            const arr = richVisualLibrary[category] || richVisualLibrary["lifestyle"];
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        function generateInfiniteBatch() {
-            const platforms = ['tiktok', 'instagram', 'reddit', 'x', 'linkedin'];
-            const categories = ['tech', 'lifestyle', 'luxury', 'gaming', 'travel', 'funny', '18plus'];
-            const creators = ['@viral_node', '@nexus_pulse', '@deep_alpha', '@stack_flow_real', '@glitch_vibe'];
-            const sampleTitles = [
-                "Zahtjevniji workflow test: M4 Max vs Desktop rig pod punim loadom",
-                "Zašto svi vrhunski product dizajneri prelaze na ovaj sustav tokena",
-                "Uncensored leak: Kako izgleda interni analitički dashboard fonda",
-                "Never do this u production okruženju (post mortem incidenta)",
-                "Noćni vibe check: Arhitektura zgrada koja definira moderni futurizam"
-            ];
-
-            const batch = [];
-            for (let i = 0; i < 4; i++) {
-                const randPlatform = platforms[(infiniteBatchCount + i) % platforms.length];
-                const randCat = categories[(infiniteBatchCount * 2 + i) % categories.length];
-                const randCreator = creators[(infiniteBatchCount + i) % creators.length];
-                const randTitle = sampleTitles[(infiniteBatchCount + i) % sampleTitles.length] + ` (#batch${infiniteBatchCount})`;
-
-                batch.push({
-                    id: Date.now() + i,
-                    creator: randCreator,
-                    title: randTitle,
-                    cat: randCat,
-                    platform: randPlatform,
-                    likes: `${Math.floor(Math.random() * 90 + 10)}k`,
-                    comments: `${Math.floor(Math.random() * 800 + 40)}`
-                });
-            }
-            infiniteBatchCount++;
-            return batch;
-        }
-
-        function openPostModal(itemIdx) {
-            const item = currentFeedItems[itemIdx];
-            if (!item) return;
-
-            document.getElementById('modal-post-platform').innerText = item.platform;
-            document.getElementById('modal-post-creator').innerText = item.creator;
-            document.getElementById('modal-post-title').innerText = item.title;
-            document.getElementById('modal-post-likes').innerText = item.likes;
-            document.getElementById('modal-post-comments-count').innerText = item.comments;
-
-            const isVideo = item.platform === 'tiktok' || item.platform === 'instagram';
-            const mediaContainer = document.getElementById('modal-post-media');
-            if (isVideo) {
-                mediaContainer.innerHTML = `<video controls playsinline loop muted poster="${getRandomPic(item.cat)}"><source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></video>`;
-            } else {
-                mediaContainer.innerHTML = `<img src="${getRandomPic(item.cat)}" alt="Vibe visual">`;
-            }
-
-            const mockComments = [
-                { user: "@alex_dev", text: "Ovo izgleda brutalno dobro, koja je šema s configom?" },
-                { user: "@vibe_lord", text: "Potvrđujem, vidio isto na twitteru jučer." },
-                { user: "@stack_queen", text: "10/10 preporuka za ovaj workflow." }
-            ];
-
-            document.getElementById('modal-post-comments-list').innerHTML = mockComments.map(c => `
-                <div class="p-2 rounded-3 bg-dark bg-opacity-50 small">
-                    <span class="fw-semibold text-info me-1">${c.user}</span>
-                    <span class="text-light">${c.text}</span>
-                </div>
-            `).join('');
-
-            const modal = new bootstrap.Modal(document.getElementById('postDetailModal'));
-            modal.show();
-        }
-
-        function renderItemsToGrid(items, append = false) {
-            if (!append) currentFeedItems = [];
-            currentFeedItems.push(...items);
-
-            const grid = document.getElementById("feed-grid");
-            const htmlString = items.map((item, idx) => {
-                const globalIdx = currentFeedItems.length - items.length + idx;
-                const isVideo = item.platform === 'tiktok' || item.platform === 'instagram';
-                const mediaContent = isVideo ? `
-                    <div class="feed-media">
-                        <video playsinline loop muted poster="${getRandomPic(item.cat)}">
-                            <source src="${demoVideoPool[idx % demoVideoPool.length]}" type="video/mp4">
-                        </video>
-                    </div>
-                ` : `
-                    <div class="feed-media">
-                        <img src="${getRandomPic(item.cat)}" alt="Vibe visual">
-                    </div>
-                `;
-
-                return `
-                    <div class="col-md-6 col-lg-4">
-                        <div class="social-card h-100 d-flex flex-column" onclick="openPostModal(${globalIdx})">
-                            ${mediaContent}
-                            <div class="creator-tag text-light">
-                                <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
-                            </div>
-                            <div class="card-body p-4 d-flex flex-column flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
-                                    <span class="small text-secondary"><i class="fa-solid fa-fire text-warning me-1"></i>Trending</span>
-                                </div>
-                                <h5 class="fw-bold text-white mb-3" style="line-height: 1.3;">${item.title}</h5>
-                                
-                                <div class="mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
-                                    <div class="d-flex gap-3 text-secondary small">
-                                        <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
-                                        <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
-                                    </div>
-                                    <span class="action-icon-btn text-decoration-none" onclick="event.stopPropagation(); openPostModal(${globalIdx})">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            if (append) {
-                grid.insertAdjacentHTML('beforeend', htmlString);
-            } else {
-                grid.innerHTML = htmlString;
-            }
-        }
-
-        function filterAndMatch(items, query) {
-            return items.filter(item => {
-                const matchPlatform = selectedPlatforms.length === 0 || selectedPlatforms.includes(item.platform);
-                const matchCategory = selectedCategories.length === 0 || selectedCategories.includes(item.cat);
-                const matchQuery = !query || item.title.toLowerCase().includes(query) || item.creator.toLowerCase().includes(query);
-                return matchPlatform && matchCategory && matchQuery;
-            });
-        }
-
-        function resetAndFetchFeed() {
-            infiniteBatchCount = 1;
-            const query = document.getElementById("keyword-search").value.toLowerCase().trim();
-            let matched = filterAndMatch(humanStories, query);
-            if (matched.length === 0) matched = humanStories.slice(0, 3);
-            renderItemsToGrid(matched, false);
-        }
-
-        function exportFeedData(format) {
-            const tier = localStorage.getItem('evolysium_tier');
-            if (tier !== 'Inner Circle / VIP') {
-                alert('❌ Export alpha podataka zahtijeva Inner Circle / VIP pretplatu.');
-                return;
-            }
-
-            if (format === 'json') {
-                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentFeedItems, null, 2));
-                const downloadAnchor = document.createElement('a');
-                downloadAnchor.setAttribute("href", dataStr);
-                downloadAnchor.setAttribute("download", "evolysium_alpha_feed.json");
-                document.body.appendChild(downloadAnchor);
-                downloadAnchor.click();
-                downloadAnchor.remove();
-            } else if (format === 'csv') {
-                let csvContent = "data:text/csv;charset=utf-8,ID,Creator,Platform,Category,Title,Likes,Comments\r\n";
-                currentFeedItems.forEach(row => {
-                    const cleanTitle = `"${row.title.replace(/"/g, '""')}"`;
-                    csvContent += [row.id, row.creator, row.platform, row.cat, cleanTitle, row.likes, row.comments].join(",") + "\r\n";
-                });
-                const encodedUri = encodeURI(csvContent);
-                const downloadAnchor = document.createElement('a');
-                downloadAnchor.setAttribute("href", encodedUri);
-                downloadAnchor.setAttribute("download", "evolysium_alpha_feed.csv");
-                document.body.appendChild(downloadAnchor);
-                downloadAnchor.click();
-                downloadAnchor.remove();
-            }
-            pushLiveToast('📁 Uspješan Alpha export podataka feeda!');
-        }
-
-        function setupInfiniteScroll() {
-            const sentinel = document.getElementById("infinite-sentinel");
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && !isLoadingInfinite) {
-                    loadMoreInfiniteData();
-                }
-            }, { rootMargin: '300px' });
-            
-            observer.observe(sentinel);
-        }
-
-        function loadMoreInfiniteData() {
-            isLoadingInfinite = true;
-            const sentinelLoader = document.getElementById("infinite-sentinel");
-            sentinelLoader.classList.remove("d-none");
-
             setTimeout(() => {
-                const newBatch = generateInfiniteBatch();
-                humanStories.push(...newBatch);
+                const freshItems = masterPool.slice().reverse().map((item, idx) => ({
+                    ...item,
+                    id: `refreshed-${Date.now()}-${idx}`,
+                    likes: `${(Math.random() * 50 + 10).toFixed(1)}K`
+                }));
+                feedData = [...freshItems, ...feedData];
+                applyFeedFilter();
+                icon.classList.remove('fa-spin');
                 
-                const query = document.getElementById("keyword-search").value.toLowerCase().trim();
-                const matchedNew = filterAndMatch(newBatch, query);
-                if (matchedNew.length > 0) {
-                    renderItemsToGrid(matchedNew, true);
-                } else {
-                    renderItemsToGrid(newBatch, true);
-                }
+                const toast = document.getElementById('refreshToast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            }, 500);
+        };
 
-                sentinelLoader.classList.add("d-none");
-                isLoadingInfinite = false;
-            }, 600);
-        }
+        window.unlockVaultAccess = function() {
+            const modalEl = document.getElementById('vaultModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+            feedData.forEach(d => { if (d.platform === '18+ Vault') d.vaultLocked = false; });
+            applyFeedFilter();
+        };
 
-        document.getElementById('keyword-search')?.addEventListener('input', resetAndFetchFeed);
-        document.addEventListener("DOMContentLoaded", () => {
-            renderVibeStrip();
-            checkVipStatus();
-            renderNotifications();
-            resetAndFetchFeed();
-            setupInfiniteScroll();
-            startLiveSimulation();
+        // Filter pills click handling
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                currentFilter = pill.getAttribute('data-filter');
+                applyFeedFilter();
+            });
         });
+
+        // Infinite scroll observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    setTimeout(() => {
+                        feedData = [...feedData, ...generateBatch()];
+                        applyFeedFilter();
+                    }, 400);
+                }
+            });
+        }, { rootMargin: '400px' });
+        observer.observe(sentinelEl);
+
+        // Legal content provider (English)
+        window.showLegalContent = function(type) {
+            const titleEl = document.getElementById('legalModalTitle');
+            const bodyEl = document.getElementById('legalModalBody');
+            if (type === 'privacy') {
+                titleEl.textContent = 'Privacy Policy — Evolysium';
+                bodyEl.innerHTML = `<p class="text-secondary small">Evolysium stores minimal local vibe preference cache in browser storage. No personal data is shared with external brokers.</p>`;
+            } else if (type === 'disclaimer') {
+                titleEl.textContent = 'Legal Disclaimer — Evolysium';
+                bodyEl.innerHTML = `<p class="text-secondary small">Content aggregated via public platform streams (TikTok, Instagram, X, Reddit, LinkedIn). Platform operates strictly as a discovery feed interface.</p>`;
+            } else if (type === 'gdpr') {
+                titleEl.textContent = 'GDPR Compliance Notice';
+                bodyEl.innerHTML = `<p class="text-secondary small">Users hold full right to local storage reset and privacy compliance purge under EU GDPR guidelines.</p>`;
+            }
+        };
+
+        // Initialize feed data
+        feedData = [...masterPool];
+        applyFeedFilter();
     </script>
 </body>
 </html>
