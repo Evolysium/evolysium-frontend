@@ -381,18 +381,17 @@
             </div>
         </div>
 
-        <!-- Scrollable Melted Social News / Micro-Digest Section -->
+        <!-- Scrollable Melted Social News / Micro-Digest Section (bez Realtime Sync badge-a) -->
         <div class="mb-5">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                 <div class="small fw-semibold" style="color: rgba(0, 240, 255, 0.85); letter-spacing: 0.5px;">🔥 WHAT’S POPPING ACROSS FEEDS</div>
-                <span class="badge bg-dark border border-secondary text-secondary font-mono small" style="opacity: 0.7;">REALTIME SYNC</span>
             </div>
             <div class="news-drawer" id="social-news-drawer">
                 <!-- Dynamically populated scrollable micro news/signals -->
             </div>
         </div>
 
-        <!-- Hero welcome / Engagement teaser -->
+        <!-- Hero welcome / Engagement teaser (uklonjena bijela pill sličica iznad naslova) -->
         <div class="text-center my-4 py-4 position-relative">
             <div style="position:absolute; width:300px; height:150px; background:var(--pink-pop); filter:blur(110px); opacity:0.12; left:50%; top:20%; transform:translateX(-50%); z-index:-1;"></div>
             <h1 class="hero-headline display-4 mb-3">Your FYP for the Whole Web.</h1>
@@ -428,12 +427,21 @@
                 <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> User Trails</button>
             </div>
 
-            <!-- Category chips -->
+            <!-- Proširene kategorije (luxury, 18+ content, architecture, funny, movies, reels, story, popular, trending, + osn. kategorije) -->
             <div class="d-flex flex-wrap gap-2">
                 <button class="social-pill active" onclick="toggleSelection('category', 'tech', this)">💻 Tech & AI</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'lifestyle', this)">⚡ Lifestyle</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand', this)">📢 Brand / Ads</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'luxury', this)">💎 Luxury</button>
+                <button class="social-pill active" onclick="toggleSelection('category', '18+content', this)">🔞 18+ Content</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'architecture', this)">🏛️ Architecture</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'funny', this)">😂 Funny</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'movies', this)">🎬 Movies</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'reels', this)">⚡ Reels</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'story', this)">📖 Story</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'popular', this)">🔥 Popular</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'trending', this)">📈 Trending</button>
             </div>
         </div>
 
@@ -484,6 +492,15 @@
                                 <option value="tech">💻 Tech & AI</option>
                                 <option value="lifestyle">⚡ Lifestyle</option>
                                 <option value="gaming">🎮 Gaming</option>
+                                <option value="luxury">💎 Luxury</option>
+                                <option value="18+content">🔞 18+ Content</option>
+                                <option value="architecture">🏛️ Architecture</option>
+                                <option value="funny">😂 Funny</option>
+                                <option value="movies">🎬 Movies</option>
+                                <option value="reels">⚡ Reels</option>
+                                <option value="story">📖 Story</option>
+                                <option value="popular">🔥 Popular</option>
+                                <option value="trending">📈 Trending</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -649,15 +666,15 @@
         let feedItems = [];
         let currentStoryIndex = 0;
         let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin", "trail"];
-        let selectedCategories = ["tech", "gaming", "luxury", "lifestyle", "brand"];
+        let selectedCategories = ["tech", "lifestyle", "brand", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
         let isLoadingInfinite = false;
 
         const fallbackItems = [
             { id: 'f1', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management blueprint with ambient cyan underlighting.' },
-            { id: 'f2', source: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', category: 'lifestyle', platform: 'instagram', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', summary: 'Concrete and glass continuity over Mediterranean cliffs.' },
-            { id: 'f3', source: '@x_build_log', title: 'Local LLM inference benchmark on M4 Max zero cloud lag', category: 'tech', platform: 'x', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900', summary: 'Token throughput breakdown hitting 142 tokens/sec local.' },
-            { id: 'f4', source: '@reddit_tech_pulse', title: 'Why hardware acceleration bypassed legacy bottlenecks this quarter', category: 'tech', platform: 'reddit', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900', summary: 'Community thread breaking down kernel-level memory allocation.' },
-            { id: 'f5', source: '@linkedin_exec', title: 'Why engineering culture eats strategy for breakfast in 2026', category: 'tech', platform: 'linkedin', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900', summary: 'Asynchronous ownership metrics from scale-up engineering teams.' }
+            { id: 'f2', source: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', category: 'architecture', platform: 'instagram', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', summary: 'Concrete and glass continuity over Mediterranean cliffs.' },
+            { id: 'f3', source: '@x_build_log', title: 'Local LLM inference benchmark on M4 Max zero cloud lag', category: 'trending', platform: 'x', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900', summary: 'Token throughput breakdown hitting 142 tokens/sec local.' },
+            { id: 'f4', source: '@reddit_tech_pulse', title: 'Why hardware acceleration bypassed legacy bottlenecks this quarter', category: 'popular', platform: 'reddit', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900', summary: 'Community thread breaking down kernel-level memory allocation.' },
+            { id: 'f5', source: '@luxury_vault', title: 'Private carbon-black yacht suite showcase Monte Carlo', category: 'luxury', platform: 'instagram', image: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=900', summary: 'Minimalist brushed titanium interior geometry.' }
         ];
 
         const socialNewsSignals = [
@@ -702,7 +719,7 @@
                 id: (item.id || 'item_' + Date.now()) + '_' + Math.random().toString(36).substring(2,7),
                 creator: item.source || item.creator || '@alpha_validator',
                 title: item.title ? item.title.replace(/\\u[0-9a-fA-F]{4}/g, m => String.fromCharCode(parseInt(m.replace('\\u',''), 16))) : 'Vibe Moment',
-                cat: item.category || item.cat || 'tech',
+                cat: item.category || item.cat || 'trending',
                 platform: (item.platform || 'tiktok').toLowerCase(),
                 likes: item.likes || (Math.floor(Math.random() * 50) + 'k'),
                 comments: item.comments || (Math.floor(Math.random() * 900) + '100'),
