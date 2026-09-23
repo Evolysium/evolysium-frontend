@@ -1,45 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium — Real stories from people you'd follow</title>
-    <meta name="description" content="A calm place where real posts, morning coffee thoughts, film rolls, and life updates from TikTok, Instagram, and Reddit meet in one warm feed.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://evolysium.github.io/evolysium-frontend/">
-
-    <!-- Google Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Evolysium",
-      "url": "https://evolysium.github.io/evolysium-frontend/",
-      "description": "Cross-platform real human community stories.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Evolysium",
-        "copyrightYear": 2026
-      }
-    }
-    </script>
-
+    <title>Evolysium — Stvarne priče i trenuci</title>
+    <meta name="description" content="Topla društvena zajednica sa stvarnim objavama, storyjima i algoritmima s mreža.">
+    
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome 6 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-primary: #fafafa;
-            --bg-secondary: #ffffff;
-            --border-color: #dbdbdb;
-            --text-primary: #262626;
-            --text-secondary: #737373;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1c1c1c;
+            --border-color: #2a2a2a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --accent-yellow: #facc15;
             --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            --accent-soft: #0095f6;
+            --tiktok-grad: linear-gradient(135deg, rgba(37,244,238,0.25), rgba(254,44,85,0.25));
         }
 
         * { box-sizing: border-box; }
@@ -59,9 +43,9 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* 3. Diskretan, manji i unikatan Evolysium logo koji se stapa (Instagram warm vibe) */
+        /* Navbar */
         .evolysium-navbar {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(20, 20, 20, 0.88);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
@@ -70,9 +54,9 @@
         }
 
         .brand-monogram {
-            width: 32px;
-            height: 32px;
-            border-radius: 9px;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
             background: var(--ig-gradient);
             display: flex;
             align-items: center;
@@ -82,10 +66,8 @@
             font-size: 0.9rem;
             color: #fff;
             text-decoration: none;
-            box-shadow: 0 2px 8px rgba(220, 39, 67, 0.25);
-            transition: transform 0.2s;
+            box-shadow: 0 0 15px rgba(131, 58, 180, 0.4);
         }
-        .brand-monogram:hover { transform: scale(1.05); color: #fff; }
 
         .brand-title {
             font-weight: 700;
@@ -96,49 +78,97 @@
         }
 
         .tier-badge-pill {
-            background: #efefef;
-            color: var(--text-primary);
+            background: rgba(250, 204, 21, 0.12);
+            color: var(--accent-yellow);
+            border: 1px solid rgba(250, 204, 21, 0.3);
             font-size: 0.75rem;
             font-weight: 600;
             padding: 0.35rem 0.9rem;
             border-radius: 9999px;
             cursor: pointer;
-            border: 1px solid rgba(0,0,0,0.06);
             transition: all 0.2s;
         }
-        .tier-badge-pill:hover { background: #e5e5e5; }
+        .tier-badge-pill:hover { background: rgba(250, 204, 21, 0.2); }
 
         /* Workspace container */
         .feed-wrapper {
             max-width: 630px;
             width: 100%;
             margin: 0 auto;
-            padding: 1.5rem 1rem;
+            padding: 1.25rem 1rem;
         }
 
-        /* Search & Refresh Control Block */
+        /* Stories Row (Instagram/TikTok Ring vibe) */
+        .stories-container {
+            display: flex;
+            gap: 0.9rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            margin-bottom: 1.25rem;
+            scrollbar-width: none;
+        }
+        .stories-container::-webkit-scrollbar { display: none; }
+
+        .story-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            width: 68px;
+        }
+
+        .story-ring {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--ig-gradient);
+            padding: 2.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .story-item:hover .story-ring { transform: scale(1.05); }
+
+        .story-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--bg-primary);
+            object-fit: cover;
+        }
+
+        .story-name {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        /* Control Panel */
         .control-panel {
             display: flex;
             gap: 0.5rem;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .search-input-wrapper { position: relative; flex: 1; }
         .search-input-wrapper input {
             width: 100%;
-            background: #efefef;
-            border: 1px solid transparent;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 0.6rem 1rem 0.6rem 2.6rem;
             color: var(--text-primary);
             font-size: 0.85rem;
             outline: none;
-            transition: all 0.2s;
         }
-        .search-input-wrapper input:focus {
-            background: #fff;
-            border-color: var(--border-color);
-        }
+        .search-input-wrapper input:focus { border-color: var(--accent-yellow); }
         .search-input-wrapper i {
             position: absolute;
             left: 0.95rem;
@@ -149,8 +179,8 @@
         }
 
         .refresh-btn {
-            background: #efefef;
-            border: 1px solid transparent;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             color: var(--text-primary);
             border-radius: 10px;
             padding: 0.6rem 1.1rem;
@@ -160,21 +190,20 @@
             display: flex;
             align-items: center;
             gap: 0.4rem;
-            transition: all 0.2s;
         }
-        .refresh-btn:hover { background: #e5e5e5; }
+        .refresh-btn:hover { background: #1f1f1f; }
 
-        /* Organised Filter Pills */
+        /* Filter Pills */
         .pills-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 0.4rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .filter-pill {
-            background: #efefef;
-            border: none;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             color: var(--text-secondary);
             border-radius: 9999px;
             padding: 0.4rem 0.9rem;
@@ -182,23 +211,23 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
         }
         .filter-pill.active {
-            background: var(--text-primary);
-            color: #fff;
+            background: var(--accent-yellow);
+            color: #000;
+            border-color: var(--accent-yellow);
+            font-weight: 600;
         }
-        .filter-pill:hover:not(.active) { background: #e5e5e5; }
 
-        /* Post Cards (Instagram clean card style) */
+        /* Post Cards */
         .post-card {
-            background: var(--bg-secondary);
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            background-image: linear-gradient(180deg, rgba(131,58,180,0.04) 0%, rgba(20,20,20,0) 100%);
         }
 
         .post-header {
@@ -208,74 +237,41 @@
             padding: 0.85rem 1rem;
         }
 
-        .author-info {
-            display: flex;
-            align-items: center;
-            gap: 0.65rem;
-        }
-
+        .author-info { display: flex; align-items: center; gap: 0.65rem; }
         .author-avatar {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            object-fit: cover;
             padding: 2px;
             background: var(--ig-gradient);
         }
-        .author-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #fff;
-        }
+        .author-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg-card); }
 
         .platform-badge {
             font-size: 0.68rem;
-            padding: 0.2rem 0.55rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 6px;
             font-weight: 600;
-            color: var(--text-secondary);
-            background: #f0f0f0;
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .media-container {
             position: relative;
             width: 100%;
-            background: #f8f8f8;
+            background: #000;
             aspect-ratio: 4/5;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
         }
-        .media-container.landscape { aspect-ratio: 16/9; }
         .media-container video, .media-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        .video-overlay-play {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .play-icon-circle {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.65);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.1rem;
-        }
 
         .post-body { padding: 0.75rem 1rem 0.5rem; }
         .post-caption { font-size: 0.88rem; line-height: 1.45; color: var(--text-primary); margin-bottom: 0.4rem; }
-        .post-tags span { color: var(--accent-soft); font-weight: 500; margin-right: 0.35rem; font-size: 0.8rem; }
+        .post-tags span { color: var(--accent-yellow); font-weight: 500; margin-right: 0.35rem; font-size: 0.8rem; }
         .post-source-origin { font-size: 0.73rem; color: var(--text-secondary); margin-bottom: 0.6rem; }
 
         .post-footer-actions {
@@ -283,9 +279,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0.6rem 1rem;
-            border-top: 1px solid rgba(0,0,0,0.04);
-            color: var(--text-primary);
-            font-size: 1.1rem;
+            border-top: 1px solid var(--border-color);
         }
         .action-btn {
             background: transparent;
@@ -296,67 +290,51 @@
             gap: 0.4rem;
             cursor: pointer;
             font-size: 0.825rem;
-            font-weight: 500;
         }
-        .action-btn:hover { opacity: 0.7; }
-        .liked-heart { color: #ed4956; }
+        .liked-heart { color: #ef4444; }
 
-        .loader-sentinel { text-align: center; padding: 1.5rem 0; color: var(--text-secondary); font-size: 0.825rem; }
-
-        /* 1. Pricing Tier Cards inside Modal */
+        /* Pricing Tier Cards */
         .tier-card {
-            background: #fafafa;
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1rem;
             transition: all 0.2s;
         }
         .tier-card.active-tier {
-            border-color: var(--text-primary);
-            background: #fff;
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.2);
+            background: linear-gradient(145deg, #181818, #222014);
         }
 
-        /* 7. Footer exact match: © Evolysium 2026. */
+        /* Footer */
         .evolysium-footer {
             margin-top: auto;
             border-top: 1px solid var(--border-color);
-            background: var(--bg-primary);
+            background: var(--bg-secondary);
             padding: 1.5rem 1rem;
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.78rem;
         }
-        .evolysium-footer .footer-links {
-            margin-top: 0.35rem;
-            display: flex;
-            justify-content: center;
-            gap: 1.1rem;
-            flex-wrap: wrap;
-        }
-        .evolysium-footer a { color: var(--text-secondary); text-decoration: none; }
-        .evolysium-footer a:hover { color: var(--text-primary); }
 
-        .refresh-toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--text-primary);
-            color: white;
-            padding: 0.55rem 1.1rem;
-            border-radius: 9999px;
-            font-size: 0.78rem;
-            font-weight: 500;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 2000;
+        /* Story Viewer Modal */
+        #storyViewerModal .modal-content {
+            background: #000;
+            border: 1px solid var(--border-color);
+            color: #fff;
+            height: 75vh;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(131,58,180,0.3);
         }
-        .refresh-toast.show { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
-    <!-- 3. Diskretan, manji i unikatan Evolysium logo koji se stapa -->
+    <!-- Header -->
     <header class="evolysium-navbar">
         <div class="container d-flex align-items-center justify-content-between py-2 px-3" style="max-width: 630px;">
             <div class="d-flex align-items-center gap-2">
@@ -364,126 +342,127 @@
                 <a class="brand-title" href="#">Evolysium</a>
             </div>
             <span class="tier-badge-pill" id="activeTierIndicator" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                <span id="currentTierLabel">Free Feed</span>
+                <i class="fa-solid fa-sparkles me-1"></i> <span id="currentTierLabel">Free Community Pass</span>
             </span>
         </div>
     </header>
 
-    <!-- Main Workspace (8. Dobro organizirano) -->
+    <!-- Main Workspace -->
     <main class="feed-wrapper">
-        <!-- 4. Google subpages breadcrumb -->
-        <nav aria-label="breadcrumb" class="mb-3 d-flex justify-content-between align-items-center small text-secondary">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="?page=home" class="text-secondary text-decoration-none">Home</a></li>
-                <li class="breadcrumb-item active text-dark" aria-current="page">Real People Feed</li>
-            </ol>
-            <span class="small text-secondary">Google Indexed</span>
-        </nav>
+        <!-- Stories Strip -->
+        <div class="stories-container" id="storiesStrip">
+            <div class="story-item" onclick="openStory('Elena Vance', 'Sinoćnji zalazak i prva skica nove priče.')">
+                <div class="story-ring"><img class="story-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&fit=crop" alt="Elena"></div>
+                <span class="story-name">Elena</span>
+            </div>
+            <div class="story-item" onclick="openStory('Liam & Notebooks', 'Testing ring-light setup for today streetwalk reel.')">
+                <div class="story-ring"><img class="story-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&fit=crop" alt="Liam"></div>
+                <span class="story-name">Liam</span>
+            </div>
+            <div class="story-item" onclick="openStory('u/analog_claire', 'Darkroom chemical check — look at that contrast.')">
+                <div class="story-ring"><img class="story-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&fit=crop" alt="Claire"></div>
+                <span class="story-name">Claire</span>
+            </div>
+            <div class="story-item" onclick="openStory('Marcus & Clay', 'Kiln opening in 10 minutes, wish us luck.')">
+                <div class="story-ring"><img class="story-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&fit=crop" alt="Marcus"></div>
+                <span class="story-name">Marcus</span>
+            </div>
+        </div>
 
-        <!-- 6. Funkcionalni Control Panel (Search + Refresh) -->
+        <!-- Search & Refresh -->
         <div class="control-panel">
             <div class="search-input-wrapper">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Search people, places, morning thoughts..." oninput="handleSearch(this.value)">
+                <input type="text" id="searchInput" placeholder="Pretraži algoritam, autore, tagove..." oninput="handleSearch(this.value)">
             </div>
-            <button class="refresh-btn" id="refreshFeedBtn" onclick="triggerManualRefresh()">
-                <i class="fa-solid fa-rotate-right"></i> Refresh
+            <button class="refresh-btn" onclick="triggerManualRefresh()">
+                <i class="fa-solid fa-rotate-right"></i> Algoritam Sync
             </button>
         </div>
 
-        <!-- 5. Organizirane platforme i kategorije -->
-        <div class="pills-grid" id="filterPillsContainer">
-            <button class="filter-pill active" data-filter="all">All posts</button>
-            <button class="filter-pill" data-filter="Instagram">Instagram</button>
-            <button class="filter-pill" data-filter="TikTok">TikTok</button>
-            <button class="filter-pill" data-filter="Reddit">Reddit</button>
-            <button class="filter-pill" data-filter="Coffee & Mornings">Coffee & Mornings</button>
-            <button class="filter-pill" data-filter="Travel">Travel</button>
-            <button class="filter-pill" data-filter="Daily Snapshots">Daily Snapshots</button>
+        <!-- Filter Pills -->
+        <div class="pills-grid">
+            <button class="filter-pill active" data-filter="all">Sve mreže</button>
+            <button class="filter-pill" data-filter="Instagram">Instagram algoritam</button>
+            <button class="filter-pill" data-filter="TikTok">TikTok FYP</button>
+            <button class="filter-pill" data-filter="Reddit">Reddit Community</button>
         </div>
 
-        <!-- 2, 9. Neograničen feed sa stvarnim ljudima (prenesene stvarne priče/objave) -->
+        <!-- Feed Stream -->
         <section id="vibeFeedStream"></section>
-
-        <!-- Infinite Scroll Sentinel -->
-        <div id="loaderSentinel" class="loader-sentinel">
-            <span>Loading more real stories...</span>
-        </div>
     </main>
 
-    <!-- 7. Footer točno: © Evolysium 2026. -->
+    <!-- Footer -->
     <footer class="evolysium-footer">
         <div class="container" style="max-width: 630px;">
-            <p class="mb-1 fw-medium text-dark">© Evolysium 2026.</p>
-            <div class="footer-links">
-                <a href="#privacy" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('privacy')">Privacy</a>
-                <a href="#disclaimer" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('disclaimer')">About source posts</a>
-                <a href="#gdpr" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('gdpr')">GDPR data</a>
-                <a href="#sitemap" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('sitemap')">Google Sitemap</a>
-            </div>
+            <p class="mb-0">© Evolysium 2026. — Društvena kuracija i mrežni algoritam stream</p>
         </div>
     </footer>
 
-    <!-- 1. Modal za 4 pretplatnička paketa -->
+    <!-- 4 Pro & Society Tier Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-white border border-light text-dark shadow-sm">
-                <div class="modal-header border-bottom">
-                    <h5 class="modal-title fw-bold fs-6">Evolysium membership options</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content" style="background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color);">
+                <div class="modal-header border-bottom border-dark">
+                    <h5 class="modal-title fw-bold fs-6">Evolysium razine članstva</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row g-2">
+                        <!-- 1. Free Feed -->
                         <div class="col-6">
-                            <div class="tier-card active-tier h-100 d-flex flex-column justify-content-between" id="card-free">
+                            <div class="tier-card active-tier h-100 d-flex flex-column justify-content-between" id="card-Free Community Pass">
                                 <div>
-                                    <h6 class="fw-bold mb-1 fs-6">1. Free Feed</h6>
-                                    <p class="small text-secondary mb-2">$0 / mo</p>
+                                    <h6 class="fw-bold mb-1 fs-6" style="color:var(--accent-yellow)">Free Community Pass</h6>
+                                    <p class="small text-secondary mb-2">$0 / mj</p>
                                     <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Unlimited public stream</li>
-                                        <li>Real human posts</li>
+                                        <li>Standardni mrežni feed</li>
+                                        <li>Osnovni pregled objava</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-outline-dark w-100" onclick="selectTier('free', 'Free Feed')">Active</button>
+                                <button class="btn btn-sm btn-outline-warning w-100" onclick="selectTier('Free Community Pass')">Aktivno</button>
                             </div>
                         </div>
+                        <!-- 2. Pro/Personal -> Social Personal Pro -->
                         <div class="col-6">
-                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-pro">
+                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-Social Personal Pro">
                                 <div>
-                                    <h6 class="fw-bold mb-1 fs-6">2. Creator Friend</h6>
-                                    <p class="small text-secondary mb-2">$4.99 / mo</p>
+                                    <h6 class="fw-bold mb-1 fs-6">Social Personal Pro</h6>
+                                    <p class="small text-secondary mb-2">$4.99 / mj</p>
                                     <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Save favorite moments</li>
-                                        <li>Clean ad-free reading</li>
+                                        <li>Osobne arhive omiljenih</li>
+                                        <li>Bez mrežnog šuma/reklama</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-dark w-100" onclick="selectTier('pro', 'Creator Friend')">Choose</button>
+                                <button class="btn btn-sm btn-warning w-100 text-dark fw-bold" onclick="selectTier('Social Personal Pro')">Odaberi</button>
                             </div>
                         </div>
+                        <!-- 3. Creator/business -> Creator Business Suite -->
                         <div class="col-6 mt-2">
-                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-vault">
+                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-Creator Business Suite">
                                 <div>
-                                    <h6 class="fw-bold mb-1 fs-6">3. Community Supporter</h6>
-                                    <p class="small text-secondary mb-2">$9.99 / mo</p>
+                                    <h6 class="fw-bold mb-1 fs-6">Creator Business Suite</h6>
+                                    <p class="small text-secondary mb-2">$9.99 / mj</p>
                                     <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Support independent curation</li>
-                                        <li>Early archive access</li>
+                                        <li>Sinkronizacija poslovnih brendova</li>
+                                        <li>Prioritetni algoritam feed</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-outline-dark w-100" onclick="selectTier('vault', 'Supporter')">Choose</button>
+                                <button class="btn btn-sm btn-outline-light w-100" onclick="selectTier('Creator Business Suite')">Odaberi</button>
                             </div>
                         </div>
+                        <!-- 4. 18+ content / VIP Enterprise -> VIP Enterprise & 18+ Access -->
                         <div class="col-6 mt-2">
-                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-syndicate">
+                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-VIP Enterprise & 18+ Access">
                                 <div>
-                                    <h6 class="fw-bold mb-1 fs-6">4. Curator Patron</h6>
-                                    <p class="small text-secondary mb-2">$19.99 / mo</p>
+                                    <h6 class="fw-bold mb-1 fs-6">VIP Enterprise & 18+ Access</h6>
+                                    <p class="small text-secondary mb-2">$19.99 / mj</p>
                                     <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Direct tag suggestions</li>
-                                        <li>Full curation badge</li>
+                                        <li>Enterprise API syndication</li>
+                                        <li>Provjereni 18+ mrežni filtri</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-outline-dark w-100" onclick="selectTier('syndicate', 'Patron')">Choose</button>
+                                <button class="btn btn-sm btn-outline-light w-100" onclick="selectTier('VIP Enterprise & 18+ Access')">Odaberi</button>
                             </div>
                         </div>
                     </div>
@@ -492,266 +471,120 @@
         </div>
     </div>
 
-    <!-- Legal & Google Subpage Modal -->
-    <div class="modal fade" id="legalModal" tabindex="-1" aria-hidden="true">
+    <!-- Story Viewer Modal -->
+    <div class="modal fade" id="storyViewerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-white border border-light text-dark">
-                <div class="modal-header border-bottom">
-                    <h5 class="modal-title fw-bold fs-6" id="legalModalTitle">Document</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content d-flex flex-column justify-content-between p-4" id="storyContentBox">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 border-secondary">
+                    <span id="storyAuthorTitle" class="fw-bold small text-warning">Author</span>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body small text-secondary" id="legalModalBody"></div>
+                <div class="text-center my-auto px-2">
+                    <p id="storyTextPreview" class="fs-6 fw-medium text-light mb-0">Trenutak priče...</p>
+                </div>
+                <div class="text-center small text-secondary">
+                    <i class="fa-solid fa-circle-notch fa-spin me-1"></i> Algoritam story feed v2.6
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast feedback -->
-    <div class="refresh-toast" id="refreshToast">
-        Feed updated with recent human shares
-    </div>
-
-    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        /*************************************************************************
-         * REAL HUMAN HUMAN-FIRST MASTER POOL (Instagram Warmth & Real Posts)
-         *************************************************************************/
         const masterHumanPool = [
             {
                 id: 'ig-101',
                 platform: 'Instagram',
-                category: 'Coffee & Mornings',
                 author: 'Elena Vance',
                 handle: '@elenavance.shots',
-                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop',
-                type: 'image',
+                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&fit=crop',
                 mediaUrl: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=900&fit=crop',
-                aspect: 'portrait',
-                caption: 'Finally quiet enough at 7:30 AM to finish three chapters and watch the light hit the kitchen counter properly.',
-                sourceUrl: 'Instagram public share',
-                tags: ['#morningcoffee', '#quietmoments', '#filmnotes'],
-                likes: '1,420',
-                comments: '34'
+                caption: 'Jutarnja kavica i sunce na kuhinjskom pultu.',
+                sourceUrl: 'Instagram Graph API Feed',
+                tags: ['#jutro', '#kava', '#igstories'],
+                likes: '1,420', comments: '34'
             },
             {
                 id: 'tt-202',
                 platform: 'TikTok',
-                category: 'Daily Snapshots',
                 author: 'Liam & Notebooks',
                 handle: '@liam.walks',
-                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop',
-                type: 'video',
-                mediaUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-                thumbnailUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&fit=crop',
-                aspect: 'portrait',
-                caption: 'Walking through rainy old streets in Ljubljana without headphones just to hear rain on umbrellas.',
-                sourceUrl: 'TikTok synced post',
-                tags: ['#walks', '#rainyday', '#ljubljana'],
-                likes: '3,890',
-                comments: '112'
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&fit=crop',
+                mediaUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&fit=crop',
+                caption: 'Šetnja kroz kišne ulice, zvuk kiše bez slušalica.',
+                sourceUrl: 'TikTok FYP Stream',
+                tags: ['#šetnja', '#kiša', '#viralvibes'],
+                likes: '3,890', comments: '112'
             },
             {
                 id: 'rd-303',
                 platform: 'Reddit',
-                category: 'Travel',
                 author: 'u/analog_claire',
                 handle: 'r/analog',
-                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop',
-                type: 'image',
+                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&fit=crop',
                 mediaUrl: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&fit=crop',
-                aspect: 'portrait',
-                caption: 'Kodak Gold 200 roll came back from local lab after two months sitting in my bag. Kyoto alleyway afternoon.',
-                sourceUrl: 'Reddit r/analog public sync',
-                tags: ['#kodakgold', '#kyoto', '#filmcamera'],
-                likes: '892',
-                comments: '48'
-            },
-            {
-                id: 'ig-404',
-                platform: 'Instagram',
-                category: 'Coffee & Mornings',
-                author: 'Marcus & Clay',
-                handle: '@marcus_pottery',
-                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop',
-                type: 'image',
-                mediaUrl: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=900&fit=crop',
-                aspect: 'portrait',
-                caption: 'First batch of matte cream cups survived the kiln without cracks. Making matcha in one right now feels like a small win.',
-                sourceUrl: 'Instagram creator sync',
-                tags: ['#ceramics', '#pottery', '#slowliving'],
-                likes: '2,610',
-                comments: '77'
+                caption: 'Kodak Gold film razvijen nakon dva mjeseca.',
+                sourceUrl: 'Reddit Community API',
+                tags: ['#analog', '#film', '#kyoto'],
+                likes: '892', comments: '48'
             }
         ];
 
-        let currentFilter = 'all';
-        let searchQuery = '';
         let feedData = [...masterHumanPool];
-        let batchIdx = 1;
-        let userTierName = localStorage.getItem('evolysium_tier_name') || 'Free Feed';
-        
-        document.getElementById('currentTierLabel').textContent = userTierName;
-        const feedStreamEl = document.getElementById('vibeFeedStream');
-        const sentinelEl = document.getElementById('loaderSentinel');
+        let currentFilter = 'all';
 
-        window.selectTier = function(tierKey, tierLabel) {
-            userTierName = tierLabel;
-            localStorage.setItem('evolysium_tier', tierKey);
-            localStorage.setItem('evolysium_tier_name', tierLabel);
-            document.getElementById('currentTierLabel').textContent = tierLabel;
-            
+        function selectTier(tierName) {
+            document.getElementById('currentTierLabel').textContent = tierName;
+            localStorage.setItem('evolysium_tier_name', tierName);
             document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('active-tier'));
-            const activeCard = document.getElementById(`card-${tierKey}`);
-            if (activeCard) activeCard.classList.add('active-tier');
+            const cardEl = document.getElementById(`card-${tierName}`);
+            if (cardEl) cardEl.classList.add('active-tier');
+            bootstrap.Modal.getInstance(document.getElementById('pricingModal')).hide();
+        }
 
-            const modalEl = document.getElementById('pricingModal');
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            if (modal) modal.hide();
-        };
-
-        function generateBatch() {
-            batchIdx++;
-            return masterHumanPool.map((item, i) => ({
-                ...item,
-                id: `${item.id}-batch-${batchIdx}-${i}`,
-                likes: `${Math.floor(Math.random() * 2000 + 400)}`
-            }));
+        function openStory(authorName, textPreview) {
+            document.getElementById('storyAuthorTitle').textContent = authorName;
+            document.getElementById('storyTextPreview').textContent = textPreview;
+            new bootstrap.Modal(document.getElementById('storyViewerModal')).show();
         }
 
         function renderCard(post) {
-            let mediaHtml = '';
-            if (post.type === 'video') {
-                mediaHtml = `
-                    <div class="media-container ${post.aspect === 'landscape' ? 'landscape' : ''}">
-                        <video poster="${post.thumbnailUrl}" preload="none" playsinline loop muted>
-                            <source src="${post.mediaUrl}" type="video/mp4">
-                        </video>
-                        <div class="video-overlay-play" onclick="togglePlay(this)">
-                            <div class="play-icon-circle"><i class="fa-solid fa-play"></i></div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                mediaHtml = `
-                    <div class="media-container ${post.aspect === 'landscape' ? 'landscape' : ''}">
-                        <img src="${post.mediaUrl}" alt="Photo shared by ${post.author}" loading="lazy">
-                    </div>
-                `;
-            }
-
-            const tagsHtml = (post.tags || []).map(t => `<span>${t}</span>`).join(' ');
-
             return `
                 <article class="post-card">
                     <div class="post-header">
                         <div class="author-info">
-                            <div class="author-avatar">
-                                <img src="${post.avatar}" alt="${post.author}">
-                            </div>
+                            <div class="author-avatar"><img src="${post.avatar}" alt="${post.author}"></div>
                             <div>
-                                <h6 class="mb-0 fw-semibold text-dark" style="font-size:0.875rem;">${post.author}</h6>
+                                <h6 class="mb-0 fw-semibold text-light" style="font-size:0.875rem;">${post.author}</h6>
                                 <small class="text-secondary" style="font-size:0.75rem;">${post.handle}</small>
                             </div>
                         </div>
                         <span class="platform-badge">${post.platform}</span>
                     </div>
-
-                    ${mediaHtml}
-
+                    <div class="media-container"><img src="${post.mediaUrl}" alt="Objava"></div>
                     <div class="post-body">
-                        <div class="post-source-origin">Synced from ${post.sourceUrl}</div>
+                        <div class="post-source-origin">Algoritam izvor: ${post.sourceUrl}</div>
                         <p class="post-caption">${post.caption}</p>
-                        <div class="post-tags">${tagsHtml}</div>
+                        <div class="post-tags">${post.tags.map(t=>`<span>${t}</span>`).join('')}</div>
                     </div>
-
                     <div class="post-footer-actions">
-                        <div class="d-flex gap-3">
-                            <button class="action-btn" onclick="toggleLike(this)">
-                                <i class="fa-regular fa-heart"></i> <span>${post.likes}</span>
-                            </button>
-                            <button class="action-btn">
-                                <i class="fa-regular fa-comment"></i> <span>${post.comments}</span>
-                            </button>
-                        </div>
-                        <button class="action-btn" title="Share link">
-                            <i class="fa-regular fa-paper-plane"></i>
+                        <button class="action-btn" onclick="let i=this.querySelector('i'); i.classList.toggle('fa-regular'); i.classList.toggle('fa-solid'); i.classList.toggle('liked-heart')">
+                            <i class="fa-regular fa-heart"></i> <span>${post.likes}</span>
                         </button>
+                        <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>${post.comments}</span></button>
                     </div>
                 </article>
             `;
         }
 
-        window.togglePlay = function(overlayEl) {
-            const video = overlayEl.parentElement.querySelector('video');
-            if (video.paused) {
-                video.play();
-                video.muted = false;
-                overlayEl.style.opacity = '0';
-            } else {
-                video.pause();
-                overlayEl.style.opacity = '1';
-            }
-        };
-
-        window.toggleLike = function(btn) {
-            const i = btn.querySelector('i');
-            const span = btn.querySelector('span');
-            let count = parseInt(span.textContent.replace(/,/g, '')) || 1000;
-            if (i.classList.contains('fa-regular')) {
-                i.classList.remove('fa-regular');
-                i.classList.add('fa-solid', 'liked-heart');
-                span.textContent = (count + 1).toLocaleString();
-            } else {
-                i.classList.remove('fa-solid', 'liked-heart');
-                i.classList.add('fa-regular');
-                span.textContent = (count - 1).toLocaleString();
-            }
-        };
-
         function applyFeedFilter() {
+            const container = document.getElementById('vibeFeedStream');
             let filtered = feedData;
             if (currentFilter !== 'all') {
-                filtered = filtered.filter(item => 
-                    item.platform.toLowerCase() === currentFilter.toLowerCase() ||
-                    item.category.toLowerCase() === currentFilter.toLowerCase()
-                );
+                filtered = filtered.filter(item => item.platform.toLowerCase() === currentFilter.toLowerCase());
             }
-            if (searchQuery.trim() !== '') {
-                const q = searchQuery.toLowerCase();
-                filtered = filtered.filter(item => 
-                    item.caption.toLowerCase().includes(q) ||
-                    item.author.toLowerCase().includes(q) ||
-                    (item.tags && item.tags.some(t => t.toLowerCase().includes(q)))
-                );
-            }
-            feedStreamEl.innerHTML = filtered.map(renderCard).join('') || `<div class="text-center py-5 text-secondary small">No matching posts right now.</div>`;
+            container.innerHTML = filtered.map(renderCard).join('');
         }
-
-        window.handleSearch = function(val) {
-            searchQuery = val;
-            applyFeedFilter();
-        };
-
-        window.triggerManualRefresh = function() {
-            const btn = document.getElementById('refreshFeedBtn');
-            const icon = btn.querySelector('i');
-            icon.classList.add('fa-spin');
-            
-            setTimeout(() => {
-                const freshItems = masterHumanPool.slice().reverse().map((item, idx) => ({
-                    ...item,
-                    id: `refreshed-${Date.now()}-${idx}`
-                }));
-                feedData = [...freshItems, ...feedData];
-                applyFeedFilter();
-                icon.classList.remove('fa-spin');
-                
-                const toast = document.getElementById('refreshToast');
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2200);
-            }, 400);
-        };
 
         document.querySelectorAll('.filter-pill').forEach(pill => {
             pill.addEventListener('click', () => {
@@ -762,36 +595,19 @@
             });
         });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    setTimeout(() => {
-                        feedData = [...feedData, ...generateBatch()];
-                        applyFeedFilter();
-                    }, 350);
-                }
-            });
-        }, { rootMargin: '400px' });
-        observer.observe(sentinelEl);
-
-        window.showLegalContent = function(type) {
-            const titleEl = document.getElementById('legalModalTitle');
-            const bodyEl = document.getElementById('legalModalBody');
-            if (type === 'privacy') {
-                titleEl.textContent = 'Privacy';
-                bodyEl.innerHTML = `<p>Local preferences and your chosen view tiers stay in your browser. No extra behavioral trackers.</p>`;
-            } else if (type === 'disclaimer') {
-                titleEl.textContent = 'About source posts';
-                bodyEl.innerHTML = `<p>Content displayed here mirrors public creator notes and shared posts via standard social web links.</p>`;
-            } else if (type === 'gdpr') {
-                titleEl.textContent = 'GDPR data info';
-                bodyEl.innerHTML = `<p>Clear your browser storage anytime to remove saved preferences.</p>`;
-            } else if (type === 'sitemap') {
-                titleEl.textContent = 'Google Sitemap / Index Status';
-                bodyEl.innerHTML = `<p>Indexable routes:<br><code>/</code> — Root human community stream</p>`;
-            }
+        window.triggerManualRefresh = function() {
+            applyFeedFilter();
         };
 
+        window.handleSearch = function(val) {
+            const container = document.getElementById('vibeFeedStream');
+            const q = val.toLowerCase();
+            const filtered = feedData.filter(item => item.caption.toLowerCase().includes(q) || item.author.toLowerCase().includes(q));
+            container.innerHTML = filtered.map(renderCard).join('');
+        };
+
+        const savedTier = localStorage.getItem('evolysium_tier_name') || 'Free Community Pass';
+        selectTier(savedTier);
         applyFeedFilter();
     </script>
 </body>
