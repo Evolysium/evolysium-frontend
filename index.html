@@ -84,7 +84,6 @@
             text-shadow: 0 0 40px rgba(255, 42, 133, 0.15);
         }
 
-        /* Story / Vibe strip with ambient blending */
         .vibe-strip {
             display: flex;
             gap: 16px;
@@ -160,7 +159,6 @@
             backdrop-filter: blur(15px);
         }
 
-        /* Ambient melted card style */
         .social-card {
             background: var(--bg-card);
             backdrop-filter: blur(24px);
@@ -228,7 +226,6 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* Melted news stream ticker / scrollable micro-news drawer */
         .news-drawer {
             display: flex;
             gap: 14px;
@@ -339,7 +336,6 @@
             color: var(--cyan-pop);
         }
 
-        /* Seamless atmospheric text gradient blending helper */
         .text-melt {
             color: rgba(255,255,255,0.85);
             line-height: 1.5;
@@ -348,54 +344,31 @@
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="navbar flex items-center justify-between p-4 bg-black/80">
-  <div class="flex items-center gap-2">
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 via-purple-500 to-cyan-400 p-[1px]">
-      <div class="w-full h-full bg-black rounded-xl flex items-center justify-center font-bold text-xs">E</div>
-    </div>
-    <span class="text-xl font-bold tracking-wider text-white">Evolysium</span>
-    <span class="px-2 py-0.5 text-[10px] font-medium tracking-wide bg-white/10 text-gray-300 rounded-full">community</span>
-  </div>
-  <button class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-sm font-medium text-white transition">Say hi / join</button>
-</header>
-
-<!-- HERO / STORIES -->
-<section class="px-4 py-2">
-  <div class="flex items-center gap-2 text-pink-400 text-xs font-medium mb-3">
-    <span>🔥</span>
-    <h2>Right now from creators & friends</h2>
-  </div>
-</section>
-
-<!-- MAIN STREAM -->
-<section class="px-4 py-8 text-center">
-  <h1 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-pink-200 to-cyan-300 bg-clip-text text-transparent">
-    All the good stuff. Zero doomscrolling.
-  </h1>
-  <p class="text-sm text-gray-400 mt-3 max-w-sm mx-auto">
-    TikTok, Insta, X, Reddit & real drops, all hanging out in one calm spot.
-  </p>
-</section>
-
-<!-- SOCIAL DIGEST -->
-<section class="px-4 py-4">
-  <div class="flex items-center justify-between mb-4">
-    <h3 class="text-cyan-400 text-xs font-semibold uppercase tracking-wider">⚡ Fresh off the timeline</h3>
-    <span class="text-[10px] text-gray-400">syncs as it happens</span>
-  </div>
-</section>
-
-<!-- ACTION / SEARCH -->
-<section class="px-4 py-6">
-  <div class="relative mb-4">
-    <input type="text" placeholder="🔍 Find creators, deep cuts, or vibes..." class="w-full bg-black/60 border border-purple-500/30 rounded-full px-6 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400" />
-  </div>
-  <button class="w-full py-4 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 font-semibold text-white shadow-lg shadow-pink-500/20 flex items-center justify-center gap-2">
-    <span>✨</span> Catch me up
-  </button>
-</section>
-
+    <!-- Header -->
+    <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none" href="#">
+                <div class="brand-pill">
+                    <i class="fa-solid fa-sparkles text-white fs-5"></i>
+                </div>
+                <div>
+                    <span class="brand-name fw-bold fs-4 text-white">Evolysium</span>
+                    <span class="badge text-white ms-2 rounded-pill font-mono" style="font-size: 0.65rem; background: var(--pink-pop);">VIBE NET</span>
+                </div>
+            </a>
+            <div class="d-flex align-items-center gap-2">
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
+                    <i class="fa-solid fa-plus-circle"></i> Drop Vibe Trail
+                </button>
+                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
+                    <i class="fa-solid fa-crown text-warning"></i> Pricing
+                </button>
+                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#authModal">
+                    <i class="fa-solid fa-user-circle"></i> Join Evolysium
+                </button>
+            </div>
+        </div>
+    </nav>
 
     <!-- Main Content -->
     <main class="container py-4">
@@ -600,7 +573,7 @@
         </div>
     </div>
 
-    <!-- Auth Modal (Join Evolysium) -->
+    <!-- Auth Modal -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.9); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -647,7 +620,7 @@
         </div>
     </div>
 
-    <!-- Interactive Story Viewer Modal with Navigation Controls -->
+    <!-- Story Viewer Modal -->
     <div class="modal fade" id="storyModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-3 d-flex flex-column justify-content-between" style="background:rgba(8, 6, 15, 0.95); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.1); border-radius:28px; height:80vh; max-width:400px; margin:auto;">
@@ -679,7 +652,6 @@
         let selectedCategories = ["tech", "gaming", "luxury", "lifestyle", "brand"];
         let isLoadingInfinite = false;
 
-        // Fallback viral pool & social personalized drawer signals
         const fallbackItems = [
             { id: 'f1', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management blueprint with ambient cyan underlighting.' },
             { id: 'f2', source: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', category: 'lifestyle', platform: 'instagram', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', summary: 'Concrete and glass continuity over Mediterranean cliffs.' },
@@ -843,7 +815,6 @@
                     ? `<video src="${item.video_url}" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()"></video>`
                     : `<img src="${item.media}" alt="Media">`;
                 
-                // Find index in global array for story viewer lookup
                 const globalIdx = feedItems.findIndex(f => f.id === item.id);
                 
                 return `
