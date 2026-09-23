@@ -125,11 +125,6 @@
             border: 3px solid var(--bg-main);
         }
 
-        .vibe-item:hover .vibe-ring { 
-            transform: scale(1.1); 
-            box-shadow: 0 0 25px rgba(255, 42, 133, 0.4);
-        }
-
         .social-pill {
             border-radius: 999px;
             padding: 10px 22px;
@@ -171,12 +166,6 @@
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.08);
         }
 
-        .social-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(255, 42, 133, 0.35);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 42, 133, 0.12), inset 0 1px 0 rgba(255,255,255,0.15);
-        }
-
         .feed-media {
             height: 290px;
             position: relative;
@@ -190,11 +179,6 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .social-card:hover .feed-media img, 
-        .social-card:hover .feed-media video {
-            transform: scale(1.04);
         }
 
         .creator-tag {
@@ -227,6 +211,29 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
+        .like-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 6px 14px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .like-btn.liked {
+            color: var(--pink-pop);
+            border-color: rgba(255, 42, 133, 0.4);
+            background: rgba(255, 42, 133, 0.12);
+        }
+        .like-btn:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
         .news-drawer {
             display: flex;
             gap: 14px;
@@ -245,31 +252,6 @@
             border-radius: 18px;
             padding: 14px 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .news-pill-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(0, 240, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .action-icon-btn {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-muted);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s;
-            cursor: pointer;
-        }
-        .action-icon-btn:hover {
-            background: rgba(255, 42, 133, 0.18);
-            color: var(--pink-pop);
-            border-color: rgba(255, 42, 133, 0.3);
         }
 
         .search-box, .auth-input {
@@ -280,16 +262,6 @@
             border-radius: 18px;
             padding: 14px 20px;
             color-scheme: dark;
-        }
-        .search-box::placeholder, .auth-input::placeholder {
-            color: rgba(255, 255, 255, 0.45);
-        }
-        .search-box:focus, .auth-input:focus {
-            background: #1a142c !important;
-            border-color: var(--pink-pop) !important;
-            box-shadow: 0 0 25px rgba(255, 42, 133, 0.2) !important;
-            color: #fff !important;
-            outline: none;
         }
 
         .btn-vibe {
@@ -325,6 +297,24 @@
             border: 2px solid var(--pink-pop);
             box-shadow: 0 0 40px rgba(255, 42, 133, 0.2);
         }
+        .pricing-perks {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: left;
+        }
+        .pricing-perks li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .pricing-perks li i {
+            color: var(--cyan-pop);
+            margin-top: 3px;
+        }
 
         .site-footer {
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -335,10 +325,6 @@
         .site-footer a {
             color: var(--text-muted);
             text-decoration: none;
-            transition: color 0.2s;
-        }
-        .site-footer a:hover {
-            color: var(--cyan-pop);
         }
 
         .text-melt {
@@ -397,13 +383,9 @@
             <div style="position:absolute; width:300px; height:150px; background:var(--pink-pop); filter:blur(110px); opacity:0.12; left:50%; top:20%; transform:translateX(-50%); z-index:-1;"></div>
             <h1 class="hero-headline display-4 mb-3">Your FYP for the Whole Web.</h1>
             <p class="text-melt mb-4 mx-auto" style="max-width: 620px;">TikTok, Instagram, X, Reddit, LinkedIn & real user-dropped brand trails melting into one fluid, endless atmospheric feed.</p>
-            <div class="d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill border border-white border-opacity-10 bg-white bg-opacity-02 small" style="backdrop-filter: blur(10px); color: rgba(255,255,255,0.8);">
-                <span class="pulse-dot" style="width:8px; height:8px; background:var(--pink-pop); border-radius:50%; display:inline-block; box-shadow:0 0 12px var(--pink-pop);"></span>
-                Unlock secret drop alerts & creator backstage passes by joining Evolysium free today.
-            </div>
         </div>
 
-        <!-- Interactive Filters & Search (veliki bijeli okvir izbrisan) -->
+        <!-- Interactive Filters & Search -->
         <div class="social-card p-4 mb-5">
             <div class="row g-3 align-items-center mb-4">
                 <div class="col-lg-8">
@@ -411,7 +393,7 @@
                 </div>
                 <div class="col-lg-4 text-lg-end">
                     <button class="btn btn-vibe px-4 py-3 w-100" onclick="loadBackendFeed()">
-                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Sync Fresh Stream
+                        <i class="fa-solid fa-bolt me-2"></i> Catch the Wave
                     </button>
                 </div>
             </div>
@@ -446,9 +428,6 @@
 
         <!-- Feed Grid -->
         <div id="feed-grid" class="row g-4"></div>
-        <div id="loading-indicator" class="text-center py-5 small" style="display:none; color: rgba(255,255,255,0.6);">
-            <i class="fa-solid fa-spinner fa-spin me-2" style="color:var(--cyan-pop);"></i> Catching the next wave of atmospheric vibes...
-        </div>
     </main>
 
     <!-- Footer -->
@@ -459,9 +438,9 @@
                 <span style="color: rgba(255,255,255,0.5);" class="small">© All rights reserved.</span>
             </div>
             <div class="d-flex align-items-center gap-4 small">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#gdprModal">GDPR Compliance</a>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#pricingModal">Upgrade Pass</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">GDPR Compliance</a>
+                <a href="#">Upgrade Pass</a>
             </div>
         </div>
     </footer>
@@ -513,7 +492,7 @@
         </div>
     </div>
 
-    <!-- Pricing Modal -->
+    <!-- Pricing Modal with Perks -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.9); backdrop-filter: blur(25px); border-radius: 32px; border: 1px solid rgba(255,255,255,0.12);">
@@ -529,6 +508,11 @@
                                     <span class="badge bg-secondary rounded-pill mb-2">Tier 1</span>
                                     <h5>Free Explorer</h5>
                                     <h3 class="fw-bold my-2">€0 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
+                                    <ul class="pricing-perks">
+                                        <li><i class="fa-solid fa-check"></i> Standard global vibe feed</li>
+                                        <li><i class="fa-solid fa-check"></i> 5 platform filter switches</li>
+                                        <li><i class="fa-solid fa-check"></i> Public story ring access</li>
+                                    </ul>
                                 </div>
                                 <button class="btn btn-outline-light w-100 rounded-pill py-2 mt-3" disabled>Current Base</button>
                             </div>
@@ -539,6 +523,11 @@
                                     <span class="badge bg-info text-dark rounded-pill mb-2">Tier 2</span>
                                     <h5>Pro / Personal</h5>
                                     <h3 class="fw-bold my-2">€14.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
+                                    <ul class="pricing-perks">
+                                        <li><i class="fa-solid fa-check"></i> Ad-free atmospheric stream</li>
+                                        <li><i class="fa-solid fa-check"></i> Custom layout bookmarking</li>
+                                        <li><i class="fa-solid fa-check"></i> Priority keyword filtering</li>
+                                    </ul>
                                 </div>
                                 <button class="btn btn-outline-info w-100 rounded-pill py-2 mt-3" onclick="alert('Pro selected')">Select Pro</button>
                             </div>
@@ -549,6 +538,11 @@
                                     <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">Tier 3 • Most Popular</span>
                                     <h5>Business / Creator</h5>
                                     <h3 class="fw-bold my-2">€29.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
+                                    <ul class="pricing-perks">
+                                        <li><i class="fa-solid fa-check"></i> Unlimited brand trail drops</li>
+                                        <li><i class="fa-solid fa-check"></i> Real-time multi-signal analytics</li>
+                                        <li><i class="fa-solid fa-check"></i> Featured creator badge placement</li>
+                                    </ul>
                                 </div>
                                 <button class="btn btn-vibe w-100 rounded-pill py-2 mt-3" onclick="alert('Unlocked')">Unlock Access</button>
                             </div>
@@ -559,6 +553,11 @@
                                     <span class="badge bg-warning text-dark rounded-pill mb-2">Tier 4</span>
                                     <h5>VIP / Enterprise</h5>
                                     <h3 class="fw-bold my-2">€49.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
+                                    <ul class="pricing-perks">
+                                        <li><i class="fa-solid fa-check"></i> Dedicated white-label stream</li>
+                                        <li><i class="fa-solid fa-check"></i> Direct multi-node API access</li>
+                                        <li><i class="fa-solid fa-check"></i> Priority concierge support</li>
+                                    </ul>
                                 </div>
                                 <button class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2 mt-3" onclick="alert('VIP activated')">Go VIP</button>
                             </div>
@@ -598,20 +597,17 @@
     <script>
         const API_FEED_URL = 'https://evolysium-backend.onrender.com/api/feed';
         let feedItems = [];
-        let currentStoryIndex = 0;
+        let likedItems = new Set(JSON.parse(localStorage.getItem('evolysium_likes') || '[]'));
         let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin", "trail"];
         let selectedCategories = ["tech", "lifestyle", "brand", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
-        let isLoadingInfinite = false;
 
         const fallbackItems = [
-            { id: 'f1', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management blueprint with ambient cyan underlighting.' },
-            { id: 'f2', source: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', category: 'architecture', platform: 'instagram', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', summary: 'Concrete and glass continuity over Mediterranean cliffs.' },
-            { id: 'f3', source: '@x_build_log', title: 'Local LLM inference benchmark on M4 Max zero cloud lag', category: 'trending', platform: 'x', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900', summary: 'Token throughput breakdown hitting 142 tokens/sec local.' }
+            { id: 'f1', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', likes: 1420, comments: '142', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management blueprint with ambient cyan underlighting.' },
+            { id: 'f2', source: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', category: 'architecture', platform: 'instagram', likes: 3890, comments: '94', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', summary: 'Concrete and glass continuity over Mediterranean cliffs.' }
         ];
 
         const socialNewsSignals = [
-            { platform: 'x', handle: '@sama', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '12m ago' },
-            { platform: 'reddit', handle: 'r/design', text: 'Why atmospheric glassmorphism and deep black UI contrast are dominating 2026 product architectures.', time: '41m ago' }
+            { platform: 'x', handle: '@sama', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '12m ago' }
         ];
 
         function renderSocialNewsDrawer() {
@@ -639,23 +635,51 @@
             }
         }
 
+        function parseLikeCount(val) {
+            if (typeof val === 'number') return val;
+            if (typeof val === 'string') {
+                const clean = val.toLowerCase().replace(/k/g, '000').replace(/m/g, '000000').replace(/[^0-9.]/g, '');
+                return parseFloat(clean) || 0;
+            }
+            return 120;
+        }
+
         function processIncomingItems(items, append = false) {
-            const mapped = items.map((item) => ({
-                id: (item.id || 'item_' + Date.now()) + '_' + Math.random().toString(36).substring(2,7),
+            const mapped = items.map((item, idx) => ({
+                id: item.id || ('item_' + Date.now() + '_' + idx),
                 creator: item.source || item.creator || '@alpha_validator',
                 title: item.title || 'Vibe Moment',
                 cat: item.category || item.cat || 'trending',
                 platform: (item.platform || 'tiktok').toLowerCase(),
-                likes: item.likes || '24k',
+                likes: parseLikeCount(item.likes),
                 comments: item.comments || '142',
                 media: item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
-                video_url: item.video_url || '',
                 summary: item.summary || 'Real-time trending signal captured from multi-platform network.',
                 isTrail: item.isTrail || false
             }));
             const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             feedItems = append ? [...feedItems, ...mapped] : [...localTrails, ...mapped];
             renderFeed();
+        }
+
+        function toggleLike(itemId) {
+            const item = feedItems.find(i => i.id === itemId);
+            if (!item) return;
+            if (likedItems.has(itemId)) {
+                likedItems.delete(itemId);
+                item.likes = Math.max(0, item.likes - 1);
+            } else {
+                likedItems.add(itemId);
+                item.likes += 1;
+            }
+            localStorage.setItem('evolysium_likes', JSON.stringify(Array.from(likedItems)));
+            renderFeed();
+        }
+
+        function formatLikes(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+            return num;
         }
 
         function toggleSelection(type, value, btn) {
@@ -675,8 +699,8 @@
                 title: document.getElementById('trailTitle').value,
                 cat: document.getElementById('trailCat').value,
                 platform: 'trail',
-                likes: '1.4k',
-                comments: '42',
+                likes: 42,
+                comments: '12',
                 media: document.getElementById('trailMedia').value,
                 summary: 'User-dropped brand & community showcase.',
                 isTrail: true
@@ -699,7 +723,7 @@
         function renderVibeStrip() {
             const strip = document.getElementById('dynamic-vibe-strip');
             if (!strip) return;
-            strip.innerHTML = feedItems.slice(0, 10).map((item, idx) => `
+            strip.innerHTML = feedItems.slice(0, 10).map((item) => `
                 <div class="vibe-item">
                     <div class="vibe-ring"><img src="${item.media}" alt="Story"></div>
                     <span class="small mt-1 text-light text-truncate" style="max-width:74px; opacity:0.8;">${item.creator.replace('@','')}</span>
@@ -721,33 +745,37 @@
                 return matchPlatform && matchCat && matchQuery;
             });
 
-            grid.innerHTML = filtered.map(item => `
-                <div class="col-md-6 col-lg-4">
-                    <div class="social-card h-100 d-flex flex-column">
-                        <div class="feed-media">
-                            <img src="${item.media}" alt="Media">
-                            <div class="creator-tag">
-                                <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
+            grid.innerHTML = filtered.map(item => {
+                const isLiked = likedItems.has(item.id);
+                return `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="social-card h-100 d-flex flex-column">
+                            <div class="feed-media">
+                                <img src="${item.media}" alt="Media">
+                                <div class="creator-tag">
+                                    <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
+                                </div>
+                                ${item.isTrail ? '<span class="trail-badge"><i class="fa-solid fa-footprints me-1"></i>BRAND TRAIL</span>' : ''}
                             </div>
-                            ${item.isTrail ? '<span class="trail-badge"><i class="fa-solid fa-footprints me-1"></i>BRAND TRAIL</span>' : ''}
-                        </div>
-                        <div class="card-body p-4 d-flex flex-column flex-grow-1">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
-                                <span class="small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
-                            </div>
-                            <h5 class="fw-bold text-white mb-2" style="font-size: 1.05rem;">${item.title}</h5>
-                            <p class="text-melt small mb-3 flex-grow-1">${item.summary}</p>
-                            <div class="pt-3 border-top border-white border-opacity-05 d-flex justify-content-between align-items-center">
-                                <div class="d-flex gap-3 small" style="color:rgba(255,255,255,0.6)">
-                                    <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
-                                    <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
+                            <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
+                                    <span class="small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
+                                </div>
+                                <h5 class="fw-bold text-white mb-2" style="font-size: 1.05rem;">${item.title}</h5>
+                                <p class="text-melt small mb-3 flex-grow-1">${item.summary}</p>
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top border-white border-opacity-10">
+                                    <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
+                                        <i class="fa-${isLiked ? 'solid' : 'regular'} fa-heart"></i>
+                                        <span>${formatLikes(item.likes)}</span>
+                                    </button>
+                                    <span class="small font-mono text-muted"><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         document.getElementById('keyword-search')?.addEventListener('input', renderFeed);
