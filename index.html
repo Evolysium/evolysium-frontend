@@ -381,9 +381,7 @@
         <!-- Stories / Vibe Hub Strip -->
         <div class="mb-4">
             <div class="small fw-semibold mb-2 px-1" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">🔥 Creator Stories</div>
-            <div class="vibe-strip" id="dynamic-vibe-strip">
-                <!-- Populated dynamically via JS -->
-            </div>
+            <div class="vibe-strip" id="dynamic-vibe-strip"></div>
         </div>
 
         <!-- Scrollable Melted Social News / Micro-Digest Section -->
@@ -391,9 +389,7 @@
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                 <div class="small fw-semibold" style="color: rgba(0, 240, 255, 0.85); letter-spacing: 0.5px;">🔥 WHAT’S POPPING ACROSS FEEDS</div>
             </div>
-            <div class="news-drawer" id="social-news-drawer">
-                <!-- Dynamically populated scrollable micro news/signals -->
-            </div>
+            <div class="news-drawer" id="social-news-drawer"></div>
         </div>
 
         <!-- Hero welcome / Engagement teaser -->
@@ -407,20 +403,18 @@
             </div>
         </div>
 
-        <!-- Interactive Filters & Search -->
+        <!-- Interactive Filters & Search (veliki bijeli okvir izbrisan) -->
         <div class="social-card p-4 mb-5">
-            <div class="row g-3 align-items-center">
-                <div class="col-lg-6">
+            <div class="row g-3 align-items-center mb-4">
+                <div class="col-lg-8">
                     <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Search creators, underground drops, or keywords...">
                 </div>
-                <div class="col-lg-6 text-lg-end">
-                    <button class="btn btn-vibe px-4 py-3 w-100 w-lg-auto" onclick="loadBackendFeed()">
+                <div class="col-lg-4 text-lg-end">
+                    <button class="btn btn-vibe px-4 py-3 w-100" onclick="loadBackendFeed()">
                         <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Sync Fresh Stream
                     </button>
                 </div>
             </div>
-
-            <div style="height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); margin: 24px 0;"></div>
 
             <!-- Platform filter chips -->
             <div class="d-flex flex-wrap gap-2 mb-3">
@@ -432,7 +426,7 @@
                 <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> User Trails</button>
             </div>
 
-            <!-- Proširene kategorije -->
+            <!-- Kategorije -->
             <div class="d-flex flex-wrap gap-2">
                 <button class="social-pill active" onclick="toggleSelection('category', 'tech', this)">💻 Tech & AI</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'lifestyle', this)">⚡ Lifestyle</button>
@@ -472,7 +466,7 @@
         </div>
     </footer>
 
-    <!-- Drop Vibe Trail Modal -->
+    <!-- Modals -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.88); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -509,7 +503,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Media Visual URL (Image / Video URL)</label>
+                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Media Visual URL</label>
                             <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/..." required>
                         </div>
                         <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Trail to Global Feed</button>
@@ -519,7 +513,7 @@
         </div>
     </div>
 
-    <!-- 4 Tiers Pricing Modal -->
+    <!-- Pricing Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.9); backdrop-filter: blur(25px); border-radius: 32px; border: 1px solid rgba(255,255,255,0.12);">
@@ -535,11 +529,6 @@
                                     <span class="badge bg-secondary rounded-pill mb-2">Tier 1</span>
                                     <h5>Free Explorer</h5>
                                     <h3 class="fw-bold my-2">€0 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
-                                    <ul class="list-unstyled small mt-3" style="color:rgba(255,255,255,0.65)">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Multi-platform public feed</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Community vibe stories</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Basic keyword search</li>
-                                    </ul>
                                 </div>
                                 <button class="btn btn-outline-light w-100 rounded-pill py-2 mt-3" disabled>Current Base</button>
                             </div>
@@ -550,28 +539,18 @@
                                     <span class="badge bg-info text-dark rounded-pill mb-2">Tier 2</span>
                                     <h5>Pro / Personal</h5>
                                     <h3 class="fw-bold my-2">€14.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
-                                    <ul class="list-unstyled small mt-3" style="color:rgba(255,255,255,0.65)">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Zero sponsored clutter</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Save favorite vibe trails</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>High-speed HD media play</li>
-                                    </ul>
                                 </div>
-                                <button class="btn btn-outline-info w-100 rounded-pill py-2 mt-3" onclick="alert('Welcome to Pro/Personal Vibe Pass!')">Select Pro</button>
+                                <button class="btn btn-outline-info w-100 rounded-pill py-2 mt-3" onclick="alert('Pro selected')">Select Pro</button>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="pricing-box hot">
                                 <div>
                                     <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">Tier 3 • Most Popular</span>
-                                    <h5>Business / Creator / 18+ Content</h5>
+                                    <h5>Business / Creator</h5>
                                     <h3 class="fw-bold my-2">€29.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
-                                    <ul class="list-unstyled text-light small mt-3">
-                                        <li class="mb-2"><i class="fa-solid fa-check me-2" style="color:var(--pink-pop)"></i>Verified brand & creator trails</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check me-2" style="color:var(--pink-pop)"></i>Unfiltered 18+ creator drops enabled</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check me-2" style="color:var(--pink-pop)"></i>Direct audience analytics</li>
-                                    </ul>
                                 </div>
-                                <button class="btn btn-vibe w-100 rounded-pill py-2 mt-3" onclick="alert('Creator/18+ Pass Unlocked!')">Unlock Access</button>
+                                <button class="btn btn-vibe w-100 rounded-pill py-2 mt-3" onclick="alert('Unlocked')">Unlock Access</button>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -580,13 +559,8 @@
                                     <span class="badge bg-warning text-dark rounded-pill mb-2">Tier 4</span>
                                     <h5>VIP / Enterprise</h5>
                                     <h3 class="fw-bold my-2">€49.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
-                                    <ul class="list-unstyled small mt-3" style="color:rgba(255,255,255,0.65)">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Top-strip permanent showcase</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Dedicated enterprise API sync</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>White-glove moderation support</li>
-                                    </ul>
                                 </div>
-                                <button class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2 mt-3" onclick="alert('VIP Enterprise activated!')">Go VIP</button>
+                                <button class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2 mt-3" onclick="alert('VIP activated')">Go VIP</button>
                             </div>
                         </div>
                     </div>
@@ -607,59 +581,14 @@
                     <form onsubmit="handleAuthSubmit(event)">
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Email</label>
-                            <input type="email" class="form-control auth-input" placeholder="creator@domain.com" required>
+                            <input type="email" class="form-control auth-input" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Password</label>
-                            <input type="password" class="form-control auth-input" placeholder="••••••••" required>
+                            <input type="password" class="form-control auth-input" required>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Enter Evolysium Stream</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Enter Stream</button>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Privacy Policy Modal -->
-    <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-light p-4" style="background: rgba(17, 14, 29, 0.92); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
-                <h4 class="fw-bold mb-3">Privacy Policy</h4>
-                <p class="small text-melt">Evolysium respects your digital footprint. We collect only public-facing social signals, aggregated creator interaction metadata, and authenticated creator profile identifiers required to sync cross-platform trends. No third-party data selling.</p>
-                <button type="button" class="btn btn-outline-light rounded-pill w-100" data-bs-dismiss="modal">Got it</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- GDPR Modal -->
-    <div class="modal fade" id="gdprModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-light p-4" style="background: rgba(17, 14, 29, 0.92); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
-                <h4 class="fw-bold mb-3">GDPR & Data Rights</h4>
-                <p class="small text-melt">Under EU GDPR guidelines, you have the full right to export, inspect, or purge your user-dropped trails and authentication records at any time. Contact privacy@evolysium.app for instant compliance requests.</p>
-                <button type="button" class="btn btn-outline-light rounded-pill w-100" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Story Viewer Modal -->
-    <div class="modal fade" id="storyModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-3 d-flex flex-column justify-content-between" style="background:rgba(8, 6, 15, 0.95); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.1); border-radius:28px; height:80vh; max-width:400px; margin:auto;">
-                <div class="d-flex justify-content-between align-items-center mb-3 px-2">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-circle-user fs-5" style="color:var(--pink-pop)"></i>
-                        <span id="storyCreatorName" class="fw-bold small text-light">@creator</span>
-                    </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="flex-grow-1 d-flex align-items-center justify-content-center overflow-hidden rounded-4 position-relative bg-black">
-                    <div id="storyMediaContainer" class="w-100 h-100 d-flex align-items-center justify-content-center"></div>
-                    <button class="position-absolute start-0 top-50 translate-middle-y btn text-white bg-dark bg-opacity-25 rounded-circle m-2 border-0" onclick="navigateStory(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="position-absolute end-0 top-50 translate-middle-y btn text-white bg-dark bg-opacity-25 rounded-circle m-2 border-0" onclick="navigateStory(1)"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-                <div class="mt-3 text-center d-flex justify-content-center align-items-center gap-2">
-                    <span id="storyTitleBadge" class="badge text-bg-dark border border-secondary text-melt">Live Trail</span>
                 </div>
             </div>
         </div>
@@ -677,23 +606,19 @@
         const fallbackItems = [
             { id: 'f1', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management blueprint with ambient cyan underlighting.' },
             { id: 'f2', source: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', category: 'architecture', platform: 'instagram', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', summary: 'Concrete and glass continuity over Mediterranean cliffs.' },
-            { id: 'f3', source: '@x_build_log', title: 'Local LLM inference benchmark on M4 Max zero cloud lag', category: 'trending', platform: 'x', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900', summary: 'Token throughput breakdown hitting 142 tokens/sec local.' },
-            { id: 'f4', source: '@reddit_tech_pulse', title: 'Why hardware acceleration bypassed legacy bottlenecks this quarter', category: 'popular', platform: 'reddit', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900', summary: 'Community thread breaking down kernel-level memory allocation.' },
-            { id: 'f5', source: '@luxury_vault', title: 'Private carbon-black yacht suite showcase Monte Carlo', category: 'luxury', platform: 'instagram', image: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=900', summary: 'Minimalist brushed titanium interior geometry.' }
+            { id: 'f3', source: '@x_build_log', title: 'Local LLM inference benchmark on M4 Max zero cloud lag', category: 'trending', platform: 'x', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900', summary: 'Token throughput breakdown hitting 142 tokens/sec local.' }
         ];
 
         const socialNewsSignals = [
             { platform: 'x', handle: '@sama', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '12m ago' },
-            { platform: 'reddit', handle: 'r/design', text: 'Why atmospheric glassmorphism and deep black UI contrast are dominating 2026 product architectures.', time: '41m ago' },
-            { platform: 'tiktok', handle: '@tech_drop', text: 'Secret peripheral drop alert: wireless tactile switches with zero acoustic bounce.', time: '1h ago' },
-            { platform: 'linkedin', handle: 'VibePulse Network', text: 'Cross-platform engagement signals grew 44% for verified creator trails this month.', time: '3h ago' }
+            { platform: 'reddit', handle: 'r/design', text: 'Why atmospheric glassmorphism and deep black UI contrast are dominating 2026 product architectures.', time: '41m ago' }
         ];
 
         function renderSocialNewsDrawer() {
             const drawer = document.getElementById('social-news-drawer');
             if (!drawer) return;
             drawer.innerHTML = socialNewsSignals.map(n => `
-                <div class="news-pill-card" onclick="alert('${n.handle}: ${n.text.replace(/'/g, "")}')">
+                <div class="news-pill-card">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="small fw-bold text-white font-mono">${n.handle}</span>
                         <span class="small font-mono" style="color:var(--text-muted); font-size: 0.7rem;">${n.time}</span>
@@ -708,13 +633,8 @@
                 const response = await fetch(API_FEED_URL);
                 if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
-                if (data && data.items && data.items.length > 0) {
-                    processIncomingItems(data.items, false);
-                } else {
-                    processIncomingItems(fallbackItems, false);
-                }
+                processIncomingItems(data?.items?.length ? data.items : fallbackItems, false);
             } catch (error) {
-                console.warn('Backend cold/unreachable, loading dynamic stream pool:', error);
                 processIncomingItems(fallbackItems, false);
             }
         }
@@ -723,20 +643,18 @@
             const mapped = items.map((item) => ({
                 id: (item.id || 'item_' + Date.now()) + '_' + Math.random().toString(36).substring(2,7),
                 creator: item.source || item.creator || '@alpha_validator',
-                title: item.title ? item.title.replace(/\\u[0-9a-fA-F]{4}/g, m => String.fromCharCode(parseInt(m.replace('\\u',''), 16))) : 'Vibe Moment',
+                title: item.title || 'Vibe Moment',
                 cat: item.category || item.cat || 'trending',
                 platform: (item.platform || 'tiktok').toLowerCase(),
-                likes: item.likes || (Math.floor(Math.random() * 50) + 'k'),
-                comments: item.comments || (Math.floor(Math.random() * 900) + '100'),
+                likes: item.likes || '24k',
+                comments: item.comments || '142',
                 media: item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
                 video_url: item.video_url || '',
                 summary: item.summary || 'Real-time trending signal captured from multi-platform network.',
                 isTrail: item.isTrail || false
             }));
-
             const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            const combined = append ? [...feedItems, ...mapped] : [...localTrails, ...mapped];
-            feedItems = combined;
+            feedItems = append ? [...feedItems, ...mapped] : [...localTrails, ...mapped];
             renderFeed();
         }
 
@@ -766,54 +684,25 @@
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             localTrails.unshift(newTrail);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
-            
             feedItems.unshift(newTrail);
             bootstrap.Modal.getInstance(document.getElementById('trailModal')).hide();
             event.target.reset();
             renderFeed();
-            alert('Your Vibe/Brand Trail is live on Evolysium!');
         }
 
         function handleAuthSubmit(event) {
             event.preventDefault();
-            alert('Authenticated! Full personalized vibe stream unlocked on Evolysium.');
+            alert('Authenticated!');
             bootstrap.Modal.getInstance(document.getElementById('authModal')).hide();
-        }
-
-        function openStoryByIndex(index) {
-            if (index < 0 || index >= Math.min(feedItems.length, 10)) return;
-            currentStoryIndex = index;
-            const item = feedItems[currentStoryIndex];
-            document.getElementById('storyTitleBadge').textContent = item.title;
-            document.getElementById('storyCreatorName').textContent = item.creator;
-            const container = document.getElementById('storyMediaContainer');
-            if (item.video_url) {
-                container.innerHTML = `<video src="${item.video_url}" class="w-100 h-100 object-fit-cover" controls autoplay></video>`;
-            } else {
-                container.innerHTML = `<img src="${item.media}" alt="Story" class="w-100 h-100 object-fit-cover">`;
-            }
-            const modalEl = document.getElementById('storyModal');
-            let instance = bootstrap.Modal.getInstance(modalEl);
-            if (!instance) {
-                new bootstrap.Modal(modalEl).show();
-            }
-        }
-
-        function navigateStory(direction) {
-            const limit = Math.min(feedItems.length, 10);
-            let nextIndex = currentStoryIndex + direction;
-            if (nextIndex < 0) nextIndex = limit - 1;
-            if (nextIndex >= limit) nextIndex = 0;
-            openStoryByIndex(nextIndex);
         }
 
         function renderVibeStrip() {
             const strip = document.getElementById('dynamic-vibe-strip');
             if (!strip) return;
             strip.innerHTML = feedItems.slice(0, 10).map((item, idx) => `
-                <div class="vibe-item" onclick="openStoryByIndex(${idx})">
+                <div class="vibe-item">
                     <div class="vibe-ring"><img src="${item.media}" alt="Story"></div>
-                    <span class="small mt-1 text-light text-truncate" style="max-width:74px; opacity:0.8;">${item.creator.replace('@','').split(' ')[0]}</span>
+                    <span class="small mt-1 text-light text-truncate" style="max-width:74px; opacity:0.8;">${item.creator.replace('@','')}</span>
                 </div>
             `).join('');
         }
@@ -832,63 +721,34 @@
                 return matchPlatform && matchCat && matchQuery;
             });
 
-            grid.innerHTML = filtered.map((item, idx) => {
-                const mediaContent = item.video_url 
-                    ? `<video src="${item.video_url}" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()"></video>`
-                    : `<img src="${item.media}" alt="Media">`;
-                
-                const globalIdx = feedItems.findIndex(f => f.id === item.id);
-                
-                return `
-                    <div class="col-md-6 col-lg-4">
-                        <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media" onclick="openStoryByIndex(${globalIdx >= 0 ? globalIdx : 0})">
-                                ${mediaContent}
-                                <div class="creator-tag">
-                                    <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
-                                </div>
-                                ${item.isTrail ? '<span class="trail-badge"><i class="fa-solid fa-footprints me-1"></i>BRAND TRAIL</span>' : ''}
+            grid.innerHTML = filtered.map(item => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="social-card h-100 d-flex flex-column">
+                        <div class="feed-media">
+                            <img src="${item.media}" alt="Media">
+                            <div class="creator-tag">
+                                <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
                             </div>
-                            <div class="card-body p-4 d-flex flex-column flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
-                                    <span class="small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
-                                </div>
-                                <h5 class="fw-bold text-white mb-2" style="line-height: 1.35; font-size: 1.05rem;">${item.title}</h5>
-                                <p class="text-melt small mb-3 flex-grow-1">${item.summary}</p>
-                                <div class="pt-3 border-top border-white border-opacity-05 d-flex justify-content-between align-items-center">
-                                    <div class="d-flex gap-3 small" style="color:rgba(255,255,255,0.6)">
-                                        <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
-                                        <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
-                                    </div>
-                                    <button class="action-icon-btn" onclick="openStoryByIndex(${globalIdx >= 0 ? globalIdx : 0})">
-                                        <i class="fa-solid fa-play"></i>
-                                    </button>
+                            ${item.isTrail ? '<span class="trail-badge"><i class="fa-solid fa-footprints me-1"></i>BRAND TRAIL</span>' : ''}
+                        </div>
+                        <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
+                                <span class="small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
+                            </div>
+                            <h5 class="fw-bold text-white mb-2" style="font-size: 1.05rem;">${item.title}</h5>
+                            <p class="text-melt small mb-3 flex-grow-1">${item.summary}</p>
+                            <div class="pt-3 border-top border-white border-opacity-05 d-flex justify-content-between align-items-center">
+                                <div class="d-flex gap-3 small" style="color:rgba(255,255,255,0.6)">
+                                    <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
+                                    <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                `;
-            }).join('');
+                </div>
+            `).join('');
         }
-
-        window.addEventListener('scroll', () => {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 400 && !isLoadingInfinite) {
-                isLoadingInfinite = true;
-                const indicator = document.getElementById('loading-indicator');
-                if (indicator) indicator.style.display = 'block';
-                setTimeout(() => {
-                    const morePulses = fallbackItems.map(f => ({
-                        ...f,
-                        id: 'inf_' + Date.now() + Math.random(),
-                        title: f.title + ' (Live Pulse Drop)'
-                    }));
-                    processIncomingItems(morePulses, true);
-                    isLoadingInfinite = false;
-                    if (indicator) indicator.style.display = 'none';
-                }, 800);
-            }
-        });
 
         document.getElementById('keyword-search')?.addEventListener('input', renderFeed);
         document.addEventListener("DOMContentLoaded", loadBackendFeed);
