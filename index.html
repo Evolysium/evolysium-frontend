@@ -47,14 +47,12 @@
             background-attachment: fixed;
         }
 
-        /* Glassmorphism Navbar */
         .navbar-custom {
             background: rgba(6, 9, 19, 0.85);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Brand Logo Design */
         .brand-logo {
             width: 40px;
             height: 40px;
@@ -150,7 +148,6 @@
             box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
         }
 
-        /* Platform Badges */
         .badge-tiktok { background-color: #ff0050; }
         .badge-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .badge-x { background-color: #000000; border: 1px solid #333; }
@@ -172,7 +169,6 @@
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
         }
 
-        /* Stats bar */
         .stat-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -180,7 +176,6 @@
             padding: 15px;
         }
 
-        /* Pricing Card Styling */
         .pricing-card {
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -192,7 +187,6 @@
             box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
         }
 
-        /* Footer */
         footer {
             background: rgba(4, 6, 14, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -212,7 +206,6 @@
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-3" href="#">
@@ -232,7 +225,6 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="container py-5">
         <div class="row justify-content-center text-center mb-4">
             <div class="col-lg-9">
@@ -242,7 +234,6 @@
             </div>
         </div>
 
-        <!-- Live Metrics Bar -->
         <div class="row g-3 mb-5 justify-content-center">
             <div class="col-6 col-md-3">
                 <div class="stat-card text-center">
@@ -264,12 +255,10 @@
             </div>
         </div>
 
-        <!-- Filter Controls -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-10">
                 <div class="card card-custom p-4 p-md-5">
                     
-                    <!-- Search -->
                     <div class="mb-4">
                         <label class="text-uppercase text-info fw-bold small mb-2 d-block">
                             <i class="fa-solid fa-magnifying-glass me-2"></i>Search Keywords, Hashtags or Topics
@@ -279,7 +268,6 @@
 
                     <hr class="border-secondary opacity-25">
 
-                    <!-- 1. Platforms -->
                     <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>1. Platforms</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="chip-btn chip-platform active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok me-1"></i> TikTok</button>
@@ -291,7 +279,6 @@
 
                     <hr class="border-secondary opacity-25">
 
-                    <!-- 2. Categories -->
                     <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-layer-group me-2"></i>2. Categories</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="chip-btn active" onclick="toggleSelection('category', 'tech', this)"><i class="fa-solid fa-microchip me-1"></i> Tech & AI</button>
@@ -315,16 +302,12 @@
             </div>
         </div>
 
-        <!-- Spinner -->
         <div id="loading-spinner" class="text-center py-5 d-none">
             <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
             <p class="mt-3 text-secondary fs-6">Curating top viral trends and media for you...</p>
         </div>
 
-        <!-- Feed Grid -->
-        <div id="feed-grid" class="row g-4">
-            <!-- Dynamically populated -->
-        </div>
+        <div id="feed-grid" class="row g-4"></div>
     </div>
 
     <!-- Pricing Modal -->
@@ -337,7 +320,6 @@
                 </div>
                 <div class="modal-body py-4">
                     <div class="row g-3">
-                        <!-- Free -->
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
@@ -353,7 +335,6 @@
                             </div>
                         </div>
 
-                        <!-- Pro -->
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card featured p-4 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
@@ -371,7 +352,6 @@
                             </div>
                         </div>
 
-                        <!-- Business -->
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
@@ -388,7 +368,6 @@
                             </div>
                         </div>
 
-                        <!-- Enterprise -->
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between" style="border-color: #a855f7;">
                                 <div>
@@ -404,14 +383,13 @@
                                 <button class="btn btn-outline-secondary btn-sm fw-bold w-100 mt-3 py-2" style="border-color: #a855f7; color: #c084fc;">Contact Sales</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Terms of Service -->
+    <!-- Terms Modal -->
     <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
@@ -424,14 +402,12 @@
                     <p>Welcome to Evolysium AI. By accessing or using our platform, you agree to be bound by these Terms of Service.</p>
                     <h6>2. Content & Age Restrictions</h6>
                     <p>Access to 18+ content is strictly restricted to adult users. Evolysium AI aggregates public signals and links; we do not host copyrighted media directly.</p>
-                    <h6>3. Subscriptions & Refunds</h6>
-                    <p>Subscriptions can be canceled at any time. Refund requests are handled according to EU consumer rights regulations within 14 days of purchase.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Privacy Policy -->
+    <!-- Privacy Modal -->
     <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
@@ -441,15 +417,12 @@
                 </div>
                 <div class="modal-body small text-secondary">
                     <h6>1. Information Collection</h6>
-                    <p>Evolysium AI values your privacy. We collect minimal technical data (such as cookies and selected filters) necessary to deliver a personalized experience.</p>
-                    <h6>2. GDPR Rights</h6>
-                    <p>Users in the European Union have the right to request access to, correction of, or complete deletion of their personal data from our platform at any time.</p>
+                    <p>Evolysium AI values your privacy. We collect minimal technical data necessary to deliver a personalized experience.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="py-4">
         <div class="container">
             <div class="row align-items-center justify-content-between g-3">
@@ -470,14 +443,12 @@
         </div>
     </footer>
 
-    <!-- JavaScript logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_BASE = "https://evolysium-backend.onrender.com";
         let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "gaming", "lifestyle"];
 
-        // Rich imagery for fallback categories (NO chip images)
         const categoryRichImages = {
             "tech": [
                 "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop",
@@ -561,7 +532,6 @@
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        // Mock Rich Backup Data if backend yields no items (Keeps site ultra-engaging)
         function getRichMockItems() {
             const items = [];
             const platforms = selectedPlatforms.length ? selectedPlatforms : ["instagram", "tiktok", "x", "reddit"];
@@ -607,7 +577,8 @@
             grid.innerHTML = "";
 
             try {
-                let url = `${API_BASE}/api/feed?platforms=${selectedPlatforms.join(",")}&categories=${selectedCategories.join(",")}&limit=100`;
+                // Dodan _ts=${Date.now()} za potpuno probijanje cache-a
+                let url = `${API_BASE}/api/feed?_ts=${Date.now()}&platforms=${selectedPlatforms.join(",")}&categories=${selectedCategories.join(",")}&limit=100`;
                 if (searchQuery) {
                     url += `&search=${encodeURIComponent(searchQuery)}`;
                 }
@@ -618,89 +589,85 @@
                 let displayItems = [];
 
                 if (data.success && data.items && data.items.length > 0) {
-                    // Filter out any "No Matching Signals" placeholder items from backend
                     displayItems = data.items.filter(item => 
                         !item.title.includes("No Matching Signals") && 
                         !item.summary.includes("adjusting your search")
                     );
                 }
 
-                // If backend yields no valid items, supply rich engaging items so page is never empty
                 if (displayItems.length === 0) {
                     displayItems = getRichMockItems();
                 }
-grid.innerHTML = displayItems.map(item => {
-    const isTikTok = item.platform === "tiktok";
-    const isInstagram = item.platform === "instagram";
-    const videoSrc = reliableVideoStreams[item.category] || reliableVideoStreams["tech"];
 
-    let mediaImage = item.image;
-    if (!mediaImage || mediaImage.includes("photo-1518770660439") || mediaImage.includes("chip")) {
-        mediaImage = getRandomImage(item.category);
-    }
+                grid.innerHTML = displayItems.map(item => {
+                    const isTikTok = item.platform === "tiktok";
+                    const isInstagram = item.platform === "instagram";
+                    const videoSrc = reliableVideoStreams[item.category] || reliableVideoStreams["tech"];
 
-    let cardClass = "";
-    if (isTikTok) cardClass = "card-tiktok";
-    if (isInstagram) cardClass = "card-instagram";
+                    let mediaImage = item.image;
+                    if (!mediaImage || mediaImage.includes("photo-1518770660439") || mediaImage.includes("chip")) {
+                        mediaImage = getRandomImage(item.category);
+                    }
 
-    const mediaElement = (isTikTok || isInstagram) ? `
-        <div class="media-container">
-            <video controls playsinline loop preload="metadata" poster="${mediaImage}">
-                <source src="${videoSrc}" type="video/mp4">
-            </video>
-        </div>
-    ` : `
-        <div class="media-container">
-            <img src="${mediaImage}" alt="Trending visual" onerror="this.src='${getRandomImage('tech')}'">
-        </div>
-    `;
+                    let cardClass = "";
+                    if (isTikTok) cardClass = "card-tiktok";
+                    if (isInstagram) cardClass = "card-instagram";
 
-    let buttonText = "View Source";
-    let buttonClass = "btn-outline-info";
-
-    if (isTikTok) {
-        buttonText = '<i class="fa-brands fa-tiktok me-1"></i> Watch on TikTok';
-        buttonClass = "btn-outline-danger";
-    } else if (isInstagram) {
-        buttonText = '<i class="fa-brands fa-instagram me-1"></i> Watch Reel on Instagram';
-        buttonClass = "btn-outline-warning";
-    }
-
-    // Backend metadata badges
-    const sourceBadge = item.source ? `<div class="text-info small fw-semibold mb-1"><i class="fa-solid fa-satellite-dish me-1"></i>${item.source}</div>` : '';
-    const sentimentBadge = item.sentiment ? `<span class="badge bg-dark border border-secondary text-light fw-normal" style="font-size: 0.7rem;">${item.sentiment}</span>` : '';
-    const scoreBadge = item.score ? `<span class="badge bg-info text-dark fw-bold" style="font-size: 0.7rem;"><i class="fa-solid fa-bolt me-1"></i>${item.score} pts</span>` : '';
-
-    return `
-        <div class="col-md-6 col-lg-4">
-            <div class="card card-custom ${cardClass} h-100">
-                ${mediaElement}
-                <div class="card-body d-flex flex-column">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        ${getPlatformBadge(item.platform)}
-                        <div class="d-flex gap-1">
-                            ${sentimentBadge}
-                            ${scoreBadge}
+                    const mediaElement = (isTikTok || isInstagram) ? `
+                        <div class="media-container">
+                            <video controls playsinline loop preload="metadata" poster="${mediaImage}">
+                                <source src="${videoSrc}" type="video/mp4">
+                            </video>
                         </div>
-                    </div>
-                    
-                    ${sourceBadge}
-                    
-                    <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
-                    <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
+                    ` : `
+                        <div class="media-container">
+                            <img src="${mediaImage}" alt="Trending visual" onerror="this.src='${getRandomImage('tech')}'">
+                        </div>
+                    `;
 
-                    <a href="${item.url}" target="_blank" class="btn ${buttonClass} btn-sm w-100 mt-2">
-                        ${buttonText}
-                    </a>
-                </div>
-            </div>
-        </div>
-    `;
-}).join('');
+                    let buttonText = "View Source";
+                    let buttonClass = "btn-outline-info";
 
+                    if (isTikTok) {
+                        buttonText = '<i class="fa-brands fa-tiktok me-1"></i> Watch on TikTok';
+                        buttonClass = "btn-outline-danger";
+                    } else if (isInstagram) {
+                        buttonText = '<i class="fa-brands fa-instagram me-1"></i> Watch Reel on Instagram';
+                        buttonClass = "btn-outline-warning";
+                    }
+
+                    const sourceBadge = item.source ? `<div class="text-info small fw-semibold mb-1"><i class="fa-solid fa-satellite-dish me-1"></i>${item.source}</div>` : '';
+                    const sentimentBadge = item.sentiment ? `<span class="badge bg-dark border border-secondary text-light fw-normal" style="font-size: 0.7rem;">${item.sentiment}</span>` : '';
+                    const scoreBadge = item.score ? `<span class="badge bg-info text-dark fw-bold" style="font-size: 0.7rem;"><i class="fa-solid fa-bolt me-1"></i>${item.score} pts</span>` : '';
+
+                    return `
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card card-custom ${cardClass} h-100">
+                                ${mediaElement}
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        ${getPlatformBadge(item.platform)}
+                                        <div class="d-flex gap-1">
+                                            ${sentimentBadge}
+                                            ${scoreBadge}
+                                        </div>
+                                    </div>
+                                    
+                                    ${sourceBadge}
+                                    
+                                    <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
+                                    <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
+
+                                    <a href="${item.url}" target="_blank" class="btn ${buttonClass} btn-sm w-100 mt-2">
+                                        ${buttonText}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
 
             } catch (err) {
-                // In case backend is cold-starting or unavailable, display rich feed immediately
                 const fallbackItems = getRichMockItems();
                 grid.innerHTML = fallbackItems.map(item => `
                     <div class="col-md-6 col-lg-4">
@@ -727,7 +694,6 @@ grid.innerHTML = displayItems.map(item => {
             }
         }
 
-        // Initialize Feed on First Load
         document.addEventListener("DOMContentLoaded", () => {
             fetchCustomFeed();
         });
