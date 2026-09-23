@@ -538,6 +538,32 @@
             document.getElementById('storyCreatorName').textContent = creator;
             new bootstrap.Modal(document.getElementById('storyModal')).show();
         }
+const API_FEED_URL = 'https://evolysium-backend.onrender.com/api/feed';
+
+async function loadBackendFeed() {
+    try {
+        const response = await fetch(API_FEED_URL);
+        const data = await response.json();
+        if (data && data.items) {
+            feedItems = data.items.map((item, index) => ({
+                id: 'item_' + index,
+                creator: item.source || '@alpha_validator',
+                title: item.title ? item.title.replace(/\\u[0-9a-fA-F]{4}/g, m => String.fromCharCode(parseInt(m.replace('\\u',''), 16))) : 'Vibe Moment',
+                cat: item.category || 'tech',
+                platform: (item.platform || 'tiktok').toLowerCase(),
+                likes: Math.floor(Math.random() * 50) + 'k',
+                comments: Math.floor(Math.random() * 900) + '100',
+                media: item.image || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
+                video_url: item.video_url || '',
+                summary: item.summary || '',
+                isTrail: false
+            }));
+            renderFeed();
+        }
+    } catch (error) {
+        console.error('Greška pri dohvaćanju feeda:', error);
+    }
+}
 
         function renderVibeStrip() {
             const strip = document.getElementById('dynamic-vibe-strip');
@@ -597,3 +623,4 @@
     </script>
 </body>
 </html>
+document.addEventListener("DOMContentLoaded", loadBackendFeed);
