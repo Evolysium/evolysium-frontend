@@ -348,31 +348,54 @@
 </head>
 <body>
 
-    <!-- Header -->
-    <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none" href="#">
-                <div class="brand-pill">
-                    <i class="fa-solid fa-sparkles text-white fs-5"></i>
-                </div>
-                <div>
-                    <span class="brand-name fw-bold fs-4 text-white">Evolysium</span>
-                    <span class="badge text-white ms-2 rounded-pill font-mono" style="font-size: 0.65rem; background: var(--pink-pop);">VIBE NET</span>
-                </div>
-            </a>
-            <div class="d-flex align-items-center gap-2">
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
-                    <i class="fa-solid fa-plus-circle"></i> Drop Vibe Trail
-                </button>
-                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                    <i class="fa-solid fa-crown text-warning"></i> Pricing
-                </button>
-                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#authModal">
-                    <i class="fa-solid fa-user-circle"></i> Join Evolysium
-                </button>
-            </div>
-        </div>
-    </nav>
+<!-- HEADER -->
+<header class="navbar flex items-center justify-between p-4 bg-black/80">
+  <div class="flex items-center gap-2">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 via-purple-500 to-cyan-400 p-[1px]">
+      <div class="w-full h-full bg-black rounded-xl flex items-center justify-center font-bold text-xs">E</div>
+    </div>
+    <span class="text-xl font-bold tracking-wider text-white">Evolysium</span>
+    <span class="px-2 py-0.5 text-[10px] font-medium tracking-wide bg-white/10 text-gray-300 rounded-full">community</span>
+  </div>
+  <button class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-sm font-medium text-white transition">Say hi / join</button>
+</header>
+
+<!-- HERO / STORIES -->
+<section class="px-4 py-2">
+  <div class="flex items-center gap-2 text-pink-400 text-xs font-medium mb-3">
+    <span>🔥</span>
+    <h2>Right now from creators & friends</h2>
+  </div>
+</section>
+
+<!-- MAIN STREAM -->
+<section class="px-4 py-8 text-center">
+  <h1 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-pink-200 to-cyan-300 bg-clip-text text-transparent">
+    All the good stuff. Zero doomscrolling.
+  </h1>
+  <p class="text-sm text-gray-400 mt-3 max-w-sm mx-auto">
+    TikTok, Insta, X, Reddit & real drops, all hanging out in one calm spot.
+  </p>
+</section>
+
+<!-- SOCIAL DIGEST -->
+<section class="px-4 py-4">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-cyan-400 text-xs font-semibold uppercase tracking-wider">⚡ Fresh off the timeline</h3>
+    <span class="text-[10px] text-gray-400">syncs as it happens</span>
+  </div>
+</section>
+
+<!-- ACTION / SEARCH -->
+<section class="px-4 py-6">
+  <div class="relative mb-4">
+    <input type="text" placeholder="🔍 Find creators, deep cuts, or vibes..." class="w-full bg-black/60 border border-purple-500/30 rounded-full px-6 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400" />
+  </div>
+  <button class="w-full py-4 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 font-semibold text-white shadow-lg shadow-pink-500/20 flex items-center justify-center gap-2">
+    <span>✨</span> Catch me up
+  </button>
+</section>
+
 
     <!-- Main Content -->
     <main class="container py-4">
