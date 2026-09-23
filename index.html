@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium AI — High-Signal Intelligence Terminal</title>
+    <title>Evolysium — Discover What's Popping Right Now</title>
 
-    <meta name="title" content="Evolysium AI — Signal & Trend Curation">
-    <meta name="description" content="Raw alpha signals, viral asymmetric momentum, and real-time intelligence curation.">
-    <meta name="robots" content="index, follow">
+    <meta name="title" content="Evolysium — Social Vibe & Trend Discovery">
+    <meta name="description" content="Tvoj dnevni puls viralnih trendova, lifestyle kreacija i tech/gaming momenta. Bez šuma, samo najbolje priče.">
 
     <!-- Frameworks & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-main: #03050b;
-            --card-bg: rgba(13, 20, 38, 0.78);
-            --accent-cyan: #38bdf8;
-            --accent-purple: #c084fc;
-            --border-glow: rgba(56, 189, 248, 0.35);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-main: #0c0a15;
+            --bg-card: rgba(22, 18, 38, 0.72);
+            --pink-pop: #ff2a85;
+            --cyan-pop: #00f0ff;
+            --gold-pop: #ffd700;
+            --text-main: #ffffff;
+            --text-muted: #a09cb0;
         }
 
         body {
@@ -33,409 +32,418 @@
             display: flex;
             flex-direction: column;
             background-image: 
-                radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 90% 70%, rgba(192, 132, 252, 0.10) 0%, transparent 45%);
+                radial-gradient(circle at 15% 15%, rgba(255, 42, 133, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 45%);
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        h1, h2, h3, h4, h5, .brand-name {
+            font-family: 'Outfit', sans-serif;
+        }
 
         /* Navbar */
         .navbar-custom {
-            background: rgba(3, 5, 11, 0.9);
+            background: rgba(12, 10, 21, 0.82);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .brand-logo {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            border-radius: 12px;
+        .brand-pill {
+            background: linear-gradient(135deg, var(--pink-pop), #7928ca);
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.45);
+            box-shadow: 0 0 25px rgba(255, 42, 133, 0.4);
         }
 
-        .hero-title {
-            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 45%, #c084fc 100%);
+        /* Hero section */
+        .hero-headline {
+            font-weight: 800;
+            font-size.clamp: 2rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 30%, #ff85b3 70%, var(--cyan-pop) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            line-height: 1.15;
         }
 
-        /* Terminal Cards */
-        .card-custom {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 22px;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+        /* Story / Vibe strip */
+        .vibe-strip {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+        .vibe-strip::-webkit-scrollbar { display: none; }
+
+        .vibe-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            min-width: 72px;
         }
 
-        .card-custom:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.2);
+        .vibe-ring {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(45deg, var(--pink-pop), var(--gold-pop));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s ease;
         }
 
-        .card-tiktok { border-color: rgba(255, 0, 80, 0.3); }
-        .card-instagram { border-color: rgba(225, 48, 108, 0.3); }
-
-        .media-container {
-            height: 250px;
-            position: relative;
-            background-color: #070a14;
-            overflow: hidden;
-        }
-
-        .media-container img, .media-container video {
+        .vibe-ring img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 50%;
+            border: 2px solid var(--bg-main);
         }
 
-        .card-custom:hover .media-container img {
-            transform: scale(1.06);
-        }
+        .vibe-item:hover .vibe-ring { transform: scale(1.08); }
 
-        /* Chips */
-        .chip-btn {
-            border-radius: 30px;
-            padding: 9px 20px;
-            font-size: 0.82rem;
+        /* Chips / Filter Pills */
+        .social-pill {
+            border-radius: 999px;
+            padding: 10px 22px;
             font-weight: 600;
+            font-size: 0.88rem;
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.04);
             transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             cursor: pointer;
         }
 
-        .chip-btn:hover {
-            border-color: var(--accent-cyan);
-            color: var(--text-main);
-            background: rgba(56, 189, 248, 0.08);
+        .social-pill:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .chip-btn.active {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(192, 132, 252, 0.25));
-            color: #ffffff;
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+        .social-pill.active {
+            background: linear-gradient(135deg, var(--pink-pop), #9b51e0);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(255, 42, 133, 0.35);
         }
 
-        .btn-primary-custom {
-            background: linear-gradient(135deg, #0284c7 0%, #9333ea 100%);
+        /* Feed Cards */
+        .social-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 42, 133, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 42, 133, 0.18);
+        }
+
+        .feed-media {
+            height: 280px;
+            position: relative;
+            background: #110e1d;
+        }
+
+        .feed-media img, .feed-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .creator-tag {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        /* Action bar inside card */
+        .action-icon-btn {
+            background: rgba(255,255,255,0.06);
             border: none;
-            color: white;
-            font-weight: 700;
-            padding: 15px 40px;
+            color: var(--text-muted);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .action-icon-btn:hover {
+            background: rgba(255, 42, 133, 0.2);
+            color: var(--pink-pop);
+        }
+
+        .search-box {
+            background: rgba(18, 14, 30, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 16px;
-            box-shadow: 0 0 30px rgba(2, 132, 199, 0.45);
-            transition: all 0.3s ease;
+            color: #fff;
+            padding: 14px 20px;
         }
-
-        .btn-primary-custom:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 0 35px rgba(147, 51, 234, 0.65);
-        }
-
-        /* Platform Badges */
-        .badge-tiktok { background-color: #ff0050; }
-        .badge-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .badge-x { background-color: #000000; border: 1px solid #444; }
-        .badge-linkedin { background-color: #0a66c2; }
-        .badge-reddit { background-color: #ff4500; }
-
-        .search-input {
-            background-color: rgba(8, 13, 26, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            color: white;
-            border-radius: 14px;
-            padding: 15px 22px;
-            font-size: 0.95rem;
-        }
-
-        .search-input:focus {
-            background-color: rgba(8, 13, 26, 0.98);
-            border-color: var(--accent-cyan);
-            color: white;
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+        .search-box:focus {
+            background: rgba(18, 14, 30, 0.98);
+            border-color: var(--pink-pop);
+            box-shadow: 0 0 20px rgba(255, 42, 133, 0.25);
+            color: #fff;
             outline: none;
         }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 18px;
-            backdrop-filter: blur(10px);
+        .btn-vibe {
+            background: linear-gradient(135deg, var(--pink-pop), #7928ca);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(255, 42, 133, 0.35);
         }
 
-        .pricing-card {
-            background: var(--card-bg);
+        /* Pricing friendly social cards */
+        .pricing-box {
+            background: rgba(22, 18, 38, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            border-radius: 24px;
+            padding: 30px;
+            transition: 0.3s;
         }
-
-        .pricing-card.featured {
-            border: 2px solid var(--accent-cyan);
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
+        .pricing-box.hot {
+            border: 2px solid var(--pink-pop);
+            box-shadow: 0 0 35px rgba(255, 42, 133, 0.25);
         }
-
-        footer {
-            background: rgba(2, 4, 10, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            margin-top: auto;
-        }
-
-        footer a { color: var(--text-muted); text-decoration: none; }
-        footer a:hover { color: var(--accent-cyan); }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom py-3">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-3" href="#">
-                <div class="brand-logo">
-                    <i class="fa-solid fa-atom text-white fs-5"></i>
+    <!-- Header -->
+    <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none" href="#">
+                <div class="brand-pill">
+                    <i class="fa-solid fa-sparkles text-white fs-5"></i>
                 </div>
-                <div class="d-flex flex-column">
-                    <span class="fw-bold fs-4 text-white tracking-tight" style="line-height: 1;">Evolysium AI</span>
-                    <span class="font-mono text-info" style="font-size: 0.65rem; letter-spacing: 1px;">TERMINAL v2.5</span>
+                <div>
+                    <span class="brand-name fw-bold fs-4 text-white">Evolysium</span>
+                    <span class="badge bg-pink text-white ms-2 rounded-pill font-mono" style="font-size: 0.65rem; background: var(--pink-pop);">FYP VIBE</span>
                 </div>
             </a>
-
-            <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-outline-info btn-sm fw-bold rounded-pill px-4 py-2" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                    <i class="fa-solid fa-gem me-1"></i> Pricing Plans
-                </button>
-            </div>
+            <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
+                <i class="fa-solid fa-crown text-warning"></i> Pro Pass
+            </button>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="container py-5">
-        <div class="row justify-content-center text-center mb-5">
-            <div class="col-lg-9">
-                <span class="badge bg-info text-dark font-mono fw-bold px-3 py-2 rounded-pill text-uppercase mb-3 shadow-sm">
-                    <i class="fa-solid fa-satellite-dish me-1"></i> Live Asymmetric Signal Stream
-                </span>
-                <h1 class="display-3 hero-title mb-3">Extract High-Signal Alpha Before the Crowd</h1>
-                <p class="text-secondary fs-5 px-lg-4">Real-time neural curation indexing asymmetric momentum across TikTok, Instagram, Reddit, X, and LinkedIn.</p>
-            </div>
-        </div>
-
-        <!-- Live Metrics Bar -->
-        <div class="row g-3 mb-5 justify-content-center">
-            <div class="col-6 col-md-3">
-                <div class="stat-card text-center">
-                    <div class="text-info font-mono fw-bold fs-3">284.9k</div>
-                    <div class="text-secondary small mt-1">Raw Signals / 24h</div>
+    <div class="container py-4">
+        
+        <!-- Stories / Vibe Hub Strip -->
+        <div class="mb-4">
+            <div class="small text-secondary fw-semibold mb-2">🔥 Trending Vibe Stories</div>
+            <div class="vibe-strip">
+                <div class="vibe-item" onclick="filterByTopic('tech')">
+                    <div class="vibe-ring"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200" alt="Tech"></div>
+                    <span class="small mt-1 text-light">AI & Gear</span>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-card text-center">
-                    <div class="font-mono fw-bold fs-3" style="color: #c084fc;">99.8%</div>
-                    <div class="text-secondary small mt-1">Signal-to-Noise Ratio</div>
+                <div class="vibe-item" onclick="filterByTopic('lifestyle')">
+                    <div class="vibe-ring"><img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=200" alt="Lifestyle"></div>
+                    <span class="small mt-1 text-light">Daily Inspo</span>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-card text-center">
-                    <div class="text-success font-mono fw-bold fs-3"><i class="fa-solid fa-circle-dot fa-beat-fade fs-6 me-2"></i>ONLINE</div>
-                    <div class="text-secondary small mt-1">Validator Grid</div>
+                <div class="vibe-item" onclick="filterByTopic('luxury')">
+                    <div class="vibe-ring"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=200" alt="Luxury"></div>
+                    <span class="small mt-1 text-light">Estates</span>
                 </div>
-            </div>
-        </div>
-
-        <!-- Filter Controls -->
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-10">
-                <div class="card card-custom p-4 p-md-5">
-                    
-                    <!-- Search -->
-                    <div class="mb-4">
-                        <label class="text-uppercase text-info font-mono fw-bold small mb-2 d-block">
-                            <i class="fa-solid fa-terminal me-2"></i>Query Signal Matrix (Keywords, Tickers, Concepts)
-                        </label>
-                        <input type="text" id="keyword-search" class="form-control search-input" placeholder="e.g. Zero-Day, AI Agents, Liquidity, Stealth Wealth...">
-                    </div>
-
-                    <hr class="border-secondary opacity-25">
-
-                    <!-- 1. Platforms -->
-                    <h6 class="text-uppercase text-info font-mono fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>1. Target Platforms</h6>
-                    <div class="d-flex flex-wrap gap-2 mb-4">
-                        <button class="chip-btn active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok me-1"></i> TikTok</button>
-                        <button class="chip-btn active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram me-1"></i> Instagram</button>
-                        <button class="chip-btn active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien me-1"></i> Reddit</button>
-                        <button class="chip-btn active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter me-1"></i> X (Twitter)</button>
-                        <button class="chip-btn active" onclick="toggleSelection('platform', 'linkedin', this)"><i class="fa-brands fa-linkedin me-1"></i> LinkedIn</button>
-                    </div>
-
-                    <hr class="border-secondary opacity-25">
-
-                    <!-- 2. Categories -->
-                    <h6 class="text-uppercase text-info font-mono fw-bold small mb-3"><i class="fa-solid fa-layer-group me-2"></i>2. Intelligence Sectors</h6>
-                    <div class="d-flex flex-wrap gap-2 mb-4">
-                        <button class="chip-btn active" onclick="toggleSelection('category', 'tech', this)"><i class="fa-solid fa-microchip me-1"></i> Tech & AI</button>
-                        <button class="chip-btn active" onclick="toggleSelection('category', 'gaming', this)"><i class="fa-solid fa-gamepad me-1"></i> Gaming</button>
-                        <button class="chip-btn active" onclick="toggleSelection('category', 'lifestyle', this)"><i class="fa-solid fa-heart me-1"></i> Lifestyle</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'funny', this)"><i class="fa-solid fa-face-laugh-squint me-1"></i> Entertainment</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'luxury', this)"><i class="fa-solid fa-gem me-1"></i> Luxury</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'architecture', this)"><i class="fa-solid fa-building me-1"></i> Architecture</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'crypto', this)"><i class="fa-solid fa-coins me-1"></i> Crypto</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', 'travel', this)"><i class="fa-solid fa-plane me-1"></i> Travel</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', '18plus', this)"><i class="fa-solid fa-user-lock me-1"></i> 18+ Vault <span class="badge bg-danger ms-1 font-mono" style="font-size: 0.6rem;">PRO</span></button>
-                    </div>
-
-                    <div class="text-center pt-2">
-                        <button class="btn btn-primary-custom btn-lg w-100 w-md-auto" onclick="fetchCustomFeed()">
-                            <i class="fa-solid fa-bolt me-2"></i> Execute Signal Scan
-                        </button>
-                    </div>
-
+                <div class="vibe-item" onclick="filterByTopic('gaming')">
+                    <div class="vibe-ring"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200" alt="Gaming"></div>
+                    <span class="small mt-1 text-light">Gaming</span>
+                </div>
+                <div class="vibe-item" onclick="filterByTopic('travel')">
+                    <div class="vibe-ring"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200" alt="Travel"></div>
+                    <span class="small mt-1 text-light">Getaways</span>
+                </div>
+                <div class="vibe-item" onclick="filterByTopic('funny')">
+                    <div class="vibe-ring"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200" alt="Fun"></div>
+                    <span class="small mt-1 text-light">Memes/Fun</span>
                 </div>
             </div>
         </div>
 
-        <!-- Spinner -->
+        <!-- Hero welcome -->
+        <div class="text-center my-4 py-3">
+            <h1 class="hero-headline display-4 mb-2">Što se danas vrti na FYP-u?</h1>
+            <p class="text-secondary">Najbolji TikTok, Reels, Reddit & Creator sadržaj na jednom mjestu, filtriran po tvom ukusu.</p>
+        </div>
+
+        <!-- Interactive Filters & Search -->
+        <div class="social-card p-4 mb-5">
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-6">
+                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Pretraži ključne riječi,creatore, teme...">
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <button class="btn btn-vibe px-4 py-3 w-100 w-lg-auto" onclick="fetchCustomFeed()">
+                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Osvježi Feed
+                    </button>
+                </div>
+            </div>
+
+            <hr class="border-secondary opacity-25 my-4">
+
+            <!-- Platform filter chips -->
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <button class="social-pill active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok"></i> TikTok</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram"></i> Instagram</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien"></i> Reddit</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter"></i> X / Twitter</button>
+            </div>
+
+            <!-- Category chips -->
+            <div class="d-flex flex-wrap gap-2">
+                <button class="social-pill active" onclick="toggleSelection('category', 'tech', this)">💻 Tech & AI</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'lifestyle', this)">⚡ Lifestyle</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'luxury', this)">🏎️ Luxury</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
+                <button class="social-pill" onclick="toggleSelection('category', 'travel', this)">✈️ Travel</button>
+                <button class="social-pill" onclick="toggleSelection('category', 'funny', this)">🔥 Entertainment</button>
+                <button class="social-pill" onclick="toggleSelection('category', '18plus', this)">🔞 Creator Vault</button>
+            </div>
+        </div>
+
+        <!-- Loading spinner -->
         <div id="loading-spinner" class="text-center py-5 d-none">
-            <div class="spinner-border text-info" style="width: 3.5rem; height: 3.5rem;" role="status"></div>
-            <p class="mt-3 text-secondary font-mono small">Extracting raw cross-platform intelligence vectors...</p>
+            <div class="spinner-border text-pink" style="color: var(--pink-pop);" role="status"></div>
+            <p class="mt-3 text-secondary small">Curiram svježe vizualne priče...</p>
         </div>
 
         <!-- Feed Grid -->
         <div id="feed-grid" class="row g-4"></div>
     </div>
 
-    <!-- Pricing Modal -->
+    <!-- Pro / Community Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content text-light" style="background-color: #060913; border: 1px solid rgba(255,255,255,0.18);">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title fw-bold text-info"><i class="fa-solid fa-gem me-2"></i>Evolysium Terminal Tiers</h5>
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0">Otključaj Puni Vibe / Pro</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body py-4">
-                    <div class="row g-3">
-                        <div class="col-md-6 col-lg-3">
-                            <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between">
+                <div class="modal-body p-4">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="pricing-box h-100 d-flex flex-column justify-content-between">
                                 <div>
-                                    <h6 class="fw-bold text-uppercase text-secondary font-mono">Observer</h6>
-                                    <h3 class="fw-bold my-2 font-mono">€0 <small class="fs-6 text-secondary">/mo</small></h3>
-                                    <ul class="list-unstyled text-start small mt-3 text-secondary">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Delayed feed stream</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Core categories</li>
-                                        <li><i class="fa-solid fa-xmark text-danger me-2"></i>18+ Vault locked</li>
+                                    <span class="badge bg-secondary rounded-pill mb-2">Free Vibe</span>
+                                    <h5>Daily Explorer</h5>
+                                    <h2 class="fw-bold my-3">€0 <span class="fs-6 text-secondary fw-normal">/ mjesečno</span></h2>
+                                    <ul class="list-unstyled text-secondary small g-2">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Osnovni viralni feed</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Javne kategorije</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-light btn-sm w-100 mt-3 font-mono" disabled>Active</button>
+                                <button class="btn btn-outline-light w-100 rounded-pill py-2" disabled>Aktivno</button>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="pricing-card featured p-4 text-center h-100 d-flex flex-column justify-content-between">
+                        <div class="col-md-6">
+                            <div class="pricing-box hot h-100 d-flex flex-column justify-content-between">
                                 <div>
-                                    <span class="badge bg-info text-dark rounded-pill mb-2 font-mono">HIGH EDGE</span>
-                                    <h6 class="fw-bold text-uppercase text-info font-mono">Operator / Pro</h6>
-                                    <h3 class="fw-bold my-2 font-mono">€9.99 <small class="fs-6 text-secondary">/mo</small></h3>
-                                    <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Real-time zero-lag stream</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"><strong>TikTok/IG Video Feed</strong></i></li>
-                                        <li><i class="fa-solid fa-check text-info me-2"><strong>Unlocked 18+ Vault</strong></i></li>
+                                    <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">MOST POPULAR</span>
+                                    <h5>Creator Pro Pass</h5>
+                                    <h2 class="fw-bold my-3">€9.99 <span class="fs-6 text-secondary fw-normal">/ mjesečno</span></h2>
+                                    <ul class="list-unstyled text-light small">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2" style="color:var(--pink-pop)"></i><strong>Neoograničeni Video Feed (TikTok/IG)</strong></li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2" style="color:var(--pink-pop)"></i><strong>Otključan Creator Vault (18+)</strong></li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2" style="color:var(--pink-pop)"></i>Direktni source linkovi</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-info btn-sm fw-bold w-100 mt-3 py-2 font-mono">Upgrade</button>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between">
-                                <div>
-                                    <h6 class="fw-bold text-uppercase text-warning font-mono">Syndicate</h6>
-                                    <h3 class="fw-bold my-2 font-mono">€29.99 <small class="fs-6 text-secondary">/mo</small></h3>
-                                    <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Everything in Operator</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Export alpha (JSON/CSV)</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Custom webhook alerts</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-3 py-2 font-mono">Select</button>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between" style="border-color: #c084fc;">
-                                <div>
-                                    <span class="badge rounded-pill mb-2 font-mono" style="background-color: #c084fc; color: #000;">INSTITUTIONAL</span>
-                                    <h6 class="fw-bold text-uppercase font-mono" style="color: #c084fc;">Whale / VIP</h6>
-                                    <h3 class="fw-bold my-2 font-mono">€79.99 <small class="fs-6 text-secondary">/mo</small></h3>
-                                    <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Private node access</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Direct API key feed</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-outline-secondary btn-sm fw-bold w-100 mt-3 py-2 font-mono" style="border-color: #c084fc; color: #c084fc;">Inquire</button>
+                                <button class="btn btn-vibe w-100 rounded-pill py-2">Pridruži se Pro timu</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer class="py-4">
-            <div class="container text-center text-secondary small font-mono">
-                Evolysium AI Terminal &copy; 2026. All signals processed via decentralized telemetry.
-            </div>
-        </footer>
     </div>
 
-    <!-- JavaScript logic -->
+    <!-- Footer -->
+    <footer class="py-4 text-center text-secondary small">
+        <div class="container">
+            Evolysium Social Curation &bull; Dizajnirano za ljudsko otkrivanje sadržaja &copy; 2026
+        </div>
+    </footer>
+
+    <!-- Logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_BASE = "https://evolysium-backend.onrender.com";
-        let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
-        let selectedCategories = ["tech", "gaming", "lifestyle"];
+        let selectedPlatforms = ["tiktok", "instagram", "reddit", "x"];
+        let selectedCategories = ["tech", "lifestyle", "luxury", "gaming"];
 
-        const categoryRichImages = {
+        const richVisualLibrary = {
             "tech": [
-                "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900&auto=format&fit=crop"
-            ],
-            "gaming": [
-                "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&auto=format&fit=crop"
             ],
             "lifestyle": [
-                "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=900&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&auto=format&fit=crop"
             ],
             "luxury": [
-                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&auto=format&fit=crop"
             ],
-            "crypto": [
-                "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=900&auto=format&fit=crop"
+            "gaming": [
+                "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900&auto=format&fit=crop"
+            ],
+            "travel": [
+                "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&auto=format&fit=crop"
+            ],
+            "funny": [
+                "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop"
             ],
             "18plus": [
                 "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&auto=format&fit=crop"
             ]
         };
 
-        const reliableVideoStreams = {
-            "tech": "https://vjs.zencdn.net/v/oceans.mp4",
-            "gaming": "https://media.w3.org/2010/05/sintel/trailer.mp4",
-            "lifestyle": "https://vjs.zencdn.net/v/oceans.mp4",
-            "crypto": "https://vjs.zencdn.net/v/oceans.mp4",
-            "luxury": "https://vjs.zencdn.net/v/oceans.mp4",
-            "18plus": "https://vjs.zencdn.net/v/oceans.mp4"
-        };
+        const demoVideoPool = [
+            "https://vjs.zencdn.net/v/oceans.mp4",
+            "https://media.w3.org/2010/05/sintel/trailer.mp4"
+        ];
+
+        const humanStories = [
+            { creator: "@lucas_builds", title: "Setup od €4,000 koji ruši internet tjedna", cat: "tech", platform: "tiktok", likes: "142k", comments: "1.2k" },
+            { creator: "@elena_vibe", title: "Zašto se svi vraćaju minimalističkom stanu u centru", cat: "luxury", platform: "instagram", likes: "89k", comments: "940" },
+            { creator: "@neoproto", title: "Ovaj AI alat mi štedi 4 sata dnevno bez zajebancije", cat: "tech", platform: "x", likes: "34k", comments: "510" },
+            { creator: "@retro_gamer_hq", title: "Hidden gem igra koju nitko ne igra, a bolja je od AAA naslova", cat: "gaming", platform: "reddit", likes: "18.5k", comments: "830" },
+            { creator: "@sunset_chaser", title: "Skriveni rooftop u Lisabonu o kojem turisti šute", cat: "travel", platform: "instagram", likes: "210k", comments: "3.4k" },
+            { creator: "@vibe_daily", title: "Jutarnja rutina od 20 minuta koja mijenja fokus", cat: "lifestyle", platform: "tiktok", likes: "65k", comments: "410" }
+        ];
 
         function toggleSelection(type, value, btn) {
             btn.classList.toggle("active");
@@ -443,113 +451,86 @@
             list = list.includes(value) ? list.filter(item => item !== value) : [...list, value];
             if (type === 'platform') selectedPlatforms = list;
             else selectedCategories = list;
+            fetchCustomFeed();
         }
 
-        function getPlatformBadge(platform) {
-            switch(platform) {
-                case 'tiktok': return `<span class="badge badge-tiktok font-mono"><i class="fa-brands fa-tiktok me-1"></i> TikTok</span>`;
-                case 'instagram': return `<span class="badge badge-instagram font-mono"><i class="fa-brands fa-instagram me-1"></i> Instagram</span>`;
-                case 'x': return `<span class="badge badge-x font-mono"><i class="fa-brands fa-x-twitter me-1"></i> X</span>`;
-                case 'linkedin': return `<span class="badge badge-linkedin font-mono"><i class="fa-brands fa-linkedin me-1"></i> LinkedIn</span>`;
-                case 'reddit': return `<span class="badge badge-reddit font-mono"><i class="fa-brands fa-reddit-alien me-1"></i> Reddit</span>`;
-                default: return `<span class="badge bg-secondary font-mono">Signal</span>`;
-            }
+        function filterByTopic(cat) {
+            selectedCategories = [cat];
+            document.querySelectorAll('.social-pill').forEach(p => p.classList.remove('active'));
+            fetchCustomFeed();
         }
 
-        function getRandomImage(category) {
-            const arr = categoryRichImages[category] || categoryRichImages["tech"];
+        function getRandomPic(category) {
+            const arr = richVisualLibrary[category] || richVisualLibrary["lifestyle"];
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        function getRichMockItems() {
-            const items = [];
-            const platforms = selectedPlatforms.length ? selectedPlatforms : ["instagram", "tiktok", "x", "reddit"];
-            const categories = selectedCategories.length ? selectedCategories : ["tech", "lifestyle", "crypto"];
-            for (let i = 0; i < 9; i++) {
-                const platform = platforms[i % platforms.length];
-                const category = categories[i % categories.length];
-                items.push({
-                    platform: platform,
-                    category: category,
-                    source: `${platform.toUpperCase()} // Alpha Feed`,
-                    title: `⚡ High-Impact Signal Detected: ${category.toUpperCase()} Shift`,
-                    summary: `Direct asymmetric pattern extraction from high-engagement primary validator feeds with 94%+ institutional score.`,
-                    image: getRandomImage(category),
-                    url: "https://evolysium.github.io/evolysium-frontend/",
-                    score: Math.floor(Math.random() * 8 + 92),
-                    sentiment: "Alpha Positive"
-                });
-            }
-            return items;
-        }
-
         async function fetchCustomFeed() {
-            const searchQuery = document.getElementById("keyword-search").value.trim();
             const spinner = document.getElementById("loading-spinner");
             const grid = document.getElementById("feed-grid");
+            const query = document.getElementById("keyword-search").value.toLowerCase().trim();
 
             spinner.classList.remove("d-none");
             grid.innerHTML = "";
 
-            try {
-                let url = `${API_BASE}/api/feed?_ts=${Date.now()}&platforms=${selectedPlatforms.join(",")}&categories=${selectedCategories.join(",")}&limit=100`;
-                if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
+            setTimeout(() => {
+                let items = humanStories.filter(item => {
+                    const matchPlatform = selectedPlatforms.length === 0 || selectedPlatforms.includes(item.platform);
+                    const matchCategory = selectedCategories.length === 0 || selectedCategories.includes(item.cat);
+                    const matchQuery = !query || item.title.toLowerCase().includes(query) || item.creator.toLowerCase().includes(query);
+                    return matchPlatform && matchCategory && matchQuery;
+                });
 
-                const response = await fetch(url);
-                const data = await response.json();
-                let displayItems = (data.success && data.items && data.items.length > 0) ? data.items.filter(item => !item.title.includes("No Matching")) : getRichMockItems();
-                if (displayItems.length === 0) displayItems = getRichMockItems();
+                if (items.length === 0) items = humanStories.slice(0, 3);
 
-                grid.innerHTML = displayItems.map(item => {
-                    const isTikTok = item.platform === "tiktok";
-                    const isInstagram = item.platform === "instagram";
-                    const videoSrc = reliableVideoStreams[item.category] || reliableVideoStreams["tech"];
-                    let mediaImage = item.image || getRandomImage(item.category);
-                    let cardClass = isTikTok ? "card-tiktok" : (isInstagram ? "card-instagram" : "");
-
-                    const mediaElement = (isTikTok || isInstagram) ? `
-                        <div class="media-container">
-                            <video controls playsinline loop preload="metadata" poster="${mediaImage}">
-                                <source src="${videoSrc}" type="video/mp4">
+                grid.innerHTML = items.map((item, idx) => {
+                    const isVideo = item.platform === 'tiktok' || item.platform === 'instagram';
+                    const mediaContent = isVideo ? `
+                        <div class="feed-media">
+                            <video controls playsinline loop muted poster="${getRandomPic(item.cat)}">
+                                <source src="${demoVideoPool[idx % demoVideoPool.length]}" type="video/mp4">
                             </video>
                         </div>
                     ` : `
-                        <div class="media-container">
-                            <img src="${mediaImage}" alt="Signal visual" onerror="this.src='${getRandomImage('tech')}'">
+                        <div class="feed-media">
+                            <img src="${getRandomPic(item.cat)}" alt="Vibe visual">
                         </div>
                     `;
 
-                    const btnClass = isTikTok ? "btn-outline-danger" : (isInstagram ? "btn-outline-warning" : "btn-outline-info");
-                    const btnText = isTikTok ? '<i class="fa-brands fa-tiktok me-1"></i> Stream TikTok' : (isInstagram ? '<i class="fa-brands fa-instagram me-1"></i> Stream Reel' : 'Inspect Source');
-
                     return `
                         <div class="col-md-6 col-lg-4">
-                            <div class="card card-custom ${cardClass} h-100">
-                                ${mediaElement}
-                                <div class="card-body d-flex flex-column">
+                            <div class="social-card h-100 d-flex flex-column">
+                                ${mediaContent}
+                                <div class="creator-tag text-light">
+                                    <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
+                                </div>
+                                <div class="card-body p-4 d-flex flex-column flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        ${getPlatformBadge(item.platform)}
-                                        <span class="badge bg-info text-dark font-mono fw-bold" style="font-size: 0.68rem;">${item.score || 96} pts</span>
+                                        <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
+                                        <span class="small text-secondary"><i class="fa-solid fa-fire text-warning me-1"></i>Trending</span>
                                     </div>
-                                    <div class="text-info font-mono small mb-1">${item.source || 'Evolysium Node'}</div>
-                                    <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
-                                    <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-                                    <a href="${item.url || '#'}" target="_blank" class="btn ${btnClass} btn-sm w-100 mt-2 font-mono">
-                                        ${btnText}
-                                    </a>
+                                    <h5 class="fw-bold text-white mb-3" style="line-height: 1.3;">${item.title}</h5>
+                                    
+                                    <div class="mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                        <div class="d-flex gap-3 text-secondary small">
+                                            <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
+                                            <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
+                                        </div>
+                                        <a href="#" class="action-icon-btn text-decoration-none" onclick="alert('Otvaram izvorni post creator platforme!')">
+                                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     `;
                 }).join('');
 
-            } catch (err) {
-                grid.innerHTML = `<div class="col-12 text-center text-secondary py-5 font-mono">Terminal fallback active: connection interrupted.</div>`;
-            } finally {
                 spinner.classList.add("d-none");
-            }
+            }, 350);
         }
 
+        document.getElementById('keyword-search').addEventListener('input', fetchCustomFeed);
         document.addEventListener("DOMContentLoaded", () => fetchCustomFeed());
     </script>
 </body>
