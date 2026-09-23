@@ -235,6 +235,34 @@
             border: 2px solid var(--pink-pop);
             box-shadow: 0 0 35px rgba(255, 42, 133, 0.25);
         }
+
+        /* Toast container */
+        #live-toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1080;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .live-toast {
+            background: rgba(18, 14, 30, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 16px;
+            padding: 12px 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInRight 0.3s ease;
+            max-width: 320px;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -260,6 +288,11 @@
                         <i class="fa-solid fa-file-csv"></i> CSV
                     </button>
                 </div>
+                <!-- TOČKA 5: Notifikacijski gumb -->
+                <button class="social-pill position-relative py-2 px-3" data-bs-toggle="modal" data-bs-target="#notificationModal" onclick="clearNotificationBadge()">
+                    <i class="fa-solid fa-bell text-info"></i>
+                    <span id="notif-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">3</span>
+                </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
                     <i class="fa-solid fa-crown text-warning"></i> Membership
                 </button>
@@ -330,6 +363,26 @@
         <div id="infinite-sentinel" class="text-center py-5 d-none">
             <div class="spinner-border text-info" role="status"></div>
             <p class="mt-2 text-secondary small font-mono">Učitavam beskonačni cross-platform vibe stream...</p>
+        </div>
+    </div>
+
+    <!-- Live Toast Container -->
+    <div id="live-toast-container"></div>
+
+    <!-- TOČKA 5: Notification Center Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-bell text-info me-2"></i>Live Vibe Feed Aktivnosti</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="notifications-list" class="d-flex flex-column gap-3">
+                        <!-- Popunjava se JS-om -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -516,6 +569,13 @@
         let isLoadingInfinite = false;
         let infiniteBatchCount = 1;
         let currentFeedItems = [];
+        let unreadNotifCount = 3;
+
+        let notificationsData = [
+            { id: 1, text: "🔥 @viral_node je prešao 100k pregleda na M4 Max testu", time: "2 min ago" },
+            { id: 2, text: "🔞 Novi 18+ Vault drop u Midnight kategoriji", time: "15 min ago" },
+            { id: 3, text: "💬 @alex_dev je komentirao tvoj pohranjeni trend", time: "1h ago" }
+        ];
 
         const richVisualLibrary = {
             "tech": [
@@ -581,6 +641,62 @@
             }
         }
 
+        function renderNotifications() {
+            const list = document.getElementById('notifications-list');
+            if (!list) return;
+            list.innerHTML = notificationsData.map(n => `
+                <div class="p-3 rounded-4 bg-dark bg-opacity-70 border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                    <span class="small text-light">${n.text}</span>
+                    <span class="font-mono text-secondary" style="font-size:0.7rem;">${n.time}</span>
+                </div>
+            `).join('');
+            const badge = document.getElementById('notif-badge');
+            if (badge) {
+                badge.innerText = unreadNotifCount;
+                badge.style.display = unreadNotifCount > 0 ? 'inline-block' : 'none';
+            }
+        }
+
+        function clearNotificationBadge() {
+            unreadNotifCount = 0;
+            renderNotifications();
+        }
+
+        function pushLiveToast(text) {
+            const container = document.getElementById('live-toast-container');
+            if (!container) return;
+            const toastEl = document.createElement('div');
+            toastEl.className = 'live-toast';
+            toastEl.innerHTML = `
+                <i class="fa-solid fa-bolt text-info fs-5"></i>
+                <div class="small text-light">${text}</div>
+            `;
+            container.appendChild(toastEl);
+            setTimeout(() => {
+                toastEl.style.transition = 'opacity 0.4s ease';
+                toastEl.style.opacity = '0';
+                setTimeout(() => toastEl.remove(), 400);
+            }, 4500);
+
+            notificationsData.unshift({ id: Date.now(), text, time: 'upravo sada' });
+            unreadNotifCount++;
+            renderNotifications();
+        }
+
+        // Simulacija live real-time događaja svakih 18 sekundi
+        function startLiveSimulation() {
+            const events = [
+                "⚡ TikTok post od @nexus_pulse upravo probio 50k lajkova",
+                "💬 Novi AI bot thread komentiran na X/Twitteru",
+                "🔥 Vibe Trend alert: Porast potražnje za 'Luxury' vizualima",
+                "🔞 Novi age-verified media payload u 18+ Vault-u"
+            ];
+            setInterval(() => {
+                const randomEvent = events[Math.floor(Math.random() * events.length)];
+                pushLiveToast(randomEvent);
+            }, 18000);
+        }
+
         function renderVibeStrip() {
             const container = document.getElementById('vibe-strip-container');
             if (!container) return;
@@ -636,7 +752,7 @@
 
             document.getElementById('story-title').value = '';
             document.getElementById('story-image').value = '';
-            alert('✨ Story uspješno objavljen u Vibe Strip i feed!');
+            pushLiveToast(`✨ Novi story objavio/la ${creator}`);
         }
 
         function verifyAgeAndCheckout(planName, price, requires18) {
@@ -673,6 +789,7 @@
             cancelCheckout();
             bootstrap.Modal.getInstance(document.getElementById('pricingModal')).hide();
             checkVipStatus();
+            pushLiveToast(`👑 Aktivirana pretplata: ${activePlanData.planName}`);
         }
 
         function toggleSelection(type, value, btn) {
@@ -747,7 +864,7 @@
             }
 
             const mockComments = [
-                { user: "@alex_dev", text: "Ovo izgleda brutlano dobro, koja je šema s configom?" },
+                { user: "@alex_dev", text: "Ovo izgleda brutalno dobro, koja je šema s configom?" },
                 { user: "@vibe_lord", text: "Potvrđujem, vidio isto na twitteru jučer." },
                 { user: "@stack_queen", text: "10/10 preporuka za ovaj workflow." }
             ];
@@ -865,9 +982,9 @@
                 downloadAnchor.click();
                 downloadAnchor.remove();
             }
+            pushLiveToast('📁 Uspješan Alpha export podataka feeda!');
         }
 
-        // Infinite Scroll Intersection Observer
         function setupInfiniteScroll() {
             const sentinel = document.getElementById("infinite-sentinel");
             const observer = new IntersectionObserver((entries) => {
@@ -905,8 +1022,10 @@
         document.addEventListener("DOMContentLoaded", () => {
             renderVibeStrip();
             checkVipStatus();
+            renderNotifications();
             resetAndFetchFeed();
             setupInfiniteScroll();
+            startLiveSimulation();
         });
     </script>
 </body>
