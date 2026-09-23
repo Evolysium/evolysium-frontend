@@ -36,14 +36,17 @@
                 radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 45%);
             background-attachment: fixed;
             overflow-x: hidden;
+            margin: 0;
         }
+
+        main { flex: 1; }
 
         h1, h2, h3, h4, h5, .brand-name {
             font-family: 'Outfit', sans-serif;
         }
 
         .navbar-custom {
-            background: rgba(12, 10, 21, 0.82);
+            background: rgba(12, 10, 21, 0.85);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
@@ -57,6 +60,17 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 0 25px rgba(255, 42, 133, 0.4);
+            position: relative;
+        }
+        .brand-pill::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--pink-pop), var(--cyan-pop));
+            opacity: 0.4;
+            filter: blur(8px);
+            z-index: -1;
         }
 
         .hero-headline {
@@ -155,6 +169,7 @@
             height: 280px;
             position: relative;
             background: #110e1d;
+            cursor: pointer;
         }
 
         .feed-media img, .feed-media video {
@@ -202,6 +217,7 @@
             align-items: center;
             justify-content: center;
             transition: 0.2s;
+            cursor: pointer;
         }
         .action-icon-btn:hover {
             background: rgba(255, 42, 133, 0.2);
@@ -231,13 +247,19 @@
             padding: 14px 32px;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(255, 42, 133, 0.35);
+            cursor: pointer;
+        }
+        .btn-vibe:hover {
+            color: #fff;
+            opacity: 0.95;
+            box-shadow: 0 12px 30px rgba(255, 42, 133, 0.5);
         }
 
         .pricing-box {
             background: rgba(22, 18, 38, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 22px;
+            padding: 24px;
             transition: 0.3s;
             height: 100%;
             display: flex;
@@ -247,6 +269,21 @@
         .pricing-box.hot {
             border: 2px solid var(--pink-pop);
             box-shadow: 0 0 35px rgba(255, 42, 133, 0.25);
+        }
+
+        .site-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 8, 18, 0.9);
+            backdrop-filter: blur(15px);
+            margin-top: 60px;
+        }
+        .site-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .site-footer a:hover {
+            color: var(--cyan-pop);
         }
     </style>
 </head>
@@ -266,20 +303,20 @@
             </a>
             <div class="d-flex align-items-center gap-2">
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
-                    <i class="fa-solid fa-plus-circle text-pink"></i> Drop Vibe Trail
+                    <i class="fa-solid fa-plus-circle"></i> Drop Vibe Trail
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
                     <i class="fa-solid fa-crown text-warning"></i> Pricing
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#authModal">
-                    <i class="fa-solid fa-user-circle"></i> Auth
+                    <i class="fa-solid fa-user-circle"></i> Join Pulse
                 </button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="container py-4">
+    <main class="container py-4">
         
         <!-- Stories / Vibe Hub Strip -->
         <div class="mb-4">
@@ -289,21 +326,25 @@
             </div>
         </div>
 
-        <!-- Hero welcome -->
+        <!-- Hero welcome / Engagement teaser -->
         <div class="text-center my-4 py-3">
             <h1 class="hero-headline display-4 mb-2">Multi-Platform Vibe Stream</h1>
-            <p class="text-secondary">TikTok, Instagram, X, LinkedIn & real user-dropped brand trails in one feed.</p>
+            <p class="text-secondary mb-3">TikTok, Instagram, X, Reddit, LinkedIn & real user-dropped brand trails in one endless feed.</p>
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill border border-secondary border-opacity-25 bg-white bg-opacity-5 small text-secondary">
+                <span class="pulse-dot" style="width:8px; height:8px; background:var(--pink-pop); border-radius:50%; display:inline-block; box-shadow:0 0 10px var(--pink-pop);"></span>
+                Unlock secret drop alerts & creator backstage passes by joining free today.
+            </div>
         </div>
 
         <!-- Interactive Filters & Search -->
         <div class="social-card p-4 mb-5">
             <div class="row g-3 align-items-center">
                 <div class="col-lg-6">
-                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Search creators, brands, or keywords...">
+                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Search creators, underground drops, or keywords...">
                 </div>
                 <div class="col-lg-6 text-lg-end">
-                    <button class="btn btn-vibe px-4 py-3 w-100 w-lg-auto" onclick="renderFeed()">
-                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Refresh Stream
+                    <button class="btn btn-vibe px-4 py-3 w-100 w-lg-auto" onclick="loadBackendFeed()">
+                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Sync Fresh Stream
                     </button>
                 </div>
             </div>
@@ -315,6 +356,7 @@
                 <button class="social-pill active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok"></i> TikTok</button>
                 <button class="social-pill active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram"></i> Instagram</button>
                 <button class="social-pill active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter"></i> X / Twitter</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien"></i> Reddit</button>
                 <button class="social-pill active" onclick="toggleSelection('platform', 'linkedin', this)"><i class="fa-brands fa-linkedin"></i> LinkedIn</button>
                 <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> User Trails</button>
             </div>
@@ -330,9 +372,27 @@
 
         <!-- Feed Grid -->
         <div id="feed-grid" class="row g-4"></div>
-    </div>
+        <div id="loading-indicator" class="text-center py-4 text-secondary small" style="display:none;">
+            <i class="fa-solid fa-spinner fa-spin me-2"></i> Catching the next wave of vibes...
+        </div>
+    </main>
 
-    <!-- Drop Vibe Trail Modal (User/Brand Ad/Story Drop) -->
+    <!-- Footer -->
+    <footer class="site-footer py-4">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2">
+                <span class="brand-name fw-bold text-white">Evolysium AI</span>
+                <span class="text-secondary small">© All rights reserved.</span>
+            </div>
+            <div class="d-flex align-items-center gap-4 small">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#gdprModal">GDPR Compliance</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#pricingModal">Upgrade Pass</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Drop Vibe Trail Modal -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: #110e1d; border-radius: 24px; border: 1px solid rgba(255,255,255,0.15);">
@@ -356,10 +416,11 @@
                                 <option value="brand">📢 Brand / Ad</option>
                                 <option value="tech">💻 Tech & AI</option>
                                 <option value="lifestyle">⚡ Lifestyle</option>
+                                <option value="gaming">🎮 Gaming</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Media Visual URL (Image/Banner)</label>
+                            <label class="form-label small text-secondary">Media Visual URL (Image / Video URL)</label>
                             <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/..." required>
                         </div>
                         <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Trail to Global Feed</button>
@@ -374,7 +435,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Evolysium 4-Tier Subscription Passes</h4>
+                    <h4 class="fw-bold mb-0">Evolysium 4-Tier Access Passes</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -382,57 +443,61 @@
                         <div class="col-md-3">
                             <div class="pricing-box">
                                 <div>
-                                    <span class="badge bg-secondary rounded-pill mb-2">1. Free</span>
-                                    <h5>Daily Explorer</h5>
+                                    <span class="badge bg-secondary rounded-pill mb-2">Tier 1</span>
+                                    <h5>Free Explorer</h5>
                                     <h3 class="fw-bold my-2">€0 <span class="fs-6 text-secondary fw-normal">/mo</span></h3>
                                     <ul class="list-unstyled text-secondary small mt-3">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Public feed access</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>View community trails</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Multi-platform public feed</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Community vibe stories</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Basic keyword search</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-light w-100 rounded-pill py-2 mt-3" disabled>Active</button>
+                                <button class="btn btn-outline-light w-100 rounded-pill py-2 mt-3" disabled>Current Base</button>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="pricing-box">
                                 <div>
-                                    <span class="badge bg-info text-dark rounded-pill mb-2">2. Personal Pro</span>
-                                    <h5>Ad-Free Vibe</h5>
-                                    <h3 class="fw-bold my-2">€4.99 <span class="fs-6 text-secondary fw-normal">/mo</span></h3>
+                                    <span class="badge bg-info text-dark rounded-pill mb-2">Tier 2</span>
+                                    <h5>Pro / Personal</h5>
+                                    <h3 class="fw-bold my-2">€14.99 <span class="fs-6 text-secondary fw-normal">/mo</span></h3>
                                     <ul class="list-unstyled text-secondary small mt-3">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Zero sponsored ads</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Save favorite trails</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Zero sponsored clutter</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Save favorite vibe trails</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>High-speed HD media play</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-info w-100 rounded-pill py-2 mt-3" onclick="alert('Selected Personal Pro!')">Upgrade</button>
+                                <button class="btn btn-outline-info w-100 rounded-pill py-2 mt-3" onclick="alert('Welcome to Pro/Personal Vibe Pass!')">Select Pro</button>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="pricing-box hot">
                                 <div>
-                                    <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">3. Creator / Business</span>
-                                    <h5>Brand Booster</h5>
-                                    <h3 class="fw-bold my-2">€9.99 <span class="fs-6 text-secondary fw-normal">/mo</span></h3>
+                                    <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">Tier 3 • Most Popular</span>
+                                    <h5>Business / Creator / 18+ Content</h5>
+                                    <h3 class="fw-bold my-2">€29.99 <span class="fs-6 text-secondary fw-normal">/mo</span></h3>
                                     <ul class="list-unstyled text-light small mt-3">
-                                        <li class="mb-2"><i class="fa-solid fa-check me-2" style="color:var(--pink-pop)"></i>Drop verified brand trails</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check me-2" style="color:var(--pink-pop)"></i>Analytics reach metrics</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check me-2" style="color:var(--pink-pop)"></i>Verified brand & creator trails</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check me-2" style="color:var(--pink-pop)"></i>Unfiltered 18+ creator drops enabled</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check me-2" style="color:var(--pink-pop)"></i>Direct audience analytics</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-vibe w-100 rounded-pill py-2 mt-3" onclick="alert('Selected Creator/Business!')">Join Creator</button>
+                                <button class="btn btn-vibe w-100 rounded-pill py-2 mt-3" onclick="alert('Creator/18+ Pass Unlocked!')">Unlock Access</button>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="pricing-box">
                                 <div>
-                                    <span class="badge bg-warning text-dark rounded-pill mb-2">4. VIP / Enterprise</span>
-                                    <h5>Network Partner</h5>
-                                    <h3 class="fw-bold my-2">€19.99 <span class="fs-6 text-secondary fw-normal">/mo</span></h3>
+                                    <span class="badge bg-warning text-dark rounded-pill mb-2">Tier 4</span>
+                                    <h5>VIP / Enterprise</h5>
+                                    <h3 class="fw-bold my-2">€49.99 <span class="fs-6 text-secondary fw-normal">/mo</span></h3>
                                     <ul class="list-unstyled text-secondary small mt-3">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Featured top-strip slot</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>API campaign sync</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Top-strip permanent showcase</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Dedicated enterprise API sync</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>White-glove moderation support</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2 mt-3" onclick="alert('Selected VIP Enterprise!')">Upgrade VIP</button>
+                                <button class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2 mt-3" onclick="alert('VIP Enterprise activated!')">Go VIP</button>
                             </div>
                         </div>
                     </div>
@@ -446,7 +511,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: #110e1d; border-radius: 24px; border: 1px solid rgba(255,255,255,0.15);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Join Evolysium</h4>
+                    <h4 class="fw-bold mb-0">Join Evolysium Network</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -459,9 +524,31 @@
                             <label class="form-label small text-secondary">Password</label>
                             <input type="password" class="form-control auth-input" placeholder="••••••••" required>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Sign In / Register</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Enter the Vibe Stream</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light p-4" style="background: #110e1d; border-radius: 24px; border: 1px solid rgba(255,255,255,0.15);">
+                <h4 class="fw-bold mb-3">Privacy Policy</h4>
+                <p class="text-secondary small">Evolysium respects your digital footprint. We collect only public-facing social signals, aggregated creator interaction metadata, and authenticated creator profile identifiers required to sync cross-platform trends. No third-party data selling.</p>
+                <button type="button" class="btn btn-outline-light rounded-pill w-100" data-bs-dismiss="modal">Got it</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GDPR Modal -->
+    <div class="modal fade" id="gdprModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light p-4" style="background: #110e1d; border-radius: 24px; border: 1px solid rgba(255,255,255,0.15);">
+                <h4 class="fw-bold mb-3">GDPR & Data Rights</h4>
+                <p class="text-secondary small">Under EU GDPR guidelines, you have the full right to export, inspect, or purge your user-dropped trails and authentication records at any time. Contact privacy@evolysium.app for instant compliance requests.</p>
+                <button type="button" class="btn btn-outline-light rounded-pill w-100" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -469,13 +556,13 @@
     <!-- Story Viewer Modal -->
     <div class="modal fade" id="storyModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-3 d-flex flex-column justify-content-between" style="background:#000; border-radius:24px; height:70vh; max-width:360px; margin:auto;">
+            <div class="modal-content p-3 d-flex flex-column justify-content-between" style="background:#000; border-radius:24px; height:75vh; max-width:380px; margin:auto;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <span id="storyCreatorName" class="fw-bold small text-light">@creator</span>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="flex-grow-1 d-flex align-items-center justify-content-center overflow-hidden rounded-4 bg-dark">
-                    <img id="storyMediaImg" src="" alt="Story" class="w-100 h-100 object-fit-cover">
+                    <div id="storyMediaContainer" class="w-100 h-100 d-flex align-items-center justify-content-center"></div>
                 </div>
                 <div class="mt-3 text-center">
                     <span id="storyTitleBadge" class="badge text-bg-dark border border-secondary">Live Trail</span>
@@ -486,16 +573,58 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        let selectedPlatforms = ["tiktok", "instagram", "x", "linkedin", "trail"];
-        let selectedCategories = ["tech", "lifestyle", "brand", "gaming"];
+        const API_FEED_URL = 'https://evolysium-backend.onrender.com/api/feed';
+        let feedItems = [];
+        let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin", "trail"];
+        let selectedCategories = ["tech", "gaming", "luxury", "lifestyle", "brand"];
+        let isLoadingInfinite = false;
 
-        // Osnovni multi-platform + user trails pool
-        let feedItems = JSON.parse(localStorage.getItem('evolysium_user_trails') || 'null') || [
-            { id: '1', creator: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', cat: 'lifestyle', platform: 'tiktok', likes: '142k', comments: '1.2k', media: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', isTrail: false },
-            { id: '2', creator: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', cat: 'lifestyle', platform: 'instagram', likes: '89k', comments: '940', media: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', isTrail: false },
-            { id: '3', creator: '@x_build_log', title: 'Local LLM inference benchmark on M4 Max zero cloud lag', cat: 'tech', platform: 'x', likes: '34k', comments: '510', media: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900', isTrail: false },
-            { id: '4', creator: '@linkedin_exec', title: 'Why engineering culture eats strategy for breakfast in 2026', cat: 'tech', platform: 'linkedin', likes: '18.5k', comments: '830', media: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900', isTrail: false }
+        // Fallback viral pool in case backend is waking up cold
+        const fallbackItems = [
+            { id: 'f1', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management blueprint with ambient cyan underlighting.' },
+            { id: 'f2', source: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', category: 'lifestyle', platform: 'instagram', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', summary: 'Concrete and glass continuity over Mediterranean cliffs.' },
+            { id: 'f3', source: '@x_build_log', title: 'Local LLM inference benchmark on M4 Max zero cloud lag', category: 'tech', platform: 'x', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900', summary: 'Token throughput breakdown hitting 142 tokens/sec local.' },
+            { id: 'f4', source: '@reddit_tech_pulse', title: 'Why hardware acceleration bypassed legacy bottlenecks this quarter', category: 'tech', platform: 'reddit', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900', summary: 'Community thread breaking down kernel-level memory allocation.' },
+            { id: 'f5', source: '@linkedin_exec', title: 'Why engineering culture eats strategy for breakfast in 2026', category: 'tech', platform: 'linkedin', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900', summary: 'Asynchronous ownership metrics from scale-up engineering teams.' }
         ];
+
+        async function loadBackendFeed() {
+            try {
+                const response = await fetch(API_FEED_URL);
+                if (!response.ok) throw new Error('Network error');
+                const data = await response.json();
+                if (data && data.items && data.items.length > 0) {
+                    processIncomingItems(data.items, false);
+                } else {
+                    processIncomingItems(fallbackItems, false);
+                }
+            } catch (error) {
+                console.warn('Backend cold/unreachable, loading dynamic stream pool:', error);
+                processIncomingItems(fallbackItems, false);
+            }
+        }
+
+        function processIncomingItems(items, append = false) {
+            const mapped = items.map((item, index) => ({
+                id: (item.id || 'item_' + Date.now()) + '_' + Math.random().toString(36.substring(2,7)),
+                creator: item.source || item.creator || '@alpha_validator',
+                title: item.title ? item.title.replace(/\\u[0-9a-fA-F]{4}/g, m => String.fromCharCode(parseInt(m.replace('\\u',''), 16))) : 'Vibe Moment',
+                cat: item.category || item.cat || 'tech',
+                platform: (item.platform || 'tiktok').toLowerCase(),
+                likes: item.likes || (Math.floor(Math.random() * 50) + 'k'),
+                comments: item.comments || (Math.floor(Math.random() * 900) + '100'),
+                media: item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
+                video_url: item.video_url || '',
+                summary: item.summary || 'Real-time trending signal captured from multi-platform network.',
+                isTrail: item.isTrail || false
+            }));
+
+            // Include local user trails from storage if initial load
+            const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            const combined = append ? [...feedItems, ...mapped] : [...localTrails, ...mapped];
+            feedItems = combined;
+            renderFeed();
+        }
 
         function toggleSelection(type, value, btn) {
             btn.classList.toggle("active");
@@ -517,60 +646,45 @@
                 likes: '1.4k',
                 comments: '42',
                 media: document.getElementById('trailMedia').value,
+                summary: 'User-dropped brand & community showcase.',
                 isTrail: true
             };
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            localTrails.unshift(newTrail);
+            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
+            
             feedItems.unshift(newTrail);
-            localStorage.setItem('evolysium_user_trails', JSON.stringify(feedItems));
             bootstrap.Modal.getInstance(document.getElementById('trailModal')).hide();
+            event.target.reset();
             renderFeed();
             alert('Your Vibe/Brand Trail is live on Evolysium!');
         }
 
         function handleAuthSubmit(event) {
             event.preventDefault();
-            alert('Authenticated! You can now publish brand trails.');
+            alert('Authenticated! Full personalized vibe stream unlocked.');
             bootstrap.Modal.getInstance(document.getElementById('authModal')).hide();
         }
 
-        function openStory(title, imgUrl, creator) {
+        function openStory(title, mediaUrl, videoUrl, creator) {
             document.getElementById('storyTitleBadge').textContent = title;
-            document.getElementById('storyMediaImg').src = imgUrl;
             document.getElementById('storyCreatorName').textContent = creator;
+            const container = document.getElementById('storyMediaContainer');
+            if (videoUrl) {
+                container.innerHTML = `<video src="${videoUrl}" class="w-100 h-100 object-fit-cover" controls autoplay></video>`;
+            } else {
+                container.innerHTML = `<img src="${mediaUrl}" alt="Story" class="w-100 h-100 object-fit-cover">`;
+            }
             new bootstrap.Modal(document.getElementById('storyModal')).show();
         }
-const API_FEED_URL = 'https://evolysium-backend.onrender.com/api/feed';
-
-async function loadBackendFeed() {
-    try {
-        const response = await fetch(API_FEED_URL);
-        const data = await response.json();
-        if (data && data.items) {
-            feedItems = data.items.map((item, index) => ({
-                id: 'item_' + index,
-                creator: item.source || '@alpha_validator',
-                title: item.title ? item.title.replace(/\\u[0-9a-fA-F]{4}/g, m => String.fromCharCode(parseInt(m.replace('\\u',''), 16))) : 'Vibe Moment',
-                cat: item.category || 'tech',
-                platform: (item.platform || 'tiktok').toLowerCase(),
-                likes: Math.floor(Math.random() * 50) + 'k',
-                comments: Math.floor(Math.random() * 900) + '100',
-                media: item.image || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
-                video_url: item.video_url || '',
-                summary: item.summary || '',
-                isTrail: false
-            }));
-            renderFeed();
-        }
-    } catch (error) {
-        console.error('Greška pri dohvaćanju feeda:', error);
-    }
-}
 
         function renderVibeStrip() {
             const strip = document.getElementById('dynamic-vibe-strip');
-            strip.innerHTML = feedItems.slice(0, 6).map(item => `
-                <div class="vibe-item" onclick="openStory('${item.title.replace(/'/g, "")}', '${item.media}', '${item.creator}')">
+            if (!strip) return;
+            strip.innerHTML = feedItems.slice(0, 8).map(item => `
+                <div class="vibe-item" onclick="openStory('${item.title.replace(/'/g, "")}', '${item.media}', '${item.video_url || ''}', '${item.creator}')">
                     <div class="vibe-ring"><img src="${item.media}" alt="Story"></div>
-                    <span class="small mt-1 text-light text-truncate" style="max-width:70px;">${item.creator.replace('@','')}</span>
+                    <span class="small mt-1 text-light text-truncate" style="max-width:70px;">${item.creator.replace('@','').split(' ')[0]}</span>
                 </div>
             `).join('');
         }
@@ -579,6 +693,7 @@ async function loadBackendFeed() {
             renderVibeStrip();
             const query = document.getElementById('keyword-search')?.value.toLowerCase().trim() || '';
             const grid = document.getElementById('feed-grid');
+            if (!grid) return;
 
             const filtered = feedItems.filter(item => {
                 const matchPlatform = selectedPlatforms.includes(item.platform);
@@ -587,145 +702,65 @@ async function loadBackendFeed() {
                 return matchPlatform && matchCat && matchQuery;
             });
 
-            grid.innerHTML = filtered.map(item => `
-                <div class="col-md-6 col-lg-4">
-                    <div class="social-card h-100 d-flex flex-column">
-                        <div class="feed-media">
-                            <img src="${item.media}" alt="Media">
-                            <div class="creator-tag text-light">
-                                <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
-                            </div>
-                            ${item.isTrail ? '<span class="trail-badge"><i class="fa-solid fa-footprints me-1"></i>BRAND TRAIL</span>' : ''}
-                        </div>
-                        <div class="card-body p-4 d-flex flex-column flex-grow-1">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
-                                <span class="small text-secondary"><i class="fa-solid fa-fire text-warning me-1"></i>Active</span>
-                            </div>
-                            <h5 class="fw-bold text-white mb-3" style="line-height: 1.3;">${item.title}</h5>
-                            <div class="mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
-                                <div class="d-flex gap-3 text-secondary small">
-                                    <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
-                                    <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
+            grid.innerHTML = filtered.map(item => {
+                const mediaContent = item.video_url 
+                    ? `<video src="${item.video_url}" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()"></video>`
+                    : `<img src="${item.media}" alt="Media">`;
+                
+                return `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="social-card h-100 d-flex flex-column">
+                            <div class="feed-media" onclick="openStory('${item.title.replace(/'/g, "")}', '${item.media}', '${item.video_url || ''}', '${item.creator}')">
+                                ${mediaContent}
+                                <div class="creator-tag text-light">
+                                    <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
                                 </div>
-                                <button class="action-icon-btn" onclick="openStory('${item.title.replace(/'/g, "")}', '${item.media}', '${item.creator}')">
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
+                                ${item.isTrail ? '<span class="trail-badge"><i class="fa-solid fa-footprints me-1"></i>BRAND TRAIL</span>' : ''}
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
+                                    <span class="small text-secondary"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
+                                </div>
+                                <h5 class="fw-bold text-white mb-2" style="line-height: 1.3;">${item.title}</h5>
+                                <p class="text-secondary small mb-3">${item.summary}</p>
+                                <div class="mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex gap-3 text-secondary small">
+                                        <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
+                                        <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
+                                    </div>
+                                    <button class="action-icon-btn" onclick="openStory('${item.title.replace(/'/g, "")}', '${item.media}', '${item.video_url || ''}', '${item.creator}')">
+                                        <i class="fa-solid fa-play"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
+
+        // Infinite scroll simulation / loader for endless stream
+        window.addEventListener('scroll', () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 400 && !isLoadingInfinite) {
+                isLoadingInfinite = true;
+                const indicator = document.getElementById('loading-indicator');
+                if (indicator) indicator.style.display = 'block';
+                setTimeout(() => {
+                    const morePulses = fallbackItems.map(f => ({
+                        ...f,
+                        id: 'inf_' + Date.now() + Math.random(),
+                        title: f.title + ' (Live Pulse Drop)'
+                    }));
+                    processIncomingItems(morePulses, true);
+                    isLoadingInfinite = false;
+                    if (indicator) indicator.style.display = 'none';
+                }, 800);
+            }
+        });
 
         document.getElementById('keyword-search')?.addEventListener('input', renderFeed);
-        document.addEventListener("DOMContentLoaded", renderFeed);
-    <script>
-const API_FEED_URL = 'https://evolysium-backend.onrender.com/api/feed';
-let feedItems = [];
-let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin", "trail"];
-let selectedCategories = ["tech", "gaming", "luxury", "lifestyle", "brand"];
-
-async function loadBackendFeed() {
-    try {
-        const response = await fetch(API_FEED_URL);
-        const data = await response.json();
-        if (data && data.items) {
-            feedItems = data.items.map((item, index) => ({
-                id: 'item_' + index,
-                creator: item.source || '@alpha_validator',
-                title: item.title ? item.title.replace(/\\u[0-9a-fA-F]{4}/g, m => String.fromCharCode(parseInt(m.replace('\\u',''), 16))) : 'Vibe Moment',
-                cat: item.category || 'tech',
-                platform: (item.platform || 'tiktok').toLowerCase(),
-                likes: Math.floor(Math.random() * 50) + 'k',
-                comments: Math.floor(Math.random() * 900) + '100',
-                media: item.image || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
-                video_url: item.video_url || '',
-                summary: item.summary || '',
-                isTrail: false
-            }));
-            renderFeed();
-        }
-    } catch (error) {
-        console.error('Greška pri dohvaćanju feeda:', error);
-    }
-}
-
-function toggleSelection(type, value, btn) {
-    btn.classList.toggle("active");
-    let list = (type === 'platform') ? selectedPlatforms : selectedCategories;
-    list = list.includes(value) ? list.filter(item => item !== value) : [...list, value];
-    if (type === 'platform') selectedPlatforms = list;
-    else selectedCategories = list;
-    renderFeed();
-}
-
-function openStory(title, imgUrl, creator) {
-    document.getElementById('storyTitleBadge').textContent = title;
-    document.getElementById('storyMediaImg').src = imgUrl;
-    document.getElementById('storyCreatorName').textContent = creator;
-    new bootstrap.Modal(document.getElementById('storyModal')).show();
-}
-
-function renderVibeStrip() {
-    const strip = document.getElementById('dynamic-vibe-strip');
-    if (!strip) return;
-    strip.innerHTML = feedItems.slice(0, 8).map(item => `
-        <div class="vibe-item" onclick="openStory('${item.title.replace(/'/g, "")}', '${item.media}', '${item.creator}')">
-            <div class="vibe-ring"><img src="${item.media}" alt="Story"></div>
-            <span class="small mt-1 text-light text-truncate" style="max-width:70px;">${item.creator.split(' ')[0]}</span>
-        </div>
-    `).join('');
-}
-
-function renderFeed() {
-    renderVibeStrip();
-    const query = document.getElementById('keyword-search')?.value.toLowerCase().trim() || '';
-    const grid = document.getElementById('feed-grid');
-    if (!grid) return;
-
-    const filtered = feedItems.filter(item => {
-        const matchPlatform = selectedPlatforms.includes(item.platform);
-        const matchCat = selectedCategories.includes(item.cat);
-        const matchQuery = !query || item.title.toLowerCase().includes(query) || item.creator.toLowerCase().includes(query);
-        return matchPlatform && matchCat && matchQuery;
-    });
-
-    grid.innerHTML = filtered.map(item => `
-        <div class="col-md-6 col-lg-4">
-            <div class="social-card h-100 d-flex flex-column">
-                <div class="feed-media">
-                    <img src="${item.media}" alt="Media">
-                    <div class="creator-tag text-light">
-                        <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
-                    </div>
-                    ${item.isTrail ? '<span class="trail-badge"><i class="fa-solid fa-footprints me-1"></i>BRAND TRAIL</span>' : ''}
-                </div>
-                <div class="card-body p-4 d-flex flex-column flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
-                        <span class="small text-secondary"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
-                    </div>
-                    <h5 class="fw-bold text-white mb-2" style="line-height: 1.3;">${item.title}</h5>
-                    <p class="text-secondary small mb-3">${item.summary}</p>
-                    <div class="mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
-                        <div class="d-flex gap-3 text-secondary small">
-                            <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
-                            <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
-                        </div>
-                        <button class="action-icon-btn" onclick="openStory('${item.title.replace(/'/g, "")}', '${item.media}', '${item.creator}')">
-                            <i class="fa-solid fa-play"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-document.getElementById('keyword-search')?.addEventListener('input', renderFeed);
-document.addEventListener("DOMContentLoaded", loadBackendFeed);
-</script>
-
+        document.addEventListener("DOMContentLoaded", loadBackendFeed);
+    </script>
 </body>
 </html>
