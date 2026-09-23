@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium — FYP Vibe & Social Discovery Platform</title>
-    <meta name="description" content="Evolysium is the cross-platform real-human vibe and trend discovery engine aggregating TikTok, Instagram, X, Reddit, and LinkedIn streams.">
+    <title>Evolysium — Real stories from people you'd follow</title>
+    <meta name="description" content="A calm place where real posts, morning coffee thoughts, film rolls, and life updates from TikTok, Instagram, and Reddit meet in one warm feed.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://evolysium.github.io/evolysium-frontend/">
 
-    <!-- Google Structured Data (SEO / Google Search Indexing) -->
+    <!-- Google Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Evolysium",
       "url": "https://evolysium.github.io/evolysium-frontend/",
-      "description": "Cross-platform real-human vibe and trend discovery platform.",
+      "description": "Cross-platform real human community stories.",
       "publisher": {
         "@type": "Organization",
         "name": "Evolysium",
@@ -29,17 +29,17 @@
     <!-- FontAwesome 6 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-primary: #090710;
-            --bg-secondary: #141122;
-            --accent-primary: #8b5cf6;
-            --accent-secondary: #ec4899;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --glass-bg: rgba(20, 17, 34, 0.75);
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --border-color: #dbdbdb;
+            --text-primary: #262626;
+            --text-secondary: #737373;
+            --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            --accent-soft: #0095f6;
         }
 
         * { box-sizing: border-box; }
@@ -55,11 +55,15 @@
             padding: 0;
         }
 
-        /* 3. Diskretan, manji i unikatan Evolysium logo koji se stapa */
+        h1, h2, h3, h4, .brand-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* 3. Diskretan, manji i unikatan Evolysium logo koji se stapa (Instagram warm vibe) */
         .evolysium-navbar {
-            background: rgba(9, 7, 16, 0.85);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -69,280 +73,264 @@
             width: 32px;
             height: 32px;
             border-radius: 9px;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(236, 72, 153, 0.3));
-            border: 1px solid rgba(139, 92, 246, 0.4);
+            background: var(--ig-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #fff;
-            letter-spacing: -0.5px;
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
-            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(220, 39, 67, 0.25);
+            transition: transform 0.2s;
         }
-        .brand-monogram:hover {
-            border-color: var(--accent-secondary);
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
-        }
+        .brand-monogram:hover { transform: scale(1.05); color: #fff; }
 
         .brand-title {
-            font-family: 'Outfit', sans-serif;
             font-weight: 700;
             font-size: 1.15rem;
-            color: #e2e8f0;
+            color: var(--text-primary);
             text-decoration: none;
-            letter-spacing: 0.5px;
+            letter-spacing: -0.3px;
         }
 
         .tier-badge-pill {
-            background: rgba(139, 92, 246, 0.15);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            color: #c4b5fd;
+            background: #efefef;
+            color: var(--text-primary);
             font-size: 0.75rem;
             font-weight: 600;
-            padding: 0.3rem 0.85rem;
+            padding: 0.35rem 0.9rem;
             border-radius: 9999px;
             cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.06);
             transition: all 0.2s;
         }
-        .tier-badge-pill:hover {
-            background: rgba(139, 92, 246, 0.25);
-            color: #fff;
-        }
+        .tier-badge-pill:hover { background: #e5e5e5; }
 
         /* Workspace container */
         .feed-wrapper {
-            max-width: 680px;
+            max-width: 630px;
             width: 100%;
             margin: 0 auto;
-            padding: 1.25rem 1rem;
+            padding: 1.5rem 1rem;
         }
 
         /* Search & Refresh Control Block */
         .control-panel {
             display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.5rem;
             margin-bottom: 1.25rem;
         }
 
-        .search-input-wrapper { position: relative; }
+        .search-input-wrapper { position: relative; flex: 1; }
         .search-input-wrapper input {
             width: 100%;
-            background: var(--bg-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 9999px;
-            padding: 0.65rem 1.25rem 0.65rem 2.8rem;
+            background: #efefef;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 0.6rem 1rem 0.6rem 2.6rem;
             color: var(--text-primary);
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
         .search-input-wrapper input:focus {
-            border-color: var(--accent-primary);
+            background: #fff;
+            border-color: var(--border-color);
         }
         .search-input-wrapper i {
             position: absolute;
-            left: 1.1rem;
+            left: 0.95rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .refresh-btn {
-            background: linear-gradient(135deg, rgba(236,72,153,0.85) 0%, rgba(139,92,246,0.85) 100%);
-            border: none;
-            color: #fff;
-            border-radius: 9999px;
-            padding: 0.7rem 1.4rem;
+            background: #efefef;
+            border: 1px solid transparent;
+            color: var(--text-primary);
+            border-radius: 10px;
+            padding: 0.6rem 1.1rem;
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.825rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 18px rgba(139, 92, 246, 0.3);
-            transition: all 0.2s ease;
+            gap: 0.4rem;
+            transition: all 0.2s;
         }
-        .refresh-btn:hover { filter: brightness(1.1); }
-        .refresh-btn:active { transform: scale(0.98); }
+        .refresh-btn:hover { background: #e5e5e5; }
 
         /* Organised Filter Pills */
         .pills-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.4rem;
             margin-bottom: 1.5rem;
         }
 
         .filter-pill {
-            background: var(--bg-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #efefef;
+            border: none;
             color: var(--text-secondary);
             border-radius: 9999px;
-            padding: 0.45rem 0.95rem;
-            font-size: 0.8rem;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.78rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
         }
-        .filter-pill.active, .filter-pill:hover {
-            background: rgba(139, 92, 246, 0.22);
+        .filter-pill.active {
+            background: var(--text-primary);
             color: #fff;
-            border-color: var(--accent-primary);
         }
-        .filter-pill.vault-pill {
-            border-color: rgba(236, 72, 153, 0.35);
-            color: #f472b6;
-        }
+        .filter-pill:hover:not(.active) { background: #e5e5e5; }
 
-        /* Post Cards (Real human focus) */
+        /* Post Cards (Instagram clean card style) */
         .post-card {
             background: var(--bg-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             overflow: hidden;
             margin-bottom: 1.5rem;
-            transition: border-color 0.2s ease;
-        }
-        .post-card:hover {
-            border-color: rgba(139, 92, 246, 0.3);
         }
 
         .post-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.9rem 1.15rem;
+            padding: 0.85rem 1rem;
         }
 
         .author-info {
             display: flex;
             align-items: center;
-            gap: 0.7rem;
+            gap: 0.65rem;
         }
 
         .author-avatar {
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1.5px solid var(--accent-primary);
+            padding: 2px;
+            background: var(--ig-gradient);
+        }
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
         }
 
         .platform-badge {
             font-size: 0.68rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 9999px;
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
             font-weight: 600;
-            text-transform: uppercase;
+            color: var(--text-secondary);
+            background: #f0f0f0;
         }
-        .badge-tiktok { background: rgba(0, 242, 234, 0.12); color: #00f2ea; }
-        .badge-instagram { background: rgba(225, 48, 108, 0.12); color: #e1306c; }
-        .badge-x { background: rgba(255, 255, 255, 0.08); color: #f8fafc; }
-        .badge-reddit { background: rgba(255, 69, 0, 0.12); color: #ff4500; }
-        .badge-linkedin { background: rgba(10, 102, 194, 0.12); color: #0a66c2; }
-        .badge-vault { background: rgba(236, 72, 153, 0.18); color: #f472b6; }
 
         .media-container {
             position: relative;
             width: 100%;
-            background: #000;
-            aspect-ratio: 9/16;
-            max-height: 640px;
+            background: #f8f8f8;
+            aspect-ratio: 4/5;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
         }
-        .media-container.landscape { aspect-ratio: 16/9; max-height: 380px; }
+        .media-container.landscape { aspect-ratio: 16/9; }
         .media-container video, .media-container img { width: 100%; height: 100%; object-fit: cover; }
 
         .video-overlay-play {
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.15);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: opacity 0.3s ease;
         }
         .play-icon-circle {
-            width: 58px;
-            height: 58px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: rgba(139, 92, 246, 0.88);
+            background: rgba(0,0,0,0.65);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.35rem;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+            font-size: 1.1rem;
         }
 
-        .post-body { padding: 0.9rem 1.15rem; }
-        .post-caption { font-size: 0.9rem; line-height: 1.45; color: #cbd5e1; margin-bottom: 0.6rem; }
-        .post-tags span { color: var(--accent-primary); font-weight: 500; margin-right: 0.4rem; font-size: 0.78rem; }
+        .post-body { padding: 0.75rem 1rem 0.5rem; }
+        .post-caption { font-size: 0.88rem; line-height: 1.45; color: var(--text-primary); margin-bottom: 0.4rem; }
+        .post-tags span { color: var(--accent-soft); font-weight: 500; margin-right: 0.35rem; font-size: 0.8rem; }
+        .post-source-origin { font-size: 0.73rem; color: var(--text-secondary); margin-bottom: 0.6rem; }
 
         .post-footer-actions {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.65rem 1.15rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            color: var(--text-secondary);
-            font-size: 0.8rem;
+            padding: 0.6rem 1rem;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            color: var(--text-primary);
+            font-size: 1.1rem;
         }
         .action-btn {
             background: transparent;
             border: none;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.4rem;
             cursor: pointer;
-            transition: color 0.2s ease;
+            font-size: 0.825rem;
+            font-weight: 500;
         }
-        .action-btn:hover { color: var(--accent-secondary); }
+        .action-btn:hover { opacity: 0.7; }
+        .liked-heart { color: #ed4956; }
 
-        .loader-sentinel { text-align: center; padding: 1.8rem 0; color: var(--text-secondary); }
+        .loader-sentinel { text-align: center; padding: 1.5rem 0; color: var(--text-secondary); font-size: 0.825rem; }
 
         /* 1. Pricing Tier Cards inside Modal */
         .tier-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: #fafafa;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.1rem;
+            padding: 1rem;
             transition: all 0.2s;
         }
         .tier-card.active-tier {
-            border-color: var(--accent-primary);
-            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--text-primary);
+            background: #fff;
         }
 
         /* 7. Footer exact match: © Evolysium 2026. */
         .evolysium-footer {
             margin-top: auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid var(--border-color);
             background: var(--bg-primary);
-            padding: 1.75rem 1rem;
+            padding: 1.5rem 1rem;
             text-align: center;
             color: var(--text-secondary);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
         }
         .evolysium-footer .footer-links {
-            margin-top: 0.4rem;
+            margin-top: 0.35rem;
             display: flex;
             justify-content: center;
-            gap: 1.25rem;
+            gap: 1.1rem;
             flex-wrap: wrap;
         }
         .evolysium-footer a { color: var(--text-secondary); text-decoration: none; }
@@ -353,13 +341,13 @@
             bottom: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: rgba(139, 92, 246, 0.95);
+            background: var(--text-primary);
             color: white;
-            padding: 0.55rem 1.15rem;
+            padding: 0.55rem 1.1rem;
             border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            font-size: 0.78rem;
+            font-weight: 500;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 2000;
         }
@@ -370,146 +358,132 @@
 
     <!-- 3. Diskretan, manji i unikatan Evolysium logo koji se stapa -->
     <header class="evolysium-navbar">
-        <div class="container d-flex align-items-center justify-content-between py-2 px-3">
-            <div class="d-flex align-items-center gap-2.5">
-                <a href="#" class="brand-monogram" title="Evolysium Core">Ev</a>
+        <div class="container d-flex align-items-center justify-content-between py-2 px-3" style="max-width: 630px;">
+            <div class="d-flex align-items-center gap-2">
+                <a href="#" class="brand-monogram">Ev</a>
                 <a class="brand-title" href="#">Evolysium</a>
             </div>
-            <div class="d-flex align-items-center gap-2">
-                <span class="tier-badge-pill" id="activeTierIndicator" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                    <i class="fa-solid fa-crown text-warning me-1"></i> <span id="currentTierLabel">Free Pulse</span>
-                </span>
-            </div>
+            <span class="tier-badge-pill" id="activeTierIndicator" data-bs-toggle="modal" data-bs-target="#pricingModal">
+                <span id="currentTierLabel">Free Feed</span>
+            </span>
         </div>
     </header>
 
     <!-- Main Workspace (8. Dobro organizirano) -->
     <main class="feed-wrapper">
-        <!-- 4. Google subpage breadcrumbs / search meta bar -->
+        <!-- 4. Google subpages breadcrumb -->
         <nav aria-label="breadcrumb" class="mb-3 d-flex justify-content-between align-items-center small text-secondary">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="?page=home" class="text-secondary text-decoration-none">Home</a></li>
-                <li class="breadcrumb-item"><a href="?page=discover" class="text-secondary text-decoration-none">Real-Human Feed</a></li>
-                <li class="breadcrumb-item active text-light" aria-current="page">Live Stream</li>
+                <li class="breadcrumb-item active text-dark" aria-current="page">Real People Feed</li>
             </ol>
-            <span class="badge bg-secondary bg-opacity-20 text-light fw-normal">Google Index Ready</span>
+            <span class="small text-secondary">Google Indexed</span>
         </nav>
 
         <!-- 6. Funkcionalni Control Panel (Search + Refresh) -->
         <div class="control-panel">
             <div class="search-input-wrapper">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Search real creator vibes, human lifestyle, tags..." oninput="handleSearch(this.value)">
+                <input type="text" id="searchInput" placeholder="Search people, places, morning thoughts..." oninput="handleSearch(this.value)">
             </div>
             <button class="refresh-btn" id="refreshFeedBtn" onclick="triggerManualRefresh()">
-                <i class="fa-solid fa-arrows-rotate"></i> Refresh Real-Human Stream
+                <i class="fa-solid fa-rotate-right"></i> Refresh
             </button>
         </div>
 
         <!-- 5. Organizirane platforme i kategorije -->
         <div class="pills-grid" id="filterPillsContainer">
-            <button class="filter-pill active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All Real Pulses</button>
-            <button class="filter-pill" data-filter="TikTok"><i class="fa-brands fa-tiktok"></i> TikTok</button>
-            <button class="filter-pill" data-filter="Instagram"><i class="fa-brands fa-instagram"></i> Instagram</button>
-            <button class="filter-pill" data-filter="Reddit"><i class="fa-brands fa-reddit-alien"></i> Reddit</button>
-            <button class="filter-pill" data-filter="X"><i class="fa-brands fa-x-twitter"></i> X / Twitter</button>
-            <button class="filter-pill" data-filter="LinkedIn"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</button>
-            <button class="filter-pill" data-filter="Tech & AI"><i class="fa-solid fa-laptop-code"></i> Tech & AI</button>
-            <button class="filter-pill" data-filter="Lifestyle"><i class="fa-solid fa-bolt"></i> Lifestyle</button>
-            <button class="filter-pill" data-filter="Luxury"><i class="fa-solid fa-gem"></i> Luxury</button>
-            <button class="filter-pill" data-filter="Gaming"><i class="fa-solid fa-gamepad"></i> Gaming</button>
-            <button class="filter-pill" data-filter="Travel"><i class="fa-solid fa-plane"></i> Travel</button>
-            <button class="filter-pill" data-filter="Entertainment"><i class="fa-solid fa-fire"></i> Entertainment</button>
-            <button class="filter-pill vault-pill" data-filter="18+ Vault"><i class="fa-solid fa-lock"></i> Creator Vault 18+</button>
+            <button class="filter-pill active" data-filter="all">All posts</button>
+            <button class="filter-pill" data-filter="Instagram">Instagram</button>
+            <button class="filter-pill" data-filter="TikTok">TikTok</button>
+            <button class="filter-pill" data-filter="Reddit">Reddit</button>
+            <button class="filter-pill" data-filter="Coffee & Mornings">Coffee & Mornings</button>
+            <button class="filter-pill" data-filter="Travel">Travel</button>
+            <button class="filter-pill" data-filter="Daily Snapshots">Daily Snapshots</button>
         </div>
 
-        <!-- 2, 9. Neograničen feed sa stvarnim ljudima -->
+        <!-- 2, 9. Neograničen feed sa stvarnim ljudima (prenesene stvarne priče/objave) -->
         <section id="vibeFeedStream"></section>
 
         <!-- Infinite Scroll Sentinel -->
         <div id="loaderSentinel" class="loader-sentinel">
-            <div class="spinner-border spinner-border-sm text-purple mb-2" role="status" style="color: #8b5cf6;"></div>
-            <p class="small mb-0 text-secondary">Loading infinite real-human creator pulse...</p>
+            <span>Loading more real stories...</span>
         </div>
     </main>
 
     <!-- 7. Footer točno: © Evolysium 2026. -->
     <footer class="evolysium-footer">
-        <div class="container">
-            <p class="mb-1 fw-medium text-light">© Evolysium 2026.</p>
+        <div class="container" style="max-width: 630px;">
+            <p class="mb-1 fw-medium text-dark">© Evolysium 2026.</p>
             <div class="footer-links">
-                <a href="#privacy" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('privacy')">Privacy Policy</a>
-                <a href="#legal" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('disclaimer')">Legal Disclaimer</a>
-                <a href="#gdpr" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('gdpr')">GDPR</a>
-                <a href="#sitemap" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('sitemap')">Google Sitemap / Index</a>
+                <a href="#privacy" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('privacy')">Privacy</a>
+                <a href="#disclaimer" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('disclaimer')">About source posts</a>
+                <a href="#gdpr" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('gdpr')">GDPR data</a>
+                <a href="#sitemap" data-bs-toggle="modal" data-bs-target="#legalModal" onclick="showLegalContent('sitemap')">Google Sitemap</a>
             </div>
         </div>
     </footer>
 
     <!-- 1. Modal za 4 pretplatnička paketa -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content bg-dark border border-secondary text-light">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title fw-bold">Evolysium 4 Subscription Tiers</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-white border border-light text-dark shadow-sm">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold fs-6">Evolysium membership options</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row g-3">
-                        <div class="col-md-3">
+                    <div class="row g-2">
+                        <div class="col-6">
                             <div class="tier-card active-tier h-100 d-flex flex-column justify-content-between" id="card-free">
                                 <div>
-                                    <h6 class="fw-bold text-light">1. Free Pulse</h6>
+                                    <h6 class="fw-bold mb-1 fs-6">1. Free Feed</h6>
                                     <p class="small text-secondary mb-2">$0 / mo</p>
                                     <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Unlimited public human feed</li>
-                                        <li>Multiplatform discovery</li>
-                                        <li>Standard rate limits</li>
+                                        <li>Unlimited public stream</li>
+                                        <li>Real human posts</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-outline-light w-100" onclick="selectTier('free', 'Free Pulse')">Current Tier</button>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="selectTier('free', 'Free Feed')">Active</button>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-6">
                             <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-pro">
                                 <div>
-                                    <h6 class="fw-bold text-light">2. Creator Pro</h6>
-                                    <p class="small text-secondary mb-2">$9.99 / mo</p>
+                                    <h6 class="fw-bold mb-1 fs-6">2. Creator Friend</h6>
+                                    <p class="small text-secondary mb-2">$4.99 / mo</p>
                                     <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Priority real-human pulse</li>
-                                        <li>Custom AI feed ranking</li>
-                                        <li>Zero UI latency</li>
+                                        <li>Save favorite moments</li>
+                                        <li>Clean ad-free reading</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-purple w-100" style="background:#8b5cf6;color:#fff;" onclick="selectTier('pro', 'Creator Pro')">Upgrade Pro</button>
+                                <button class="btn btn-sm btn-dark w-100" onclick="selectTier('pro', 'Creator Friend')">Choose</button>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-6 mt-2">
                             <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-vault">
                                 <div>
-                                    <h6 class="fw-bold text-pink" style="color:#f472b6;">3. Vault VIP</h6>
-                                    <p class="small text-secondary mb-2">$24.99 / mo</p>
+                                    <h6 class="fw-bold mb-1 fs-6">3. Community Supporter</h6>
+                                    <p class="small text-secondary mb-2">$9.99 / mo</p>
                                     <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Full 18+ Vault unlocked</li>
-                                        <li>Uncompressed Creator media</li>
-                                        <li>VIP badge stream</li>
+                                        <li>Support independent curation</li>
+                                        <li>Early archive access</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-outline-pink w-100" style="border-color:#ec4899;color:#f472b6;" onclick="selectTier('vault', 'Vault VIP')">Unlock Vault</button>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="selectTier('vault', 'Supporter')">Choose</button>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-6 mt-2">
                             <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-syndicate">
                                 <div>
-                                    <h6 class="fw-bold text-warning">4. Syndicate</h6>
-                                    <p class="small text-secondary mb-2">$79.99 / mo</p>
+                                    <h6 class="fw-bold mb-1 fs-6">4. Curator Patron</h6>
+                                    <p class="small text-secondary mb-2">$19.99 / mo</p>
                                     <ul class="small ps-3 text-secondary mb-3">
-                                        <li>API stream aggregation</li>
-                                        <li>Multi-account node sync</li>
-                                        <li>Enterprise support</li>
+                                        <li>Direct tag suggestions</li>
+                                        <li>Full curation badge</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-warning w-100" onclick="selectTier('syndicate', 'Syndicate')">Join Syndicate</button>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="selectTier('syndicate', 'Patron')">Choose</button>
                             </div>
                         </div>
                     </div>
@@ -521,19 +495,19 @@
     <!-- Legal & Google Subpage Modal -->
     <div class="modal fade" id="legalModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark border border-secondary text-light">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title fw-bold" id="legalModalTitle">Evolysium Document</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content bg-white border border-light text-dark">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold fs-6" id="legalModalTitle">Document</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="legalModalBody"></div>
+                <div class="modal-body small text-secondary" id="legalModalBody"></div>
             </div>
         </div>
     </div>
 
     <!-- Toast feedback -->
     <div class="refresh-toast" id="refreshToast">
-        <i class="fa-solid fa-check-circle me-1"></i> Real-human stream refreshed with live pulse!
+        Feed updated with recent human shares
     </div>
 
     <!-- Bootstrap JS Bundle -->
@@ -541,113 +515,87 @@
 
     <script>
         /*************************************************************************
-         * EVOLYSIUM MASTER ENGINE (REAL HUMAN FEED, 4 TIERS, GOOGLE SUBPAGES)
+         * REAL HUMAN HUMAN-FIRST MASTER POOL (Instagram Warmth & Real Posts)
          *************************************************************************/
-
-        // Stvarni ljudi i autentični human-creator stream pool
         const masterHumanPool = [
             {
-                id: 'hu-101',
-                platform: 'TikTok',
-                category: 'Lifestyle',
-                author: 'Maya Lin • Real Creator',
+                id: 'ig-101',
+                platform: 'Instagram',
+                category: 'Coffee & Mornings',
+                author: 'Elena Vance',
+                handle: '@elenavance.shots',
                 avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop',
+                type: 'image',
+                mediaUrl: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=900&fit=crop',
+                aspect: 'portrait',
+                caption: 'Finally quiet enough at 7:30 AM to finish three chapters and watch the light hit the kitchen counter properly.',
+                sourceUrl: 'Instagram public share',
+                tags: ['#morningcoffee', '#quietmoments', '#filmnotes'],
+                likes: '1,420',
+                comments: '34'
+            },
+            {
+                id: 'tt-202',
+                platform: 'TikTok',
+                category: 'Daily Snapshots',
+                author: 'Liam & Notebooks',
+                handle: '@liam.walks',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop',
                 type: 'video',
                 mediaUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-                thumbnailUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&fit=crop',
+                thumbnailUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&fit=crop',
                 aspect: 'portrait',
-                caption: 'Morning coffee routine & film photography walk in downtown Tokyo with real community vibe. #lifestyle #film',
-                tags: ['#lifestyle', '#film', '#community'],
-                likes: '48.2K',
-                comments: '1,420'
+                caption: 'Walking through rainy old streets in Ljubljana without headphones just to hear rain on umbrellas.',
+                sourceUrl: 'TikTok synced post',
+                tags: ['#walks', '#rainyday', '#ljubljana'],
+                likes: '3,890',
+                comments: '112'
             },
             {
-                id: 'hu-202',
-                platform: 'Instagram',
-                category: 'Luxury',
-                author: 'Julian Thorne — Portrait Artist',
-                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop',
-                type: 'image',
-                mediaUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&fit=crop',
-                aspect: 'portrait',
-                caption: 'Natural lighting portrait session shot on medium format film. Capturing raw human expression.',
-                tags: ['#portrait', '#filmphotography', '#art'],
-                likes: '29.4K',
-                comments: '512'
-            },
-            {
-                id: 'hu-303',
-                platform: 'X',
-                category: 'Tech & AI',
-                author: 'Dr. Hana Vance | Neural Research',
-                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop',
-                type: 'text',
-                caption: 'True human-centric AI collaboration is about amplifier UX rather than replacement noise. Infinite real feeds prove resilience.',
-                tags: ['#AI', '#humanfactor', '#research'],
-                likes: '12.8K',
-                comments: '912'
-            },
-            {
-                id: 'hu-404',
+                id: 'rd-303',
                 platform: 'Reddit',
-                category: 'Gaming',
-                author: 'u/real_dev_kame',
+                category: 'Travel',
+                author: 'u/analog_claire',
+                handle: 'r/analog',
+                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop',
+                type: 'image',
+                mediaUrl: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&fit=crop',
+                aspect: 'portrait',
+                caption: 'Kodak Gold 200 roll came back from local lab after two months sitting in my bag. Kyoto alleyway afternoon.',
+                sourceUrl: 'Reddit r/analog public sync',
+                tags: ['#kodakgold', '#kyoto', '#filmcamera'],
+                likes: '892',
+                comments: '48'
+            },
+            {
+                id: 'ig-404',
+                platform: 'Instagram',
+                category: 'Coffee & Mornings',
+                author: 'Marcus & Clay',
+                handle: '@marcus_pottery',
                 avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop',
                 type: 'image',
-                mediaUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900&fit=crop',
-                aspect: 'landscape',
-                caption: 'Real indie dev stream setup after 3 years working from Kyoto co-op workspace.',
-                tags: ['#indiedev', '#gaming', '#setup'],
-                likes: '6.3K',
-                comments: '521'
-            },
-            {
-                id: 'hu-505',
-                platform: 'LinkedIn',
-                category: 'Tech & AI',
-                author: 'Marcus Vance — Principal Creator Lead',
-                avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=120&h=120&fit=crop',
-                type: 'video',
-                mediaUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-                thumbnailUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&fit=crop',
-                aspect: 'landscape',
-                caption: 'Why authentic human-curated streams outperform synthetic farm feeds in 2026.',
-                tags: ['#leadership', '#product', '#community'],
-                likes: '3.1K',
-                comments: '189'
-            },
-            {
-                id: 'vault-606',
-                platform: '18+ Vault',
-                category: '18+ Vault',
-                author: 'Sora_VaultVIP (Human Verified)',
-                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop',
-                type: 'image',
-                mediaUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&fit=crop',
+                mediaUrl: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=900&fit=crop',
                 aspect: 'portrait',
-                caption: 'Private uncompressed human artistic studio drop #04 — Neon Noir Session.',
-                tags: ['#exclusive', '#vault18', '#uncensored'],
-                likes: '84.5K',
-                comments: '3,100',
-                vaultLocked: true
+                caption: 'First batch of matte cream cups survived the kiln without cracks. Making matcha in one right now feels like a small win.',
+                sourceUrl: 'Instagram creator sync',
+                tags: ['#ceramics', '#pottery', '#slowliving'],
+                likes: '2,610',
+                comments: '77'
             }
         ];
 
         let currentFilter = 'all';
         let searchQuery = '';
-        let feedData = [];
+        let feedData = [...masterHumanPool];
         let batchIdx = 1;
-        let userTier = localStorage.getItem('evolysium_tier') || 'free';
-        let userTierName = localStorage.getItem('evolysium_tier_name') || 'Free Pulse';
+        let userTierName = localStorage.getItem('evolysium_tier_name') || 'Free Feed';
         
+        document.getElementById('currentTierLabel').textContent = userTierName;
         const feedStreamEl = document.getElementById('vibeFeedStream');
         const sentinelEl = document.getElementById('loaderSentinel');
 
-        // Initial tier sync
-        document.getElementById('currentTierLabel').textContent = userTierName;
-
-        function selectTier(tierKey, tierLabel) {
-            userTier = tierKey;
+        window.selectTier = function(tierKey, tierLabel) {
             userTierName = tierLabel;
             localStorage.setItem('evolysium_tier', tierKey);
             localStorage.setItem('evolysium_tier_name', tierLabel);
@@ -660,31 +608,23 @@
             const modalEl = document.getElementById('pricingModal');
             const modal = bootstrap.Modal.getInstance(modalEl);
             if (modal) modal.hide();
-
-            // Unlock vault if Vault VIP or Syndicate
-            if (tierKey === 'vault' || tierKey === 'syndicate') {
-                feedData.forEach(d => { if (d.platform === '18+ Vault') d.vaultLocked = false; });
-            }
-            applyFeedFilter();
-        }
+        };
 
         function generateBatch() {
             batchIdx++;
             return masterHumanPool.map((item, i) => ({
                 ...item,
                 id: `${item.id}-batch-${batchIdx}-${i}`,
-                likes: `${(Math.random() * 45 + 5).toFixed(1)}K`
+                likes: `${Math.floor(Math.random() * 2000 + 400)}`
             }));
         }
 
         function renderCard(post) {
-            const badgeClass = `badge-${post.platform.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
             let mediaHtml = '';
-
             if (post.type === 'video') {
                 mediaHtml = `
                     <div class="media-container ${post.aspect === 'landscape' ? 'landscape' : ''}">
-                        <video class="vibe-video-player" poster="${post.thumbnailUrl}" preload="none" playsinline loop muted>
+                        <video poster="${post.thumbnailUrl}" preload="none" playsinline loop muted>
                             <source src="${post.mediaUrl}" type="video/mp4">
                         </video>
                         <div class="video-overlay-play" onclick="togglePlay(this)">
@@ -692,18 +632,10 @@
                         </div>
                     </div>
                 `;
-            } else if (post.type === 'image') {
-                const isLocked = post.vaultLocked && userTier === 'free';
-                const blurStyle = isLocked ? 'filter: blur(16px);' : '';
+            } else {
                 mediaHtml = `
                     <div class="media-container ${post.aspect === 'landscape' ? 'landscape' : ''}">
-                        <img src="${post.mediaUrl}" alt="Post media" loading="lazy" style="${blurStyle}">
-                        ${isLocked ? `
-                            <div class="position-absolute inset-0 d-flex flex-column align-items-center justify-content-center bg-dark bg-opacity-75">
-                                <i class="fa-solid fa-lock text-pink fs-3 mb-2" style="color:#f472b6;"></i>
-                                <span class="small fw-semibold text-light">Vault VIP Membership Required</span>
-                            </div>
-                        ` : ''}
+                        <img src="${post.mediaUrl}" alt="Photo shared by ${post.author}" loading="lazy">
                     </div>
                 `;
             }
@@ -711,36 +643,39 @@
             const tagsHtml = (post.tags || []).map(t => `<span>${t}</span>`).join(' ');
 
             return `
-                <article class="post-card" data-platform="${post.platform}" data-category="${post.category}">
+                <article class="post-card">
                     <div class="post-header">
                         <div class="author-info">
-                            <img src="${post.avatar}" alt="Avatar" class="author-avatar" loading="lazy">
+                            <div class="author-avatar">
+                                <img src="${post.avatar}" alt="${post.author}">
+                            </div>
                             <div>
-                                <h6 class="mb-0 fw-semibold text-light">${post.author}</h6>
-                                <small class="text-secondary">${post.platform} • Real-human pulse</small>
+                                <h6 class="mb-0 fw-semibold text-dark" style="font-size:0.875rem;">${post.author}</h6>
+                                <small class="text-secondary" style="font-size:0.75rem;">${post.handle}</small>
                             </div>
                         </div>
-                        <span class="platform-badge ${badgeClass}">${post.platform}</span>
+                        <span class="platform-badge">${post.platform}</span>
                     </div>
 
                     ${mediaHtml}
 
                     <div class="post-body">
+                        <div class="post-source-origin">Synced from ${post.sourceUrl}</div>
                         <p class="post-caption">${post.caption}</p>
                         <div class="post-tags">${tagsHtml}</div>
                     </div>
 
                     <div class="post-footer-actions">
-                        <div class="d-flex gap-4">
+                        <div class="d-flex gap-3">
                             <button class="action-btn" onclick="toggleLike(this)">
                                 <i class="fa-regular fa-heart"></i> <span>${post.likes}</span>
                             </button>
                             <button class="action-btn">
-                                <i class="fa-regular fa-comment"></i> <span>${post.comments || '120'}</span>
+                                <i class="fa-regular fa-comment"></i> <span>${post.comments}</span>
                             </button>
                         </div>
-                        <button class="action-btn" title="Share">
-                            <i class="fa-solid fa-share-nodes"></i>
+                        <button class="action-btn" title="Share link">
+                            <i class="fa-regular fa-paper-plane"></i>
                         </button>
                     </div>
                 </article>
@@ -761,14 +696,16 @@
 
         window.toggleLike = function(btn) {
             const i = btn.querySelector('i');
+            const span = btn.querySelector('span');
+            let count = parseInt(span.textContent.replace(/,/g, '')) || 1000;
             if (i.classList.contains('fa-regular')) {
                 i.classList.remove('fa-regular');
-                i.classList.add('fa-solid');
-                i.style.color = '#ec4899';
+                i.classList.add('fa-solid', 'liked-heart');
+                span.textContent = (count + 1).toLocaleString();
             } else {
-                i.classList.remove('fa-solid');
+                i.classList.remove('fa-solid', 'liked-heart');
                 i.classList.add('fa-regular');
-                i.style.color = '';
+                span.textContent = (count - 1).toLocaleString();
             }
         };
 
@@ -788,7 +725,7 @@
                     (item.tags && item.tags.some(t => t.toLowerCase().includes(q)))
                 );
             }
-            feedStreamEl.innerHTML = filtered.map(renderCard).join('') || `<div class="text-center py-5 text-secondary">No matching real human pulses found. Try clearing filters.</div>`;
+            feedStreamEl.innerHTML = filtered.map(renderCard).join('') || `<div class="text-center py-5 text-secondary small">No matching posts right now.</div>`;
         }
 
         window.handleSearch = function(val) {
@@ -804,8 +741,7 @@
             setTimeout(() => {
                 const freshItems = masterHumanPool.slice().reverse().map((item, idx) => ({
                     ...item,
-                    id: `refreshed-${Date.now()}-${idx}`,
-                    likes: `${(Math.random() * 50 + 10).toFixed(1)}K`
+                    id: `refreshed-${Date.now()}-${idx}`
                 }));
                 feedData = [...freshItems, ...feedData];
                 applyFeedFilter();
@@ -813,8 +749,8 @@
                 
                 const toast = document.getElementById('refreshToast');
                 toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2300);
-            }, 450);
+                setTimeout(() => toast.classList.remove('show'), 2200);
+            }, 400);
         };
 
         document.querySelectorAll('.filter-pill').forEach(pill => {
@@ -826,7 +762,6 @@
             });
         });
 
-        // Infinite scroll observer (unlimited feed)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
@@ -836,38 +771,27 @@
                     }, 350);
                 }
             });
-        }, { rootMargin: '450px' });
+        }, { rootMargin: '400px' });
         observer.observe(sentinelEl);
 
-        // 4. Google subpages & legal modal provider
         window.showLegalContent = function(type) {
             const titleEl = document.getElementById('legalModalTitle');
             const bodyEl = document.getElementById('legalModalBody');
             if (type === 'privacy') {
-                titleEl.textContent = 'Privacy Policy — Evolysium 2026';
-                bodyEl.innerHTML = `<p class="text-secondary small">Evolysium stores local subscription tier and filter state locally in browser storage. Zero tracking beacons on real-human social discovery feeds.</p>`;
+                titleEl.textContent = 'Privacy';
+                bodyEl.innerHTML = `<p>Local preferences and your chosen view tiers stay in your browser. No extra behavioral trackers.</p>`;
             } else if (type === 'disclaimer') {
-                titleEl.textContent = 'Legal Disclaimer — Evolysium 2026';
-                bodyEl.innerHTML = `<p class="text-secondary small">Cross-platform aggregation compliant with public RSS/embed API directives across TikTok, Instagram, X, Reddit, and LinkedIn.</p>`;
+                titleEl.textContent = 'About source posts';
+                bodyEl.innerHTML = `<p>Content displayed here mirrors public creator notes and shared posts via standard social web links.</p>`;
             } else if (type === 'gdpr') {
-                titleEl.textContent = 'GDPR Compliance Notice';
-                bodyEl.innerHTML = `<p class="text-secondary small">EU GDPR Article 17 right-to-eraser supported via local storage state wipe.</p>`;
+                titleEl.textContent = 'GDPR data info';
+                bodyEl.innerHTML = `<p>Clear your browser storage anytime to remove saved preferences.</p>`;
             } else if (type === 'sitemap') {
-                titleEl.textContent = 'Google Crawler Sitemap / Index Status';
-                bodyEl.innerHTML = `
-                    <p class="text-secondary small">Indexed subpage hierarchy for Google Search:</p>
-                    <ul class="small text-secondary ps-3">
-                        <li><code>/</code> — Root Real-Human Feed Stream</li>
-                        <li><code>/?page=discover</code> — Multiplatform Discovery</li>
-                        <li><code>/?page=vault18</code> — Creator Vault 18+ Node</li>
-                        <li><code>/?page=tiers</code> — 4-Tier Subscription Matrix</li>
-                    </ul>
-                `;
+                titleEl.textContent = 'Google Sitemap / Index Status';
+                bodyEl.innerHTML = `<p>Indexable routes:<br><code>/</code> — Root human community stream</p>`;
             }
         };
 
-        // Initialize unlimited real human feed
-        feedData = [...masterHumanPool];
         applyFeedFilter();
     </script>
 </body>
