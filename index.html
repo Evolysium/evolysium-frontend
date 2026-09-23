@@ -63,7 +63,6 @@
         /* Hero section */
         .hero-headline {
             font-weight: 800;
-            font-size.clamp: 2rem;
             letter-spacing: -0.5px;
             background: linear-gradient(135deg, #fff 30%, #ff85b3 70%, var(--cyan-pop) 100%);
             -webkit-background-clip: text;
@@ -183,7 +182,6 @@
             border: 1px solid rgba(255,255,255,0.12);
         }
 
-        /* Action bar inside card */
         .action-icon-btn {
             background: rgba(255,255,255,0.06);
             border: none;
@@ -226,12 +224,10 @@
             box-shadow: 0 10px 25px rgba(255, 42, 133, 0.35);
         }
 
-        /* Pricing friendly social cards */
         .pricing-box {
             background: rgba(22, 18, 38, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 30px;
             transition: 0.3s;
         }
         .pricing-box.hot {
@@ -251,11 +247,11 @@
                 </div>
                 <div>
                     <span class="brand-name fw-bold fs-4 text-white">Evolysium</span>
-                    <span class="badge bg-pink text-white ms-2 rounded-pill font-mono" style="font-size: 0.65rem; background: var(--pink-pop);">FYP VIBE</span>
+                    <span class="badge text-white ms-2 rounded-pill font-mono" style="font-size: 0.65rem; background: var(--pink-pop);">FYP VIBE</span>
                 </div>
             </a>
             <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                <i class="fa-solid fa-crown text-warning"></i> Pro Pass
+                <i class="fa-solid fa-crown text-warning"></i> Membership
             </button>
         </div>
     </nav>
@@ -304,7 +300,7 @@
         <div class="social-card p-4 mb-5">
             <div class="row g-3 align-items-center">
                 <div class="col-lg-6">
-                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Pretraži ključne riječi,creatore, teme...">
+                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Pretraži ključne riječi, creatore, teme...">
                 </div>
                 <div class="col-lg-6 text-lg-end">
                     <button class="btn btn-vibe px-4 py-3 w-100 w-lg-auto" onclick="fetchCustomFeed()">
@@ -321,6 +317,7 @@
                 <button class="social-pill active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram"></i> Instagram</button>
                 <button class="social-pill active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien"></i> Reddit</button>
                 <button class="social-pill active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter"></i> X / Twitter</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'linkedin', this)"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</button>
             </div>
 
             <!-- Category chips -->
@@ -337,7 +334,7 @@
 
         <!-- Loading spinner -->
         <div id="loading-spinner" class="text-center py-5 d-none">
-            <div class="spinner-border text-pink" style="color: var(--pink-pop);" role="status"></div>
+            <div class="spinner-border" style="color: var(--pink-pop);" role="status"></div>
             <p class="mt-3 text-secondary small">Curiram svježe vizualne priče...</p>
         </div>
 
@@ -345,44 +342,110 @@
         <div id="feed-grid" class="row g-4"></div>
     </div>
 
-    <!-- Pro / Community Modal -->
+    <!-- 4 Natural Membership & Vault Tiers Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Otključaj Puni Vibe / Pro</h4>
+                    <div>
+                        <h4 class="fw-bold mb-0">Evolysium Membership</h4>
+                        <p class="text-secondary small mb-0">Izaberi svoj prirodni layer. Sigurna naplata s enkripcijom.</p>
+                    </div>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="pricing-box h-100 d-flex flex-column justify-content-between">
+                    <div class="row g-3">
+                        <!-- 1. Free Vibe (€0) -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3">
                                 <div>
                                     <span class="badge bg-secondary rounded-pill mb-2">Free Vibe</span>
-                                    <h5>Daily Explorer</h5>
-                                    <h2 class="fw-bold my-3">€0 <span class="fs-6 text-secondary fw-normal">/ mjesečno</span></h2>
-                                    <ul class="list-unstyled text-secondary small g-2">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Osnovni viralni feed</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Javne kategorije</li>
+                                    <h5>Free Vibe</h5>
+                                    <h3 class="fw-bold my-2">€0 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
+                                    <ul class="list-unstyled text-secondary small mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Osnovni feed</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Javne teme</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-light w-100 rounded-pill py-2" disabled>Aktivno</button>
+                                <button class="btn btn-outline-light w-100 rounded-pill py-2 small" disabled>Trenutni Plan</button>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="pricing-box hot h-100 d-flex flex-column justify-content-between">
+
+                        <!-- 2. Creator Spark (€9.99/mj) -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3">
                                 <div>
-                                    <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">MOST POPULAR</span>
-                                    <h5>Creator Pro Pass</h5>
-                                    <h2 class="fw-bold my-3">€9.99 <span class="fs-6 text-secondary fw-normal">/ mjesečno</span></h2>
-                                    <ul class="list-unstyled text-light small">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2" style="color:var(--pink-pop)"></i><strong>Neoograničeni Video Feed (TikTok/IG)</strong></li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2" style="color:var(--pink-pop)"></i><strong>Otključan Creator Vault (18+)</strong></li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2" style="color:var(--pink-pop)"></i>Direktni source linkovi</li>
+                                    <span class="badge rounded-pill mb-2" style="background:#7928ca;">PRO PASS</span>
+                                    <h5>Creator Spark</h5>
+                                    <h3 class="fw-bold my-2">€9.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
+                                    <ul class="list-unstyled text-light small mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2"></i>Full 5-platform feed</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2"></i>Video preview HD</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2"></i>Objavljivanje storyja</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-vibe w-100 rounded-pill py-2">Pridruži se Pro timu</button>
+                                <button class="btn btn-outline-light w-100 rounded-pill py-2 small" onclick="initCheckout('Creator Spark', 9.99, false)">Odaberi Spark</button>
                             </div>
+                        </div>
+
+                        <!-- 3. Midnight Access (€14.99/mj - 18+) -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3" style="border-color: rgba(255,42,133,0.5);">
+                                <div>
+                                    <span class="badge rounded-pill mb-2 bg-danger">18+ VAULT</span>
+                                    <h5>Midnight Access</h5>
+                                    <h3 class="fw-bold my-2">€14.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
+                                    <ul class="list-unstyled text-light small mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i><strong>Age-verified uncensored</strong></li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i>Erotski/uncensored vault</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i>Direct creator vibe</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-danger w-100 rounded-pill py-2 small" onclick="verifyAgeAndCheckout('Midnight Access', 14.99, true)">Otključaj Midnight</button>
+                            </div>
+                        </div>
+
+                        <!-- 4. Inner Circle / VIP (€29.99/mj) -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="pricing-box hot h-100 d-flex flex-column justify-content-between p-3">
+                                <div>
+                                    <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">WHALE / ALL</span>
+                                    <h5>Inner Circle / VIP</h5>
+                                    <h3 class="fw-bold my-2">€29.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
+                                    <ul class="list-unstyled text-light small mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i><strong>Sve iz Spark + Midnight</strong></li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Export alpha (JSON/CSV)</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Custom webhook alerts</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-vibe w-100 rounded-pill py-2 small" onclick="verifyAgeAndCheckout('Inner Circle / VIP', 29.99, true)">Pridruži se VIP-u</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sigurni naplatni panel -->
+                    <div id="checkout-panel" class="mt-4 p-4 rounded-4 d-none" style="background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.15);">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0" id="checkout-title">Sigurna naplata</h5>
+                            <span class="badge bg-success"><i class="fa-solid fa-lock me-1"></i>SSL Encrypted</span>
+                        </div>
+                        <p class="text-secondary small mb-3" id="checkout-desc">Odabran paket: ...</p>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small text-secondary">Email za račun / token</label>
+                                <input type="email" id="checkout-email" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="tvoj@email.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-secondary">Način plaćanja</label>
+                                <select id="checkout-method" class="form-select form-select-sm bg-dark text-light border-secondary">
+                                    <option value="stripe">Stripe (Kartica / Apple Pay / Google Pay)</option>
+                                    <option value="crypto">Crypto (USDT / USDC / ETH)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-end">
+                            <button class="btn btn-secondary btn-sm rounded-pill px-3 me-2" onclick="cancelCheckout()">Odustani</button>
+                            <button class="btn btn-vibe btn-sm rounded-pill px-4" onclick="completePaymentSimulation()">Plati sigurno (€<span id="checkout-price">0</span>)</button>
                         </div>
                     </div>
                 </div>
@@ -393,29 +456,27 @@
     <!-- Footer -->
     <footer class="py-4 text-center text-secondary small">
         <div class="container">
-            Evolysium Social Curation &bull; Dizajnirano za ljudsko otkrivanje sadržaja &copy; 2026
+            Copyright Evolysium 2026 &bull; Privacy Policy &bull; Legal Disclaimer &bull; GDPR
         </div>
     </footer>
 
     <!-- Logic -->
+    <script src="https://cdn.jsdelivr.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_BASE = "https://evolysium-backend.onrender.com";
-        let selectedPlatforms = ["tiktok", "instagram", "reddit", "x"];
+        let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
         let selectedCategories = ["tech", "lifestyle", "luxury", "gaming"];
 
         const richVisualLibrary = {
             "tech": [
-                "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900&auto=format&fit=crop"
             ],
             "lifestyle": [
-                "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=900&auto=format&fit=crop"
             ],
             "luxury": [
-                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&auto=format&fit=crop"
             ],
             "gaming": [
                 "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900&auto=format&fit=crop"
@@ -432,8 +493,7 @@
         };
 
         const demoVideoPool = [
-            "https://vjs.zencdn.net/v/oceans.mp4",
-            "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            "https://vjs.zencdn.net/v/oceans.mp4"
         ];
 
         const humanStories = [
@@ -441,9 +501,45 @@
             { creator: "@elena_vibe", title: "Zašto se svi vraćaju minimalističkom stanu u centru", cat: "luxury", platform: "instagram", likes: "89k", comments: "940" },
             { creator: "@neoproto", title: "Ovaj AI alat mi štedi 4 sata dnevno bez zajebancije", cat: "tech", platform: "x", likes: "34k", comments: "510" },
             { creator: "@retro_gamer_hq", title: "Hidden gem igra koju nitko ne igra, a bolja je od AAA naslova", cat: "gaming", platform: "reddit", likes: "18.5k", comments: "830" },
-            { creator: "@sunset_chaser", title: "Skriveni rooftop u Lisabonu o kojem turisti šute", cat: "travel", platform: "instagram", likes: "210k", comments: "3.4k" },
-            { creator: "@vibe_daily", title: "Jutarnja rutina od 20 minuta koja mijenja fokus", cat: "lifestyle", platform: "tiktok", likes: "65k", comments: "410" }
+            { creator: "@corp_pulse", title: "Zašto remote-first modeli mijenjaju strukturu leadershipa u EU", cat: "lifestyle", platform: "linkedin", likes: "12.1k", comments: "310" }
         ];
+
+        let activePlanData = null;
+
+        function verifyAgeAndCheckout(planName, price, requires18) {
+            if (requires18) {
+                const confirmed = confirm("🔞 OVAJ PAKET SADRŽI MIDNIGHT / 18+ VAULT SADRŽAJ.\nPotvrđuješ li da imaš 18+ godina i da je u tvojoj jurisdikciji dozvoljen pristup ovakvom sadržaju?");
+                if (!confirmed) return;
+            }
+            initCheckout(planName, price, requires18);
+        }
+
+        function initCheckout(planName, price, is18Plus) {
+            activePlanData = { planName, price, is18Plus };
+            document.getElementById('checkout-title').innerText = `Checkout: ${planName}`;
+            document.getElementById('checkout-desc').innerText = `Cijena pretplate: €${price}/mjesečno. ${is18Plus ? 'Uključuje age-verified 18+ vault token.' : ''}`;
+            document.getElementById('checkout-price').innerText = price;
+            document.getElementById('checkout-panel').classList.remove('d-none');
+        }
+
+        function cancelCheckout() {
+            document.getElementById('checkout-panel').classList.add('d-none');
+            activePlanData = null;
+        }
+
+        function completePaymentSimulation() {
+            const email = document.getElementById('checkout-email').value;
+            if (!email || !email.includes('@')) {
+                alert('Unesi važeću email adresu!');
+                return;
+            }
+            localStorage.setItem('evolysium_tier', activePlanData.planName);
+            localStorage.setItem('evolysium_vault_18', activePlanData.is18Plus ? 'true' : 'false');
+            
+            alert(`✅ Plaćanje uspješno!\nAktivan paket: ${activePlanData.planName}\nToken spremljen.`);
+            cancelCheckout();
+            bootstrap.Modal.getInstance(document.getElementById('pricingModal')).hide();
+        }
 
         function toggleSelection(type, value, btn) {
             btn.classList.toggle("active");
@@ -530,7 +626,7 @@
             }, 350);
         }
 
-        document.getElementById('keyword-search').addEventListener('input', fetchCustomFeed);
+        document.getElementById('keyword-search')?.addEventListener('input', fetchCustomFeed);
         document.addEventListener("DOMContentLoaded", () => fetchCustomFeed());
     </script>
 </body>
