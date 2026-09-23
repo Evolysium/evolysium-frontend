@@ -1,35 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium AI — Signal & Trend Curation</title>
+    <title>Evolysium AI — High-Signal Intelligence Terminal</title>
 
-    <!-- Primary Meta Tags -->
     <meta name="title" content="Evolysium AI — Signal & Trend Curation">
-    <meta name="description" content="Discover, filter, and curate top trends and real-time signals from TikTok, Instagram, Reddit, X, and LinkedIn with Evolysium AI.">
-    <meta name="keywords" content="Evolysium AI, trend curation, content aggregator, social media signals, tech trends">
+    <meta name="description" content="Raw alpha signals, viral asymmetric momentum, and real-time intelligence curation.">
     <meta name="robots" content="index, follow">
-
-    <!-- Open Graph / Facebook / LinkedIn -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://evolysium.github.io/evolysium-frontend/">
-    <meta property="og:title" content="Evolysium AI — Signal & Trend Curation">
-    <meta property="og:description" content="Curate the most relevant web signals and social trends in real time.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop">
 
     <!-- Frameworks & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-main: #060913;
-            --card-bg: rgba(15, 23, 42, 0.75);
+            --bg-main: #03050b;
+            --card-bg: rgba(13, 20, 38, 0.78);
             --accent-cyan: #38bdf8;
-            --accent-purple: #a855f7;
-            --border-glow: rgba(56, 189, 248, 0.25);
+            --accent-purple: #c084fc;
+            --border-glow: rgba(56, 189, 248, 0.35);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -42,58 +33,64 @@
             display: flex;
             flex-direction: column;
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 65%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 90% 70%, rgba(192, 132, 252, 0.10) 0%, transparent 45%);
             background-attachment: fixed;
         }
 
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Navbar */
         .navbar-custom {
-            background: rgba(6, 9, 19, 0.85);
-            backdrop-filter: blur(16px);
+            background: rgba(3, 5, 11, 0.9);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .brand-logo {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.45);
         }
 
         .hero-title {
-            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #a855f7 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 45%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
         }
 
+        /* Terminal Cards */
         .card-custom {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 22px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
         }
 
         .card-custom:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-color: var(--accent-cyan);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.25);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.2);
         }
 
-        .card-tiktok { border: 1px solid rgba(255, 0, 80, 0.35); }
-        .card-instagram { border: 1px solid rgba(225, 48, 108, 0.35); }
+        .card-tiktok { border-color: rgba(255, 0, 80, 0.3); }
+        .card-instagram { border-color: rgba(225, 48, 108, 0.3); }
 
         .media-container {
-            height: 230px;
+            height: 250px;
             position: relative;
-            background-color: #0b0f19;
+            background-color: #070a14;
             overflow: hidden;
         }
 
@@ -101,17 +98,18 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .card-custom:hover .media-container img {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
+        /* Chips */
         .chip-btn {
             border-radius: 30px;
-            padding: 8px 18px;
-            font-size: 0.85rem;
+            padding: 9px 20px;
+            font-size: 0.82rem;
             font-weight: 600;
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: var(--text-muted);
@@ -123,89 +121,88 @@
         .chip-btn:hover {
             border-color: var(--accent-cyan);
             color: var(--text-main);
+            background: rgba(56, 189, 248, 0.08);
         }
 
         .chip-btn.active {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(192, 132, 252, 0.25));
             color: #ffffff;
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
         }
 
         .btn-primary-custom {
-            background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #0284c7 0%, #9333ea 100%);
             border: none;
             color: white;
             font-weight: 700;
-            padding: 14px 36px;
-            border-radius: 14px;
-            box-shadow: 0 0 25px rgba(2, 132, 199, 0.4);
+            padding: 15px 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(2, 132, 199, 0.45);
             transition: all 0.3s ease;
         }
 
         .btn-primary-custom:hover {
             transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
+            box-shadow: 0 0 35px rgba(147, 51, 234, 0.65);
         }
 
+        /* Platform Badges */
         .badge-tiktok { background-color: #ff0050; }
-        .badge-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-        .badge-x { background-color: #000000; border: 1px solid #333; }
+        .badge-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .badge-x { background-color: #000000; border: 1px solid #444; }
         .badge-linkedin { background-color: #0a66c2; }
         .badge-reddit { background-color: #ff4500; }
 
         .search-input {
-            background-color: rgba(10, 15, 29, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background-color: rgba(8, 13, 26, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             color: white;
-            border-radius: 12px;
-            padding: 14px 20px;
+            border-radius: 14px;
+            padding: 15px 22px;
+            font-size: 0.95rem;
         }
 
         .search-input:focus {
-            background-color: rgba(10, 15, 29, 0.95);
+            background-color: rgba(8, 13, 26, 0.98);
             border-color: var(--accent-cyan);
             color: white;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+            outline: none;
         }
 
         .stat-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 15px;
+            border-radius: 18px;
+            padding: 18px;
+            backdrop-filter: blur(10px);
         }
 
         .pricing-card {
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
+            border-radius: 20px;
         }
 
         .pricing-card.featured {
             border: 2px solid var(--accent-cyan);
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
         }
 
         footer {
-            background: rgba(4, 6, 14, 0.95);
+            background: rgba(2, 4, 10, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             margin-top: auto;
         }
 
-        footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        footer a:hover {
-            color: var(--accent-cyan);
-        }
+        footer a { color: var(--text-muted); text-decoration: none; }
+        footer a:hover { color: var(--accent-cyan); }
     </style>
 </head>
 <body>
 
+    <!-- Header Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-3" href="#">
@@ -214,72 +211,81 @@
                 </div>
                 <div class="d-flex flex-column">
                     <span class="fw-bold fs-4 text-white tracking-tight" style="line-height: 1;">Evolysium AI</span>
+                    <span class="font-mono text-info" style="font-size: 0.65rem; letter-spacing: 1px;">TERMINAL v2.5</span>
                 </div>
             </a>
 
             <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-outline-info btn-sm fw-bold rounded-pill px-3 py-2" data-bs-toggle="modal" data-bs-target="#pricingModal">
+                <button class="btn btn-outline-info btn-sm fw-bold rounded-pill px-4 py-2" data-bs-toggle="modal" data-bs-target="#pricingModal">
                     <i class="fa-solid fa-gem me-1"></i> Pricing Plans
                 </button>
             </div>
         </div>
     </nav>
 
+    <!-- Main Content -->
     <div class="container py-5">
-        <div class="row justify-content-center text-center mb-4">
+        <div class="row justify-content-center text-center mb-5">
             <div class="col-lg-9">
-                <span class="badge bg-info text-dark fw-bold px-3 py-2 rounded-pill text-uppercase mb-3">Real-Time Intelligence Hub</span>
-                <h1 class="display-4 hero-title mb-3">Uncover Viral Trends & High-Impact Signals</h1>
-                <p class="text-secondary fs-5">Evolysium AI tracks live web chatter, viral media, and market signals across TikTok, Instagram, Reddit, X, and LinkedIn.</p>
+                <span class="badge bg-info text-dark font-mono fw-bold px-3 py-2 rounded-pill text-uppercase mb-3 shadow-sm">
+                    <i class="fa-solid fa-satellite-dish me-1"></i> Live Asymmetric Signal Stream
+                </span>
+                <h1 class="display-3 hero-title mb-3">Extract High-Signal Alpha Before the Crowd</h1>
+                <p class="text-secondary fs-5 px-lg-4">Real-time neural curation indexing asymmetric momentum across TikTok, Instagram, Reddit, X, and LinkedIn.</p>
             </div>
         </div>
 
+        <!-- Live Metrics Bar -->
         <div class="row g-3 mb-5 justify-content-center">
             <div class="col-6 col-md-3">
                 <div class="stat-card text-center">
-                    <div class="text-info fw-bold fs-4"><i class="fa-solid fa-bolt me-1"></i> 142.8k</div>
-                    <div class="text-secondary small">Signals Analyzed Today</div>
+                    <div class="text-info font-mono fw-bold fs-3">284.9k</div>
+                    <div class="text-secondary small mt-1">Raw Signals / 24h</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="stat-card text-center">
-                    <div class="text-purple fw-bold fs-4" style="color: #a855f7;"><i class="fa-solid fa-fire me-1"></i> 99.4%</div>
-                    <div class="text-secondary small">Accuracy Rate</div>
+                    <div class="font-mono fw-bold fs-3" style="color: #c084fc;">99.8%</div>
+                    <div class="text-secondary small mt-1">Signal-to-Noise Ratio</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="stat-card text-center">
-                    <div class="text-success fw-bold fs-4"><i class="fa-solid fa-chart-line me-1"></i> Live</div>
-                    <div class="text-secondary small">Social Feed Stream</div>
+                    <div class="text-success font-mono fw-bold fs-3"><i class="fa-solid fa-circle-dot fa-beat-fade fs-6 me-2"></i>ONLINE</div>
+                    <div class="text-secondary small mt-1">Validator Grid</div>
                 </div>
             </div>
         </div>
 
+        <!-- Filter Controls -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-10">
                 <div class="card card-custom p-4 p-md-5">
                     
+                    <!-- Search -->
                     <div class="mb-4">
-                        <label class="text-uppercase text-info fw-bold small mb-2 d-block">
-                            <i class="fa-solid fa-magnifying-glass me-2"></i>Search Keywords, Hashtags or Topics
+                        <label class="text-uppercase text-info font-mono fw-bold small mb-2 d-block">
+                            <i class="fa-solid fa-terminal me-2"></i>Query Signal Matrix (Keywords, Tickers, Concepts)
                         </label>
-                        <input type="text" id="keyword-search" class="form-control search-input" placeholder="e.g. AI Agents, Reels, Crypto, Fitness, Luxury Lifestyle...">
+                        <input type="text" id="keyword-search" class="form-control search-input" placeholder="e.g. Zero-Day, AI Agents, Liquidity, Stealth Wealth...">
                     </div>
 
                     <hr class="border-secondary opacity-25">
 
-                    <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>1. Platforms</h6>
+                    <!-- 1. Platforms -->
+                    <h6 class="text-uppercase text-info font-mono fw-bold small mb-3"><i class="fa-solid fa-share-nodes me-2"></i>1. Target Platforms</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
-                        <button class="chip-btn chip-platform active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok me-1"></i> TikTok</button>
-                        <button class="chip-btn chip-platform active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram me-1"></i> Instagram</button>
-                        <button class="chip-btn chip-platform active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien me-1"></i> Reddit</button>
-                        <button class="chip-btn chip-platform active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter me-1"></i> X (Twitter)</button>
-                        <button class="chip-btn chip-platform active" onclick="toggleSelection('platform', 'linkedin', this)"><i class="fa-brands fa-linkedin me-1"></i> LinkedIn</button>
+                        <button class="chip-btn active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok me-1"></i> TikTok</button>
+                        <button class="chip-btn active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram me-1"></i> Instagram</button>
+                        <button class="chip-btn active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien me-1"></i> Reddit</button>
+                        <button class="chip-btn active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter me-1"></i> X (Twitter)</button>
+                        <button class="chip-btn active" onclick="toggleSelection('platform', 'linkedin', this)"><i class="fa-brands fa-linkedin me-1"></i> LinkedIn</button>
                     </div>
 
                     <hr class="border-secondary opacity-25">
 
-                    <h6 class="text-uppercase text-info fw-bold small mb-3"><i class="fa-solid fa-layer-group me-2"></i>2. Categories</h6>
+                    <!-- 2. Categories -->
+                    <h6 class="text-uppercase text-info font-mono fw-bold small mb-3"><i class="fa-solid fa-layer-group me-2"></i>2. Intelligence Sectors</h6>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="chip-btn active" onclick="toggleSelection('category', 'tech', this)"><i class="fa-solid fa-microchip me-1"></i> Tech & AI</button>
                         <button class="chip-btn active" onclick="toggleSelection('category', 'gaming', this)"><i class="fa-solid fa-gamepad me-1"></i> Gaming</button>
@@ -289,12 +295,12 @@
                         <button class="chip-btn" onclick="toggleSelection('category', 'architecture', this)"><i class="fa-solid fa-building me-1"></i> Architecture</button>
                         <button class="chip-btn" onclick="toggleSelection('category', 'crypto', this)"><i class="fa-solid fa-coins me-1"></i> Crypto</button>
                         <button class="chip-btn" onclick="toggleSelection('category', 'travel', this)"><i class="fa-solid fa-plane me-1"></i> Travel</button>
-                        <button class="chip-btn" onclick="toggleSelection('category', '18plus', this)"><i class="fa-solid fa-user-lock me-1"></i> 18+ Content <span class="badge bg-danger ms-1" style="font-size: 0.65rem;">PRO</span></button>
+                        <button class="chip-btn" onclick="toggleSelection('category', '18plus', this)"><i class="fa-solid fa-user-lock me-1"></i> 18+ Vault <span class="badge bg-danger ms-1 font-mono" style="font-size: 0.6rem;">PRO</span></button>
                     </div>
 
                     <div class="text-center pt-2">
                         <button class="btn btn-primary-custom btn-lg w-100 w-md-auto" onclick="fetchCustomFeed()">
-                            <i class="fa-solid fa-compass me-2"></i> Explore Feed
+                            <i class="fa-solid fa-bolt me-2"></i> Execute Signal Scan
                         </button>
                     </div>
 
@@ -302,147 +308,97 @@
             </div>
         </div>
 
+        <!-- Spinner -->
         <div id="loading-spinner" class="text-center py-5 d-none">
-            <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
-            <p class="mt-3 text-secondary fs-6">Curating top viral trends and media for you...</p>
+            <div class="spinner-border text-info" style="width: 3.5rem; height: 3.5rem;" role="status"></div>
+            <p class="mt-3 text-secondary font-mono small">Extracting raw cross-platform intelligence vectors...</p>
         </div>
 
+        <!-- Feed Grid -->
         <div id="feed-grid" class="row g-4"></div>
     </div>
 
     <!-- Pricing Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
+            <div class="modal-content text-light" style="background-color: #060913; border: 1px solid rgba(255,255,255,0.18);">
                 <div class="modal-header border-secondary">
-                    <h5 class="modal-title fw-bold text-info"><i class="fa-solid fa-tags me-2"></i>Evolysium AI Subscription Plans</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title fw-bold text-info"><i class="fa-solid fa-gem me-2"></i>Evolysium Terminal Tiers</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body py-4">
                     <div class="row g-3">
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
-                                    <h6 class="fw-bold text-uppercase text-secondary">Free</h6>
-                                    <h3 class="fw-bold my-2">€0 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <h6 class="fw-bold text-uppercase text-secondary font-mono">Observer</h6>
+                                    <h3 class="fw-bold my-2 font-mono">€0 <small class="fs-6 text-secondary">/mo</small></h3>
                                     <ul class="list-unstyled text-start small mt-3 text-secondary">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Basic feed stream</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Standard categories</li>
-                                        <li><i class="fa-solid fa-xmark text-danger me-2"></i>18+ Content locked</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Delayed feed stream</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Core categories</li>
+                                        <li><i class="fa-solid fa-xmark text-danger me-2"></i>18+ Vault locked</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-light btn-sm w-100 mt-3" disabled>Current Plan</button>
+                                <button class="btn btn-outline-light btn-sm w-100 mt-3 font-mono" disabled>Active</button>
                             </div>
                         </div>
-
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card featured p-4 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
-                                    <span class="badge bg-info text-dark rounded-pill mb-2">RECOMMENDED</span>
-                                    <h6 class="fw-bold text-uppercase text-info">Pro / Personal</h6>
-                                    <h3 class="fw-bold my-2">€9.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <span class="badge bg-info text-dark rounded-pill mb-2 font-mono">HIGH EDGE</span>
+                                    <h6 class="fw-bold text-uppercase text-info font-mono">Operator / Pro</h6>
+                                    <h3 class="fw-bold my-2 font-mono">€9.99 <small class="fs-6 text-secondary">/mo</small></h3>
                                     <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Unlimited stream results</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i><strong>TikTok & Instagram Video Reels</strong></li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i><strong>Includes 18+ Category</strong></li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Real-Time Keyword Alerts</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Real-time zero-lag stream</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"><strong>TikTok/IG Video Feed</strong></i></li>
+                                        <li><i class="fa-solid fa-check text-info me-2"><strong>Unlocked 18+ Vault</strong></i></li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-info btn-sm fw-bold w-100 mt-3 py-2">Upgrade to Pro</button>
+                                <button class="btn btn-info btn-sm fw-bold w-100 mt-3 py-2 font-mono">Upgrade</button>
                             </div>
                         </div>
-
                         <div class="col-md-6 col-lg-3">
                             <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between">
                                 <div>
-                                    <h6 class="fw-bold text-uppercase text-warning">Business</h6>
-                                    <h3 class="fw-bold my-2">€29.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <h6 class="fw-bold text-uppercase text-warning font-mono">Syndicate</h6>
+                                    <h3 class="fw-bold my-2 font-mono">€29.99 <small class="fs-6 text-secondary">/mo</small></h3>
                                     <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Everything in Pro</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Analytics Dashboard</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Export data (PDF/CSV)</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Priority support</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Everything in Operator</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Export alpha (JSON/CSV)</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Custom webhook alerts</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-3 py-2">Get Business</button>
+                                <button class="btn btn-outline-warning btn-sm fw-bold w-100 mt-3 py-2 font-mono">Select</button>
                             </div>
                         </div>
-
                         <div class="col-md-6 col-lg-3">
-                            <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between" style="border-color: #a855f7;">
+                            <div class="pricing-card p-4 text-center h-100 d-flex flex-column justify-content-between" style="border-color: #c084fc;">
                                 <div>
-                                    <span class="badge rounded-pill mb-2" style="background-color: #a855f7; color: #fff;">AGENCY</span>
-                                    <h6 class="fw-bold text-uppercase" style="color: #c084fc;">Enterprise / VIP</h6>
-                                    <h3 class="fw-bold my-2">€79.99 <small class="fs-6 text-secondary">/mo</small></h3>
+                                    <span class="badge rounded-pill mb-2 font-mono" style="background-color: #c084fc; color: #000;">INSTITUTIONAL</span>
+                                    <h6 class="fw-bold text-uppercase font-mono" style="color: #c084fc;">Whale / VIP</h6>
+                                    <h3 class="fw-bold my-2 font-mono">€79.99 <small class="fs-6 text-secondary">/mo</small></h3>
                                     <ul class="list-unstyled text-start small mt-3">
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Custom API Access</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Dedicated Account Manager</li>
-                                        <li><i class="fa-solid fa-check text-info me-2"></i>Multi-user team accounts</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Private node access</li>
+                                        <li><i class="fa-solid fa-check text-info me-2"></i>Direct API key feed</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-secondary btn-sm fw-bold w-100 mt-3 py-2" style="border-color: #a855f7; color: #c084fc;">Contact Sales</button>
+                                <button class="btn btn-outline-secondary btn-sm fw-bold w-100 mt-3 py-2 font-mono" style="border-color: #c084fc; color: #c084fc;">Inquire</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer class="py-4">
+            <div class="container text-center text-secondary small font-mono">
+                Evolysium AI Terminal &copy; 2026. All signals processed via decentralized telemetry.
+            </div>
+        </footer>
     </div>
 
-    <!-- Terms Modal -->
-    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title text-info fw-bold"><i class="fa-solid fa-file-contract me-2"></i>Terms of Service</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body small text-secondary">
-                    <h6>1. Overview</h6>
-                    <p>Welcome to Evolysium AI. By accessing or using our platform, you agree to be bound by these Terms of Service.</p>
-                    <h6>2. Content & Age Restrictions</h6>
-                    <p>Access to 18+ content is strictly restricted to adult users. Evolysium AI aggregates public signals and links; we do not host copyrighted media directly.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Privacy Modal -->
-    <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content text-light" style="background-color: #0a0f1d; border: 1px solid rgba(255,255,255,0.2);">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title text-info fw-bold"><i class="fa-solid fa-user-shield me-2"></i>Privacy Policy & GDPR</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body small text-secondary">
-                    <h6>1. Information Collection</h6>
-                    <p>Evolysium AI values your privacy. We collect minimal technical data necessary to deliver a personalized experience.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="py-4">
-        <div class="container">
-            <div class="row align-items-center justify-content-between g-3">
-                <div class="col-md-6 text-center text-md-start">
-                    <span class="fw-bold text-white me-2">Evolysium AI</span>
-                    <small class="text-secondary">&copy; 2026. All rights reserved.</small>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <div class="d-flex justify-content-center justify-content-md-end gap-3 small">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
-                        <span class="text-secondary">•</span>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
-                        <span class="text-secondary">•</span>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#pricingModal">Plans</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
+    <!-- JavaScript logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_BASE = "https://evolysium-backend.onrender.com";
@@ -451,42 +407,24 @@
 
         const categoryRichImages = {
             "tech": [
-                "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900&auto=format&fit=crop"
             ],
             "gaming": [
-                "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900&auto=format&fit=crop"
             ],
             "lifestyle": [
-                "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&auto=format&fit=crop"
-            ],
-            "funny": [
-                "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=800&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=900&auto=format&fit=crop"
             ],
             "luxury": [
-                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop"
-            ],
-            "architecture": [
-                "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&auto=format&fit=crop"
             ],
             "crypto": [
-                "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?w=800&auto=format&fit=crop"
-            ],
-            "travel": [
-                "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=900&auto=format&fit=crop"
             ],
             "18plus": [
-                "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop"
+                "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&auto=format&fit=crop"
             ]
         };
 
@@ -494,36 +432,27 @@
             "tech": "https://vjs.zencdn.net/v/oceans.mp4",
             "gaming": "https://media.w3.org/2010/05/sintel/trailer.mp4",
             "lifestyle": "https://vjs.zencdn.net/v/oceans.mp4",
-            "funny": "https://media.w3.org/2010/05/sintel/trailer.mp4",
-            "luxury": "https://vjs.zencdn.net/v/oceans.mp4",
-            "architecture": "https://media.w3.org/2010/05/sintel/trailer.mp4",
             "crypto": "https://vjs.zencdn.net/v/oceans.mp4",
-            "travel": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+            "luxury": "https://vjs.zencdn.net/v/oceans.mp4",
             "18plus": "https://vjs.zencdn.net/v/oceans.mp4"
         };
 
         function toggleSelection(type, value, btn) {
             btn.classList.toggle("active");
             let list = (type === 'platform') ? selectedPlatforms : selectedCategories;
-            
-            if (list.includes(value)) {
-                list = list.filter(item => item !== value);
-            } else {
-                list.push(value);
-            }
-
+            list = list.includes(value) ? list.filter(item => item !== value) : [...list, value];
             if (type === 'platform') selectedPlatforms = list;
             else selectedCategories = list;
         }
 
         function getPlatformBadge(platform) {
             switch(platform) {
-                case 'tiktok': return `<span class="badge badge-tiktok"><i class="fa-brands fa-tiktok me-1"></i> TikTok</span>`;
-                case 'instagram': return `<span class="badge badge-instagram"><i class="fa-brands fa-instagram me-1"></i> Instagram</span>`;
-                case 'x': return `<span class="badge badge-x"><i class="fa-brands fa-x-twitter me-1"></i> X</span>`;
-                case 'linkedin': return `<span class="badge badge-linkedin"><i class="fa-brands fa-linkedin me-1"></i> LinkedIn</span>`;
-                case 'reddit': return `<span class="badge badge-reddit"><i class="fa-brands fa-reddit-alien me-1"></i> Reddit</span>`;
-                default: return `<span class="badge bg-secondary">Platform</span>`;
+                case 'tiktok': return `<span class="badge badge-tiktok font-mono"><i class="fa-brands fa-tiktok me-1"></i> TikTok</span>`;
+                case 'instagram': return `<span class="badge badge-instagram font-mono"><i class="fa-brands fa-instagram me-1"></i> Instagram</span>`;
+                case 'x': return `<span class="badge badge-x font-mono"><i class="fa-brands fa-x-twitter me-1"></i> X</span>`;
+                case 'linkedin': return `<span class="badge badge-linkedin font-mono"><i class="fa-brands fa-linkedin me-1"></i> LinkedIn</span>`;
+                case 'reddit': return `<span class="badge badge-reddit font-mono"><i class="fa-brands fa-reddit-alien me-1"></i> Reddit</span>`;
+                default: return `<span class="badge bg-secondary font-mono">Signal</span>`;
             }
         }
 
@@ -535,36 +464,22 @@
         function getRichMockItems() {
             const items = [];
             const platforms = selectedPlatforms.length ? selectedPlatforms : ["instagram", "tiktok", "x", "reddit"];
-            const categories = selectedCategories.length ? selectedCategories : ["tech", "lifestyle", "gaming"];
-
-            const sampleTitles = {
-                "tech": ["Next-Gen AI Models Released Today", "Breakthrough in Quantum Computing", "Autonomous Robotics Takeover in 2026"],
-                "gaming": ["Unreal Engine 5.5 Visuals Mindblowing", "Esports Championship Live Updates", "Top 10 Hidden Steam Gems This Week"],
-                "lifestyle": ["Morning Routine of High Performers", "Minimalist Living Space Inspiration", "Healthy Meal Prep Secrets for Peak Energy"],
-                "instagram": ["Viral Instagram Reel Hitting 5M Views", "Trending Aesthetics & Photo Filters", "Creator Economy Growth in 2026"],
-                "crypto": ["Web3 Innovations Skyrocketing", "DeFi Yield Strategies for 2026"],
-                "luxury": ["Hypercar Concept Revealed in Monaco", "Swiss Watchmaking Masterclass"],
-                "travel": ["Hidden Destinations in Iceland", "Luxury Eco-Resorts You Must Visit"]
-            };
-
-            for (let i = 0; i < 12; i++) {
+            const categories = selectedCategories.length ? selectedCategories : ["tech", "lifestyle", "crypto"];
+            for (let i = 0; i < 9; i++) {
                 const platform = platforms[i % platforms.length];
                 const category = categories[i % categories.length];
-                const titleArr = sampleTitles[category] || sampleTitles["tech"];
-                const title = titleArr[i % titleArr.length];
-                const likes = Math.floor(Math.random() * 85 + 12) + "k";
-
                 items.push({
                     platform: platform,
                     category: category,
-                    title: title,
-                    summary: `Curated viral signal from ${platform.toUpperCase()}. Trending across social feeds with high engagement rate (${likes} interactions).`,
+                    source: `${platform.toUpperCase()} // Alpha Feed`,
+                    title: `⚡ High-Impact Signal Detected: ${category.toUpperCase()} Shift`,
+                    summary: `Direct asymmetric pattern extraction from high-engagement primary validator feeds with 94%+ institutional score.`,
                     image: getRandomImage(category),
-                    url: `https://www.${platform === 'x' ? 'x.com' : platform + '.com'}`,
-                    likes: likes
+                    url: "https://evolysium.github.io/evolysium-frontend/",
+                    score: Math.floor(Math.random() * 8 + 92),
+                    sentiment: "Alpha Positive"
                 });
             }
-
             return items;
         }
 
@@ -577,41 +492,20 @@
             grid.innerHTML = "";
 
             try {
-                // Dodan _ts=${Date.now()} za potpuno probijanje cache-a
                 let url = `${API_BASE}/api/feed?_ts=${Date.now()}&platforms=${selectedPlatforms.join(",")}&categories=${selectedCategories.join(",")}&limit=100`;
-                if (searchQuery) {
-                    url += `&search=${encodeURIComponent(searchQuery)}`;
-                }
+                if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
 
                 const response = await fetch(url);
                 const data = await response.json();
-
-                let displayItems = [];
-
-                if (data.success && data.items && data.items.length > 0) {
-                    displayItems = data.items.filter(item => 
-                        !item.title.includes("No Matching Signals") && 
-                        !item.summary.includes("adjusting your search")
-                    );
-                }
-
-                if (displayItems.length === 0) {
-                    displayItems = getRichMockItems();
-                }
+                let displayItems = (data.success && data.items && data.items.length > 0) ? data.items.filter(item => !item.title.includes("No Matching")) : getRichMockItems();
+                if (displayItems.length === 0) displayItems = getRichMockItems();
 
                 grid.innerHTML = displayItems.map(item => {
                     const isTikTok = item.platform === "tiktok";
                     const isInstagram = item.platform === "instagram";
                     const videoSrc = reliableVideoStreams[item.category] || reliableVideoStreams["tech"];
-
-                    let mediaImage = item.image;
-                    if (!mediaImage || mediaImage.includes("photo-1518770660439") || mediaImage.includes("chip")) {
-                        mediaImage = getRandomImage(item.category);
-                    }
-
-                    let cardClass = "";
-                    if (isTikTok) cardClass = "card-tiktok";
-                    if (isInstagram) cardClass = "card-instagram";
+                    let mediaImage = item.image || getRandomImage(item.category);
+                    let cardClass = isTikTok ? "card-tiktok" : (isInstagram ? "card-instagram" : "");
 
                     const mediaElement = (isTikTok || isInstagram) ? `
                         <div class="media-container">
@@ -621,45 +515,27 @@
                         </div>
                     ` : `
                         <div class="media-container">
-                            <img src="${mediaImage}" alt="Trending visual" onerror="this.src='${getRandomImage('tech')}'">
+                            <img src="${mediaImage}" alt="Signal visual" onerror="this.src='${getRandomImage('tech')}'">
                         </div>
                     `;
 
-                    let buttonText = "View Source";
-                    let buttonClass = "btn-outline-info";
-
-                    if (isTikTok) {
-                        buttonText = '<i class="fa-brands fa-tiktok me-1"></i> Watch on TikTok';
-                        buttonClass = "btn-outline-danger";
-                    } else if (isInstagram) {
-                        buttonText = '<i class="fa-brands fa-instagram me-1"></i> Watch Reel on Instagram';
-                        buttonClass = "btn-outline-warning";
-                    }
-
-                    const sourceBadge = item.source ? `<div class="text-info small fw-semibold mb-1"><i class="fa-solid fa-satellite-dish me-1"></i>${item.source}</div>` : '';
-                    const sentimentBadge = item.sentiment ? `<span class="badge bg-dark border border-secondary text-light fw-normal" style="font-size: 0.7rem;">${item.sentiment}</span>` : '';
-                    const scoreBadge = item.score ? `<span class="badge bg-info text-dark fw-bold" style="font-size: 0.7rem;"><i class="fa-solid fa-bolt me-1"></i>${item.score} pts</span>` : '';
+                    const btnClass = isTikTok ? "btn-outline-danger" : (isInstagram ? "btn-outline-warning" : "btn-outline-info");
+                    const btnText = isTikTok ? '<i class="fa-brands fa-tiktok me-1"></i> Stream TikTok' : (isInstagram ? '<i class="fa-brands fa-instagram me-1"></i> Stream Reel' : 'Inspect Source');
 
                     return `
                         <div class="col-md-6 col-lg-4">
                             <div class="card card-custom ${cardClass} h-100">
                                 ${mediaElement}
                                 <div class="card-body d-flex flex-column">
-                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
                                         ${getPlatformBadge(item.platform)}
-                                        <div class="d-flex gap-1">
-                                            ${sentimentBadge}
-                                            ${scoreBadge}
-                                        </div>
+                                        <span class="badge bg-info text-dark font-mono fw-bold" style="font-size: 0.68rem;">${item.score || 96} pts</span>
                                     </div>
-                                    
-                                    ${sourceBadge}
-                                    
+                                    <div class="text-info font-mono small mb-1">${item.source || 'Evolysium Node'}</div>
                                     <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
                                     <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-
-                                    <a href="${item.url}" target="_blank" class="btn ${buttonClass} btn-sm w-100 mt-2">
-                                        ${buttonText}
+                                    <a href="${item.url || '#'}" target="_blank" class="btn ${btnClass} btn-sm w-100 mt-2 font-mono">
+                                        ${btnText}
                                     </a>
                                 </div>
                             </div>
@@ -668,35 +544,13 @@
                 }).join('');
 
             } catch (err) {
-                const fallbackItems = getRichMockItems();
-                grid.innerHTML = fallbackItems.map(item => `
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card card-custom h-100">
-                            <div class="media-container">
-                                <img src="${item.image}" alt="Trending visual">
-                            </div>
-                            <div class="card-body d-flex flex-column">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    ${getPlatformBadge(item.platform)}
-                                    <span class="badge bg-dark border border-info text-info fw-normal">Trending</span>
-                                </div>
-                                <h5 class="card-title text-light fs-6 fw-bold mt-1">${item.title}</h5>
-                                <p class="card-text text-secondary small flex-grow-1">${item.summary}</p>
-                                <a href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm w-100 mt-2">
-                                    Explore Trend
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
+                grid.innerHTML = `<div class="col-12 text-center text-secondary py-5 font-mono">Terminal fallback active: connection interrupted.</div>`;
             } finally {
                 spinner.classList.add("d-none");
             }
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            fetchCustomFeed();
-        });
+        document.addEventListener("DOMContentLoaded", () => fetchCustomFeed());
     </script>
 </body>
 </html>
