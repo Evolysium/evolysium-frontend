@@ -244,14 +244,20 @@
         .news-drawer::-webkit-scrollbar { display: none; }
         
         .news-pill-card {
-            min-width: 290px;
-            max-width: 290px;
-            background: rgba(255, 255, 255, 0.027);
+            min-width: 320px;
+            max-width: 320px;
+            background: rgba(255, 255, 255, 0.035);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
-            padding: 14px 16px;
+            padding: 16px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .news-pill-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(0, 240, 255, 0.25);
+            transform: translateY(-2px);
         }
 
         .search-box, .auth-input {
@@ -370,10 +376,11 @@
             <div class="vibe-strip" id="dynamic-vibe-strip"></div>
         </div>
 
-        <!-- Scrollable Melted Social News / Micro-Digest Section -->
+        <!-- Scrollable Melted Social News / Micro-Digest Section (Bogat i aktualiziran) -->
         <div class="mb-5">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                 <div class="small fw-semibold" style="color: rgba(0, 240, 255, 0.85); letter-spacing: 0.5px;">🔥 WHAT’S POPPING ACROSS FEEDS</div>
+                <span class="small font-mono text-muted" style="font-size: 0.7rem;"><i class="fa-solid fa-satellite-dish me-1 text-info"></i>LIVE SIGNALS</span>
             </div>
             <div class="news-drawer" id="social-news-drawer"></div>
         </div>
@@ -606,20 +613,32 @@
             { id: 'f2', source: '@ig_architecture', title: 'Monaco rooftop twilight minimalist spatial design', category: 'architecture', platform: 'instagram', likes: 3890, comments: '94', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900', summary: 'Concrete and glass continuity over Mediterranean cliffs.' }
         ];
 
+        // Bogatiji i aktualizirani real-time signali
         const socialNewsSignals = [
-            { platform: 'x', handle: '@sama', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '12m ago' }
+            { platform: 'x', handle: '@sama', badge: 'AI LABS', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '4m ago', tag: '#AGI' },
+            { platform: 'reddit', handle: 'r/designsystems', badge: 'UI/UX', text: 'Glassmorphism 3.0 specs dropping: noise-diffusion shaders with zero GPU stutter on mobile viewports.', time: '19m ago', tag: '#Frontend' },
+            { platform: 'linkedin', handle: '@sarah_chen', badge: 'VENTURE', text: 'Cross-platform algorithmic aggregators are outperforming native platform discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' },
+            { platform: 'x', handle: '@karpathy', badge: 'NEURAL', text: 'Local inference optimization continues to surprise. Running 70B-class approximations locally feels unreal now.', time: '1h ago', tag: '#LLM' },
+            { platform: 'tiktok', handle: '@vibe_architect', badge: 'TREND', text: 'Dark neon industrial aesthetic is replacing minimalist beige in studio builds across Berlin and Tokyo.', time: '2h ago', tag: '#Interior' }
         ];
 
         function renderSocialNewsDrawer() {
             const drawer = document.getElementById('social-news-drawer');
             if (!drawer) return;
             drawer.innerHTML = socialNewsSignals.map(n => `
-                <div class="news-pill-card">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <span class="small fw-bold text-white font-mono">${n.handle}</span>
-                        <span class="small font-mono" style="color:var(--text-muted); font-size: 0.7rem;">${n.time}</span>
+                <div class="news-pill-card" onclick="alert('Signal detail: ${n.handle}')">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center gap-1.5">
+                            <span class="small fw-bold text-white font-mono">${n.handle}</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info" style="font-size:0.55rem;">${n.badge}</span>
+                        </div>
+                        <span class="small font-mono text-muted" style="font-size: 0.68rem;">${n.time}</span>
                     </div>
-                    <p class="small text-melt mb-0" style="font-size:0.83rem; line-height: 1.35;">${n.text}</p>
+                    <p class="small text-melt mb-2" style="font-size:0.83rem; line-height: 1.4;">${n.text}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="font-mono text-secondary" style="font-size:0.7rem;">${n.tag}</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-muted" style="font-size:0.7rem;"></i>
+                    </div>
                 </div>
             `).join('');
         }
