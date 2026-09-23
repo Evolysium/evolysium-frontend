@@ -147,6 +147,7 @@
             overflow: hidden;
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
         }
 
         .social-card:hover {
@@ -250,16 +251,26 @@
                     <span class="badge text-white ms-2 rounded-pill font-mono" style="font-size: 0.65rem; background: var(--pink-pop);">FYP VIBE</span>
                 </div>
             </a>
-            <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                <i class="fa-solid fa-crown text-warning"></i> Membership
-            </button>
+            <div class="d-flex align-items-center gap-2">
+                <div id="vip-export-toolbar" class="d-none d-flex gap-2">
+                    <button class="social-pill py-1 px-3 text-warning border-warning" onclick="exportFeedData('json')" title="Export Alpha JSON">
+                        <i class="fa-solid fa-file-code"></i> JSON
+                    </button>
+                    <button class="social-pill py-1 px-3 text-info border-info" onclick="exportFeedData('csv')" title="Export Alpha CSV">
+                        <i class="fa-solid fa-file-csv"></i> CSV
+                    </button>
+                </div>
+                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
+                    <i class="fa-solid fa-crown text-warning"></i> Membership
+                </button>
+            </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <div class="container py-4">
         
-        <!-- Stories / Vibe Hub Strip (s gumbom za objavu) -->
+        <!-- Stories / Vibe Hub Strip -->
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="small text-secondary fw-semibold">🔥 Trending Vibe Stories</div>
@@ -277,7 +288,7 @@
         </div>
 
         <!-- Interactive Filters & Search -->
-        <div class="social-card p-4 mb-5">
+        <div class="social-card p-4 mb-5" style="cursor: default;">
             <div class="row g-3 align-items-center">
                 <div class="col-lg-6">
                     <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Pretraži ključne riječi, creatore, teme...">
@@ -322,7 +333,39 @@
         </div>
     </div>
 
-    <!-- 4 Natural Membership & Vault Tiers Modal -->
+    <!-- TOČKA 4: Post Detail & Comments Modal -->
+    <div class="modal fade" id="postDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span id="modal-post-platform" class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">PLATFORM</span>
+                        <span id="modal-post-creator" class="small text-secondary fw-semibold">@creator</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="modal-post-media" class="feed-media rounded-4 mb-3 overflow-hidden"></div>
+                    <h4 id="modal-post-title" class="fw-bold mb-3">Naslov objave</h4>
+                    <div class="d-flex justify-content-between align-items-center pb-3 border-bottom border-secondary border-opacity-25 mb-3">
+                        <div class="d-flex gap-3 text-secondary small">
+                            <span><i class="fa-regular fa-heart me-1 text-pink-pop"></i><span id="modal-post-likes">0</span></span>
+                            <span><i class="fa-regular fa-comment me-1"></i><span id="modal-post-comments-count">0</span></span>
+                        </div>
+                        <button class="social-pill py-1 px-3 small" onclick="alert('Link kopiran u međuspremnik!')">
+                            <i class="fa-solid fa-share-nodes"></i> Share Vibe
+                        </button>
+                    </div>
+                    <div class="small text-secondary mb-2 fw-semibold">Live Community Vibe / Komentari:</div>
+                    <div id="modal-post-comments-list" class="d-flex flex-column gap-2" style="max-height: 200px; overflow-y: auto;">
+                        <!-- Dinamički komentari -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Membership Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
@@ -343,7 +386,6 @@
                                     <h3 class="fw-bold my-2">€0 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
                                     <ul class="list-unstyled text-secondary small mb-4">
                                         <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Osnovni feed</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Javne teme</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-outline-light w-100 rounded-pill py-2 small" disabled>Trenutni Plan</button>
@@ -357,8 +399,6 @@
                                     <h3 class="fw-bold my-2">€9.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
                                     <ul class="list-unstyled text-light small mb-4">
                                         <li class="mb-2"><i class="fa-solid fa-check text-pink me-2"></i>Full 5-platform feed</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2"></i>Video preview HD</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2"></i>Objavljivanje storyja</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-outline-light w-100 rounded-pill py-2 small" onclick="initCheckout('Creator Spark', 9.99, false)">Odaberi Spark</button>
@@ -371,9 +411,7 @@
                                     <h5>Midnight Access</h5>
                                     <h3 class="fw-bold my-2">€14.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
                                     <ul class="list-unstyled text-light small mb-4">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i><strong>Age-verified uncensored</strong></li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i>Erotski/uncensored vault</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i>Direct creator vibe</li>
+                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i>Age-verified uncensored</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-danger w-100 rounded-pill py-2 small" onclick="verifyAgeAndCheckout('Midnight Access', 14.99, true)">Otključaj Midnight</button>
@@ -386,9 +424,7 @@
                                     <h5>Inner Circle / VIP</h5>
                                     <h3 class="fw-bold my-2">€29.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
                                     <ul class="list-unstyled text-light small mb-4">
-                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i><strong>Sve iz Spark + Midnight</strong></li>
                                         <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Export alpha (JSON/CSV)</li>
-                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Custom webhook alerts</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-vibe w-100 rounded-pill py-2 small" onclick="verifyAgeAndCheckout('Inner Circle / VIP', 29.99, true)">Pridruži se VIP-u</button>
@@ -479,6 +515,7 @@
         let selectedCategories = ["tech", "lifestyle", "luxury", "gaming"];
         let isLoadingInfinite = false;
         let infiniteBatchCount = 1;
+        let currentFeedItems = [];
 
         const richVisualLibrary = {
             "tech": [
@@ -513,11 +550,11 @@
         ];
 
         const baseHumanStories = [
-            { creator: "@lucas_builds", title: "Setup od €4,000 koji ruši internet tjedna", cat: "tech", platform: "tiktok", likes: "142k", comments: "1.2k" },
-            { creator: "@elena_vibe", title: "Zašto se svi vraćaju minimalističkom stanu u centru", cat: "luxury", platform: "instagram", likes: "89k", comments: "940" },
-            { creator: "@neoproto", title: "Ovaj AI alat mi štedi 4 sata dnevno bez zajebancije", cat: "tech", platform: "x", likes: "34k", comments: "510" },
-            { creator: "@retro_gamer_hq", title: "Hidden gem igra koju nitko ne igra, a bolja je od AAA naslova", cat: "gaming", platform: "reddit", likes: "18.5k", comments: "830" },
-            { creator: "@corp_pulse", title: "Zašto remote-first modeli mijenjaju strukturu leadershipa u EU", cat: "lifestyle", platform: "linkedin", likes: "12.1k", comments: "310" }
+            { id: 1, creator: "@lucas_builds", title: "Setup od €4,000 koji ruši internet tjedna", cat: "tech", platform: "tiktok", likes: "142k", comments: "1.2k" },
+            { id: 2, creator: "@elena_vibe", title: "Zašto se svi vraćaju minimalističkom stanu u centru", cat: "luxury", platform: "instagram", likes: "89k", comments: "940" },
+            { id: 3, creator: "@neoproto", title: "Ovaj AI alat mi štedi 4 sata dnevno bez zajebancije", cat: "tech", platform: "x", likes: "34k", comments: "510" },
+            { id: 4, creator: "@retro_gamer_hq", title: "Hidden gem igra koju nitko ne igra, a bolja je od AAA naslova", cat: "gaming", platform: "reddit", likes: "18.5k", comments: "830" },
+            { id: 5, creator: "@corp_pulse", title: "Zašto remote-first modeli mijenjaju strukturu leadershipa u EU", cat: "lifestyle", platform: "linkedin", likes: "12.1k", comments: "310" }
         ];
 
         let humanStories = [...baseHumanStories];
@@ -533,6 +570,16 @@
         ];
 
         let activePlanData = null;
+
+        function checkVipStatus() {
+            const tier = localStorage.getItem('evolysium_tier');
+            const toolbar = document.getElementById('vip-export-toolbar');
+            if (tier === 'Inner Circle / VIP') {
+                toolbar.classList.remove('d-none');
+            } else {
+                toolbar.classList.add('d-none');
+            }
+        }
 
         function renderVibeStrip() {
             const container = document.getElementById('vibe-strip-container');
@@ -571,6 +618,7 @@
             localStorage.setItem('evolysium_custom_stories', JSON.stringify(customStories));
 
             humanStories.unshift({
+                id: Date.now(),
                 creator: creator,
                 title: title,
                 cat: cat,
@@ -624,6 +672,7 @@
             alert(`✅ Plaćanje uspješno!\nAktivan paket: ${activePlanData.planName}\nToken spremljen.`);
             cancelCheckout();
             bootstrap.Modal.getInstance(document.getElementById('pricingModal')).hide();
+            checkVipStatus();
         }
 
         function toggleSelection(type, value, btn) {
@@ -666,6 +715,7 @@
                 const randTitle = sampleTitles[(infiniteBatchCount + i) % sampleTitles.length] + ` (#batch${infiniteBatchCount})`;
 
                 batch.push({
+                    id: Date.now() + i,
                     creator: randCreator,
                     title: randTitle,
                     cat: randCat,
@@ -678,13 +728,52 @@
             return batch;
         }
 
+        function openPostModal(itemIdx) {
+            const item = currentFeedItems[itemIdx];
+            if (!item) return;
+
+            document.getElementById('modal-post-platform').innerText = item.platform;
+            document.getElementById('modal-post-creator').innerText = item.creator;
+            document.getElementById('modal-post-title').innerText = item.title;
+            document.getElementById('modal-post-likes').innerText = item.likes;
+            document.getElementById('modal-post-comments-count').innerText = item.comments;
+
+            const isVideo = item.platform === 'tiktok' || item.platform === 'instagram';
+            const mediaContainer = document.getElementById('modal-post-media');
+            if (isVideo) {
+                mediaContainer.innerHTML = `<video controls playsinline loop muted poster="${getRandomPic(item.cat)}"><source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></video>`;
+            } else {
+                mediaContainer.innerHTML = `<img src="${getRandomPic(item.cat)}" alt="Vibe visual">`;
+            }
+
+            const mockComments = [
+                { user: "@alex_dev", text: "Ovo izgleda brutlano dobro, koja je šema s configom?" },
+                { user: "@vibe_lord", text: "Potvrđujem, vidio isto na twitteru jučer." },
+                { user: "@stack_queen", text: "10/10 preporuka za ovaj workflow." }
+            ];
+
+            document.getElementById('modal-post-comments-list').innerHTML = mockComments.map(c => `
+                <div class="p-2 rounded-3 bg-dark bg-opacity-50 small">
+                    <span class="fw-semibold text-info me-1">${c.user}</span>
+                    <span class="text-light">${c.text}</span>
+                </div>
+            `).join('');
+
+            const modal = new bootstrap.Modal(document.getElementById('postDetailModal'));
+            modal.show();
+        }
+
         function renderItemsToGrid(items, append = false) {
+            if (!append) currentFeedItems = [];
+            currentFeedItems.push(...items);
+
             const grid = document.getElementById("feed-grid");
             const htmlString = items.map((item, idx) => {
+                const globalIdx = currentFeedItems.length - items.length + idx;
                 const isVideo = item.platform === 'tiktok' || item.platform === 'instagram';
                 const mediaContent = isVideo ? `
                     <div class="feed-media">
-                        <video controls playsinline loop muted poster="${getRandomPic(item.cat)}">
+                        <video playsinline loop muted poster="${getRandomPic(item.cat)}">
                             <source src="${demoVideoPool[idx % demoVideoPool.length]}" type="video/mp4">
                         </video>
                     </div>
@@ -696,7 +785,7 @@
 
                 return `
                     <div class="col-md-6 col-lg-4">
-                        <div class="social-card h-100 d-flex flex-column">
+                        <div class="social-card h-100 d-flex flex-column" onclick="openPostModal(${globalIdx})">
                             ${mediaContent}
                             <div class="creator-tag text-light">
                                 <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
@@ -713,9 +802,9 @@
                                         <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
                                         <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
                                     </div>
-                                    <a href="#" class="action-icon-btn text-decoration-none" onclick="alert('Otvaram izvorni post creator platforme!')">
+                                    <span class="action-icon-btn text-decoration-none" onclick="event.stopPropagation(); openPostModal(${globalIdx})">
                                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -745,6 +834,37 @@
             let matched = filterAndMatch(humanStories, query);
             if (matched.length === 0) matched = humanStories.slice(0, 3);
             renderItemsToGrid(matched, false);
+        }
+
+        function exportFeedData(format) {
+            const tier = localStorage.getItem('evolysium_tier');
+            if (tier !== 'Inner Circle / VIP') {
+                alert('❌ Export alpha podataka zahtijeva Inner Circle / VIP pretplatu.');
+                return;
+            }
+
+            if (format === 'json') {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentFeedItems, null, 2));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", "evolysium_alpha_feed.json");
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            } else if (format === 'csv') {
+                let csvContent = "data:text/csv;charset=utf-8,ID,Creator,Platform,Category,Title,Likes,Comments\r\n";
+                currentFeedItems.forEach(row => {
+                    const cleanTitle = `"${row.title.replace(/"/g, '""')}"`;
+                    csvContent += [row.id, row.creator, row.platform, row.cat, cleanTitle, row.likes, row.comments].join(",") + "\r\n";
+                });
+                const encodedUri = encodeURI(csvContent);
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", encodedUri);
+                downloadAnchor.setAttribute("download", "evolysium_alpha_feed.csv");
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            }
         }
 
         // Infinite Scroll Intersection Observer
@@ -784,6 +904,7 @@
         document.getElementById('keyword-search')?.addEventListener('input', resetAndFetchFeed);
         document.addEventListener("DOMContentLoaded", () => {
             renderVibeStrip();
+            checkVipStatus();
             resetAndFetchFeed();
             setupInfiniteScroll();
         });
