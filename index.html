@@ -3,612 +3,911 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium — Stvarne priče i trenuci</title>
-    <meta name="description" content="Topla društvena zajednica sa stvarnim objavama, storyjima i algoritmima s mreža.">
-    
-    <!-- Bootstrap 5 CSS -->
+    <title>Evolysium — Discover What's Popping Right Now</title>
+
+    <meta name="title" content="Evolysium — Social Vibe & Trend Discovery">
+    <meta name="description" content="Tvoj dnevni puls viralnih trendova, lifestyle kreacija i tech/gaming momenta. Bez šuma, samo najbolje priče.">
+
+    <!-- Frameworks & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome 6 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #141414;
-            --bg-card: #1c1c1c;
-            --border-color: #2a2a2a;
-            --text-primary: #f5f5f5;
-            --text-secondary: #a3a3a3;
-            --accent-yellow: #facc15;
-            --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            --tiktok-grad: linear-gradient(135deg, rgba(37,244,238,0.25), rgba(254,44,85,0.25));
+            --bg-main: #0c0a15;
+            --bg-card: rgba(22, 18, 38, 0.72);
+            --pink-pop: #ff2a85;
+            --cyan-pop: #00f0ff;
+            --gold-pop: #ffd700;
+            --text-main: #ffffff;
+            --text-muted: #a09cb0;
         }
 
-        * { box-sizing: border-box; }
-
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            margin: 0;
-            padding: 0;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(255, 42, 133, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 45%);
+            background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        h1, h2, h3, h4, .brand-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        h1, h2, h3, h4, h5, .brand-name {
+            font-family: 'Outfit', sans-serif;
         }
 
         /* Navbar */
-        .evolysium-navbar {
-            background: rgba(20, 20, 20, 0.88);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        .navbar-custom {
+            background: rgba(12, 10, 21, 0.82);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .brand-monogram {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            background: var(--ig-gradient);
+        .brand-pill {
+            background: linear-gradient(135deg, var(--pink-pop), #7928ca);
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            box-shadow: 0 0 25px rgba(255, 42, 133, 0.4);
+        }
+
+        /* Hero section */
+        .hero-headline {
             font-weight: 800;
-            font-size: 0.9rem;
-            color: #fff;
-            text-decoration: none;
-            box-shadow: 0 0 15px rgba(131, 58, 180, 0.4);
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 30%, #ff85b3 70%, var(--cyan-pop) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .brand-title {
-            font-weight: 700;
-            font-size: 1.15rem;
-            color: var(--text-primary);
-            text-decoration: none;
-            letter-spacing: -0.3px;
-        }
-
-        .tier-badge-pill {
-            background: rgba(250, 204, 21, 0.12);
-            color: var(--accent-yellow);
-            border: 1px solid rgba(250, 204, 21, 0.3);
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.35rem 0.9rem;
-            border-radius: 9999px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .tier-badge-pill:hover { background: rgba(250, 204, 21, 0.2); }
-
-        /* Workspace container */
-        .feed-wrapper {
-            max-width: 630px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 1.25rem 1rem;
-        }
-
-        /* Stories Row (Instagram/TikTok Ring vibe) */
-        .stories-container {
+        /* Story / Vibe strip */
+        .vibe-strip {
             display: flex;
-            gap: 0.9rem;
+            gap: 14px;
             overflow-x: auto;
-            padding-bottom: 1rem;
-            margin-bottom: 1.25rem;
+            padding-bottom: 10px;
             scrollbar-width: none;
         }
-        .stories-container::-webkit-scrollbar { display: none; }
+        .vibe-strip::-webkit-scrollbar { display: none; }
 
-        .story-item {
+        .vibe-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.35rem;
             cursor: pointer;
-            flex-shrink: 0;
-            width: 68px;
+            min-width: 72px;
         }
 
-        .story-ring {
-            width: 64px;
-            height: 64px;
+        .vibe-ring {
+            width: 66px;
+            height: 66px;
             border-radius: 50%;
-            background: var(--ig-gradient);
-            padding: 2.5px;
+            padding: 3px;
+            background: linear-gradient(45deg, var(--pink-pop), var(--gold-pop));
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s;
+            transition: transform 0.25s ease;
         }
-        .story-item:hover .story-ring { transform: scale(1.05); }
 
-        .story-avatar {
+        .vibe-ring img {
             width: 100%;
             height: 100%;
+            object-fit: cover;
             border-radius: 50%;
-            border: 2px solid var(--bg-primary);
+            border: 2px solid var(--bg-main);
+        }
+
+        .vibe-item:hover .vibe-ring { transform: scale(1.08); }
+
+        /* Chips / Filter Pills */
+        .social-pill {
+            border-radius: 999px;
+            padding: 10px 22px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .social-pill:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .social-pill.active {
+            background: linear-gradient(135deg, var(--pink-pop), #9b51e0);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(255, 42, 133, 0.35);
+        }
+
+        /* Feed Cards */
+        .social-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 42, 133, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 42, 133, 0.18);
+        }
+
+        .feed-media {
+            height: 280px;
+            position: relative;
+            background: #110e1d;
+        }
+
+        .feed-media img, .feed-media video {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
-        .story-name {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-        }
-
-        /* Control Panel */
-        .control-panel {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .search-input-wrapper { position: relative; flex: 1; }
-        .search-input-wrapper input {
-            width: 100%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.6rem 1rem 0.6rem 2.6rem;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-            outline: none;
-        }
-        .search-input-wrapper input:focus { border-color: var(--accent-yellow); }
-        .search-input-wrapper i {
+        .creator-tag {
             position: absolute;
-            left: 0.95rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
-
-        .refresh-btn {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            border-radius: 10px;
-            padding: 0.6rem 1.1rem;
-            font-weight: 600;
-            font-size: 0.825rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        .refresh-btn:hover { background: #1f1f1f; }
-
-        /* Filter Pills */
-        .pills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .filter-pill {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            border-radius: 9999px;
-            padding: 0.4rem 0.9rem;
+            top: 14px;
+            left: 14px;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: 999px;
             font-size: 0.78rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .filter-pill.active {
-            background: var(--accent-yellow);
-            color: #000;
-            border-color: var(--accent-yellow);
-            font-weight: 600;
-        }
-
-        /* Post Cards */
-        .post-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            overflow: hidden;
-            margin-bottom: 1.25rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            background-image: linear-gradient(180deg, rgba(131,58,180,0.04) 0%, rgba(20,20,20,0) 100%);
-        }
-
-        .post-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0.85rem 1rem;
+            gap: 6px;
+            border: 1px solid rgba(255,255,255,0.12);
         }
 
-        .author-info { display: flex; align-items: center; gap: 0.65rem; }
-        .author-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            padding: 2px;
-            background: var(--ig-gradient);
-        }
-        .author-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg-card); }
-
-        .platform-badge {
-            font-size: 0.68rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 6px;
-            font-weight: 600;
-            color: var(--text-primary);
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .media-container {
-            position: relative;
-            width: 100%;
-            background: #000;
-            aspect-ratio: 4/5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .media-container video, .media-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        .post-body { padding: 0.75rem 1rem 0.5rem; }
-        .post-caption { font-size: 0.88rem; line-height: 1.45; color: var(--text-primary); margin-bottom: 0.4rem; }
-        .post-tags span { color: var(--accent-yellow); font-weight: 500; margin-right: 0.35rem; font-size: 0.8rem; }
-        .post-source-origin { font-size: 0.73rem; color: var(--text-secondary); margin-bottom: 0.6rem; }
-
-        .post-footer-actions {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.6rem 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-        .action-btn {
-            background: transparent;
+        .action-icon-btn {
+            background: rgba(255,255,255,0.06);
             border: none;
-            color: var(--text-primary);
+            color: var(--text-muted);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            cursor: pointer;
-            font-size: 0.825rem;
+            justify-content: center;
+            transition: 0.2s;
         }
-        .liked-heart { color: #ef4444; }
-
-        /* Pricing Tier Cards */
-        .tier-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1rem;
-            transition: all 0.2s;
-        }
-        .tier-card.active-tier {
-            border-color: var(--accent-yellow);
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.2);
-            background: linear-gradient(145deg, #181818, #222014);
+        .action-icon-btn:hover {
+            background: rgba(255, 42, 133, 0.2);
+            color: var(--pink-pop);
         }
 
-        /* Footer */
-        .evolysium-footer {
-            margin-top: auto;
-            border-top: 1px solid var(--border-color);
-            background: var(--bg-secondary);
-            padding: 1.5rem 1rem;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.78rem;
-        }
-
-        /* Story Viewer Modal */
-        #storyViewerModal .modal-content {
-            background: #000;
-            border: 1px solid var(--border-color);
+        .search-box {
+            background: rgba(18, 14, 30, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
             color: #fff;
-            height: 75vh;
-            max-width: 400px;
-            margin: auto;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 0 40px rgba(131,58,180,0.3);
+            padding: 14px 20px;
+        }
+        .search-box:focus {
+            background: rgba(18, 14, 30, 0.98);
+            border-color: var(--pink-pop);
+            box-shadow: 0 0 20px rgba(255, 42, 133, 0.25);
+            color: #fff;
+            outline: none;
+        }
+
+        .btn-vibe {
+            background: linear-gradient(135deg, var(--pink-pop), #7928ca);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(255, 42, 133, 0.35);
+        }
+
+        .pricing-box {
+            background: rgba(22, 18, 38, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+        .pricing-box.hot {
+            border: 2px solid var(--pink-pop);
+            box-shadow: 0 0 35px rgba(255, 42, 133, 0.25);
         }
     </style>
 </head>
 <body>
 
     <!-- Header -->
-    <header class="evolysium-navbar">
-        <div class="container d-flex align-items-center justify-content-between py-2 px-3" style="max-width: 630px;">
+    <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none" href="#">
+                <div class="brand-pill">
+                    <i class="fa-solid fa-sparkles text-white fs-5"></i>
+                </div>
+                <div>
+                    <span class="brand-name fw-bold fs-4 text-white">Evolysium</span>
+                    <span class="badge text-white ms-2 rounded-pill font-mono" style="font-size: 0.65rem; background: var(--pink-pop);">FYP VIBE</span>
+                </div>
+            </a>
             <div class="d-flex align-items-center gap-2">
-                <a href="#" class="brand-monogram">Ev</a>
-                <a class="brand-title" href="#">Evolysium</a>
-            </div>
-            <span class="tier-badge-pill" id="activeTierIndicator" data-bs-toggle="modal" data-bs-target="#pricingModal">
-                <i class="fa-solid fa-sparkles me-1"></i> <span id="currentTierLabel">Free Community Pass</span>
-            </span>
-        </div>
-    </header>
-
-    <!-- Main Workspace -->
-    <main class="feed-wrapper">
-        <!-- Stories Strip -->
-        <div class="stories-container" id="storiesStrip">
-            <div class="story-item" onclick="openStory('Elena Vance', 'Sinoćnji zalazak i prva skica nove priče.')">
-                <div class="story-ring"><img class="story-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&fit=crop" alt="Elena"></div>
-                <span class="story-name">Elena</span>
-            </div>
-            <div class="story-item" onclick="openStory('Liam & Notebooks', 'Testing ring-light setup for today streetwalk reel.')">
-                <div class="story-ring"><img class="story-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&fit=crop" alt="Liam"></div>
-                <span class="story-name">Liam</span>
-            </div>
-            <div class="story-item" onclick="openStory('u/analog_claire', 'Darkroom chemical check — look at that contrast.')">
-                <div class="story-ring"><img class="story-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&fit=crop" alt="Claire"></div>
-                <span class="story-name">Claire</span>
-            </div>
-            <div class="story-item" onclick="openStory('Marcus & Clay', 'Kiln opening in 10 minutes, wish us luck.')">
-                <div class="story-ring"><img class="story-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&fit=crop" alt="Marcus"></div>
-                <span class="story-name">Marcus</span>
+                <div id="vip-export-toolbar" class="d-none d-flex gap-2">
+                    <button class="social-pill py-1 px-3 text-warning border-warning" onclick="exportFeedData('json')" title="Export Alpha JSON">
+                        <i class="fa-solid fa-file-code"></i> JSON
+                    </button>
+                    <button class="social-pill py-1 px-3 text-info border-info" onclick="exportFeedData('csv')" title="Export Alpha CSV">
+                        <i class="fa-solid fa-file-csv"></i> CSV
+                    </button>
+                </div>
+                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
+                    <i class="fa-solid fa-crown text-warning"></i> Membership
+                </button>
             </div>
         </div>
+    </nav>
 
-        <!-- Search & Refresh -->
-        <div class="control-panel">
-            <div class="search-input-wrapper">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Pretraži algoritam, autore, tagove..." oninput="handleSearch(this.value)">
+    <!-- Main Content -->
+    <div class="container py-4">
+        
+        <!-- Stories / Vibe Hub Strip -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="small text-secondary fw-semibold">🔥 Trending Vibe Stories</div>
+                <button class="social-pill py-1 px-3" style="font-size: 0.78rem;" data-bs-toggle="modal" data-bs-target="#storyModal">
+                    <i class="fa-solid fa-plus" style="color:var(--pink-pop)"></i> Objavi Story
+                </button>
             </div>
-            <button class="refresh-btn" onclick="triggerManualRefresh()">
-                <i class="fa-solid fa-rotate-right"></i> Algoritam Sync
-            </button>
+            <div class="vibe-strip" id="vibe-strip-container"></div>
         </div>
 
-        <!-- Filter Pills -->
-        <div class="pills-grid">
-            <button class="filter-pill active" data-filter="all">Sve mreže</button>
-            <button class="filter-pill" data-filter="Instagram">Instagram algoritam</button>
-            <button class="filter-pill" data-filter="TikTok">TikTok FYP</button>
-            <button class="filter-pill" data-filter="Reddit">Reddit Community</button>
+        <!-- Hero welcome -->
+        <div class="text-center my-4 py-3">
+            <h1 class="hero-headline display-4 mb-2">Što se danas vrti na FYP-u?</h1>
+            <p class="text-secondary">Najbolji TikTok, Reels, Reddit & Creator sadržaj na jednom mjestu, filtriran po tvom ukusu.</p>
         </div>
 
-        <!-- Feed Stream -->
-        <section id="vibeFeedStream"></section>
-    </main>
+        <!-- Interactive Filters & Search -->
+        <div class="social-card p-4 mb-5" style="cursor: default;">
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-6">
+                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Pretraži ključne riječi, creatore, teme...">
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <button class="btn btn-vibe px-4 py-3 w-100 w-lg-auto" onclick="resetAndFetchFeed()">
+                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Osvježi Feed
+                    </button>
+                </div>
+            </div>
+
+            <hr class="border-secondary opacity-25 my-4">
+
+            <!-- Platform filter chips -->
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <button class="social-pill active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok"></i> TikTok</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram"></i> Instagram</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien"></i> Reddit</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter"></i> X / Twitter</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'linkedin', this)"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</button>
+            </div>
+
+            <!-- Category chips -->
+            <div class="d-flex flex-wrap gap-2">
+                <button class="social-pill active" onclick="toggleSelection('category', 'tech', this)">💻 Tech & AI</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'lifestyle', this)">⚡ Lifestyle</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'luxury', this)">🏎️ Luxury</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
+                <button class="social-pill" onclick="toggleSelection('category', 'travel', this)">✈️ Travel</button>
+                <button class="social-pill" onclick="toggleSelection('category', 'funny', this)">🔥 Entertainment</button>
+                <button class="social-pill" onclick="toggleSelection('category', '18plus', this)">🔞 Creator Vault</button>
+            </div>
+        </div>
+
+        <!-- Feed Grid -->
+        <div id="feed-grid" class="row g-4"></div>
+
+        <!-- Infinite Scroll Sentinel & Loader -->
+        <div id="infinite-sentinel" class="text-center py-5 d-none">
+            <div class="spinner-border text-info" role="status"></div>
+            <p class="mt-2 text-secondary small font-mono">Učitavam beskonačni cross-platform vibe stream...</p>
+        </div>
+    </div>
+
+    <!-- TOČKA 4: Post Detail & Comments Modal -->
+    <div class="modal fade" id="postDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span id="modal-post-platform" class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">PLATFORM</span>
+                        <span id="modal-post-creator" class="small text-secondary fw-semibold">@creator</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="modal-post-media" class="feed-media rounded-4 mb-3 overflow-hidden"></div>
+                    <h4 id="modal-post-title" class="fw-bold mb-3">Naslov objave</h4>
+                    <div class="d-flex justify-content-between align-items-center pb-3 border-bottom border-secondary border-opacity-25 mb-3">
+                        <div class="d-flex gap-3 text-secondary small">
+                            <span><i class="fa-regular fa-heart me-1 text-pink-pop"></i><span id="modal-post-likes">0</span></span>
+                            <span><i class="fa-regular fa-comment me-1"></i><span id="modal-post-comments-count">0</span></span>
+                        </div>
+                        <button class="social-pill py-1 px-3 small" onclick="alert('Link kopiran u međuspremnik!')">
+                            <i class="fa-solid fa-share-nodes"></i> Share Vibe
+                        </button>
+                    </div>
+                    <div class="small text-secondary mb-2 fw-semibold">Live Community Vibe / Komentari:</div>
+                    <div id="modal-post-comments-list" class="d-flex flex-column gap-2" style="max-height: 200px; overflow-y: auto;">
+                        <!-- Dinamički komentari -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Membership Modal -->
+    <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content text-light" style="background: #110e1d; border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <div>
+                        <h4 class="fw-bold mb-0">Evolysium Membership</h4>
+                        <p class="text-secondary small mb-0">Izaberi svoj prirodni layer. Sigurna naplata s enkripcijom.</p>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3">
+                                <div>
+                                    <span class="badge bg-secondary rounded-pill mb-2">Free Vibe</span>
+                                    <h5>Free Vibe</h5>
+                                    <h3 class="fw-bold my-2">€0 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
+                                    <ul class="list-unstyled text-secondary small mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-info me-2"></i>Osnovni feed</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-outline-light w-100 rounded-pill py-2 small" disabled>Trenutni Plan</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3">
+                                <div>
+                                    <span class="badge rounded-pill mb-2" style="background:#7928ca;">PRO PASS</span>
+                                    <h5>Creator Spark</h5>
+                                    <h3 class="fw-bold my-2">€9.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
+                                    <ul class="list-unstyled text-light small mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-pink me-2"></i>Full 5-platform feed</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-outline-light w-100 rounded-pill py-2 small" onclick="initCheckout('Creator Spark', 9.99, false)">Odaberi Spark</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="pricing-box h-100 d-flex flex-column justify-content-between p-3" style="border-color: rgba(255,42,133,0.5);">
+                                <div>
+                                    <span class="badge rounded-pill mb-2 bg-danger">18+ VAULT</span>
+                                    <h5>Midnight Access</h5>
+                                    <h3 class="fw-bold my-2">€14.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
+                                    <ul class="list-unstyled text-light small mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-danger me-2"></i>Age-verified uncensored</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-danger w-100 rounded-pill py-2 small" onclick="verifyAgeAndCheckout('Midnight Access', 14.99, true)">Otključaj Midnight</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="pricing-box hot h-100 d-flex flex-column justify-content-between p-3">
+                                <div>
+                                    <span class="badge rounded-pill mb-2" style="background: var(--pink-pop);">WHALE / ALL</span>
+                                    <h5>Inner Circle / VIP</h5>
+                                    <h3 class="fw-bold my-2">€29.99 <span class="fs-6 text-secondary fw-normal">/mj</span></h3>
+                                    <ul class="list-unstyled text-light small mb-4">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i>Export alpha (JSON/CSV)</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-vibe w-100 rounded-pill py-2 small" onclick="verifyAgeAndCheckout('Inner Circle / VIP', 29.99, true)">Pridruži se VIP-u</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sigurni naplatni panel -->
+                    <div id="checkout-panel" class="mt-4 p-4 rounded-4 d-none" style="background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.15);">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0" id="checkout-title">Sigurna naplata</h5>
+                            <span class="badge bg-success"><i class="fa-solid fa-lock me-1"></i>SSL Encrypted</span>
+                        </div>
+                        <p class="text-secondary small mb-3" id="checkout-desc">Odabran paket: ...</p>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small text-secondary">Email za račun / token</label>
+                                <input type="email" id="checkout-email" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="tvoj@email.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-secondary">Način plaćanja</label>
+                                <select id="checkout-method" class="form-select form-select-sm bg-dark text-light border-secondary">
+                                    <option value="stripe">Stripe (Kartica / Apple Pay / Google Pay)</option>
+                                    <option value="crypto">Crypto (USDT / USDC / ETH)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-end">
+                            <button class="btn btn-secondary btn-sm rounded-pill px-3 me-2" onclick="cancelCheckout()">Odustani</button>
+                            <button class="btn btn-vibe btn-sm rounded-pill px-4" onclick="completePaymentSimulation()">Plati sigurno (€<span id="checkout-price">0</span>)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal za objavu Storyja -->
+    <div class="modal fade" id="storyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: #110e1d; border-radius: 24px; border: 1px solid rgba(255,255,255,0.15);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h5 class="fw-bold mb-0">Objavi novi Story</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label small text-secondary">Tvoj Creator / Handle</label>
+                        <input type="text" id="story-creator" class="form-control bg-dark text-light border-secondary" value="@ti_creator">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-secondary">Naziv / Vibe naslov</label>
+                        <input type="text" id="story-title" class="form-control bg-dark text-light border-secondary" placeholder="Npr. Noćni pogled s balkona...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-secondary">Kategorija</label>
+                        <select id="story-cat" class="form-select bg-dark text-light border-secondary">
+                            <option value="tech">Tech & AI</option>
+                            <option value="lifestyle">Lifestyle</option>
+                            <option value="luxury">Luxury</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="travel">Travel</option>
+                            <option value="funny">Entertainment</option>
+                            <option value="18plus">18+ Vault</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-secondary">URL slike / vizuala za story</label>
+                        <input type="url" id="story-image" class="form-control bg-dark text-light border-secondary" placeholder="https://images.unsplash.com/...">
+                    </div>
+                    <button class="btn btn-vibe w-100 rounded-pill py-2.5" onclick="publishStory()">Objavi na Vibe Strip</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
-    <footer class="evolysium-footer">
-        <div class="container" style="max-width: 630px;">
-            <p class="mb-0">© Evolysium 2026. — Društvena kuracija i mrežni algoritam stream</p>
+    <footer class="py-4 text-center text-secondary small">
+        <div class="container">
+            Copyright Evolysium 2026 &bull; Privacy Policy &bull; Legal Disclaimer &bull; GDPR
         </div>
     </footer>
 
-    <!-- 4 Pro & Society Tier Modal -->
-    <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color);">
-                <div class="modal-header border-bottom border-dark">
-                    <h5 class="modal-title fw-bold fs-6">Evolysium razine članstva</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row g-2">
-                        <!-- 1. Free Feed -->
-                        <div class="col-6">
-                            <div class="tier-card active-tier h-100 d-flex flex-column justify-content-between" id="card-Free Community Pass">
-                                <div>
-                                    <h6 class="fw-bold mb-1 fs-6" style="color:var(--accent-yellow)">Free Community Pass</h6>
-                                    <p class="small text-secondary mb-2">$0 / mj</p>
-                                    <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Standardni mrežni feed</li>
-                                        <li>Osnovni pregled objava</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-sm btn-outline-warning w-100" onclick="selectTier('Free Community Pass')">Aktivno</button>
-                            </div>
-                        </div>
-                        <!-- 2. Pro/Personal -> Social Personal Pro -->
-                        <div class="col-6">
-                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-Social Personal Pro">
-                                <div>
-                                    <h6 class="fw-bold mb-1 fs-6">Social Personal Pro</h6>
-                                    <p class="small text-secondary mb-2">$4.99 / mj</p>
-                                    <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Osobne arhive omiljenih</li>
-                                        <li>Bez mrežnog šuma/reklama</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-sm btn-warning w-100 text-dark fw-bold" onclick="selectTier('Social Personal Pro')">Odaberi</button>
-                            </div>
-                        </div>
-                        <!-- 3. Creator/business -> Creator Business Suite -->
-                        <div class="col-6 mt-2">
-                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-Creator Business Suite">
-                                <div>
-                                    <h6 class="fw-bold mb-1 fs-6">Creator Business Suite</h6>
-                                    <p class="small text-secondary mb-2">$9.99 / mj</p>
-                                    <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Sinkronizacija poslovnih brendova</li>
-                                        <li>Prioritetni algoritam feed</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-sm btn-outline-light w-100" onclick="selectTier('Creator Business Suite')">Odaberi</button>
-                            </div>
-                        </div>
-                        <!-- 4. 18+ content / VIP Enterprise -> VIP Enterprise & 18+ Access -->
-                        <div class="col-6 mt-2">
-                            <div class="tier-card h-100 d-flex flex-column justify-content-between" id="card-VIP Enterprise & 18+ Access">
-                                <div>
-                                    <h6 class="fw-bold mb-1 fs-6">VIP Enterprise & 18+ Access</h6>
-                                    <p class="small text-secondary mb-2">$19.99 / mj</p>
-                                    <ul class="small ps-3 text-secondary mb-3">
-                                        <li>Enterprise API syndication</li>
-                                        <li>Provjereni 18+ mrežni filtri</li>
-                                    </ul>
-                                </div>
-                                <button class="btn btn-sm btn-outline-light w-100" onclick="selectTier('VIP Enterprise & 18+ Access')">Odaberi</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Story Viewer Modal -->
-    <div class="modal fade" id="storyViewerModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content d-flex flex-column justify-content-between p-4" id="storyContentBox">
-                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 border-secondary">
-                    <span id="storyAuthorTitle" class="fw-bold small text-warning">Author</span>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="text-center my-auto px-2">
-                    <p id="storyTextPreview" class="fs-6 fw-medium text-light mb-0">Trenutak priče...</p>
-                </div>
-                <div class="text-center small text-secondary">
-                    <i class="fa-solid fa-circle-notch fa-spin me-1"></i> Algoritam story feed v2.6
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const masterHumanPool = [
-            {
-                id: 'ig-101',
-                platform: 'Instagram',
-                author: 'Elena Vance',
-                handle: '@elenavance.shots',
-                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&fit=crop',
-                mediaUrl: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=900&fit=crop',
-                caption: 'Jutarnja kavica i sunce na kuhinjskom pultu.',
-                sourceUrl: 'Instagram Graph API Feed',
-                tags: ['#jutro', '#kava', '#igstories'],
-                likes: '1,420', comments: '34'
-            },
-            {
-                id: 'tt-202',
-                platform: 'TikTok',
-                author: 'Liam & Notebooks',
-                handle: '@liam.walks',
-                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&fit=crop',
-                mediaUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&fit=crop',
-                caption: 'Šetnja kroz kišne ulice, zvuk kiše bez slušalica.',
-                sourceUrl: 'TikTok FYP Stream',
-                tags: ['#šetnja', '#kiša', '#viralvibes'],
-                likes: '3,890', comments: '112'
-            },
-            {
-                id: 'rd-303',
-                platform: 'Reddit',
-                author: 'u/analog_claire',
-                handle: 'r/analog',
-                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&fit=crop',
-                mediaUrl: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&fit=crop',
-                caption: 'Kodak Gold film razvijen nakon dva mjeseca.',
-                sourceUrl: 'Reddit Community API',
-                tags: ['#analog', '#film', '#kyoto'],
-                likes: '892', comments: '48'
-            }
+        let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin"];
+        let selectedCategories = ["tech", "lifestyle", "luxury", "gaming"];
+        let isLoadingInfinite = false;
+        let infiniteBatchCount = 1;
+        let currentFeedItems = [];
+
+        const richVisualLibrary = {
+            "tech": [
+                "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&auto=format&fit=crop"
+            ],
+            "lifestyle": [
+                "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=900&auto=format&fit=crop"
+            ],
+            "luxury": [
+                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1563720223185-11003d516935?w=900&auto=format&fit=crop"
+            ],
+            "gaming": [
+                "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900&auto=format&fit=crop"
+            ],
+            "travel": [
+                "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&auto=format&fit=crop"
+            ],
+            "funny": [
+                "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop"
+            ],
+            "18plus": [
+                "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&auto=format&fit=crop"
+            ]
+        };
+
+        const demoVideoPool = [
+            "https://vjs.zencdn.net/v/oceans.mp4"
         ];
 
-        let feedData = [...masterHumanPool];
-        let currentFilter = 'all';
+        const baseHumanStories = [
+            { id: 1, creator: "@lucas_builds", title: "Setup od €4,000 koji ruši internet tjedna", cat: "tech", platform: "tiktok", likes: "142k", comments: "1.2k" },
+            { id: 2, creator: "@elena_vibe", title: "Zašto se svi vraćaju minimalističkom stanu u centru", cat: "luxury", platform: "instagram", likes: "89k", comments: "940" },
+            { id: 3, creator: "@neoproto", title: "Ovaj AI alat mi štedi 4 sata dnevno bez zajebancije", cat: "tech", platform: "x", likes: "34k", comments: "510" },
+            { id: 4, creator: "@retro_gamer_hq", title: "Hidden gem igra koju nitko ne igra, a bolja je od AAA naslova", cat: "gaming", platform: "reddit", likes: "18.5k", comments: "830" },
+            { id: 5, creator: "@corp_pulse", title: "Zašto remote-first modeli mijenjaju strukturu leadershipa u EU", cat: "lifestyle", platform: "linkedin", likes: "12.1k", comments: "310" }
+        ];
 
-        function selectTier(tierName) {
-            document.getElementById('currentTierLabel').textContent = tierName;
-            localStorage.setItem('evolysium_tier_name', tierName);
-            document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('active-tier'));
-            const cardEl = document.getElementById(`card-${tierName}`);
-            if (cardEl) cardEl.classList.add('active-tier');
+        let humanStories = [...baseHumanStories];
+        let customStories = JSON.parse(localStorage.getItem('evolysium_custom_stories') || '[]');
+
+        const defaultStories = [
+            { label: "AI & Gear", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200", cat: "tech" },
+            { label: "Daily Inspo", img: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=200", cat: "lifestyle" },
+            { label: "Estates", img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=200", cat: "luxury" },
+            { label: "Gaming", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200", cat: "gaming" },
+            { label: "Getaways", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200", cat: "travel" },
+            { label: "Memes/Fun", img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200", cat: "funny" }
+        ];
+
+        let activePlanData = null;
+
+        function checkVipStatus() {
+            const tier = localStorage.getItem('evolysium_tier');
+            const toolbar = document.getElementById('vip-export-toolbar');
+            if (tier === 'Inner Circle / VIP') {
+                toolbar.classList.remove('d-none');
+            } else {
+                toolbar.classList.add('d-none');
+            }
+        }
+
+        function renderVibeStrip() {
+            const container = document.getElementById('vibe-strip-container');
+            if (!container) return;
+
+            let html = defaultStories.map(item => `
+                <div class="vibe-item" onclick="filterByTopic('${item.cat}')">
+                    <div class="vibe-ring"><img src="${item.img}" alt="${item.label}"></div>
+                    <span class="small mt-1 text-light">${item.label}</span>
+                </div>
+            `).join('');
+
+            customStories.forEach(s => {
+                html += `
+                    <div class="vibe-item" onclick="filterByTopic('${s.cat}')" title="${s.title}">
+                        <div class="vibe-ring" style="background: linear-gradient(45deg, #00f0ff, #ff2a85);">
+                            <img src="${s.img || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200'}" alt="User story">
+                        </div>
+                        <span class="small mt-1 text-light text-truncate" style="max-width: 65px;">${s.creator}</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function publishStory() {
+            const creator = document.getElementById('story-creator').value.trim() || '@creator';
+            const title = document.getElementById('story-title').value.trim() || 'Novi story';
+            const cat = document.getElementById('story-cat').value;
+            const imgInput = document.getElementById('story-image').value.trim();
+            const img = imgInput || richVisualLibrary[cat]?.[0] || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200';
+
+            const newStory = { creator, title, cat, img };
+            customStories.unshift(newStory);
+            localStorage.setItem('evolysium_custom_stories', JSON.stringify(customStories));
+
+            humanStories.unshift({
+                id: Date.now(),
+                creator: creator,
+                title: title,
+                cat: cat,
+                platform: 'instagram',
+                likes: '1k',
+                comments: '42'
+            });
+
+            renderVibeStrip();
+            resetAndFetchFeed();
+
+            const modalEl = document.getElementById('storyModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+
+            document.getElementById('story-title').value = '';
+            document.getElementById('story-image').value = '';
+            alert('✨ Story uspješno objavljen u Vibe Strip i feed!');
+        }
+
+        function verifyAgeAndCheckout(planName, price, requires18) {
+            if (requires18) {
+                const confirmed = confirm("🔞 OVAJ PAKET SADRŽI MIDNIGHT / 18+ VAULT SADRŽAJ.\nPotvrđuješ li da imaš 18+ godina i da je u tvojoj jurisdikciji dozvoljen pristup ovakvom sadržaju?");
+                if (!confirmed) return;
+            }
+            initCheckout(planName, price, requires18);
+        }
+
+        function initCheckout(planName, price, is18Plus) {
+            activePlanData = { planName, price, is18Plus };
+            document.getElementById('checkout-title').innerText = `Checkout: ${planName}`;
+            document.getElementById('checkout-desc').innerText = `Cijena pretplate: €${price}/mjesečno. ${is18Plus ? 'Uključuje age-verified 18+ vault token.' : ''}`;
+            document.getElementById('checkout-price').innerText = price;
+            document.getElementById('checkout-panel').classList.remove('d-none');
+        }
+
+        function cancelCheckout() {
+            document.getElementById('checkout-panel').classList.add('d-none');
+            activePlanData = null;
+        }
+
+        function completePaymentSimulation() {
+            const email = document.getElementById('checkout-email').value;
+            if (!email || !email.includes('@')) {
+                alert('Unesi važeću email adresu!');
+                return;
+            }
+            localStorage.setItem('evolysium_tier', activePlanData.planName);
+            localStorage.setItem('evolysium_vault_18', activePlanData.is18Plus ? 'true' : 'false');
+            
+            alert(`✅ Plaćanje uspješno!\nAktivan paket: ${activePlanData.planName}\nToken spremljen.`);
+            cancelCheckout();
             bootstrap.Modal.getInstance(document.getElementById('pricingModal')).hide();
+            checkVipStatus();
         }
 
-        function openStory(authorName, textPreview) {
-            document.getElementById('storyAuthorTitle').textContent = authorName;
-            document.getElementById('storyTextPreview').textContent = textPreview;
-            new bootstrap.Modal(document.getElementById('storyViewerModal')).show();
+        function toggleSelection(type, value, btn) {
+            btn.classList.toggle("active");
+            let list = (type === 'platform') ? selectedPlatforms : selectedCategories;
+            list = list.includes(value) ? list.filter(item => item !== value) : [...list, value];
+            if (type === 'platform') selectedPlatforms = list;
+            else selectedCategories = list;
+            resetAndFetchFeed();
         }
 
-        function renderCard(post) {
-            return `
-                <article class="post-card">
-                    <div class="post-header">
-                        <div class="author-info">
-                            <div class="author-avatar"><img src="${post.avatar}" alt="${post.author}"></div>
-                            <div>
-                                <h6 class="mb-0 fw-semibold text-light" style="font-size:0.875rem;">${post.author}</h6>
-                                <small class="text-secondary" style="font-size:0.75rem;">${post.handle}</small>
+        function filterByTopic(cat) {
+            selectedCategories = [cat];
+            document.querySelectorAll('.social-pill').forEach(p => p.classList.remove('active'));
+            resetAndFetchFeed();
+        }
+
+        function getRandomPic(category) {
+            const arr = richVisualLibrary[category] || richVisualLibrary["lifestyle"];
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function generateInfiniteBatch() {
+            const platforms = ['tiktok', 'instagram', 'reddit', 'x', 'linkedin'];
+            const categories = ['tech', 'lifestyle', 'luxury', 'gaming', 'travel', 'funny', '18plus'];
+            const creators = ['@viral_node', '@nexus_pulse', '@deep_alpha', '@stack_flow_real', '@glitch_vibe'];
+            const sampleTitles = [
+                "Zahtjevniji workflow test: M4 Max vs Desktop rig pod punim loadom",
+                "Zašto svi vrhunski product dizajneri prelaze na ovaj sustav tokena",
+                "Uncensored leak: Kako izgleda interni analitički dashboard fonda",
+                "Never do this u production okruženju (post mortem incidenta)",
+                "Noćni vibe check: Arhitektura zgrada koja definira moderni futurizam"
+            ];
+
+            const batch = [];
+            for (let i = 0; i < 4; i++) {
+                const randPlatform = platforms[(infiniteBatchCount + i) % platforms.length];
+                const randCat = categories[(infiniteBatchCount * 2 + i) % categories.length];
+                const randCreator = creators[(infiniteBatchCount + i) % creators.length];
+                const randTitle = sampleTitles[(infiniteBatchCount + i) % sampleTitles.length] + ` (#batch${infiniteBatchCount})`;
+
+                batch.push({
+                    id: Date.now() + i,
+                    creator: randCreator,
+                    title: randTitle,
+                    cat: randCat,
+                    platform: randPlatform,
+                    likes: `${Math.floor(Math.random() * 90 + 10)}k`,
+                    comments: `${Math.floor(Math.random() * 800 + 40)}`
+                });
+            }
+            infiniteBatchCount++;
+            return batch;
+        }
+
+        function openPostModal(itemIdx) {
+            const item = currentFeedItems[itemIdx];
+            if (!item) return;
+
+            document.getElementById('modal-post-platform').innerText = item.platform;
+            document.getElementById('modal-post-creator').innerText = item.creator;
+            document.getElementById('modal-post-title').innerText = item.title;
+            document.getElementById('modal-post-likes').innerText = item.likes;
+            document.getElementById('modal-post-comments-count').innerText = item.comments;
+
+            const isVideo = item.platform === 'tiktok' || item.platform === 'instagram';
+            const mediaContainer = document.getElementById('modal-post-media');
+            if (isVideo) {
+                mediaContainer.innerHTML = `<video controls playsinline loop muted poster="${getRandomPic(item.cat)}"><source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></video>`;
+            } else {
+                mediaContainer.innerHTML = `<img src="${getRandomPic(item.cat)}" alt="Vibe visual">`;
+            }
+
+            const mockComments = [
+                { user: "@alex_dev", text: "Ovo izgleda brutlano dobro, koja je šema s configom?" },
+                { user: "@vibe_lord", text: "Potvrđujem, vidio isto na twitteru jučer." },
+                { user: "@stack_queen", text: "10/10 preporuka za ovaj workflow." }
+            ];
+
+            document.getElementById('modal-post-comments-list').innerHTML = mockComments.map(c => `
+                <div class="p-2 rounded-3 bg-dark bg-opacity-50 small">
+                    <span class="fw-semibold text-info me-1">${c.user}</span>
+                    <span class="text-light">${c.text}</span>
+                </div>
+            `).join('');
+
+            const modal = new bootstrap.Modal(document.getElementById('postDetailModal'));
+            modal.show();
+        }
+
+        function renderItemsToGrid(items, append = false) {
+            if (!append) currentFeedItems = [];
+            currentFeedItems.push(...items);
+
+            const grid = document.getElementById("feed-grid");
+            const htmlString = items.map((item, idx) => {
+                const globalIdx = currentFeedItems.length - items.length + idx;
+                const isVideo = item.platform === 'tiktok' || item.platform === 'instagram';
+                const mediaContent = isVideo ? `
+                    <div class="feed-media">
+                        <video playsinline loop muted poster="${getRandomPic(item.cat)}">
+                            <source src="${demoVideoPool[idx % demoVideoPool.length]}" type="video/mp4">
+                        </video>
+                    </div>
+                ` : `
+                    <div class="feed-media">
+                        <img src="${getRandomPic(item.cat)}" alt="Vibe visual">
+                    </div>
+                `;
+
+                return `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="social-card h-100 d-flex flex-column" onclick="openPostModal(${globalIdx})">
+                            ${mediaContent}
+                            <div class="creator-tag text-light">
+                                <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
+                                    <span class="small text-secondary"><i class="fa-solid fa-fire text-warning me-1"></i>Trending</span>
+                                </div>
+                                <h5 class="fw-bold text-white mb-3" style="line-height: 1.3;">${item.title}</h5>
+                                
+                                <div class="mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex gap-3 text-secondary small">
+                                        <span><i class="fa-regular fa-heart me-1"></i>${item.likes}</span>
+                                        <span><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
+                                    </div>
+                                    <span class="action-icon-btn text-decoration-none" onclick="event.stopPropagation(); openPostModal(${globalIdx})">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <span class="platform-badge">${post.platform}</span>
                     </div>
-                    <div class="media-container"><img src="${post.mediaUrl}" alt="Objava"></div>
-                    <div class="post-body">
-                        <div class="post-source-origin">Algoritam izvor: ${post.sourceUrl}</div>
-                        <p class="post-caption">${post.caption}</p>
-                        <div class="post-tags">${post.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-                    </div>
-                    <div class="post-footer-actions">
-                        <button class="action-btn" onclick="let i=this.querySelector('i'); i.classList.toggle('fa-regular'); i.classList.toggle('fa-solid'); i.classList.toggle('liked-heart')">
-                            <i class="fa-regular fa-heart"></i> <span>${post.likes}</span>
-                        </button>
-                        <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>${post.comments}</span></button>
-                    </div>
-                </article>
-            `;
-        }
+                `;
+            }).join('');
 
-        function applyFeedFilter() {
-            const container = document.getElementById('vibeFeedStream');
-            let filtered = feedData;
-            if (currentFilter !== 'all') {
-                filtered = filtered.filter(item => item.platform.toLowerCase() === currentFilter.toLowerCase());
+            if (append) {
+                grid.insertAdjacentHTML('beforeend', htmlString);
+            } else {
+                grid.innerHTML = htmlString;
             }
-            container.innerHTML = filtered.map(renderCard).join('');
         }
 
-        document.querySelectorAll('.filter-pill').forEach(pill => {
-            pill.addEventListener('click', () => {
-                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-                pill.classList.add('active');
-                currentFilter = pill.getAttribute('data-filter');
-                applyFeedFilter();
+        function filterAndMatch(items, query) {
+            return items.filter(item => {
+                const matchPlatform = selectedPlatforms.length === 0 || selectedPlatforms.includes(item.platform);
+                const matchCategory = selectedCategories.length === 0 || selectedCategories.includes(item.cat);
+                const matchQuery = !query || item.title.toLowerCase().includes(query) || item.creator.toLowerCase().includes(query);
+                return matchPlatform && matchCategory && matchQuery;
             });
+        }
+
+        function resetAndFetchFeed() {
+            infiniteBatchCount = 1;
+            const query = document.getElementById("keyword-search").value.toLowerCase().trim();
+            let matched = filterAndMatch(humanStories, query);
+            if (matched.length === 0) matched = humanStories.slice(0, 3);
+            renderItemsToGrid(matched, false);
+        }
+
+        function exportFeedData(format) {
+            const tier = localStorage.getItem('evolysium_tier');
+            if (tier !== 'Inner Circle / VIP') {
+                alert('❌ Export alpha podataka zahtijeva Inner Circle / VIP pretplatu.');
+                return;
+            }
+
+            if (format === 'json') {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentFeedItems, null, 2));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", "evolysium_alpha_feed.json");
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            } else if (format === 'csv') {
+                let csvContent = "data:text/csv;charset=utf-8,ID,Creator,Platform,Category,Title,Likes,Comments\r\n";
+                currentFeedItems.forEach(row => {
+                    const cleanTitle = `"${row.title.replace(/"/g, '""')}"`;
+                    csvContent += [row.id, row.creator, row.platform, row.cat, cleanTitle, row.likes, row.comments].join(",") + "\r\n";
+                });
+                const encodedUri = encodeURI(csvContent);
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", encodedUri);
+                downloadAnchor.setAttribute("download", "evolysium_alpha_feed.csv");
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            }
+        }
+
+        // Infinite Scroll Intersection Observer
+        function setupInfiniteScroll() {
+            const sentinel = document.getElementById("infinite-sentinel");
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !isLoadingInfinite) {
+                    loadMoreInfiniteData();
+                }
+            }, { rootMargin: '300px' });
+            
+            observer.observe(sentinel);
+        }
+
+        function loadMoreInfiniteData() {
+            isLoadingInfinite = true;
+            const sentinelLoader = document.getElementById("infinite-sentinel");
+            sentinelLoader.classList.remove("d-none");
+
+            setTimeout(() => {
+                const newBatch = generateInfiniteBatch();
+                humanStories.push(...newBatch);
+                
+                const query = document.getElementById("keyword-search").value.toLowerCase().trim();
+                const matchedNew = filterAndMatch(newBatch, query);
+                if (matchedNew.length > 0) {
+                    renderItemsToGrid(matchedNew, true);
+                } else {
+                    renderItemsToGrid(newBatch, true);
+                }
+
+                sentinelLoader.classList.add("d-none");
+                isLoadingInfinite = false;
+            }, 600);
+        }
+
+        document.getElementById('keyword-search')?.addEventListener('input', resetAndFetchFeed);
+        document.addEventListener("DOMContentLoaded", () => {
+            renderVibeStrip();
+            checkVipStatus();
+            resetAndFetchFeed();
+            setupInfiniteScroll();
         });
-
-        window.triggerManualRefresh = function() {
-            applyFeedFilter();
-        };
-
-        window.handleSearch = function(val) {
-            const container = document.getElementById('vibeFeedStream');
-            const q = val.toLowerCase();
-            const filtered = feedData.filter(item => item.caption.toLowerCase().includes(q) || item.author.toLowerCase().includes(q));
-            container.innerHTML = filtered.map(renderCard).join('');
-        };
-
-        const savedTier = localStorage.getItem('evolysium_tier_name') || 'Free Community Pass';
-        selectTier(savedTier);
-        applyFeedFilter();
     </script>
 </body>
 </html>
