@@ -362,8 +362,8 @@
     <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none" href="#">
-                <div class="brand-pill">
-                    <i class="fa-solid fa-sparkles text-white fs-5"></i>
+                <div class="brand-pill fw-bold text-white fs-4" style="letter-spacing: -1px; text-shadow: 0 0 10px var(--cyan-pop);">
+                    ƎE
                 </div>
                 <div>
                     <span class="brand-name fw-bold fs-4 text-white">Evolysium</span>
@@ -726,7 +726,6 @@
             { platform: 'linkedin', handle: '@sarah_chen', badge: 'VENTURE', text: 'Cross-platform algorithmic aggregators are outperforming native platform discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
         ];
 
-        // Stripe Checkout Integration (Ispravljeni nazivi paketa koji se šalju na backend)
         async function startStripeCheckout(tier) {
             try {
                 const response = await fetch(`${API_BASE_URL}/api/payment/create-checkout-session`, {
