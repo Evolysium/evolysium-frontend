@@ -729,11 +729,12 @@
         // Stripe Checkout Integration
         async function startStripeCheckout(tier) {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/create-checkout-session`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tier: tier })
-                });
+                const response = await fetch(`${API_BASE_URL}/api/payment/create-checkout-session`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tier: tier })
+});
+
                 const data = await response.json();
                 if (data.url) {
                     window.location.href = data.url;
