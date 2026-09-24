@@ -25,6 +25,18 @@
             color-scheme: dark;
         }
 
+        /* Dynamic Theme Variations */
+        body.theme-matrix {
+            --pink-pop: #00ff66 !important;
+            --cyan-pop: #00ccff !important;
+            --gold-pop: #33ff00 !important;
+        }
+        body.theme-gold {
+            --pink-pop: #ffaa00 !important;
+            --cyan-pop: #ffea00 !important;
+            --gold-pop: #ff6600 !important;
+        }
+
         body {
             background-color: var(--bg-main) !important;
             color: var(--text-main);
@@ -121,7 +133,7 @@
             content: 'LIVE';
             position: absolute;
             bottom: -4px;
-            background: #ff2a85;
+            background: var(--pink-pop);
             color: white;
             font-size: 0.55rem;
             font-weight: 800;
@@ -354,9 +366,29 @@
             padding: 20px;
             text-align: center;
         }
+
+        /* Preloader overlay */
+        #app-preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-main);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Dynamic Preloader -->
+    <div id="app-preloader">
+        <div class="brand-pill fw-bold text-white fs-2 mb-3 animate-pulse" style="width: 70px; height: 70px; letter-spacing: -2px;">ƎE</div>
+        <h4 class="fw-bold hero-headline mb-1">Evolysium</h4>
+        <p class="small text-muted font-mono">Syncing multi-platform feeds...</p>
+    </div>
 
     <!-- Header -->
     <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
@@ -371,6 +403,24 @@
                 </div>
             </a>
             <div class="d-flex align-items-center gap-2">
+                <!-- Theme Toggle Button -->
+                <button class="social-pill" onclick="cycleTheme()" title="Switch Neon Theme">
+                    <i class="fa-solid fa-palette text-warning"></i>
+                </button>
+                
+                <!-- Notification Bell Dropdown -->
+                <div class="dropdown">
+                    <button class="social-pill position-relative" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()">
+                        <i class="fa-solid fa-bell text-info"></i>
+                        <span id="notificationBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 280px;" id="notificationsDropdownList">
+                        <li><h6 class="dropdown-header text-info fw-bold">Recent Notifications</h6></li>
+                        <li><hr class="dropdown-divider border-secondary opacity-25"></li>
+                        <li><span class="dropdown-item-text small text-muted">No new alerts</span></li>
+                    </ul>
+                </div>
+
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
                     <i class="fa-solid fa-plus-circle"></i> Drop Story
                 </button>
@@ -475,6 +525,24 @@
     </footer>
 
     <!-- Modals -->
+
+    <!-- Onboarding Tour Modal -->
+    <div class="modal fade" id="onboardingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0">Welcome to Evolysium ƎE</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <div class="brand-pill fw-bold text-white fs-3 mx-auto mb-3" style="width: 60px; height: 60px;">ƎE</div>
+                    <h5 class="fw-bold text-white mb-2">Your Multi-Platform Vibe Hub</h5>
+                    <p class="text-melt small mb-4">Explore global trends, drop your stories, customize your neon theme, and connect securely across platforms while we prep Stripe.</p>
+                    <button class="btn btn-vibe w-100 rounded-pill py-3" data-bs-dismiss="modal" onclick="completeOnboarding()">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Drop Story Modal -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
@@ -715,6 +783,23 @@
         let followRequests = JSON.parse(localStorage.getItem('evolysium_requests') || '["@luka_creator", "@ana_vibe"]');
         let approvedUsers = JSON.parse(localStorage.getItem('evolysium_approved') || '[]');
 
+        // Notifications array
+        let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to Evolysium platform!", "time": "Just now"}]');
+        let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
+
+        // Theme switching logic
+        let currentThemeIndex = parseInt(localStorage.getItem('evolysium_theme_idx') || '0');
+        const themes = ['', 'theme-matrix', 'theme-gold'];
+        function applyTheme(idx) {
+            document.body.className = themes[idx];
+            localStorage.setItem('evolysium_theme_idx', idx);
+        }
+        function cycleTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            applyTheme(currentThemeIndex);
+        }
+        applyTheme(currentThemeIndex);
+
         const fallbackItems = [
             { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'instagram', likes: 5210, comments: '312', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
             { id: 'f2', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', likes: 1420, comments: '142', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
@@ -775,6 +860,13 @@
                 processIncomingItems(data?.items?.length ? data.items : fallbackItems, false);
             } catch (error) {
                 processIncomingItems(fallbackItems, false);
+            } finally {
+                // Hide preloader smoothly
+                const preloader = document.getElementById('app-preloader');
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 500);
+                }
             }
         }
 
@@ -817,6 +909,7 @@
             } else {
                 likedItems.add(itemId);
                 item.likes += 1;
+                addNotification(`You liked a post by ${item.creator}`);
             }
             localStorage.setItem('evolysium_likes', JSON.stringify(Array.from(likedItems)));
             renderFeed();
@@ -860,6 +953,7 @@
             bootstrap.Modal.getInstance(document.getElementById('trailModal')).hide();
             event.target.reset();
             renderVibeStrip();
+            addNotification('Your story was successfully published!');
             alert('Story successfully published to your profile!');
         }
 
@@ -876,6 +970,7 @@
             localStorage.setItem('evolysium_requests', JSON.stringify(followRequests));
             localStorage.setItem('evolysium_approved', JSON.stringify(approvedUsers));
             updateProfileStats();
+            addNotification(`Approved access request for ${username}`);
             alert('Approved access request for: ' + username);
         }
 
@@ -976,17 +1071,72 @@
                 listEl.innerHTML = localTrails.length ? localTrails.map(t => `
                     <div class="col-md-6">
                         <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
-                            <div class="d-flex align-items-center gap-3">
-                                <img src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
-                                <div>
-                                    <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
-                                    <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • ❤️ ${t.likes} likes</span>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
+                                    <div>
+                                        <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
+                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • ❤️ ${t.likes} likes</span>
+                                    </div>
                                 </div>
+                                <button class="btn btn-sm text-danger" onclick="deleteUserStory('${t.id}')" title="Delete Story"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
                 `).join('') : '<p class="text-muted small">No active stories published yet.</p>';
             }
+        }
+
+        function deleteUserStory(id) {
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            localTrails = localTrails.filter(t => t.id !== id);
+            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
+            updateProfileStats();
+            renderVibeStrip();
+            alert('Story deleted successfully.');
+        }
+
+        function addNotification(text) {
+            appNotifications.unshift({ text: text, time: 'Just now' });
+            unreadNotifications = true;
+            localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
+            localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
+            renderNotifications();
+        }
+
+        function markNotificationsRead() {
+            unreadNotifications = false;
+            localStorage.setItem('evolysium_unread', JSON.stringify(false));
+            document.getElementById('notificationBadgeCount').style.display = 'none';
+        }
+
+        function renderNotifications() {
+            const listEl = document.getElementById('notificationsDropdownList');
+            const badgeEl = document.getElementById('notificationBadgeCount');
+            if (!listEl) return;
+
+            if (unreadNotifications && appNotifications.length > 0) {
+                badgeEl.style.display = 'inline-block';
+                badgeEl.innerText = appNotifications.length;
+            } else {
+                badgeEl.style.display = 'none';
+            }
+
+            listEl.innerHTML = `
+                <li><h6 class="dropdown-header text-info fw-bold">Recent Notifications</h6></li>
+                <li><hr class="dropdown-divider border-secondary opacity-25"></li>
+                ${appNotifications.map(n => `
+                    <li><div class="dropdown-item-text small text-light py-2 border-bottom border-secondary border-opacity-10">
+                        <div>${n.text}</div>
+                        <span class="text-muted font-mono" style="font-size:0.65rem;">${n.time}</span>
+                    </div></li>
+                `).join('')}
+            `;
+        }
+
+        function reportPost(title) {
+            alert(`Thank you. Post "${title}" has been reported for review.`);
+            addNotification(`Reported post: ${title}`);
         }
 
         function openShareModal(title, mediaUrl) {
@@ -1026,6 +1176,7 @@
         function renderFeed() {
             renderVibeStrip();
             renderSocialNewsDrawer();
+            renderNotifications();
             const query = document.getElementById('keyword-search')?.value.toLowerCase().trim() || '';
             const grid = document.getElementById('feed-grid');
             if (!grid) return;
@@ -1055,7 +1206,10 @@
                             <div class="card-body p-4 d-flex flex-column flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
-                                    <span class="small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
+                                        <button class="btn btn-sm text-muted p-0" onclick="reportPost('${item.title}')" title="Report Post"><i class="fa-solid fa-flag" style="font-size:0.75rem;"></i></button>
+                                    </div>
                                 </div>
                                 <h5 class="fw-bold text-white mb-2" style="font-size: 1.05rem;">${item.title}</h5>
                                 ${musicHtml}
@@ -1080,8 +1234,21 @@
             }).join('');
         }
 
+        function completeOnboarding() {
+            localStorage.setItem('evolysium_onboarded', 'true');
+        }
+
         document.getElementById('keyword-search')?.addEventListener('input', renderFeed);
-        document.addEventListener("DOMContentLoaded", loadBackendFeed);
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            loadBackendFeed();
+            // Trigger onboarding tour if first visit
+            if (!localStorage.getItem('evolysium_onboarded')) {
+                setTimeout(() => {
+                    new bootstrap.Modal(document.getElementById('onboardingModal')).show();
+                }, 800);
+            }
+        });
     </script>
 </body>
 </html>
