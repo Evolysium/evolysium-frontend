@@ -950,7 +950,10 @@
             localTrails.unshift(newStory);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
-            bootstrap.Modal.getInstance(document.getElementById('trailModal')).hide();
+            const modalEl = document.getElementById('trailModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modalInstance.hide();
+            
             event.target.reset();
             renderVibeStrip();
             addNotification('Your story was successfully published!');
@@ -1025,12 +1028,16 @@
                     </div>
                 `;
             }
-            new bootstrap.Modal(document.getElementById('externalProfileModal')).show();
+            const extModalEl = document.getElementById('externalProfileModal');
+            const extModal = bootstrap.Modal.getInstance(extModalEl) || new bootstrap.Modal(extModalEl);
+            extModal.show();
         }
 
         function sendFollowRequest(handle) {
             alert('Access request sent to ' + handle + '.');
-            bootstrap.Modal.getInstance(document.getElementById('externalProfileModal')).hide();
+            const extModalEl = document.getElementById('externalProfileModal');
+            const extModal = bootstrap.Modal.getInstance(extModalEl);
+            if (extModal) extModal.hide();
         }
 
         function updateProfileStats() {
@@ -1141,7 +1148,9 @@
 
         function openShareModal(title, mediaUrl) {
             document.getElementById('shareLinkInput').value = window.location.origin + '?share=' + encodeURIComponent(title);
-            new bootstrap.Modal(document.getElementById('shareModal')).show();
+            const shareModalEl = document.getElementById('shareModal');
+            const shareModal = bootstrap.Modal.getInstance(shareModalEl) || new bootstrap.Modal(shareModalEl);
+            shareModal.show();
         }
 
         function copyShareLink() {
@@ -1153,7 +1162,9 @@
 
         function triggerShareAction(platform) {
             alert('Post successfully shared to ' + platform + '!');
-            bootstrap.Modal.getInstance(document.getElementById('shareModal')).hide();
+            const shareModalEl = document.getElementById('shareModal');
+            const shareModal = bootstrap.Modal.getInstance(shareModalEl);
+            if (shareModal) shareModal.hide();
         }
 
         function renderVibeStrip() {
@@ -1245,7 +1256,9 @@
             // Trigger onboarding tour if first visit
             if (!localStorage.getItem('evolysium_onboarded')) {
                 setTimeout(() => {
-                    new bootstrap.Modal(document.getElementById('onboardingModal')).show();
+                    const onboardingEl = document.getElementById('onboardingModal');
+                    const onboardingModal = new bootstrap.Modal(onboardingEl);
+                    onboardingModal.show();
                 }, 800);
             }
         });
