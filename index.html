@@ -659,13 +659,13 @@
                                 <div>
                                     <span class="badge bg-info text-dark rounded-pill mb-2">Creator</span>
                                     <h5>Pro / Personal</h5>
-                                    <h3 class="fw-bold my-2">€8.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
+                                    <h3 class="fw-bold my-2">€9.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
                                         <li><i class="fa-solid fa-check"></i> Ad-free platform stream</li>
                                         <li><i class="fa-solid fa-check"></i> Private/Public story controls</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-outline-info w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('pro')">Select Pro</button>
+                                <button class="btn btn-outline-info w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('creator')">Select Creator</button>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -693,7 +693,7 @@
                                         <li><i class="fa-solid fa-check"></i> VIP status badge</li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('vip')">Go VIP</button>
+                                <button class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('elite')">Go VIP</button>
                             </div>
                         </div>
                     </div>
@@ -726,14 +726,14 @@
             { platform: 'linkedin', handle: '@sarah_chen', badge: 'VENTURE', text: 'Cross-platform algorithmic aggregators are outperforming native platform discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
         ];
 
-        // Stripe Checkout Integration
+        // Stripe Checkout Integration (Ispravljeni nazivi paketa koji se šalju na backend)
         async function startStripeCheckout(tier) {
             try {
                 const response = await fetch(`${API_BASE_URL}/api/payment/create-checkout-session`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tier: tier })
-});
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tier: tier })
+                });
 
                 const data = await response.json();
                 if (data.url) {
