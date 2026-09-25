@@ -407,19 +407,6 @@
                 <button class="social-pill" onclick="cycleTheme()" title="Switch Neon Theme">
                     <i class="fa-solid fa-palette text-warning"></i>
                 </button>
-                
-                <!-- Notification Bell Dropdown -->
-                <div class="dropdown">
-                    <button class="social-pill position-relative" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()">
-                        <i class="fa-solid fa-bell text-info"></i>
-                        <span id="notificationBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 280px;" id="notificationsDropdownList">
-                        <li><h6 class="dropdown-header text-info fw-bold">Recent Notifications</h6></li>
-                        <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                        <li><span class="dropdown-item-text small text-muted">No new alerts</span></li>
-                    </ul>
-                </div>
 
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
                     <i class="fa-solid fa-plus-circle"></i> Drop Story
@@ -430,6 +417,19 @@
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
                     <i class="fa-solid fa-crown text-warning"></i> Pricing
                 </button>
+                
+                <!-- Notification Bell Dropdown (Pomaknuto s desne strane i osigurano da se vidi) -->
+                <div class="dropdown">
+                    <button class="social-pill position-relative" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()">
+                        <i class="fa-solid fa-bell text-info"></i>
+                        <span id="notificationBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(17, 14, 29, 0.98); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 290px;" id="notificationsDropdownList">
+                        <li><h6 class="dropdown-header text-info fw-bold">Turn Evolysium Notifications</h6></li>
+                        <li><hr class="dropdown-divider border-secondary opacity-25"></li>
+                        <li><span class="dropdown-item-text small text-muted">No new alerts</span></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
@@ -1130,7 +1130,7 @@
             }
 
             listEl.innerHTML = `
-                <li><h6 class="dropdown-header text-info fw-bold">Recent Notifications</h6></li>
+                <li><h6 class="dropdown-header text-info fw-bold">Turn Evolysium Notifications</h6></li>
                 <li><hr class="dropdown-divider border-secondary opacity-25"></li>
                 ${appNotifications.map(n => `
                     <li><div class="dropdown-item-text small text-light py-2 border-bottom border-secondary border-opacity-10">
