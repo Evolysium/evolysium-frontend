@@ -408,6 +408,12 @@
                     <i class="fa-solid fa-palette text-warning"></i>
                 </button>
 
+                <!-- Inbox Button -->
+                <button class="social-pill position-relative" data-bs-toggle="modal" data-bs-target="#inboxModal">
+                    <i class="fa-solid fa-envelope text-pink"></i> Inbox
+                    <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
+                </button>
+
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
                     <i class="fa-solid fa-plus-circle"></i> Drop Story
                 </button>
@@ -418,7 +424,7 @@
                     <i class="fa-solid fa-crown text-warning"></i> Pricing
                 </button>
                 
-                <!-- Notification Bell Dropdown (Pomaknuto s desne strane i osigurano da se vidi) -->
+                <!-- Notification Bell Dropdown -->
                 <div class="dropdown">
                     <button class="social-pill position-relative" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()">
                         <i class="fa-solid fa-bell text-info"></i>
@@ -526,6 +532,43 @@
 
     <!-- Modals -->
 
+    <!-- Inbox Modal -->
+    <div class="modal fade" id="inboxModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-envelope text-pink me-2"></i>Evolysium Inbox</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+                        <!-- Conversations list -->
+                        <div class="col-md-5 border-end border-secondary border-opacity-25">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="fw-bold mb-0 text-white">Chats</h6>
+                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="startNewChatPrompt()">+ New Message</button>
+                            </div>
+                            <div id="conversationsList" class="d-flex flex-column gap-2" style="max-height: 350px; overflow-y: auto;"></div>
+                        </div>
+                        <!-- Active Chat Window -->
+                        <div class="col-md-7 d-flex flex-column justify-content-between" style="min-height: 380px;">
+                            <div id="activeChatHeader" class="pb-2 border-bottom border-secondary border-opacity-25 fw-bold text-info small">
+                                Select a conversation
+                            </div>
+                            <div id="activeChatMessages" class="py-3 flex-grow-1 overflow-auto d-flex flex-column gap-2" style="max-height: 270px;">
+                                <div class="text-center text-muted small my-auto">Choose a chat on the left to start messaging.</div>
+                            </div>
+                            <form id="chatMessageForm" class="d-flex gap-2 mt-2 pt-2 border-top border-secondary border-opacity-25 d-none" onsubmit="sendChatMessage(event)">
+                                <input type="text" id="chatInputMessage" class="form-control auth-input form-control-sm" placeholder="Type a message..." required>
+                                <button type="submit" class="btn btn-vibe btn-sm px-3 py-2">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Onboarding Tour Modal -->
     <div class="modal fade" id="onboardingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -537,7 +580,7 @@
                 <div class="modal-body p-4 text-center">
                     <div class="brand-pill fw-bold text-white fs-3 mx-auto mb-3" style="width: 60px; height: 60px;">ƎE</div>
                     <h5 class="fw-bold text-white mb-2">Your Multi-Platform Vibe Hub</h5>
-                    <p class="text-melt small mb-4">Explore global trends, drop your stories, customize your neon theme, and connect securely across platforms while we prep Stripe.</p>
+                    <p class="text-melt small mb-4">Explore global trends, drop stories, chat in your inbox, and customize your neon theme securely.</p>
                     <button class="btn btn-vibe w-100 rounded-pill py-3" data-bs-dismiss="modal" onclick="completeOnboarding()">Get Started</button>
                 </div>
             </div>
@@ -787,6 +830,13 @@
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to Evolysium platform!", "time": "Just now"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
 
+        // Inbox / Chat state
+        let conversations = JSON.parse(localStorage.getItem('evolysium_conversations') || JSON.stringify([
+            { id: 'c1', user: '@fashion_weekly', messages: [{ sender: '@fashion_weekly', text: 'Hey! Loved your latest story drop.', time: '10m ago' }] },
+            { id: 'c2', user: '@luka_creator', messages: [{ sender: '@luka_creator', text: 'Are we collaborating on the next trend feed?', time: '1h ago' }] }
+        ]));
+        let activeChatId = null;
+
         // Theme switching logic
         let currentThemeIndex = parseInt(localStorage.getItem('evolysium_theme_idx') || '0');
         const themes = ['', 'theme-matrix', 'theme-gold'];
@@ -861,7 +911,6 @@
             } catch (error) {
                 processIncomingItems(fallbackItems, false);
             } finally {
-                // Hide preloader smoothly
                 const preloader = document.getElementById('app-preloader');
                 if (preloader) {
                     preloader.style.opacity = '0';
@@ -1008,6 +1057,9 @@
                                 <span class="badge bg-success rounded-pill">Public Profile • Active Stories</span>
                             </div>
                         </div>
+                        <div class="d-flex gap-2 mb-4">
+                            <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="openDirectChat('${handle}')"><i class="fa-solid fa-envelope me-1"></i> Send Message</button>
+                        </div>
                         <h6 class="fw-bold mb-3">Active Stories</h6>
                         <div class="row g-3">
                             ${sampleStories.map(s => `
@@ -1103,6 +1155,82 @@
             alert('Story deleted successfully.');
         }
 
+        // Inbox Functions
+        function renderInbox() {
+            const listEl = document.getElementById('conversationsList');
+            if (!listEl) return;
+            
+            listEl.innerHTML = conversations.map(c => `
+                <div class="p-2 rounded-3 cursor-pointer d-flex justify-content-between align-items-center" style="background: ${activeChatId === c.id ? 'rgba(255,42,133,0.15)' : 'rgba(255,255,255,0.02)'}; border:1px solid rgba(255,255,255,0.05);" onclick="openChat('${c.id}')">
+                    <div>
+                        <span class="small fw-bold text-white d-block">${c.user}</span>
+                        <span class="small text-muted text-truncate d-block" style="max-width: 150px; font-size: 0.75rem;">${c.messages[c.messages.length - 1]?.text || 'No messages yet'}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-muted" style="font-size:0.7rem;"></i>
+                </div>
+            `).join('');
+            
+            document.getElementById('inboxBadgeCount').style.display = conversations.length ? 'inline-block' : 'none';
+            document.getElementById('inboxBadgeCount').innerText = conversations.length;
+        }
+
+        function openChat(chatId) {
+            activeChatId = chatId;
+            renderInbox();
+            const chat = conversations.find(c => c.id === chatId);
+            if (!chat) return;
+
+            document.getElementById('activeChatHeader').innerText = 'Conversation with ' + chat.user;
+            const msgContainer = document.getElementById('activeChatMessages');
+            msgContainer.innerHTML = chat.messages.map(m => `
+                <div class="p-2 rounded-3 small ${m.sender === '@my_profile' ? 'ms-auto bg-primary bg-opacity-25 text-white' : 'me-auto bg-dark border border-secondary border-opacity-25 text-light'}" style="max-width: 80%;">
+                    <div>${m.text}</div>
+                    <span class="text-muted font-mono d-block text-end" style="font-size:0.6rem;">${m.time}</span>
+                </div>
+            `).join('');
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+            document.getElementById('chatMessageForm').classList.remove('d-none');
+        }
+
+        function openDirectChat(handle) {
+            let chat = conversations.find(c => c.user === handle);
+            if (!chat) {
+                chat = { id: 'c_' + Date.now(), user: handle, messages: [{ sender: handle, time: 'Just now', text: 'Hi! Connected via Evolysium.' }] };
+                conversations.unshift(chat);
+                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+            }
+            const extModalEl = document.getElementById('externalProfileModal');
+            const extModal = bootstrap.Modal.getInstance(extModalEl);
+            if (extModal) extModal.hide();
+
+            const inboxEl = document.getElementById('inboxModal');
+            const inboxModal = new bootstrap.Modal(inboxEl);
+            inboxModal.show();
+            openChat(chat.id);
+        }
+
+        function startNewChatPrompt() {
+            const handle = prompt("Enter creator handle to message (e.g., @anna_style):");
+            if (!handle) return;
+            openDirectChat(handle.startsWith('@') ? handle : '@' + handle);
+        }
+
+        function sendChatMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('chatInputMessage');
+            const text = input.value.trim();
+            if (!text || !activeChatId) return;
+
+            const chat = conversations.find(c => c.id === activeChatId);
+            if (!chat) return;
+
+            chat.messages.push({ sender: '@my_profile', text: text, time: 'Just now' });
+            localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+            input.value = '';
+            openChat(activeChatId);
+            renderInbox();
+        }
+
         function addNotification(text) {
             appNotifications.unshift({ text: text, time: 'Just now' });
             unreadNotifications = true;
@@ -1188,6 +1316,7 @@
             renderVibeStrip();
             renderSocialNewsDrawer();
             renderNotifications();
+            renderInbox();
             const query = document.getElementById('keyword-search')?.value.toLowerCase().trim() || '';
             const grid = document.getElementById('feed-grid');
             if (!grid) return;
@@ -1253,7 +1382,6 @@
         
         document.addEventListener("DOMContentLoaded", () => {
             loadBackendFeed();
-            // Trigger onboarding tour if first visit
             if (!localStorage.getItem('evolysium_onboarded')) {
                 setTimeout(() => {
                     const onboardingEl = document.getElementById('onboardingModal');
