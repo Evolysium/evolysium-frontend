@@ -450,15 +450,15 @@
     <!-- Sidebar Offcanvas Menu (Three lines menu) -->
     <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="background: rgba(12, 10, 21, 0.95); backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.1);">
         <div class="offcanvas-header border-bottom border-secondary border-opacity-25 py-4 px-4">
-            <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel"><i class="fa-solid fa-bars text-pink me-2"></i>Evolysium Izbornik</h5>
+            <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel"><i class="fa-solid fa-bars text-pink me-2"></i>Evolysium Menu</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-4 d-flex flex-column gap-3">
             <div class="p-3 rounded-4 mb-2" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
-                <span class="small text-muted d-block mb-1 font-mono">TRENUTNI PROFIL</span>
+                <span class="small text-muted d-block mb-1 font-mono">CURRENT PROFILE</span>
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold text-white" id="sidebarProfileTypeLabel">Privatni Profil</span>
-                    <button class="btn btn-sm btn-vibe py-1 px-3" onclick="toggleAccountType()">Promijeni</button>
+                    <span class="fw-bold text-white" id="sidebarProfileTypeLabel">Private Profile</span>
+                    <button class="btn btn-sm btn-vibe py-1 px-3" onclick="toggleAccountType()">Switch</button>
                 </div>
             </div>
 
@@ -467,72 +467,72 @@
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inboxModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-envelope text-pink fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Poruke</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Pregled razgovora i chat</span>
+                    <span class="fw-semibold d-block">Messages</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Conversations and chat overview</span>
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Pregled odgovora na priče (Story replies)');">
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Story replies overview.');">
                 <i class="fa-solid fa-comment-dots text-info fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Odgovori na priču</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Što su korisnici komentirali na vaše priče</span>
+                    <span class="fw-semibold d-block">Story Replies</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">What users commented on your stories</span>
                 </div>
             </a>
 
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#profileModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-user-plus text-warning fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Zahtjevi za praćenje</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Upravljajte zahtjevima za vaš profil</span>
+                    <span class="fw-semibold d-block">Follow Requests</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Manage requests for your profile</span>
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Lista blokiranih korisnika je prazna.');">
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Blocked users list is empty.');">
                 <i class="fa-solid fa-ban text-danger fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Blokirani korisnici</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Upravljanje blokiranim računima</span>
+                    <span class="fw-semibold d-block">Blocked Users</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Manage blocked accounts</span>
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Kolačići i privatnost: Svi kolačići su usklađeni s GDPR propisima.');">
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Cookies and Privacy: All cookies comply with GDPR regulations.');">
                 <i class="fa-solid fa-cookie-bite text-warning fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Kolačići</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Postavke privatnosti i kolačića</span>
+                    <span class="fw-semibold d-block">Cookies</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Privacy and cookie settings</span>
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Pregled vaših komentara i lajkova.');">
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Overview of your comments and likes.');">
                 <i class="fa-solid fa-heart text-pink fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Komentari i lajkovi</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Interakcije na vašim objavama</span>
+                    <span class="fw-semibold d-block">Comments & Likes</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Interactions on your posts</span>
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Vaša nedavna aktivnost na platformi je uredna.');">
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Your recent activity on the platform is clean.');">
                 <i class="fa-solid fa-chart-line text-info fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Aktivnost</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Vrijeme provedeno i logovi</span>
+                    <span class="fw-semibold d-block">Activity</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Time spent and logs</span>
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Nemate spremljenih objavljenih objava.');">
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('You have no saved published posts.');">
                 <i class="fa-solid fa-bookmark text-warning fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Spremljene objave</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Vaše arhivirane i spremljene stvari</span>
+                    <span class="fw-semibold d-block">Saved Posts</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Your archived and saved items</span>
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Pregled dijeljenih priča putem vanjskih aplikacija.');">
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Overview of shared stories via external apps.');">
                 <i class="fa-solid fa-share-nodes text-success fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Dijeljene priče</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Priče podijeljene s vanjskim mrežama</span>
+                    <span class="fw-semibold d-block">Shared Stories</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Stories shared with external networks</span>
                 </div>
             </a>
         </div>
@@ -766,10 +766,10 @@
                     <!-- Account Type Switching Card -->
                     <div class="p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                         <div>
-                            <h6 class="fw-bold mb-1 text-white">Vrsta profila (Account Mode)</h6>
-                            <span class="small text-muted" id="accountModeStatusText">Trenutno: Privatni profil</span>
+                            <h6 class="fw-bold mb-1 text-white">Account Mode</h6>
+                            <span class="small text-muted" id="accountModeStatusText">Current: Private Profile</span>
                         </div>
-                        <button class="btn btn-sm btn-vibe rounded-pill px-3" onclick="toggleAccountType()">Prebaci na Poslovni</button>
+                        <button class="btn btn-sm btn-vibe rounded-pill px-3" onclick="toggleAccountType()">Switch to Business</button>
                     </div>
 
                     <div class="p-3 rounded-4 mb-4 d-flex justify-content-between align-items-center" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
@@ -968,12 +968,12 @@
             
             if (isBusinessAccount) {
                 if (badgeEl) { badgeEl.innerText = 'BUSINESS PROFILE'; badgeEl.style.background = 'var(--cyan-pop)'; badgeEl.style.color = '#000'; }
-                if (sidebarLabel) sidebarLabel.innerText = 'Poslovni Profil (Business)';
-                if (accountStatusText) accountStatusText.innerText = 'Trenutno: Poslovni profil (Uključena analitika)';
+                if (sidebarLabel) sidebarLabel.innerText = 'Business Profile';
+                if (accountStatusText) accountStatusText.innerText = 'Current: Business Profile (Analytics enabled)';
             } else {
                 if (badgeEl) { badgeEl.innerText = 'PRIVATE / PUBLIC'; badgeEl.style.background = 'var(--pink-pop)'; badgeEl.style.color = '#fff'; }
-                if (sidebarLabel) sidebarLabel.innerText = 'Privatni / Privatni Profil';
-                if (accountStatusText) accountStatusText.innerText = 'Trenutno: Privatni / Privatni profil';
+                if (sidebarLabel) sidebarLabel.innerText = 'Private Profile';
+                if (accountStatusText) accountStatusText.innerText = 'Current: Private Profile';
             }
         }
 
@@ -982,7 +982,7 @@
             localStorage.setItem('evolysium_is_business', JSON.stringify(isBusinessAccount));
             updateAccountTypeUI();
             updateProfileStats();
-            alert(isBusinessAccount ? 'Prebačeni ste na POSLOVni profil. Dostupne su vam napredne statistike i alati.' : 'Prebačeni ste na PRIVATNI profil.');
+            alert(isBusinessAccount ? 'Switched to BUSINESS profile. Advanced statistics and tools are now available.' : 'Switched to PRIVATE profile.');
         }
 
         const fallbackItems = [
