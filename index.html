@@ -415,6 +415,11 @@
                     <i class="fa-solid fa-palette text-warning"></i>
                 </button>
 
+                <!-- Sign In / Register Button -->
+                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#authModal">
+                    <i class="fa-solid fa-right-to-bracket text-success"></i> <span id="authNavButtonLabel">Sign In</span>
+                </button>
+
                 <!-- Inbox Button -->
                 <button class="social-pill position-relative" data-bs-toggle="modal" data-bs-target="#inboxModal">
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
@@ -464,6 +469,14 @@
 
             <hr class="border-secondary opacity-25 my-1">
 
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#authModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-right-to-bracket text-success fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Sign In / Register</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Access or create your account</span>
+                </div>
+            </a>
+
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inboxModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-envelope text-pink fs-5" style="width:24px;"></i>
                 <div>
@@ -501,38 +514,6 @@
                 <div>
                     <span class="fw-semibold d-block">Cookies</span>
                     <span class="small text-muted" style="font-size:0.75rem;">Privacy and cookie settings</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Overview of your comments and likes.');">
-                <i class="fa-solid fa-heart text-pink fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">Comments & Likes</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Interactions on your posts</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Your recent activity on the platform is clean.');">
-                <i class="fa-solid fa-chart-line text-info fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">Activity</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Time spent and logs</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('You have no saved published posts.');">
-                <i class="fa-solid fa-bookmark text-warning fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">Saved Posts</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Your archived and saved items</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Overview of shared stories via external apps.');">
-                <i class="fa-solid fa-share-nodes text-success fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">Shared Stories</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Stories shared with external networks</span>
                 </div>
             </a>
         </div>
@@ -630,6 +611,40 @@
 
     <!-- Modals -->
 
+    <!-- Sign In / Register Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0" id="authModalTitle"><i class="fa-solid fa-right-to-bracket text-pink me-2"></i>Sign In to Evolysium</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="authForm" onsubmit="handleAuthSubmit(event)">
+                        <div class="mb-3" id="nameFieldContainer" style="display: none;">
+                            <label class="form-label small text-muted">Full Name / Handle</label>
+                            <input type="text" id="authName" class="form-control auth-input" placeholder="@your_handle">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Email Address</label>
+                            <input type="email" id="authEmail" class="form-control auth-input" placeholder="name@example.com" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small text-muted">Password</label>
+                            <input type="password" id="authPassword" class="form-control auth-input" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" id="authSubmitBtn" class="btn btn-vibe w-100 rounded-pill py-3 mb-3">Sign In</button>
+                        
+                        <div class="text-center">
+                            <span class="small text-muted" id="authSwitchText">Don't have an account?</span>
+                            <button type="button" class="btn btn-link text-info text-decoration-none small p-0 ms-1" onclick="toggleAuthMode()" id="authSwitchBtn">Register here</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Inbox Modal -->
     <div class="modal fade" id="inboxModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -640,7 +655,6 @@
                 </div>
                 <div class="modal-body p-4">
                     <div class="row g-3">
-                        <!-- Conversations list -->
                         <div class="col-md-5 border-end border-secondary border-opacity-25">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="fw-bold mb-0 text-white">Chats</h6>
@@ -648,7 +662,6 @@
                             </div>
                             <div id="conversationsList" class="d-flex flex-column gap-2" style="max-height: 350px; overflow-y: auto;"></div>
                         </div>
-                        <!-- Active Chat Window -->
                         <div class="col-md-7 d-flex flex-column justify-content-between" style="min-height: 380px;">
                             <div id="activeChatHeader" class="pb-2 border-bottom border-secondary border-opacity-25 fw-bold text-info small">
                                 Select a conversation
@@ -662,24 +675,6 @@
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Onboarding Tour Modal -->
-    <div class="modal fade" id="onboardingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
-                <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Welcome to Evolysium ƎE</h4>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4 text-center">
-                    <div class="brand-pill fw-bold text-white fs-3 mx-auto mb-3" style="width: 60px; height: 60px;">ƎE</div>
-                    <h5 class="fw-bold text-white mb-2">Your Multi-Platform Vibe Hub</h5>
-                    <p class="text-melt small mb-4">Explore global trends, drop stories, chat in your inbox, and customize your neon theme securely.</p>
-                    <button class="btn btn-vibe w-100 rounded-pill py-3" data-bs-dismiss="modal" onclick="completeOnboarding()">Get Started</button>
                 </div>
             </div>
         </div>
@@ -762,8 +757,6 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    
-                    <!-- Account Type Switching Card -->
                     <div class="p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                         <div>
                             <h6 class="fw-bold mb-1 text-white">Account Mode</h6>
@@ -942,6 +935,10 @@
         let followRequests = JSON.parse(localStorage.getItem('evolysium_requests') || '["@luka_creator", "@ana_vibe"]');
         let approvedUsers = JSON.parse(localStorage.getItem('evolysium_approved') || '[]');
 
+        // Auth state
+        let isRegisterMode = false;
+        let currentUser = JSON.parse(localStorage.getItem('evolysium_current_user') || 'null');
+
         // Notifications array
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to Evolysium platform!", "time": "Just now"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
@@ -965,6 +962,64 @@
             applyTheme(currentThemeIndex);
         }
         applyTheme(currentThemeIndex);
+
+        // Auth handling logic
+        function updateAuthUI() {
+            const labelEl = document.getElementById('authNavButtonLabel');
+            if (currentUser) {
+                if (labelEl) labelEl.innerText = currentUser.name || currentUser.email;
+            } else {
+                if (labelEl) labelEl.innerText = 'Sign In';
+            }
+        }
+
+        function toggleAuthMode() {
+            isRegisterMode = !isRegisterMode;
+            const titleEl = document.getElementById('authModalTitle');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const switchText = document.getElementById('authSwitchText');
+            const switchBtn = document.getElementById('authSwitchBtn');
+            const nameField = document.getElementById('nameFieldContainer');
+
+            if (isRegisterMode) {
+                titleEl.innerHTML = '<i class="fa-solid fa-user-plus text-pink me-2"></i>Create Evolysium Account';
+                submitBtn.innerText = 'Register';
+                switchText.innerText = 'Already have an account?';
+                switchBtn.innerText = 'Sign In here';
+                nameField.style.display = 'block';
+            } else {
+                titleEl.innerHTML = '<i class="fa-solid fa-right-to-bracket text-pink me-2"></i>Sign In to Evolysium';
+                submitBtn.innerText = 'Sign In';
+                switchText.innerText = "Don't have an account?";
+                switchBtn.innerText = 'Register here';
+                nameField.style.display = 'none';
+            }
+        }
+
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            const name = document.getElementById('authName').value || '@user_' + Math.floor(Math.random() * 1000);
+
+            if (isRegisterMode) {
+                currentUser = { email, name };
+                localStorage.setItem('evolysium_current_user', JSON.stringify(currentUser));
+                addNotification('Account successfully created! Welcome to Evolysium.');
+                alert('Account registered and signed in successfully!');
+            } else {
+                currentUser = { email, name: email.split('@')[0] };
+                localStorage.setItem('evolysium_current_user', JSON.stringify(currentUser));
+                addNotification('Signed in successfully.');
+                alert('Signed in successfully!');
+            }
+
+            updateAuthUI();
+            const modalEl = document.getElementById('authModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modalInstance.hide();
+            event.target.reset();
+        }
 
         // Account / Profile Type Switching Logic
         function updateAccountTypeUI() {
@@ -1516,22 +1571,12 @@
             }).join('');
         }
 
-        function completeOnboarding() {
-            localStorage.setItem('evolysium_onboarded', 'true');
-        }
-
         document.getElementById('keyword-search')?.addEventListener('input', renderFeed);
         
         document.addEventListener("DOMContentLoaded", () => {
             loadBackendFeed();
             updateAccountTypeUI();
-            if (!localStorage.getItem('evolysium_onboarded')) {
-                setTimeout(() => {
-                    const onboardingEl = document.getElementById('onboardingModal');
-                    const onboardingModal = new bootstrap.Modal(onboardingEl);
-                    onboardingModal.show();
-                }, 800);
-            }
+            updateAuthUI();
         });
     </script>
 </body>
