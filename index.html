@@ -438,7 +438,7 @@
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
                     <i class="fa-solid fa-user-gear text-info"></i> My Profile <span id="verifiedBadgeIcon" class="text-warning ms-1" style="display:none;" title="Verified Profile"><i class="fa-solid fa-circle-check"></i></span>
                 </button>
-                <!-- POPRAVLJEN PRICING GUMB: Otvara modal za cijene -->
+                <!-- Pricing Button -->
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
                     <i class="fa-solid fa-crown text-warning"></i> Pricing
                 </button>
@@ -757,7 +757,7 @@
         </div>
     </div>
 
-    <!-- Drop Story Modal (Ažurirano s mogućnošću uploada datoteke sa uređaja) -->
+    <!-- Drop Story Modal -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.92); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -1238,7 +1238,7 @@
             stopCameraFeed();
         }
 
-        // Universal Feed Post / Story Submission
+        // Universal Feed Post / Story Submission (Popravljeno)
         function handleUniversalPostSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('univTitle').value;
@@ -1500,7 +1500,7 @@
             
             event.target.reset();
             renderVibeStrip();
-            renderFeed(); // OSVJEŽAVANJE FEEDA NAKON OBJAVE PRIČE
+            renderFeed();
             addNotification('Your story was successfully published!');
             alert('Story successfully published to your profile and feed refreshed!');
         }
@@ -1840,8 +1840,7 @@
             const grid = document.getElementById('feed-grid');
             if (!grid) return;
 
-            // Integracija korisničkih priča kao stavki u feedu kako bi se osiguralo da su videa i slike korisnika vidljivi u feedu nakon objave
-            const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || []).map(t => ({
+            const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]').map(t => ({
                 id: t.id,
                 creator: '@my_profile',
                 title: t.title,
