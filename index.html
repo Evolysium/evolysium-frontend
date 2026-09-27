@@ -426,17 +426,19 @@
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
 
-                <!-- Create Modal Trigger (Updated without cross icon) -->
+                <!-- Create Modal Trigger -->
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#createPostModal" title="Create Post or Story">
                     <i class="fa-solid fa-plus"></i> Create
                 </button>
 
+                <!-- Drop Story Button -->
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
                     <i class="fa-solid fa-plus-circle"></i> Drop Story
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
                     <i class="fa-solid fa-user-gear text-info"></i> My Profile <span id="verifiedBadgeIcon" class="text-warning ms-1" style="display:none;" title="Verified Profile"><i class="fa-solid fa-circle-check"></i></span>
                 </button>
+                <!-- POPRAVLJEN PRICING GUMB: Otvara modal za cijene -->
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
                     <i class="fa-solid fa-crown text-warning"></i> Pricing
                 </button>
@@ -457,7 +459,7 @@
         </div>
     </nav>
 
-    <!-- Sidebar Offcanvas Menu (Three lines menu) -->
+    <!-- Sidebar Offcanvas Menu -->
     <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="background: rgba(12, 10, 21, 0.95); backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.1);">
         <div class="offcanvas-header border-bottom border-secondary border-opacity-25 py-4 px-4">
             <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel"><i class="fa-solid fa-bars text-pink me-2"></i>Evolysium Menu</h5>
@@ -617,7 +619,7 @@
             <div class="d-flex align-items-center gap-4 small">
                 <a href="#">Privacy Policy</a>
                 <a href="#">GDPR Compliance</a>
-                <a href="#">Upgrade Pass</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#pricingModal">Upgrade Pass</a>
             </div>
         </div>
     </footer>
@@ -693,7 +695,7 @@
         </div>
     </div>
 
-    <!-- Create Post Modal (Updated: removed cross, added camera capture and file upload options) -->
+    <!-- Create Post Modal -->
     <div class="modal fade" id="createPostModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -755,12 +757,12 @@
         </div>
     </div>
 
-    <!-- Drop Story Modal with Live Camera Integration -->
+    <!-- Drop Story Modal (Ažurirano s mogućnošću uploada datoteke sa uređaja) -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.92); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Drop a New Story (Camera / Upload)</h4>
+                    <h4 class="fw-bold mb-0">Drop a New Story (Camera / Upload File)</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -770,7 +772,7 @@
                             <video id="cameraPreview" autoplay playsinline style="width:100%; height:100%; object-fit:cover;"></video>
                             <canvas id="cameraCanvas" style="display:none;"></canvas>
                         </div>
-                        <div class="d-flex gap-2 justify-content-center">
+                        <div class="d-flex gap-2 justify-content-center flex-wrap">
                             <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="startCameraFeed()"><i class="fa-solid fa-camera me-1"></i> Open Camera</button>
                             <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 d-none" id="captureBtn" onclick="captureCameraMedia()"><i class="fa-solid fa-circle-dot me-1"></i> Snap / Record</button>
                             <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 d-none" id="stopCamBtn" onclick="stopCameraFeed()">Close Camera</button>
@@ -820,8 +822,9 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Media Visual URL (Camera snap or link)</label>
-                            <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/... or snapshot" required>
+                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Upload Image/Video from Device or Snapshot Link</label>
+                            <input type="file" id="trailDeviceFile" class="form-control auth-input form-control-sm mb-2" accept="image/*,video/*" onchange="handleTrailFileUpload(event)">
+                            <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/... or uploaded file" required>
                         </div>
                         <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Story</button>
                     </form>
@@ -1175,6 +1178,23 @@
             reader.readAsDataURL(file);
         }
 
+        // Upload datoteke za Drop a Story (Uređaj)
+        function handleTrailFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('trailMedia').value = e.target.result;
+                if (file.type.startsWith('video/')) {
+                    document.getElementById('trailMediaType').value = 'video';
+                } else {
+                    document.getElementById('trailMediaType').value = 'image';
+                }
+                alert('Story file successfully uploaded from device!');
+            };
+            reader.readAsDataURL(file);
+        }
+
         // Camera Live Capture Functions for Stories
         async function startCameraFeed() {
             const container = document.getElementById('cameraContainer');
@@ -1261,7 +1281,7 @@
                     isPrivate: privacy === 'private'
                 };
                 feedItems.unshift(newPost);
-                renderFeed();
+                renderFeed(); // AUTOMATSKO OSVJEŽAVANJE FEEDA
                 addNotification('Feed post published successfully (' + privacy + ')');
             }
 
@@ -1269,7 +1289,7 @@
             const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
             modalInstance.hide();
             event.target.reset();
-            alert('Successfully published!');
+            alert('Successfully published and feed refreshed!');
         }
 
         // Verified Badge Logic
@@ -1346,7 +1366,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                alert('Could not connect to backend server for payment.');
+                alert('Could not connect to backend server for payment. Opening modal option.');
             }
         }
 
@@ -1480,8 +1500,9 @@
             
             event.target.reset();
             renderVibeStrip();
+            renderFeed(); // OSVJEŽAVANJE FEEDA NAKON OBJAVE PRIČE
             addNotification('Your story was successfully published!');
-            alert('Story successfully published to your profile!');
+            alert('Story successfully published to your profile and feed refreshed!');
         }
 
         function toggleProfilePrivacy() {
@@ -1636,7 +1657,8 @@
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
             updateProfileStats();
             renderVibeStrip();
-            alert('Story deleted successfully.');
+            renderFeed();
+            alert('Story deleted and feed updated.');
         }
 
         // Inbox Functions
@@ -1818,7 +1840,28 @@
             const grid = document.getElementById('feed-grid');
             if (!grid) return;
 
-            const filtered = feedItems.filter(item => {
+            // Integracija korisničkih priča kao stavki u feedu kako bi se osiguralo da su videa i slike korisnika vidljivi u feedu nakon objave
+            const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || []).map(t => ({
+                id: t.id,
+                creator: '@my_profile',
+                title: t.title,
+                cat: 'story',
+                platform: 'trail',
+                likes: t.likes,
+                comments: '0',
+                media: t.media,
+                mediaType: t.mediaType,
+                summary: 'User published story stream.',
+                tags: ['@story'],
+                music: t.music,
+                isLive: t.isLive,
+                isPrivate: t.isPrivate,
+                isTrail: true
+            }));
+
+            const combinedFeed = [...localTrails, ...feedItems];
+
+            const filtered = combinedFeed.filter(item => {
                 const matchPlatform = selectedPlatforms.includes(item.platform);
                 const matchCat = selectedCategories.includes(item.cat);
                 const matchQuery = !query || item.title.toLowerCase().includes(query) || item.creator.toLowerCase().includes(query) || (item.tags && item.tags.some(t => t.toLowerCase().includes(query)));
