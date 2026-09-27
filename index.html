@@ -707,7 +707,7 @@
                     <!-- Live Camera Feed Box for Create Post -->
                     <div class="mb-3 text-center">
                         <div id="univCameraContainer" class="position-relative rounded-4 overflow-hidden bg-black mb-2" style="height: 180px; display: none; border: 1px solid rgba(255,255,255,0.2);">
-                            <video id="univCameraPreview" autoplay playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                            <video id="univCameraPreview" autoplay playsinline muted style="width:100%; height:100%; object-fit:cover;"></video>
                             <canvas id="univCameraCanvas" style="display:none;"></canvas>
                         </div>
                         <div class="d-flex gap-2 justify-content-center flex-wrap">
@@ -769,7 +769,7 @@
                     <!-- Camera Stream Box -->
                     <div class="mb-3 text-center">
                         <div id="cameraContainer" class="position-relative rounded-4 overflow-hidden bg-black mb-2" style="height: 200px; display: none; border: 1px solid rgba(255,255,255,0.2);">
-                            <video id="cameraPreview" autoplay playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                            <video id="cameraPreview" autoplay playsinline muted style="width:100%; height:100%; object-fit:cover;"></video>
                             <canvas id="cameraCanvas" style="display:none;"></canvas>
                         </div>
                         <div class="d-flex gap-2 justify-content-center flex-wrap">
@@ -1119,7 +1119,7 @@
             event.target.reset();
         }
 
-        // Camera Live Capture Functions for Universal Create Post
+        // Camera Live Capture Functions for Universal Create Post (Optimizirano za Instagram i Web)
         async function startUnivCamera() {
             const container = document.getElementById('univCameraContainer');
             const videoEl = document.getElementById('univCameraPreview');
@@ -1127,14 +1127,24 @@
             const stopBtn = document.getElementById('univStopCamBtn');
 
             try {
-                univMediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error('MediaDevices API not supported in this browser environment.');
+                }
+                univMediaStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'user' }, 
+                    audio: false 
+                });
                 videoEl.srcObject = univMediaStream;
+                videoEl.setAttribute('playsinline', 'true');
+                videoEl.setAttribute('autoplay', 'true');
+                await videoEl.play().catch(e => console.log("Auto-play prevented:", e));
+                
                 container.style.display = 'block';
                 captureBtn.classList.remove('d-none');
                 stopBtn.classList.remove('d-none');
             } catch (err) {
                 console.error('Camera access error:', err);
-                alert('Unable to access camera. Please check permissions.');
+                alert('Unable to access camera. Please ensure permissions are granted or use file upload.');
             }
         }
 
@@ -1143,6 +1153,8 @@
                 univMediaStream.getTracks().forEach(track => track.stop());
                 univMediaStream = null;
             }
+            const videoEl = document.getElementById('univCameraPreview');
+            if (videoEl) videoEl.srcObject = null;
             document.getElementById('univCameraContainer').style.display = 'none';
             document.getElementById('univCaptureBtn').classList.add('d-none');
             document.getElementById('univStopCamBtn').classList.add('d-none');
@@ -1178,7 +1190,6 @@
             reader.readAsDataURL(file);
         }
 
-        // Upload datoteke za Drop a Story (Uređaj)
         function handleTrailFileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1195,7 +1206,7 @@
             reader.readAsDataURL(file);
         }
 
-        // Camera Live Capture Functions for Stories
+        // Camera Live Capture Functions for Stories (Optimizirano za Instagram i Web)
         async function startCameraFeed() {
             const container = document.getElementById('cameraContainer');
             const videoEl = document.getElementById('cameraPreview');
@@ -1203,8 +1214,18 @@
             const stopBtn = document.getElementById('stopCamBtn');
 
             try {
-                mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error('MediaDevices API not supported.');
+                }
+                mediaStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'user' }, 
+                    audio: false 
+                });
                 videoEl.srcObject = mediaStream;
+                videoEl.setAttribute('playsinline', 'true');
+                videoEl.setAttribute('autoplay', 'true');
+                await videoEl.play().catch(e => console.log("Auto-play prevented:", e));
+
                 container.style.display = 'block';
                 captureBtn.classList.remove('d-none');
                 stopBtn.classList.remove('d-none');
@@ -1219,6 +1240,8 @@
                 mediaStream.getTracks().forEach(track => track.stop());
                 mediaStream = null;
             }
+            const videoEl = document.getElementById('cameraPreview');
+            if (videoEl) videoEl.srcObject = null;
             document.getElementById('cameraContainer').style.display = 'none';
             document.getElementById('captureBtn').classList.add('d-none');
             document.getElementById('stopCamBtn').classList.add('d-none');
@@ -1238,7 +1261,7 @@
             stopCameraFeed();
         }
 
-        // Universal Feed Post / Story Submission (Popravljeno)
+        // Universal Feed Post / Story Submission (Trenutni prikaz i osvježavanje)
         function handleUniversalPostSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('univTitle').value;
@@ -1263,6 +1286,7 @@
                 localTrails.unshift(newStory);
                 localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
                 renderVibeStrip();
+                renderFeed();
                 addNotification('New story published successfully (' + privacy + ')');
             } else {
                 const newPost = {
@@ -1281,7 +1305,7 @@
                     isPrivate: privacy === 'private'
                 };
                 feedItems.unshift(newPost);
-                renderFeed(); // AUTOMATSKO OSVJEŽAVANJE FEEDA
+                renderFeed(); 
                 addNotification('Feed post published successfully (' + privacy + ')');
             }
 
@@ -1563,7 +1587,7 @@
                                     <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                                         <div class="d-flex align-items-center gap-3 mb-2">
                                             ${s.mediaType === 'video' ? `
-                                                <video src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop></video>
+                                                <video src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
                                             ` : `
                                                 <img src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
                                             `}
@@ -1634,7 +1658,7 @@
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div class="d-flex align-items-center gap-3">
                                     ${t.mediaType === 'video' ? `
-                                        <video src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop></video>
+                                        <video src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
                                     ` : `
                                         <img src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
                                     `}
@@ -1821,7 +1845,7 @@
                 <div class="vibe-item" onclick="openCreatorProfile('${c.handle}')">
                     <div class="vibe-ring ${c.isLive ? 'is-live' : ''}">
                         ${c.mediaType === 'video' ? `
-                            <video src="${c.img}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" muted autoplay loop></video>
+                            <video src="${c.img}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" muted autoplay loop playsinline></video>
                         ` : `
                             <img src="${c.img}" alt="Story">
                         `}
@@ -1877,7 +1901,7 @@
                         <div class="social-card h-100 d-flex flex-column">
                             <div class="feed-media">
                                 ${item.mediaType === 'video' ? `
-                                    <video src="${item.media}" style="width: 100%; height: 100%; object-fit: cover;" controls autoplay loop muted></video>
+                                    <video src="${item.media}" style="width: 100%; height: 100%; object-fit: cover;" controls autoplay loop muted playsinline></video>
                                 ` : `
                                     <img src="${item.media}" alt="Media" onclick="openCreatorProfile('${item.creator}')">
                                 `}
