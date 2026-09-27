@@ -142,7 +142,7 @@
             border: 2px solid var(--bg-main);
         }
 
-        .vibe-ring img {
+        .vibe-ring img, .vibe-ring video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -715,6 +715,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label class="form-label small" style="color:rgba(255,255,255,0.6)">Media Format Type</label>
+                                <select id="trailMediaType" class="form-control auth-input text-white">
+                                    <option value="image">🖼️ Image (Photo)</option>
+                                    <option value="video">🎬 Video Clip</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Category</label>
                             <select id="trailCat" class="form-control auth-input text-white">
@@ -738,8 +747,8 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Media Visual URL (Image/Video)</label>
-                            <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/..." required>
+                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Media Visual URL (Image / Video Link)</label>
+                            <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/... or .mp4 link" required>
                         </div>
                         <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Story</button>
                     </form>
@@ -1134,6 +1143,7 @@
                 likes: parseLikeCount(item.likes),
                 comments: item.comments || '142',
                 media: item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
+                mediaType: item.mediaType || 'image',
                 summary: item.summary || 'Global trend post overview.',
                 tags: item.tags || [],
                 music: item.music || 'Original Audio',
@@ -1178,6 +1188,7 @@
         function handleTrailSubmit(event) {
             event.preventDefault();
             const mode = document.getElementById('trailMode').value;
+            const mediaType = document.getElementById('trailMediaType').value;
             const rawTags = document.getElementById('trailTags').value;
             const tags = rawTags ? rawTags.split(',').map(t => t.trim()) : [];
 
@@ -1185,6 +1196,7 @@
                 id: 'story_' + Date.now(),
                 title: document.getElementById('trailTitle').value,
                 media: document.getElementById('trailMedia').value,
+                mediaType: mediaType,
                 cat: document.getElementById('trailCat').value,
                 music: document.getElementById('trailMusic').value || 'Evolysium Audio',
                 isLive: mode === 'live',
@@ -1240,8 +1252,8 @@
                 `;
             } else {
                 const sampleStories = [
-                    { title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', likes: 45, isLive: false },
-                    { title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', likes: 88, isLive: true }
+                    { title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false },
+                    { title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true }
                 ];
                 
                 bodyEl.innerHTML = `
@@ -1262,7 +1274,11 @@
                                 <div class="col-md-6">
                                     <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                                         <div class="d-flex align-items-center gap-3 mb-2">
-                                            <img src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
+                                            ${s.mediaType === 'video' ? `
+                                                <video src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop></video>
+                                            ` : `
+                                                <img src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
+                                            `}
                                             <div>
                                                 <h6 class="fw-bold mb-1 text-white small">${s.title}</h6>
                                                 <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'}</span>
@@ -1329,7 +1345,11 @@
                         <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div class="d-flex align-items-center gap-3">
-                                    <img src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
+                                    ${t.mediaType === 'video' ? `
+                                        <video src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop></video>
+                                    ` : `
+                                        <img src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
+                                    `}
                                     <div>
                                         <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
                                         <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • ❤️ ${t.likes} likes</span>
@@ -1496,14 +1516,27 @@
             const strip = document.getElementById('dynamic-vibe-strip');
             if (!strip) return;
             const sampleCreators = [
-                { handle: '@fashion_weekly', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', isLive: true },
-                { handle: '@ig_architecture', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', isLive: false },
-                { handle: '@luka_creator', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', isLive: false },
-                { handle: '@ana_vibe', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900', isLive: true }
+                { handle: '@fashion_weekly', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true },
+                { handle: '@ig_architecture', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: false },
+                { handle: '@luka_creator', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false },
+                { handle: '@ana_vibe', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900', mediaType: 'image', isLive: true }
             ];
-            strip.innerHTML = sampleCreators.map((c) => `
+
+            const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            const combinedCreators = [
+                { handle: '@my_profile', img: localTrails[0]?.media || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: localTrails[0]?.mediaType || 'image', isLive: localTrails[0]?.isLive || false },
+                ...sampleCreators
+            ];
+
+            strip.innerHTML = combinedCreators.map((c) => `
                 <div class="vibe-item" onclick="openCreatorProfile('${c.handle}')">
-                    <div class="vibe-ring ${c.isLive ? 'is-live' : ''}"><img src="${c.img}" alt="Story"></div>
+                    <div class="vibe-ring ${c.isLive ? 'is-live' : ''}">
+                        ${c.mediaType === 'video' ? `
+                            <video src="${c.img}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" muted autoplay loop></video>
+                        ` : `
+                            <img src="${c.img}" alt="Story">
+                        `}
+                    </div>
                     <span class="small mt-1 text-light text-truncate" style="max-width:74px; opacity:0.8;">${c.handle.replace('@','')}</span>
                 </div>
             `).join('');
@@ -1534,7 +1567,11 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="social-card h-100 d-flex flex-column">
                             <div class="feed-media">
-                                <img src="${item.media}" alt="Media" onclick="openCreatorProfile('${item.creator}')">
+                                ${item.mediaType === 'video' ? `
+                                    <video src="${item.media}" style="width: 100%; height: 100%; object-fit: cover;" controls autoplay loop muted></video>
+                                ` : `
+                                    <img src="${item.media}" alt="Media" onclick="openCreatorProfile('${item.creator}')">
+                                `}
                                 <div class="creator-tag" onclick="openCreatorProfile('${item.creator}')">
                                     <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator}
                                 </div>
