@@ -426,9 +426,9 @@
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
 
-                <!-- Plus / Cross Create Modal Trigger -->
+                <!-- Create Modal Trigger (Updated without cross icon) -->
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#createPostModal" title="Create Post or Story">
-                    <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-xmark text-cyan ms-1" style="font-size: 0.75rem;"></i> Create
+                    <i class="fa-solid fa-plus"></i> Create
                 </button>
 
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
@@ -693,15 +693,28 @@
         </div>
     </div>
 
-    <!-- Create Post Modal (Feed Cross / Plus Button Option) -->
+    <!-- Create Post Modal (Updated: removed cross, added camera capture and file upload options) -->
     <div class="modal fade" id="createPostModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-1"></i><i class="fa-solid fa-xmark text-pink me-2"></i>Create Feed Post / Story</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-2"></i>Create Feed Post / Story</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
+                    <!-- Live Camera Feed Box for Create Post -->
+                    <div class="mb-3 text-center">
+                        <div id="univCameraContainer" class="position-relative rounded-4 overflow-hidden bg-black mb-2" style="height: 180px; display: none; border: 1px solid rgba(255,255,255,0.2);">
+                            <video id="univCameraPreview" autoplay playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                            <canvas id="univCameraCanvas" style="display:none;"></canvas>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center flex-wrap">
+                            <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="startUnivCamera()"><i class="fa-solid fa-camera me-1"></i> Use Camera</button>
+                            <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 d-none" id="univCaptureBtn" onclick="captureUnivCamera()"><i class="fa-solid fa-circle-dot me-1"></i> Snap Photo</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 d-none" id="univStopCamBtn" onclick="stopUnivCamera()">Close Camera</button>
+                        </div>
+                    </div>
+
                     <form onsubmit="handleUniversalPostSubmit(event)">
                         <div class="mb-3">
                             <label class="form-label small text-muted">Post Title / Caption</label>
@@ -729,8 +742,11 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-muted">Media Image/Video URL</label>
-                            <input type="url" id="univMediaUrl" class="form-control auth-input" placeholder="https://images.unsplash.com/... or direct link" required>
+                            <label class="form-label small text-muted">Upload File / Media URL</label>
+                            <div class="d-flex gap-2 mb-2">
+                                <input type="file" id="univFileUpload" class="form-control auth-input form-control-sm" accept="image/*,video/*" onchange="handleFileUpload(event)">
+                            </div>
+                            <input type="url" id="univMediaUrl" class="form-control auth-input" placeholder="https://images.unsplash.com/... or snapshot" required>
                         </div>
                         <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish to Platform</button>
                     </form>
@@ -1016,6 +1032,7 @@
 
         // Camera stream state
         let mediaStream = null;
+        let univMediaStream = null;
 
         // Notifications array
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to Evolysium platform!", "time": "Just now"}]');
@@ -1097,6 +1114,65 @@
             const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
             modalInstance.hide();
             event.target.reset();
+        }
+
+        // Camera Live Capture Functions for Universal Create Post
+        async function startUnivCamera() {
+            const container = document.getElementById('univCameraContainer');
+            const videoEl = document.getElementById('univCameraPreview');
+            const captureBtn = document.getElementById('univCaptureBtn');
+            const stopBtn = document.getElementById('univStopCamBtn');
+
+            try {
+                univMediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                videoEl.srcObject = univMediaStream;
+                container.style.display = 'block';
+                captureBtn.classList.remove('d-none');
+                stopBtn.classList.remove('d-none');
+            } catch (err) {
+                console.error('Camera access error:', err);
+                alert('Unable to access camera. Please check permissions.');
+            }
+        }
+
+        function stopUnivCamera() {
+            if (univMediaStream) {
+                univMediaStream.getTracks().forEach(track => track.stop());
+                univMediaStream = null;
+            }
+            document.getElementById('univCameraContainer').style.display = 'none';
+            document.getElementById('univCaptureBtn').classList.add('d-none');
+            document.getElementById('univStopCamBtn').classList.add('d-none');
+        }
+
+        function captureUnivCamera() {
+            const videoEl = document.getElementById('univCameraPreview');
+            const canvas = document.getElementById('univCameraCanvas');
+            canvas.width = videoEl.videoWidth || 640;
+            canvas.height = videoEl.videoHeight || 480;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/png');
+            
+            document.getElementById('univMediaUrl').value = dataUrl;
+            alert('Camera snapshot captured successfully!');
+            stopUnivCamera();
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('univMediaUrl').value = e.target.result;
+                if (file.type.startsWith('video/')) {
+                    document.getElementById('univType').value = 'video';
+                } else {
+                    document.getElementById('univType').value = 'image';
+                }
+                alert('File loaded successfully into media URL field!');
+            };
+            reader.readAsDataURL(file);
         }
 
         // Camera Live Capture Functions for Stories
