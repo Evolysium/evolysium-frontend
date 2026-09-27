@@ -1261,8 +1261,8 @@
             stopCameraFeed();
         }
 
-        // Universal Feed Post / Story Submission
-        function handleUniversalPostSubmit(event) {
+        // Universal Feed Post / Story Submission — Integrirano s bazom i backendom!
+        async function handleUniversalPostSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('univTitle').value;
             const destination = document.getElementById('univDestination').value;
@@ -1270,55 +1270,44 @@
             const privacy = document.getElementById('univPrivacy').value;
             const mediaUrl = document.getElementById('univMediaUrl').value;
 
-            if (destination === 'story') {
-                const newStory = {
-                    id: 'story_' + Date.now(),
-                    title: title,
-                    media: mediaUrl,
-                    mediaType: mediaType,
-                    cat: 'story',
-                    music: 'Evolysium Live Audio',
-                    isLive: false,
-                    isPrivate: privacy === 'private',
-                    likes: 1
-                };
-                let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-                localTrails.unshift(newStory);
-                localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
-                renderVibeStrip();
-                renderFeed();
-                addNotification('New story published successfully (' + privacy + ')');
-            } else {
-                const newPost = {
-                    id: 'post_' + Date.now(),
-                    creator: currentUser ? currentUser.name : '@my_profile',
-                    title: title,
-                    category: 'trending',
-                    platform: 'trail',
-                    likes: 1,
-                    comments: '0',
-                    image: mediaUrl,
-                    mediaType: mediaType,
-                    summary: 'User published feed post (' + privacy + ')',
-                    tags: ['@community'],
-                    music: 'Original Vibe',
-                    isPrivate: privacy === 'private'
-                };
-                
-                let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-                localFeedPosts.unshift(newPost);
-                localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+            const category = mediaType === 'video' ? 'reels' : 'trending';
 
-                feedItems.unshift(newPost);
-                renderFeed(); 
-                addNotification('Feed post published successfully (' + privacy + ')');
+            const payload = {
+                platform: destination === 'story' ? 'trail' : 'evolysium',
+                category: category,
+                title: title,
+                summary: `User published ${destination} (${privacy})`,
+                image: mediaUrl,
+                video_url: mediaType === 'video' ? mediaUrl : '',
+                is_story: destination === 'story'
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/posts/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (response.ok && result.success !== false) {
+                    addNotification('New post successfully published to database!');
+                    alert('Successfully published! The post is now saved and visible on the feed.');
+
+                    const modalEl = document.getElementById('createPostModal');
+                    const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                    modalInstance.hide();
+                    event.target.reset();
+
+                    // Reload feed from backend to display the new entry instantly
+                    loadBackendFeed();
+                } else {
+                    alert('Server error: ' + (result.error || 'Unknown error'));
+                }
+            } catch (err) {
+                console.error('Backend connection error:', err);
+                alert('Could not connect to backend server to save the post.');
             }
-
-            const modalEl = document.getElementById('createPostModal');
-            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-            modalInstance.hide();
-            event.target.reset();
-            alert('Successfully published and feed refreshed!');
         }
 
         // Verified Badge Logic
