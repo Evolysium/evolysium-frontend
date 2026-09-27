@@ -1261,7 +1261,7 @@
             stopCameraFeed();
         }
 
-        // Universal Feed Post / Story Submission (Sada se odmah sprema i prikazuje u feedu)
+        // Universal Feed Post / Story Submission
         function handleUniversalPostSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('univTitle').value;
@@ -1305,7 +1305,6 @@
                     isPrivate: privacy === 'private'
                 };
                 
-                // Spremanje u localStorage da se objava ne izgubi i da se odmah vidi u feedu
                 let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
                 localFeedPosts.unshift(newPost);
                 localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
@@ -1466,7 +1465,6 @@
                 isTrail: false
             }));
             
-            // Učitavanje i korisničkih objava iz lokalne memorije kako bi se uvijek prikazivale u feedu
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             feedItems = append ? [...feedItems, ...localFeedPosts, ...mapped] : [...localFeedPosts, ...mapped];
             renderFeed();
