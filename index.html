@@ -1119,7 +1119,7 @@
             event.target.reset();
         }
 
-        // Camera Live Capture Functions for Universal Create Post (Optimizirano za Instagram i Web)
+        // Camera Live Capture Functions for Universal Create Post
         async function startUnivCamera() {
             const container = document.getElementById('univCameraContainer');
             const videoEl = document.getElementById('univCameraPreview');
@@ -1206,7 +1206,7 @@
             reader.readAsDataURL(file);
         }
 
-        // Camera Live Capture Functions for Stories (Optimizirano za Instagram i Web)
+        // Camera Live Capture Functions for Stories
         async function startCameraFeed() {
             const container = document.getElementById('cameraContainer');
             const videoEl = document.getElementById('cameraPreview');
@@ -1261,7 +1261,7 @@
             stopCameraFeed();
         }
 
-        // Universal Feed Post / Story Submission (Trenutni prikaz i osvježavanje)
+        // Universal Feed Post / Story Submission (Sada se odmah sprema i prikazuje u feedu)
         function handleUniversalPostSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('univTitle').value;
@@ -1304,6 +1304,12 @@
                     music: 'Original Vibe',
                     isPrivate: privacy === 'private'
                 };
+                
+                // Spremanje u localStorage da se objava ne izgubi i da se odmah vidi u feedu
+                let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+                localFeedPosts.unshift(newPost);
+                localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+
                 feedItems.unshift(newPost);
                 renderFeed(); 
                 addNotification('Feed post published successfully (' + privacy + ')');
@@ -1460,7 +1466,9 @@
                 isTrail: false
             }));
             
-            feedItems = append ? [...feedItems, ...mapped] : [...mapped];
+            // Učitavanje i korisničkih objava iz lokalne memorije kako bi se uvijek prikazivale u feedu
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            feedItems = append ? [...feedItems, ...localFeedPosts, ...mapped] : [...localFeedPosts, ...mapped];
             renderFeed();
         }
 
