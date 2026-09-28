@@ -367,7 +367,6 @@
             text-align: center;
         }
 
-        /* Preloader overlay */
         #app-preloader {
             position: fixed;
             inset: 0;
@@ -394,7 +393,6 @@
     <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-3">
-                <!-- Hamburger Menu Toggle Button -->
                 <button class="social-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
                     <i class="fa-solid fa-bars text-white"></i>
                 </button>
@@ -410,40 +408,28 @@
             </div>
             
             <div class="d-flex align-items-center gap-2">
-                <!-- Theme Toggle Button -->
                 <button class="social-pill" onclick="cycleTheme()" title="Switch Neon Theme">
                     <i class="fa-solid fa-palette text-warning"></i>
                 </button>
-
-                <!-- Sign In / Register Button -->
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#authModal">
                     <i class="fa-solid fa-right-to-bracket text-success"></i> <span id="authNavButtonLabel">Sign In</span>
                 </button>
-
-                <!-- Inbox Button -->
                 <button class="social-pill position-relative" data-bs-toggle="modal" data-bs-target="#inboxModal">
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
-
-                <!-- Create Modal Trigger -->
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#createPostModal" title="Create Post or Story">
                     <i class="fa-solid fa-plus"></i> Create
                 </button>
-
-                <!-- Drop Story Button -->
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
                     <i class="fa-solid fa-plus-circle"></i> Drop Story
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
                     <i class="fa-solid fa-user-gear text-info"></i> My Profile <span id="verifiedBadgeIcon" class="text-warning ms-1" style="display:none;" title="Verified Profile"><i class="fa-solid fa-circle-check"></i></span>
                 </button>
-                <!-- Pricing Button -->
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#pricingModal">
                     <i class="fa-solid fa-crown text-warning"></i> Pricing
                 </button>
-                
-                <!-- Notification Bell Dropdown -->
                 <div class="dropdown">
                     <button class="social-pill position-relative" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()">
                         <i class="fa-solid fa-bell text-info"></i>
@@ -704,7 +690,6 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <!-- Live Camera Feed Box for Create Post -->
                     <div class="mb-3 text-center">
                         <div id="univCameraContainer" class="position-relative rounded-4 overflow-hidden bg-black mb-2" style="height: 180px; display: none; border: 1px solid rgba(255,255,255,0.2);">
                             <video id="univCameraPreview" autoplay playsinline muted style="width:100%; height:100%; object-fit:cover;"></video>
@@ -766,7 +751,6 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <!-- Camera Stream Box -->
                     <div class="mb-3 text-center">
                         <div id="cameraContainer" class="position-relative rounded-4 overflow-hidden bg-black mb-2" style="height: 200px; display: none; border: 1px solid rgba(255,255,255,0.2);">
                             <video id="cameraPreview" autoplay playsinline muted style="width:100%; height:100%; object-fit:cover;"></video>
@@ -1029,26 +1013,21 @@
         let followRequests = JSON.parse(localStorage.getItem('evolysium_requests') || '["@luka_creator", "@ana_vibe"]');
         let approvedUsers = JSON.parse(localStorage.getItem('evolysium_approved') || '[]');
 
-        // Auth state
         let isRegisterMode = false;
         let currentUser = JSON.parse(localStorage.getItem('evolysium_current_user') || 'null');
 
-        // Camera stream state
         let mediaStream = null;
         let univMediaStream = null;
 
-        // Notifications array
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to Evolysium platform!", "time": "Just now"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
 
-        // Inbox / Chat state
         let conversations = JSON.parse(localStorage.getItem('evolysium_conversations') || JSON.stringify([
             { id: 'c1', user: '@fashion_weekly', messages: [{ sender: '@fashion_weekly', text: 'Hey! Loved your latest story drop.', time: '10m ago' }] },
             { id: 'c2', user: '@luka_creator', messages: [{ sender: '@luka_creator', text: 'Are we collaborating on the next trend feed?', time: '1h ago' }] }
         ]));
         let activeChatId = null;
 
-        // Theme switching logic
         let currentThemeIndex = parseInt(localStorage.getItem('evolysium_theme_idx') || '0');
         const themes = ['', 'theme-matrix', 'theme-gold'];
         function applyTheme(idx) {
@@ -1061,7 +1040,6 @@
         }
         applyTheme(currentThemeIndex);
 
-        // Auth handling logic
         function updateAuthUI() {
             const labelEl = document.getElementById('authNavButtonLabel');
             if (currentUser) {
@@ -1119,7 +1097,6 @@
             event.target.reset();
         }
 
-        // Camera Live Capture Functions for Universal Create Post
         async function startUnivCamera() {
             const container = document.getElementById('univCameraContainer');
             const videoEl = document.getElementById('univCameraPreview');
@@ -1128,7 +1105,7 @@
 
             try {
                 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    throw new Error('MediaDevices API not supported in this browser environment.');
+                    throw new Error('MediaDevices API not supported.');
                 }
                 univMediaStream = await navigator.mediaDevices.getUserMedia({ 
                     video: { facingMode: 'user' }, 
@@ -1206,7 +1183,6 @@
             reader.readAsDataURL(file);
         }
 
-        // Camera Live Capture Functions for Stories
         async function startCameraFeed() {
             const container = document.getElementById('cameraContainer');
             const videoEl = document.getElementById('cameraPreview');
@@ -1231,7 +1207,7 @@
                 stopBtn.classList.remove('d-none');
             } catch (err) {
                 console.error('Camera access error:', err);
-                alert('Unable to access camera. Please check permissions or use a file URL.');
+                alert('Unable to access camera.');
             }
         }
 
@@ -1257,11 +1233,10 @@
             const dataUrl = canvas.toDataURL('image/png');
             
             document.getElementById('trailMedia').value = dataUrl;
-            alert('Snapshot captured successfully and added to your story media field!');
+            alert('Snapshot captured successfully!');
             stopCameraFeed();
         }
 
-        // Universal Feed Post / Story Submission — Integrirano s bazom i backendom!
         async function handleUniversalPostSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('univTitle').value;
@@ -1299,7 +1274,6 @@
                     modalInstance.hide();
                     event.target.reset();
 
-                    // Reload feed from backend to display the new entry instantly
                     loadBackendFeed();
                 } else {
                     alert('Server error: ' + (result.error || 'Unknown error'));
@@ -1310,7 +1284,6 @@
             }
         }
 
-        // Verified Badge Logic
         function requestVerificationBadge() {
             isVerifiedBadge = true;
             localStorage.setItem('evolysium_verified', JSON.stringify(isVerifiedBadge));
@@ -1319,7 +1292,6 @@
             alert('Verified badge granted successfully!');
         }
 
-        // Account / Profile Type Switching Logic
         function updateAccountTypeUI() {
             const badgeEl = document.getElementById('navbarProfileBadge');
             const sidebarLabel = document.getElementById('sidebarProfileTypeLabel');
@@ -1354,7 +1326,7 @@
             localStorage.setItem('evolysium_is_business', JSON.stringify(isBusinessAccount));
             updateAccountTypeUI();
             updateProfileStats();
-            alert(isBusinessAccount ? 'Switched to BUSINESS profile. Advanced statistics and tools are now available.' : 'Switched to PRIVATE profile.');
+            alert(isBusinessAccount ? 'Switched to BUSINESS profile.' : 'Switched to PRIVATE profile.');
         }
 
         const fallbackItems = [
@@ -1384,7 +1356,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                alert('Could not connect to backend server for payment. Opening modal option.');
+                alert('Could not connect to backend server for payment.');
             }
         }
 
@@ -1521,14 +1493,14 @@
             renderVibeStrip();
             renderFeed();
             addNotification('Your story was successfully published!');
-            alert('Story successfully published to your profile and feed refreshed!');
+            alert('Story successfully published!');
         }
 
         function toggleProfilePrivacy() {
             isPrivateProfile = !isPrivateProfile;
             localStorage.setItem('evolysium_is_private', JSON.stringify(isPrivateProfile));
             updateProfileStats();
-            alert(isPrivateProfile ? 'Your profile is now PRIVATE. Requests are required to view and like stories.' : 'Your profile is now PUBLIC.');
+            alert(isPrivateProfile ? 'Your profile is now PRIVATE.' : 'Your profile is now PUBLIC.');
         }
 
         function approveRequest(username) {
@@ -1680,7 +1652,6 @@
             alert('Story deleted and feed updated.');
         }
 
-        // Inbox Functions
         function renderInbox() {
             const listEl = document.getElementById('conversationsList');
             if (!listEl) return;
