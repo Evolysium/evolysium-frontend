@@ -378,6 +378,26 @@
             justify-content: center;
             transition: opacity 0.5s ease;
         }
+
+        /* MOBILE OPTIMIZATION OVERRIDES */
+        @media (max-width: 992px) {
+            .navbar .container {
+                flex-direction: column;
+                align-items: stretch !important;
+                gap: 12px;
+            }
+            .navbar .container > div:last-child {
+                justify-content: flex-start !important;
+                flex-wrap: wrap;
+                gap: 6px !important;
+                overflow-x: auto;
+                padding-bottom: 6px;
+            }
+            .social-pill {
+                padding: 6px 12px;
+                font-size: 0.78rem;
+            }
+        }
     </style>
 </head>
 <body>
