@@ -456,7 +456,7 @@
                         <span id="notificationBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(17, 14, 29, 0.98); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 290px;" id="notificationsDropdownList">
-                        <li><h6 class="dropdown-header text-info fw-bold">Turn Evolysium Notifications</h6></li>
+                        <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
                         <li><hr class="dropdown-divider border-secondary opacity-25"></li>
                         <li><span class="dropdown-item-text small text-muted">No new alerts</span></li>
                     </ul>
@@ -570,7 +570,7 @@
         <div class="social-card p-4 mb-5">
             <div class="row g-3 align-items-center mb-4">
                 <div class="col-lg-8">
-                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Search posts, tags (@user) or keywords...">
+                    <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Search posts, tags (@user) or keywords..." oninput="renderFeed()">
                 </div>
                 <div class="col-lg-4 text-lg-end">
                     <button class="btn btn-vibe px-4 py-3 w-100" onclick="loadBackendFeed()">
@@ -579,7 +579,7 @@
                 </div>
             </div>
 
-            <!-- Platform filter chips (Instagram, Reddit, X, LinkedIn uklonjeni s prikaza) -->
+            <!-- Platform filter chips -->
             <div class="d-flex flex-wrap gap-2 mb-3">
                 <button class="social-pill active" onclick="toggleSelection('platform', 'evolysium', this)"><i class="fa-solid fa-globe"></i> Evolysium</button>
                 <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> Trails & Stories</button>
@@ -1028,11 +1028,10 @@
         let feedItems = [];
         let likedItems = new Set(JSON.parse(localStorage.getItem('evolysium_likes') || '[]'));
         
-        // Uklonjeni generički filteri za platforme s vanjskih servisa, ostavljeni samo evolysium i trail
         let selectedPlatforms = ["evolysium", "trail"];
         let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
 
-        // Varijable za beskonačni scroll (infinite scroll)
+        // Infinite scroll varijable
         let displayLimit = 12;
         let isLoadingMore = false;
 
@@ -1459,6 +1458,8 @@
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             feedItems = append ? [...feedItems, ...localFeedPosts, ...mapped] : [...localFeedPosts, ...mapped];
             renderFeed();
+            renderVibeStrip();
+            renderSocialNewsDrawer();
         }
 
         function toggleLike(itemId) {
@@ -1488,7 +1489,7 @@
             list = list.includes(value) ? list.filter(item => item !== value) : [...list, value];
             if (type === 'platform') selectedPlatforms = list;
             else selectedCategories = list;
-            displayLimit = 12; // Resetuj limit kod promjene filtera
+            displayLimit = 12;
             renderFeed();
         }
 
@@ -1527,6 +1528,121 @@
             alert('Story successfully published!');
         }
 
+        function renderVibeStrip() {
+            const strip = document.getElementById('dynamic-vibe-strip');
+            if (!strip) return;
+
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            const defaultCreators = [
+                { handle: '@fashion_weekly', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', isLive: true },
+                { handle: '@creator_lab', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', isLive: false },
+                { handle: '@tech_guru', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', isLive: true },
+                { handle: '@luka_creator', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', isLive: false }
+            ];
+
+            strip.innerHTML = defaultCreators.map(c => `
+                <div class="vibe-item" onclick="openCreatorProfile('${c.handle}')">
+                    <div class="vibe-ring ${c.isLive ? 'is-live' : ''}">
+                        <img src="${c.media}">
+                    </div>
+                    <span class="small text-muted text-truncate mt-1" style="max-width: 76px; font-size: 0.72rem;">${c.handle}</span>
+                </div>
+            `).join('') + localTrails.map(t => `
+                <div class="vibe-item" onclick="openCreatorProfile('@my_profile')">
+                    <div class="vibe-ring ${t.isLive ? 'is-live' : ''}">
+                        <img src="${t.media}">
+                    </div>
+                    <span class="small text-muted text-truncate mt-1" style="max-width: 76px; font-size: 0.72rem;">@my_profile</span>
+                </div>
+            `).join('');
+        }
+
+        function renderFeed() {
+            const grid = document.getElementById('feed-grid');
+            if (!grid) return;
+
+            const searchQuery = document.getElementById('keyword-search')?.value.toLowerCase() || '';
+
+            const filtered = feedItems.filter(item => {
+                const matchesPlatform = selectedPlatforms.includes(item.platform);
+                const matchesCategory = selectedCategories.includes(item.cat);
+                const matchesSearch = !searchQuery || 
+                    item.title.toLowerCase().includes(searchQuery) || 
+                    item.creator.toLowerCase().includes(searchQuery) ||
+                    item.summary.toLowerCase().includes(searchQuery);
+                return matchesPlatform && matchesCategory && matchesSearch;
+            });
+
+            const displayedItems = filtered.slice(0, displayLimit);
+
+            if (displayedItems.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fa-solid fa-ghost text-muted fs-1 mb-3"></i>
+                        <h5 class="text-white fw-bold">No trends found</h5>
+                        <p class="text-muted small">Try adjusting your category filters or search keywords.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = displayedItems.map(item => {
+                const isLiked = likedItems.has(item.id);
+                return `
+                    <div class="col-md-4">
+                        <div class="social-card h-100 d-flex flex-column">
+                            <div class="feed-media" onclick="openCreatorProfile('${item.creator}')">
+                                ${item.mediaType === 'video' ? `
+                                    <video src="${item.media}" autoplay loop muted playsinline></video>
+                                ` : `
+                                    <img src="${item.media}" alt="${item.title}">
+                                `}
+                                <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
+                                    <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
+                                </div>
+                                <div class="trail-badge font-mono">${item.cat.toUpperCase()}</div>
+                            </div>
+                            <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
+                                <div>
+                                    <h5 class="fw-bold text-white mb-2 fs-6" style="line-height: 1.4;">${item.title}</h5>
+                                    <p class="small text-muted mb-3" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-10">
+                                    <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
+                                        <i class="fa-solid fa-heart"></i> <span id="likes-count-${item.id}">${formatLikes(item.likes)}</span>
+                                    </button>
+                                    <div class="d-flex gap-2">
+                                        <button class="social-pill py-1 px-3 fs-7" onclick="openShareModal('${item.title}', '${item.media}')">
+                                            <i class="fa-solid fa-share-nodes"></i> Share
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const loader = document.getElementById('infinite-loader');
+            if (loader) {
+                loader.style.display = displayLimit < filtered.length ? 'block' : 'none';
+            }
+        }
+
+        // Infinite Scroll Event Listener
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+                if (!isLoadingMore) {
+                    isLoadingMore = true;
+                    setTimeout(() => {
+                        displayLimit += 6;
+                        renderFeed();
+                        isLoadingMore = false;
+                    }, 400);
+                }
+            }
+        });
+
         function toggleProfilePrivacy() {
             isPrivateProfile = !isPrivateProfile;
             localStorage.setItem('evolysium_is_private', JSON.stringify(isPrivateProfile));
@@ -1556,7 +1672,7 @@
                     <div class="py-5">
                         <i class="fa-solid fa-lock text-warning fs-1 mb-3"></i>
                         <h5 class="fw-bold text-white">This Profile is Private</h5>
-                        <p class="text-melt small mb-4">Send a request to view this profile and interact with its stories.</p>
+                        <p class="text-muted small mb-4">Send a request to view this profile and interact with its stories.</p>
                         <button class="btn btn-vibe rounded-pill px-4" onclick="sendFollowRequest('${handle}')">Request Access</button>
                     </div>
                 `;
@@ -1708,38 +1824,14 @@
             if (!chat) return;
 
             document.getElementById('activeChatHeader').innerText = 'Chat with ' + chat.user;
-            const msgContainer = document.getElementById('activeChatMessages');
-            msgContainer.innerHTML = chat.messages.map(m => `
-                <div class="p-2 rounded-3 small ${m.sender === '@my_profile' ? 'ms-auto bg-primary text-white' : 'me-auto bg-dark text-light border border-secondary border-opacity-25'}" style="max-width: 80%;">
-                    <strong class="d-block text-info" style="font-size:0.65rem;">${m.sender}</strong>
-                    <div>${m.text}</div>
+            const messagesEl = document.getElementById('activeChatMessages');
+            messagesEl.innerHTML = chat.messages.map(m => `
+                <div class="p-2 rounded-3 mb-1" style="background: rgba(255,255,255,0.04); max-width: 80%;">
+                    <span class="small fw-bold text-info d-block" style="font-size:0.7rem;">${m.sender}</span>
+                    <span class="small text-white">${m.text}</span>
                 </div>
             `).join('');
-            msgContainer.scrollTop = msgContainer.scrollHeight;
             document.getElementById('chatMessageForm').classList.remove('d-none');
-        }
-
-        function openDirectChat(handle) {
-            let chat = conversations.find(c => c.user === handle);
-            if (!chat) {
-                chat = { id: 'c_' + Date.now(), user: handle, messages: [{ sender: handle, time: 'Just now', text: 'Hi! Connected via Evolysium.' }] };
-                conversations.unshift(chat);
-                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
-            }
-            const extModalEl = document.getElementById('externalProfileModal');
-            const extModal = bootstrap.Modal.getInstance(extModalEl);
-            if (extModal) extModal.hide();
-
-            const inboxEl = document.getElementById('inboxModal');
-            const inboxModal = new bootstrap.Modal(inboxEl);
-            inboxModal.show();
-            openChat(chat.id);
-        }
-
-        function startNewChatPrompt() {
-            const handle = prompt("Enter creator handle to message (e.g., @anna_style):");
-            if (!handle) return;
-            openDirectChat(handle.startsWith('@') ? handle : '@' + handle);
         }
 
         function sendChatMessage(event) {
@@ -1749,234 +1841,103 @@
             if (!text || !activeChatId) return;
 
             const chat = conversations.find(c => c.id === activeChatId);
-            if (!chat) return;
+            if (chat) {
+                chat.messages.push({ sender: currentUser ? currentUser.name : '@my_profile', text: text, time: 'Just now' });
+                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+                openChat(activeChatId);
+                input.value = '';
+            }
+        }
 
-            chat.messages.push({ sender: '@my_profile', text: text, time: 'Just now' });
+        function startNewChatPrompt() {
+            const handle = prompt('Enter creator handle to message (e.g., @fashion_weekly):');
+            if (!handle) return;
+            const newChat = { id: 'c_' + Date.now(), user: handle, messages: [{ sender: handle, text: 'Hello! Thanks for connecting on Evolysium.', time: 'Just now' }] };
+            conversations.unshift(newChat);
             localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
-            input.value = '';
-            openChat(activeChatId);
-            renderInbox();
+            openChat(newChat.id);
+        }
+
+        function openDirectChat(handle) {
+            const extModalEl = document.getElementById('externalProfileModal');
+            const extModal = bootstrap.Modal.getInstance(extModalEl);
+            if (extModal) extModal.hide();
+
+            let chat = conversations.find(c => c.user === handle);
+            if (!chat) {
+                chat = { id: 'c_' + Date.now(), user: handle, messages: [{ sender: handle, text: 'Started direct conversation.', time: 'Just now' }] };
+                conversations.unshift(chat);
+                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+            }
+            const inboxModalEl = document.getElementById('inboxModal');
+            const inboxModal = new bootstrap.Modal(inboxModalEl);
+            inboxModal.show();
+            openChat(chat.id);
         }
 
         function addNotification(text) {
             appNotifications.unshift({ text: text, time: 'Just now' });
-            unreadNotifications = true;
             localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
+            unreadNotifications = true;
             localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
-            renderNotifications();
+            updateNotificationUI();
+        }
+
+        function updateNotificationUI() {
+            const badge = document.getElementById('notificationBadgeCount');
+            const list = document.getElementById('notificationsDropdownList');
+            if (!badge || !list) return;
+
+            if (unreadNotifications) {
+                badge.style.display = 'inline-block';
+                badge.innerText = appNotifications.length;
+            } else {
+                badge.style.display = 'none';
+            }
+
+            list.innerHTML = `
+                <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
+                <li><hr class="dropdown-divider border-secondary opacity-25"></li>
+                ${appNotifications.map(n => `
+                    <li><a class="dropdown-item py-2 small text-light text-wrap" href="#">${n.text}<br><span class="text-muted" style="font-size:0.65rem;">${n.time}</span></a></li>
+                `).join('')}
+            `;
         }
 
         function markNotificationsRead() {
             unreadNotifications = false;
             localStorage.setItem('evolysium_unread', JSON.stringify(false));
-            document.getElementById('notificationBadgeCount').style.display = 'none';
-        }
-
-        function renderNotifications() {
-            const listEl = document.getElementById('notificationsDropdownList');
-            const badgeEl = document.getElementById('notificationBadgeCount');
-            if (!listEl) return;
-
-            if (unreadNotifications && appNotifications.length > 0) {
-                badgeEl.style.display = 'inline-block';
-                badgeEl.innerText = appNotifications.length;
-            } else {
-                badgeEl.style.display = 'none';
-            }
-
-            listEl.innerHTML = `
-                <li><h6 class="dropdown-header text-info fw-bold">Turn Evolysium Notifications</h6></li>
-                <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                ${appNotifications.map(n => `
-                    <li><div class="dropdown-item-text small text-light py-2 border-bottom border-secondary border-opacity-10">
-                        <div>${n.text}</div>
-                        <span class="text-muted font-mono" style="font-size:0.65rem;">${n.time}</span>
-                    </div></li>
-                `).join('')}
-            `;
-        }
-
-        function reportPost(title) {
-            alert(`Thank you. Post "${title}" has been reported for review.`);
-            addNotification(`Reported post: ${title}`);
+            updateNotificationUI();
         }
 
         function openShareModal(title, mediaUrl) {
-            document.getElementById('shareLinkInput').value = window.location.origin + '?share=' + encodeURIComponent(title);
-            const shareModalEl = document.getElementById('shareModal');
-            const shareModal = bootstrap.Modal.getInstance(shareModalEl) || new bootstrap.Modal(shareModalEl);
-            shareModal.show();
+            const shareUrl = window.location.href.split('#')[0] + '?post=' + encodeURIComponent(title);
+            document.getElementById('shareLinkInput').value = shareUrl;
+            const modal = new bootstrap.Modal(document.getElementById('shareModal'));
+            modal.show();
         }
 
         function copyShareLink() {
             const input = document.getElementById('shareLinkInput');
             input.select();
             navigator.clipboard.writeText(input.value);
-            alert('Post link copied!');
+            alert('Post link copied to clipboard!');
         }
 
         function triggerShareAction(platform) {
-            alert('Post successfully shared to ' + platform + '!');
-            const shareModalEl = document.getElementById('shareModal');
-            const shareModal = bootstrap.Modal.getInstance(shareModalEl);
-            if (shareModal) shareModal.hide();
+            alert('Sharing link via ' + platform + ' successfully triggered!');
         }
 
-        function renderVibeStrip() {
-            const strip = document.getElementById('dynamic-vibe-strip');
-            if (!strip) return;
-            const sampleCreators = [
-                { handle: '@fashion_weekly', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true },
-                { handle: '@ig_architecture', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: false },
-                { handle: '@luka_creator', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false },
-                { handle: '@ana_vibe', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900', mediaType: 'image', isLive: true }
-            ];
-
-            const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            const combinedCreators = [
-                { handle: '@my_profile', img: localTrails[0]?.media || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: localTrails[0]?.mediaType || 'image', isLive: localTrails[0]?.isLive || false },
-                ...sampleCreators
-            ];
-
-            strip.innerHTML = combinedCreators.map((c) => `
-                <div class="vibe-item" onclick="openCreatorProfile('${c.handle}')">
-                    <div class="vibe-ring ${c.isLive ? 'is-live' : ''}">
-                        ${c.mediaType === 'video' ? `
-                            <video src="${c.img}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" muted autoplay loop playsinline></video>
-                        ` : `
-                            <img src="${c.img}" alt="Story">
-                        `}
-                    </div>
-                    <span class="small mt-1 text-light text-truncate" style="max-width:74px; opacity:0.8;">${c.handle.replace('@','')}</span>
-                </div>
-            `).join('');
-        }
-
-        function renderFeed() {
+        // Inicijalizacija aplikacije pri učitavanju
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            updateAccountTypeUI();
+            updateNotificationUI();
+            renderInbox();
             renderVibeStrip();
             renderSocialNewsDrawer();
-            renderNotifications();
-            renderInbox();
-            const query = document.getElementById('keyword-search')?.value.toLowerCase().trim() || '';
-            const grid = document.getElementById('feed-grid');
-            if (!grid) return;
-
-            const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]').map(t => ({
-                id: t.id,
-                creator: '@my_profile',
-                title: t.title,
-                cat: 'story',
-                platform: 'trail',
-                likes: t.likes,
-                comments: '0',
-                media: t.media,
-                mediaType: t.mediaType,
-                summary: 'User published story stream.',
-                tags: ['@story'],
-                music: t.music,
-                isLive: t.isLive,
-                isPrivate: t.isPrivate,
-                isTrail: true
-            }));
-
-            const combinedFeed = [...localTrails, ...feedItems];
-
-            const filtered = combinedFeed.filter(item => {
-                const matchPlatform = selectedPlatforms.includes(item.platform);
-                const matchCat = selectedCategories.includes(item.cat);
-                const matchQuery = !query || item.title.toLowerCase().includes(query) || item.creator.toLowerCase().includes(query) || (item.tags && item.tags.some(t => t.toLowerCase().includes(query)));
-                return matchPlatform && matchCat && matchQuery;
-            });
-
-            // Ograničavanje prikaza na trenutni displayLimit (beskonačni skrol)
-            const paginatedItems = filtered.slice(0, displayLimit);
-
-            grid.innerHTML = paginatedItems.map(item => {
-                const isLiked = likedItems.has(item.id);
-                const tagsHtml = item.tags && item.tags.length ? `<div class="mb-2">${item.tags.map(tag => `<span class="badge bg-dark border border-secondary text-info me-1" style="font-size:0.68rem;">${tag}</span>`).join('')}</div>` : '';
-                const musicHtml = item.music ? `<div class="small text-muted mb-2 font-mono" style="font-size:0.75rem;"><i class="fa-solid fa-music me-1 text-pink"></i>${item.music}</div>` : '';
-
-                return `
-                    <div class="col-md-6 col-lg-4">
-                        <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media">
-                                ${item.mediaType === 'video' ? `
-                                    <video src="${item.media}" style="width: 100%; height: 100%; object-fit: cover;" controls autoplay loop muted playsinline></video>
-                                ` : `
-                                    <img src="${item.media}" alt="Media" onclick="openCreatorProfile('${item.creator}')">
-                                `}
-                                <div class="creator-tag" onclick="openCreatorProfile('${item.creator}')">
-                                    <i class="fa-solid fa-circle-user" style="color:var(--pink-pop)"></i> ${item.creator} ${isVerifiedBadge ? '<i class="fa-solid fa-circle-check text-warning ms-1" style="font-size:0.7rem;"></i>' : ''}
-                                </div>
-                                <span class="trail-badge" style="background: rgba(0, 240, 255, 0.75);">${item.isPrivate ? '🔒 PRIVATE' : '🌐 PUBLIC'}</span>
-                            </div>
-                            <div class="card-body p-4 d-flex flex-column flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge rounded-pill bg-dark border border-secondary text-secondary small text-uppercase font-mono">${item.platform}</span>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <span class="small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-fire text-warning me-1"></i>${item.cat}</span>
-                                        <button class="btn btn-sm text-muted p-0" onclick="reportPost('${item.title}')" title="Report Post"><i class="fa-solid fa-flag" style="font-size:0.75rem;"></i></button>
-                                    </div>
-                                </div>
-                                <h5 class="fw-bold text-white mb-2" style="font-size: 1.05rem;">${item.title}</h5>
-                                ${musicHtml}
-                                ${tagsHtml}
-                                <p class="text-melt small mb-3 flex-grow-1">${item.summary}</p>
-                                <div class="d-flex justify-content-between align-items-center pt-2 border-top border-white border-opacity-10">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
-                                            <i class="fa-${isLiked ? 'solid' : 'regular'} fa-heart"></i>
-                                            <span>${formatLikes(item.likes)}</span>
-                                        </button>
-                                        <button class="like-btn" onclick="openShareModal('${item.title}', '${item.media}')" title="Share">
-                                            <i class="fa-solid fa-share-nodes"></i>
-                                        </button>
-                                    </div>
-                                    <span class="small font-mono text-muted"><i class="fa-regular fa-comment me-1"></i>${item.comments}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            // Prikaz ili sakrivanje loader indikatora za beskonačni skrol
-            const loaderEl = document.getElementById('infinite-loader');
-            if (loaderEl) {
-                loaderEl.style.display = displayLimit < filtered.length ? 'block' : 'none';
-            }
-        }
-
-        // Listener za beskonačni skrol (automatsko učitavanje novih stavki pri dnu stranice)
-        window.addEventListener('scroll', () => {
-            if (isLoadingMore) return;
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
-                isLoadingMore = true;
-                const loaderEl = document.getElementById('infinite-loader');
-                if (loaderEl) loaderEl.style.display = 'block';
-                
-                setTimeout(() => {
-                    displayLimit += 6; // Dodaj još 6 elemenata na feed
-                    renderFeed();
-                    isLoadingMore = false;
-                    if (loaderEl) loaderEl.style.display = 'none';
-                }, 600);
-            }
-        });
-
-        document.getElementById('keyword-search')?.addEventListener('input', () => {
-            displayLimit = 12;
-            renderFeed();
-        });
-        
-        document.addEventListener("DOMContentLoaded", () => {
             loadBackendFeed();
-            updateAccountTypeUI();
-            updateAuthUI();
-            renderInbox();
-            renderNotifications();
         });
-
     </script>
 </body>
 </html>
