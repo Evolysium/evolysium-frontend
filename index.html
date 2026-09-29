@@ -1690,23 +1690,24 @@
             document.getElementById('inboxBadgeCount').innerText = conversations.length;
         }
 
-        function openChat(chatId) {
+                function openChat(chatId) {
             activeChatId = chatId;
             renderInbox();
             const chat = conversations.find(c => c.id === chatId);
             if (!chat) return;
 
-            document.getElementById('activeChatHeader').innerText = 'Conversation with ' + chat.user;
+            document.getElementById('activeChatHeader').innerText = 'Chat with ' + chat.user;
             const msgContainer = document.getElementById('activeChatMessages');
             msgContainer.innerHTML = chat.messages.map(m => `
-                <div class="p-2 rounded-3 small ${m.sender === '@my_profile' ? 'ms-auto bg-primary bg-opacity-25 text-white' : 'me-auto bg-dark border border-secondary border-opacity-25 text-light'}" style="max-width: 80%;">
+                <div class="p-2 rounded-3 small ${m.sender === '@my_profile' ? 'ms-auto bg-primary text-white' : 'me-auto bg-dark text-light border border-secondary border-opacity-25'}" style="max-width: 80%;">
+                    <strong class="d-block text-info" style="font-size:0.65rem;">${m.sender}</strong>
                     <div>${m.text}</div>
-                    <span class="text-muted font-mono d-block text-end" style="font-size:0.6rem;">${m.time}</span>
                 </div>
             `).join('');
             msgContainer.scrollTop = msgContainer.scrollHeight;
             document.getElementById('chatMessageForm').classList.remove('d-none');
         }
+
 
         function openDirectChat(handle) {
             let chat = conversations.find(c => c.user === handle);
@@ -1929,11 +1930,14 @@
 
         document.getElementById('keyword-search')?.addEventListener('input', renderFeed);
         
-        document.addEventListener("DOMContentLoaded", () => {
+                document.addEventListener("DOMContentLoaded", () => {
             loadBackendFeed();
             updateAccountTypeUI();
             updateAuthUI();
+            renderInbox();
+            renderNotifications();
         });
+
     </script>
 </body>
 </html>
