@@ -579,14 +579,10 @@
                 </div>
             </div>
 
-            <!-- Platform filter chips -->
+            <!-- Platform filter chips (Instagram, Reddit, X, LinkedIn uklonjeni s prikaza) -->
             <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="social-pill active" onclick="toggleSelection('platform', 'tiktok', this)"><i class="fa-brands fa-tiktok"></i> TikTok</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'instagram', this)"><i class="fa-brands fa-instagram"></i> Instagram</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'x', this)"><i class="fa-brands fa-x-twitter"></i> X / Twitter</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'reddit', this)"><i class="fa-brands fa-reddit-alien"></i> Reddit</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'linkedin', this)"><i class="fa-brands fa-linkedin"></i> LinkedIn</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> Trails</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'evolysium', this)"><i class="fa-solid fa-globe"></i> Evolysium</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> Trails & Stories</button>
             </div>
 
             <!-- Categories -->
@@ -595,7 +591,7 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'tech', this)">💻 Tech & AI</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'lifestyle', this)">⚡ Lifestyle</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'fitness', this)">🏋️‍♂️ Fitness & Health</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'travel', this)">✈️️ Travel & Nature</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'travel', this)">✈ Travel & Nature</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'food', this)">🍔 Food & Recipe</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand', this)">📢 Brand / Ads</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
@@ -613,6 +609,14 @@
 
         <!-- Feed Grid -->
         <div id="feed-grid" class="row g-4"></div>
+        
+        <!-- Infinite scroll loader indicator -->
+        <div id="infinite-loader" class="text-center py-4" style="display: none;">
+            <div class="spinner-border text-pink" role="status">
+                <span class="visually-hidden">Loading more...</span>
+            </div>
+            <p class="small text-muted mt-2 font-mono">Loading more stories into your feed...</p>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -1023,8 +1027,14 @@
         const API_FEED_URL = `${API_BASE_URL}/api/feed`;
         let feedItems = [];
         let likedItems = new Set(JSON.parse(localStorage.getItem('evolysium_likes') || '[]'));
-        let selectedPlatforms = ["tiktok", "instagram", "reddit", "x", "linkedin", "trail"];
+        
+        // Uklonjeni generički filteri za platforme s vanjskih servisa, ostavljeni samo evolysium i trail
+        let selectedPlatforms = ["evolysium", "trail"];
         let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
+
+        // Varijable za beskonačni scroll (infinite scroll)
+        let displayLimit = 12;
+        let isLoadingMore = false;
 
         let isPrivateProfile = JSON.parse(localStorage.getItem('evolysium_is_private') || 'false');
         let isBusinessAccount = JSON.parse(localStorage.getItem('evolysium_is_business') || 'false');
@@ -1350,14 +1360,14 @@
         }
 
         const fallbackItems = [
-            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'instagram', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
-            { id: 'f2', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
+            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'evolysium', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
+            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'evolysium', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
         ];
 
         const socialNewsSignals = [
-            { platform: 'x', handle: '@sama', badge: 'AI LABS', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '4m ago', tag: '#AGI' },
-            { platform: 'reddit', handle: 'r/designsystems', badge: 'UI/UX', text: 'Glassmorphism 3.0 specs dropping: noise-diffusion shaders with zero GPU stutter on mobile viewports.', time: '19m ago', tag: '#Frontend' },
-            { platform: 'linkedin', handle: '@sarah_chen', badge: 'VENTURE', text: 'Cross-platform algorithmic aggregators are outperforming native platform discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
+            { platform: 'evolysium', handle: '@sama', badge: 'AI LABS', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '4m ago', tag: '#AGI' },
+            { platform: 'evolysium', handle: '@designsystems', badge: 'UI/UX', text: 'Glassmorphism 3.0 specs dropping: noise-diffusion shaders with zero GPU stutter on mobile viewports.', time: '19m ago', tag: '#Frontend' },
+            { platform: 'evolysium', handle: '@sarah_chen', badge: 'VENTURE', text: 'Cross-platform algorithmic aggregators are outperforming native platform discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
         ];
 
         async function startStripeCheckout(tier) {
@@ -1433,7 +1443,7 @@
                 creator: item.source || item.creator || '@alpha_validator',
                 title: item.title || 'Public Post',
                 cat: item.category || item.cat || 'trending',
-                platform: (item.platform || 'tiktok').toLowerCase(),
+                platform: 'evolysium',
                 likes: parseLikeCount(item.likes),
                 comments: item.comments || '142',
                 media: item.img_url || item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
@@ -1478,6 +1488,7 @@
             list = list.includes(value) ? list.filter(item => item !== value) : [...list, value];
             if (type === 'platform') selectedPlatforms = list;
             else selectedCategories = list;
+            displayLimit = 12; // Resetuj limit kod promjene filtera
             renderFeed();
         }
 
@@ -1690,7 +1701,7 @@
             document.getElementById('inboxBadgeCount').innerText = conversations.length;
         }
 
-                function openChat(chatId) {
+        function openChat(chatId) {
             activeChatId = chatId;
             renderInbox();
             const chat = conversations.find(c => c.id === chatId);
@@ -1707,7 +1718,6 @@
             msgContainer.scrollTop = msgContainer.scrollHeight;
             document.getElementById('chatMessageForm').classList.remove('d-none');
         }
-
 
         function openDirectChat(handle) {
             let chat = conversations.find(c => c.user === handle);
@@ -1878,7 +1888,10 @@
                 return matchPlatform && matchCat && matchQuery;
             });
 
-            grid.innerHTML = filtered.map(item => {
+            // Ograničavanje prikaza na trenutni displayLimit (beskonačni skrol)
+            const paginatedItems = filtered.slice(0, displayLimit);
+
+            grid.innerHTML = paginatedItems.map(item => {
                 const isLiked = likedItems.has(item.id);
                 const tagsHtml = item.tags && item.tags.length ? `<div class="mb-2">${item.tags.map(tag => `<span class="badge bg-dark border border-secondary text-info me-1" style="font-size:0.68rem;">${tag}</span>`).join('')}</div>` : '';
                 const musicHtml = item.music ? `<div class="small text-muted mb-2 font-mono" style="font-size:0.75rem;"><i class="fa-solid fa-music me-1 text-pink"></i>${item.music}</div>` : '';
@@ -1926,11 +1939,37 @@
                     </div>
                 `;
             }).join('');
+
+            // Prikaz ili sakrivanje loader indikatora za beskonačni skrol
+            const loaderEl = document.getElementById('infinite-loader');
+            if (loaderEl) {
+                loaderEl.style.display = displayLimit < filtered.length ? 'block' : 'none';
+            }
         }
 
-        document.getElementById('keyword-search')?.addEventListener('input', renderFeed);
+        // Listener za beskonačni skrol (automatsko učitavanje novih stavki pri dnu stranice)
+        window.addEventListener('scroll', () => {
+            if (isLoadingMore) return;
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+                isLoadingMore = true;
+                const loaderEl = document.getElementById('infinite-loader');
+                if (loaderEl) loaderEl.style.display = 'block';
+                
+                setTimeout(() => {
+                    displayLimit += 6; // Dodaj još 6 elemenata na feed
+                    renderFeed();
+                    isLoadingMore = false;
+                    if (loaderEl) loaderEl.style.display = 'none';
+                }, 600);
+            }
+        });
+
+        document.getElementById('keyword-search')?.addEventListener('input', () => {
+            displayLimit = 12;
+            renderFeed();
+        });
         
-                document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             loadBackendFeed();
             updateAccountTypeUI();
             updateAuthUI();
