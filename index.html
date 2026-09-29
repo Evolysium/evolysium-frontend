@@ -6,7 +6,7 @@
     <title>Evolysium — Discover What's Popping Right Now</title>
 
     <meta name="title" content="Evolysium — Social Vibe & Trend Discovery">
-    <meta name="description" content="Your daily pulse of viral trends, creator trails, and multi-platform moments.">
+    <meta name="description" content="Your daily pulse of viral trends, creator trails, and autonomous platform moments.">
 
     <!-- Frameworks & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -438,11 +438,12 @@
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#createPostModal" title="Create Post or Story">
-                    <i class="fa-solid fa-plus"></i> Create
+                <!-- Oključene neograničene objave i priče -->
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#createPostModal" title="Unlimited Post Creator">
+                    <i class="fa-solid fa-plus"></i> Create Post (<span class="text-warning">Unlimited</span>)
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal">
-                    <i class="fa-solid fa-plus-circle"></i> Drop Story
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal" title="Unlimited Story Drop">
+                    <i class="fa-solid fa-plus-circle"></i> Drop Story (<span class="text-warning">Unlimited</span>)
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
                     <i class="fa-solid fa-user-gear text-info"></i> My Profile <span id="verifiedBadgeIcon" class="text-warning ms-1" style="display:none;" title="Verified Profile"><i class="fa-solid fa-circle-check"></i></span>
@@ -579,10 +580,10 @@
                 </div>
             </div>
 
-            <!-- Platform filter chips -->
+            <!-- Platform filter chips (Očišćeno od vanjskih mreža) -->
             <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="social-pill active" onclick="toggleSelection('platform', 'evolysium', this)"><i class="fa-solid fa-globe"></i> Evolysium</button>
-                <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> Trails & Stories</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'evolysium', this)"><i class="fa-solid fa-globe"></i> Evolysium Ecosystem</button>
+                <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> Native Trails & Stories</button>
             </div>
 
             <!-- Categories -->
@@ -624,7 +625,7 @@
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
             <div class="d-flex align-items-center gap-2">
                 <span class="brand-name fw-bold text-white">Evolysium</span>
-                <span style="color: rgba(255,255,255,0.5);" class="small">© All Rights Reserved.</span>
+                <span style="color: rgba(255,255,255,0.5);" class="small">© All Rights Reserved. Unlimited Ecosystem.</span>
             </div>
             <div class="d-flex align-items-center gap-4 small">
                 <a href="#">Privacy Policy</a>
@@ -705,12 +706,12 @@
         </div>
     </div>
 
-    <!-- Create Post Modal -->
+    <!-- Create Post Modal (Unlimited Posts) -->
     <div class="modal fade" id="createPostModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-2"></i>Create Feed Post / Story</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-2"></i>Create Unlimited Post / Story</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -734,8 +735,8 @@
                         <div class="mb-3">
                             <label class="form-label small text-muted">Publish Destination</label>
                             <select id="univDestination" class="form-control auth-input text-white">
-                                <option value="feed">⚡ Public / Private Feed</option>
-                                <option value="story">📖 Story Strip</option>
+                                <option value="feed">⚡ Public / Private Feed (Unlimited)</option>
+                                <option value="story">📖 Story Strip (Unlimited)</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -759,19 +760,19 @@
                             </div>
                             <input type="url" id="univMediaUrl" class="form-control auth-input" placeholder="https://images.unsplash.com/... or snapshot" required>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish to Platform</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Unlimited Post</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Drop Story Modal -->
+    <!-- Drop Story Modal (Unlimited Stories) -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.92); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Drop a New Story (Camera / Upload File)</h4>
+                    <h4 class="fw-bold mb-0">Drop Unlimited Story (Camera / File)</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -830,11 +831,11 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Upload Image/Video from Device or Snapshot Link</label>
+                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Upload Image/Video from Device or Link</label>
                             <input type="file" id="trailDeviceFile" class="form-control auth-input form-control-sm mb-2" accept="image/*,video/*" onchange="handleTrailFileUpload(event)">
                             <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/... or uploaded file" required>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Story</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Unlimited Story</button>
                     </form>
                 </div>
             </div>
@@ -919,7 +920,7 @@
         </div>
     </div>
 
-    <!-- Share Modal -->
+    <!-- Share Modal (Očišćeno od vanjskih društvenih mreža, zadržani interne poveznice i chat) -->
     <div class="modal fade" id="shareModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.94); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -928,12 +929,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4 text-center">
-                    <p class="text-melt small mb-4">Send this post to friends across platforms:</p>
-                    <div class="d-flex justify-content-center gap-3 mb-4">
-                        <button class="btn btn-success rounded-pill px-4 py-2" onclick="triggerShareAction('WhatsApp')"><i class="fa-brands fa-whatsapp me-2"></i> WhatsApp</button>
-                        <button class="btn btn-dark rounded-pill px-4 py-2 border border-secondary" onclick="triggerShareAction('TikTok')"><i class="fa-brands fa-tiktok me-2"></i> TikTok DM</button>
-                        <button class="btn btn-danger rounded-pill px-4 py-2" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743);" onclick="triggerShareAction('Instagram')"><i class="fa-brands fa-instagram me-2"></i> IG Direct</button>
-                    </div>
+                    <p class="text-melt small mb-4">Share this post internally within the Evolysium network:</p>
                     <div class="input-group">
                         <input type="text" id="shareLinkInput" class="form-control auth-input" readonly>
                         <button class="btn btn-vibe" onclick="copyShareLink()">Copy Link</button>
@@ -960,8 +956,8 @@
                                     <h5>Free Starter</h5>
                                     <h3 class="fw-bold my-2">€0 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
-                                        <li><i class="fa-solid fa-check"></i> Access to global public feed</li>
-                                        <li><i class="fa-solid fa-check"></i> Basic story viewing</li>
+                                        <li><i class="fa-solid fa-check"></i> Unlimited public feed access</li>
+                                        <li><i class="fa-solid fa-check"></i> Unlimited story viewing</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-outline-light w-100 rounded-pill py-2 mt-3" disabled>Current Base</button>
@@ -993,7 +989,7 @@
                                         <li><i class="fa-solid fa-check"></i> Priority public post placement</li>
                                         <li><i class="fa-solid fa-check"></i> Advanced story analytics & stats</li>
                                         <li><i class="fa-solid fa-check"></i> Business profile badge activation</li>
-                                        <li><i class="fa-solid fa-check"></i> Extended multi-platform stream reach</li>
+                                        <li><i class="fa-solid fa-check"></i> Unlimited autonomous stream reach</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-vibe w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('business')">Unlock Access</button>
@@ -1031,7 +1027,6 @@
         let selectedPlatforms = ["evolysium", "trail"];
         let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
 
-        // Infinite scroll varijable
         let displayLimit = 12;
         let isLoadingMore = false;
 
@@ -1280,7 +1275,7 @@
                 platform: destination === 'story' ? 'trail' : 'evolysium',
                 category: category,
                 title: title,
-                summary: `User published ${destination} (${privacy})`,
+                summary: `User published unlimited ${destination} (${privacy})`,
                 img_url: mediaUrl,
                 video_url: mediaType === 'video' ? mediaUrl : '',
                 is_story: destination === 'story'
@@ -1295,8 +1290,8 @@
 
                 const result = await response.json();
                 if (response.ok && result.success !== false) {
-                    addNotification('New post successfully published to database!');
-                    alert('Successfully published! The post is now saved and visible on the feed.');
+                    addNotification('Unlimited post successfully published!');
+                    alert('Successfully published! Unlimited post is now saved and visible on the feed.');
 
                     const modalEl = document.getElementById('createPostModal');
                     const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
@@ -1344,7 +1339,7 @@
                 if (sidebarLabel) sidebarLabel.innerText = 'Business Profile';
                 if (accountStatusText) accountStatusText.innerText = 'Current: Business Profile (Analytics enabled)';
             } else {
-                if (badgeEl) { badgeEl.innerText = 'PRIVATE / PUBLIC'; badgeEl.style.background = 'var(--pink-pop)'; badgeEl.style.color = '#fff'; }
+                if (badgeEl) { badgeEl.innerText = 'UNLIMITED FEED'; badgeEl.style.background = 'var(--pink-pop)'; badgeEl.style.color = '#fff'; }
                 if (sidebarLabel) sidebarLabel.innerText = 'Private Profile';
                 if (accountStatusText) accountStatusText.innerText = 'Current: Private Profile';
             }
@@ -1366,7 +1361,7 @@
         const socialNewsSignals = [
             { platform: 'evolysium', handle: '@sama', badge: 'AI LABS', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '4m ago', tag: '#AGI' },
             { platform: 'evolysium', handle: '@designsystems', badge: 'UI/UX', text: 'Glassmorphism 3.0 specs dropping: noise-diffusion shaders with zero GPU stutter on mobile viewports.', time: '19m ago', tag: '#Frontend' },
-            { platform: 'evolysium', handle: '@sarah_chen', badge: 'VENTURE', text: 'Cross-platform algorithmic aggregators are outperforming native platform discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
+            { platform: 'evolysium', handle: '@sarah_chen', badge: 'VENTURE', text: 'Autonomous algorithmic aggregators are outperforming legacy discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
         ];
 
         async function startStripeCheckout(tier) {
@@ -1524,8 +1519,8 @@
             event.target.reset();
             renderVibeStrip();
             renderFeed();
-            addNotification('Your story was successfully published!');
-            alert('Story successfully published!');
+            addNotification('Your unlimited story was successfully published!');
+            alert('Unlimited story successfully published!');
         }
 
         function renderVibeStrip() {
@@ -1629,7 +1624,6 @@
             }
         }
 
-        // Infinite Scroll Event Listener
         window.addEventListener('scroll', () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
                 if (!isLoadingMore) {
@@ -1924,11 +1918,6 @@
             alert('Post link copied to clipboard!');
         }
 
-        function triggerShareAction(platform) {
-            alert('Sharing link via ' + platform + ' successfully triggered!');
-        }
-
-        // Inicijalizacija aplikacije pri učitavanju
         document.addEventListener('DOMContentLoaded', () => {
             updateAuthUI();
             updateAccountTypeUI();
