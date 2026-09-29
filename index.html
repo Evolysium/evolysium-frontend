@@ -378,7 +378,6 @@
             transition: opacity 0.5s ease;
         }
 
-        /* Osiguranje vidljivosti notifikacija i popovera iznad stranice (z-index sustav) */
         .dropdown-menu {
             z-index: 99999 !important;
         }
@@ -631,7 +630,7 @@
 
     <!-- Modals -->
 
-    <!-- Story Full View Modal (Functional Likes, Comments & Trends) -->
+    <!-- Story Full View Modal -->
     <div class="modal fade" id="storyViewModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(12, 10, 21, 0.98); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
@@ -652,7 +651,6 @@
                         <video id="storyModalVideo" src="" autoplay loop muted playsinline style="max-width:100%; max-height:400px; object-fit:contain; display:none;"></video>
                     </div>
                     
-                    <!-- Stvarni interaktivni lajkovi i komentari unutar storyja -->
                     <div class="d-flex justify-content-between align-items-center px-2 mb-3">
                         <span class="small font-mono text-info" id="storyModalMusic"><i class="fa-solid fa-music me-1"></i> Original Audio</span>
                         <div class="d-flex gap-2">
@@ -677,7 +675,7 @@
         </div>
     </div>
 
-    <!-- Sign In / Register Modal (Funkcionalna registracija i prijava) -->
+    <!-- Sign In / Register Modal -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -711,7 +709,7 @@
         </div>
     </div>
 
-    <!-- Inbox Modal (Stvarni i funkcionalni zahtjevi i chat) -->
+    <!-- Inbox Modal -->
     <div class="modal fade" id="inboxModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -746,7 +744,7 @@
         </div>
     </div>
 
-    <!-- Invite Modal (Nova opcija: Pozovi prijatelje na registraciju i pretplatu) -->
+    <!-- Invite Modal -->
     <div class="modal fade" id="inviteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -906,7 +904,7 @@
         </div>
     </div>
 
-    <!-- User Profile Modal (Privatan/poslovan profil sa svim statistikama, pratiteljima, lajkovima i zahtjevima) -->
+    <!-- User Profile Modal -->
     <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.94); backdrop-filter: blur(25px); border-radius: 32px; border: 1px solid rgba(255,255,255,0.12);">
@@ -1077,6 +1075,7 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_BASE_URL = 'https://evolysium-backend.onrender.com';
@@ -1090,7 +1089,6 @@
         let displayLimit = 12;
         let isLoadingMore = false;
 
-        // Upravljanje pretplatom i restrikcijama
         let currentSubscription = JSON.parse(localStorage.getItem('evolysium_subscription') || '{"type": "Free", "active": false}');
         let isPrivateProfile = JSON.parse(localStorage.getItem('evolysium_is_private') || 'false');
         let isBusinessAccount = JSON.parse(localStorage.getItem('evolysium_is_business') || 'false');
@@ -1105,7 +1103,6 @@
         let mediaStream = null;
         let univMediaStream = null;
 
-        // Sustav obavijesti i newslettera
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Dobrodošli na Evolysium! Newsletter obavijesti su aktivirane.", "time": "Upravo sada"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
 
@@ -1141,7 +1138,7 @@
                 if (membershipLabel) membershipLabel.innerText = currentSubscription.type + ' (Pretplata)';
                 if (profileMemberText) profileMemberText.innerText = currentSubscription.type + ' pretplata aktivna ✓';
             } else {
-                if (membershipLabel) membershipLabel.innerText = currentUser ? 'Free Registered' Neki : 'Neregistrirani posjetitelj';
+                if (membershipLabel) membershipLabel.innerText = currentUser ? 'Free Registered' : 'Neregistrirani posjetitelj';
                 if (profileMemberText) profileMemberText.innerText = currentUser ? 'Besplatno registrirani (Ograničeno)' : 'Niste prijavljeni';
             }
         }
@@ -1170,12 +1167,11 @@
             }
         }
 
-        // 2. Stvarna i funkcionalna registracija s newsletter notifikacijom na mail
         function handleAuthSubmit(event) {
             event.preventDefault();
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
-            const name = document.getElementById('authName'].value || '@user_' + Math.floor(Math.random() * 1000);
+            const name = document.getElementById('authName').value || '@user_' + Math.floor(Math.random() * 1000);
 
             if (isRegisterMode) {
                 currentUser = { email, name };
@@ -1196,7 +1192,6 @@
             event.target.reset();
         }
 
-        // 1. Provjera restrikcija za registrirane i pretplaćene korisnike
         function checkPostPermission() {
             if (!currentUser) {
                 alert('Morate biti registrirani da biste objavljivali sadržaj!');
@@ -1240,7 +1235,6 @@
             bootstrap.Modal.getInstance(document.getElementById('pricingModal')).hide();
         }
 
-        // 6. Slanje pozivnica prijateljima
         function sendEmailInvite() {
             const email = document.getElementById('inviteEmailInput').value;
             if (!email) {
@@ -1505,7 +1499,6 @@
             alert('Story uspješno objavljen!');
         }
 
-        // 9. Stvarni i funkcionalni lajkovi i komentari u trendovima na storyjima
         function openStoryViewer(storyData) {
             activeStoryModalItem = storyData;
             document.getElementById('storyModalCreatorHandle').innerText = storyData.creator || storyData.handle || '@creator';
@@ -1551,7 +1544,7 @@
                 ];
             }
             listEl.innerHTML = activeStoryModalItem.commentsList.map(c => `
-                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-2pis small">
+                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 small">
                     <span class="fw-bold text-info">${c.user}:</span> <span class="text-white">${c.text}</span>
                 </div>
             `).join('');
@@ -1651,154 +1644,156 @@
                     <p class="small text-melt mb-2" style="font-size:0.83rem; line-height: 1.4;">${n.text}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="font-mono text-secondary" style="font-size:0.7rem;">${n.tag} Click to view 🔍</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-muted" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-arrow-trend-up text-pink"></i>
                     </div>
                 </div>
             `).join('');
         }
 
+        function processIncomingItems(items, prepend = false) {
+            if (!Array.isArray(items)) return;
+            const normalized = items.map(item => ({
+                id: item.id || 'item_' + Math.random(),
+                source: item.source || item.creator || '@creator',
+                title: item.title || item.text || 'Untitled Post',
+                category: item.category || item.cat || 'trending',
+                platform: item.platform || 'trail',
+                likes: item.likes || Math.floor(Math.random() * 500) + 20,
+                comments: item.comments || Math.floor(Math.random() * 40) + 2,
+                img_url: item.img_url || item.media || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900',
+                video_url: item.video_url || '',
+                summary: item.summary || 'Evolysium network trend update.',
+                tags: item.tags || ['@vibe', '#trending'],
+                isPrivate: item.isPrivate || false
+            }));
+
+            if (prepend) {
+                feedItems = [...normalized, ...feedItems];
+            } else {
+                feedItems = [...feedItems, ...normalized];
+            }
+            renderFeed();
+        }
+
         async function loadBackendFeed() {
             try {
                 const response = await fetch(API_FEED_URL);
-                if (!response.ok) throw new Error('Network error');
+                if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
-                processIncomingItems(data?.items?.length ? data.items : fallbackItems, false);
-            } catch (error) {
-                processIncomingItems(fallbackItems, false);
+                if (Array.isArray(data) && data.length > 0) {
+                    processIncomingItems(data);
+                } else {
+                    processIncomingItems(fallbackItems);
+                }
+            } catch (e) {
+                console.log("Backend offline or unreachable, loading fallback & local posts.");
+                let localPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+                processIncomingItems([...localPosts, ...fallbackItems]);
             } finally {
                 const preloader = document.getElementById('app-preloader');
                 if (preloader) {
                     preloader.style.opacity = '0';
-                    setTimeout(() => preloader.style.display = 'none', 500);
+                    setTimeout(() => preloader.remove(), 500);
                 }
             }
         }
 
-        function parseLikeCount(val) {
-            if (typeof val === 'number') return val;
-            if (typeof val === 'string') {
-                const clean = val.toLowerCase().replace(/k/g, '000').replace(/m/g, '000000').replace(/[^0-9.]/g, '');
-                return parseFloat(clean) || 0;
+        function toggleSelection(type, value, btnEl) {
+            if (type === 'platform') {
+                if (selectedPlatforms.includes(value)) {
+                    if (selectedPlatforms.length > 1) {
+                        selectedPlatforms = selectedPlatforms.filter(p => p !== value);
+                        btnEl.classList.remove('active');
+                    }
+                } else {
+                    selectedPlatforms.push(value);
+                    btnEl.classList.add('active');
+                }
+            } else if (type === 'category') {
+                if (selectedCategories.includes(value)) {
+                    if (selectedCategories.length > 1) {
+                        selectedCategories = selectedCategories.filter(c => c !== value);
+                        btnEl.classList.remove('active');
+                    }
+                } else {
+                    selectedCategories.push(value);
+                    btnEl.classList.add('active');
+                }
             }
-            return 120;
-        }
-
-        function processIncomingItems(items, append = false) {
-            const mapped = items.map((item, idx) => ({
-                id: item.id || ('item_' + Date.now() + '_' + idx),
-                creator: item.source || item.creator || '@alpha_validator',
-                title: item.title || 'Public Post',
-                cat: item.category || item.cat || 'trending',
-                platform: item.platform || 'trail',
-                likes: parseLikeCount(item.likes),
-                comments: item.comments || '142',
-                media: item.img_url || item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
-                mediaType: item.mediaType || (item.video_url ? 'video' : 'image'),
-                summary: item.summary || 'Global trend post overview.',
-                tags: item.tags || [],
-                music: item.music || 'Original Audio',
-                isLive: item.isLive || false,
-                isPrivate: item.isPrivate || false,
-                isTrail: item.isTrail || false
-            }));
-            
-            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            
-            feedItems = append ? [...localTrails, ...localFeedPosts, ...mapped] : [...localTrails, ...localFeedPosts, ...mapped];
             renderFeed();
-            renderVibeStrip();
-            renderSocialNewsDrawer();
         }
 
         function toggleLike(itemId) {
-            const item = feedItems.find(i => i.id === itemId);
-            if (!item) return;
             if (likedItems.has(itemId)) {
                 likedItems.delete(itemId);
-                item.likes = Math.max(0, item.likes - 1);
             } else {
                 likedItems.add(itemId);
-                item.likes += 1;
-                addNotification(`Lajkavali ste objavu od ${item.creator}`);
+                addNotification('Sviđ vam se objavljeni post!');
             }
             localStorage.setItem('evolysium_likes', JSON.stringify(Array.from(likedItems)));
             renderFeed();
         }
 
-        function formatLikes(num) {
-            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-            if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
-            return num;
-        }
-
-        function toggleSelection(type, value, btn) {
-            btn.classList.toggle("active");
-            let list = (type === 'platform') ? selectedPlatforms : selectedCategories;
-            list = list.includes(value) ? list.filter(item => item !== value) : [...list, value];
-            if (type === 'platform') selectedPlatforms = list;
-            else selectedCategories = list;
-            displayLimit = 12;
-            renderFeed();
-        }
-
         function renderFeed() {
             const grid = document.getElementById('feed-grid');
+            const searchInput = document.getElementById('keyword-search');
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
             if (!grid) return;
 
-            const searchQuery = document.getElementById('keyword-search')?.value.toLowerCase() || '';
-
-            const filtered = feedItems.filter(item => {
-                const matchesPlatform = selectedPlatforms.includes(item.platform);
-                const matchesCategory = selectedCategories.includes(item.cat);
-                const matchesSearch = !searchQuery || 
-                    item.title.toLowerCase().includes(searchQuery) || 
-                    item.creator.toLowerCase().includes(searchQuery) ||
-                    item.summary.toLowerCase().includes(searchQuery);
-                return matchesPlatform && matchesCategory && matchesSearch;
+            let filtered = feedItems.filter(item => {
+                const matchPlatform = selectedPlatforms.includes(item.platform || 'trail');
+                const matchCategory = selectedCategories.includes(item.category || item.cat || 'trending');
+                
+                let matchQuery = true;
+                if (query) {
+                    const titleMatch = (item.title || '').toLowerCase().includes(query);
+                    const sourceMatch = (item.source || '').toLowerCase().includes(query);
+                    const tagMatch = Array.isArray(item.tags) && item.tags.some(t => t.toLowerCase().includes(query));
+                    matchQuery = titleMatch || sourceMatch || tagMatch;
+                }
+                return matchPlatform && matchCategory && matchQuery;
             });
 
-            const displayedItems = filtered.slice(0, displayLimit);
-
-            if (displayedItems.length === 0) {
+            if (filtered.length === 0) {
                 grid.innerHTML = `
                     <div class="col-12 text-center py-5">
-                        <i class="fa-solid fa-ghost text-muted fs-1 mb-3"></i>
-                        <h5 class="text-white fw-bold">No trends found</h5>
-                        <p class="text-muted small">Try adjusting your category filters or search keywords.</p>
+                        <div class="social-card p-5">
+                            <i class="fa-solid fa-satellite text-info fs-1 mb-3"></i>
+                            <h4 class="fw-bold text-white mb-2">No active vibe items found</h4>
+                            <p class="small text-muted mb-4">Try clearing your search filters or click Refresh Feed.</p>
+                            <button class="btn btn-vibe" onclick="loadBackendFeed()">Refresh Stream</button>
+                        </div>
                     </div>
                 `;
                 return;
             }
 
-            grid.innerHTML = displayedItems.map(item => {
+            grid.innerHTML = filtered.slice(0, displayLimit).map(item => {
                 const isLiked = likedItems.has(item.id);
                 return `
-                    <div class="col-md-4">
+                    <div class="col-md-6 col-lg-4">
                         <div class="social-card h-100 d-flex flex-column">
                             <div class="feed-media" onclick="openStoryViewer(${JSON.stringify(item).replace(/"/g, '&quot;')})">
-                                ${item.mediaType === 'video' ? `
-                                    <video src="${item.media}" autoplay loop muted playsinline></video>
-                                ` : `
-                                    <img src="${item.media}" alt="${item.title}">
-                                `}
-                                <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
-                                    <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
+                                ${item.video_url ? `<video src="${item.video_url}" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>` : `<img src="${item.img_url}" alt="Post media">`}
+                                <div class="creator-tag" onclick="event.stopPropagation(); openExternalProfile('${item.source}')">
+                                    <i class="fa-solid fa-user-circle"></i> ${item.source}
                                 </div>
-                                <div class="trail-badge font-mono">${item.cat.toUpperCase()}</div>
+                                <div class="trail-badge">
+                                    ${item.platform.toUpperCase()}
+                                </div>
                             </div>
                             <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
                                 <div>
-                                    <h5 class="fw-bold text-white mb-2 fs-6" style="line-height: 1.4;">${item.title}</h5>
-                                    <p class="small text-muted mb-3" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
+                                    <h5 class="fw-bold text-white mb-2" style="font-size: 1.05rem; line-height: 1.4;">${item.title}</h5>
+                                    <p class="small text-muted mb-3" style="font-size: 0.84rem;">${item.summary || ''}</p>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-10">
+                                <div class="d-flex align-items-center justify-content-between pt-3 border-top border-secondary border-opacity-25">
                                     <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
-                                        <i class="fa-solid fa-heart"></i> <span id="likes-count-${item.id}">${formatLikes(item.likes)}</span>
+                                        <i class="fa-solid fa-heart"></i> <span>${item.likes + (isLiked ? 1 : 0)}</span>
                                     </button>
                                     <div class="d-flex gap-2">
-                                        <button class="social-pill py-1 px-3 fs-7" onclick="openShareModal('${item.title}', '${item.media}')">
-                                            <i class="fa-solid fa-share-nodes"></i> Share
+                                        <button class="social-pill py-1 px-3 fs-7" onclick="openShareModal('${item.title}')" title="Share Post">
+                                            <i class="fa-solid fa-share-nodes"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -1807,174 +1802,125 @@
                     </div>
                 `;
             }).join('');
-
-            const loader = document.getElementById('infinite-loader');
-            if (loader) {
-                loader.style.display = displayLimit < filtered.length ? 'block' : 'none';
-            }
         }
 
         window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-                if (!isLoadingMore) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+                if (!isLoadingMore && displayLimit < feedItems.length) {
                     isLoadingMore = true;
+                    const loader = document.getElementById('infinite-loader');
+                    if (loader) loader.style.display = 'block';
                     setTimeout(() => {
                         displayLimit += 6;
-                        renderFeed();
                         isLoadingMore = false;
-                    }, 400);
+                        if (loader) loader.style.display = 'none';
+                        renderFeed();
+                    }, 600);
                 }
             }
         });
 
-        // 8. Privatan / poslovan profil (funkcionalna razlika)
-        function toggleAccountType() {
-            isBusinessAccount = !isBusinessAccount;
-            localStorage.setItem('evolysium_is_business', JSON.stringify(isBusinessAccount));
-            updateAccountTypeUI();
-            updateProfileStats();
-            alert(isBusinessAccount ? 'Prebačeno na POSLOVNI profil (Uključena napredna analitika i dosezi).' : 'Prebačeno na PRIVATNI profil.');
+        function openShareModal(title) {
+            const input = document.getElementById('shareLinkInput');
+            if (input) input.value = `https://evolysium.app/post?title=${encodeURIComponent(title)}`;
+            new bootstrap.Modal(document.getElementById('shareModal')).show();
         }
 
-        function updateAccountTypeUI() {
-            const badgeEl = document.getElementById('navbarProfileBadge');
-            const sidebarLabel = document.getElementById('sidebarProfileTypeLabel');
-            const accountStatusText = document.getElementById('accountModeStatusText');
-
-            if (isBusinessAccount) {
-                if (badgeEl) { badgeEl.innerText = 'BUSINESS PROFILE'; badgeEl.style.background = 'var(--cyan-pop)'; badgeEl.style.color = '#000'; }
-                if (sidebarLabel) sidebarLabel.innerText = 'Business Profile';
-                if (accountStatusText) accountStatusText.innerText = 'Current: Poslovni Profil (Aktivna napredna analitika)';
-            } else {
-                if (badgeEl) { badgeEl.innerText = 'PUBLIC FEED'; badgeEl.style.background = 'var(--pink-pop)'; badgeEl.style.color = '#fff'; }
-                if (sidebarLabel) sidebarLabel.innerText = 'Private Profile';
-                if (accountStatusText) accountStatusText.innerText = 'Current: Privatni Profil';
-            }
+        function copyShareLink() {
+            const input = document.getElementById('shareLinkInput');
+            input.select();
+            document.execCommand('copy');
+            alert('Post link copied to clipboard!');
         }
 
-        // 3. Stvarni i funkcionalni zahtjevi za praćenje i inbox
-        function sendFollowRequest(handle) {
-            addNotification(`Poslan zahtjev za praćenje korisniku ${handle}`);
-            alert('Uspješno poslan zahtjev za praćenje korisniku: ' + handle);
-            bootstrap.Modal.getInstance(document.getElementById('externalProfileModal')).hide();
-        }
-
-        function approveRequest(username) {
-            followRequests = followRequests.filter(u => u !== username);
-            approvedUsers.push(username);
-            localStorage.setItem('evolysium_requests', JSON.stringify(followRequests));
-            localStorage.setItem('evolysium_approved', JSON.stringify(approvedUsers));
-            updateProfileStats();
-            addNotification(`Odobren zahtjev za praćenje korisniku ${username}`);
-            alert('Odobren zahtjev za praćenje od: ' + username);
-        }
-
-        function openCreatorProfile(handle) {
-            document.getElementById('extProfileTitle').innerText = 'Creator Profile: ' + handle;
-            const bodyEl = document.getElementById('extProfileBody');
-            
-            const isMockPrivate = handle.includes('private') || handle === '@luka_creator';
-            const isApproved = approvedUsers.includes(handle);
-
-            if (isMockPrivate && !isApproved) {
-                bodyEl.innerHTML = `
-                    <div class="py-5">
-                        <i class="fa-solid fa-lock text-warning fs-1 mb-3"></i>
-                        <h5 class="fw-bold text-white">This Profile is Private</h5>
-                        <p class="text-muted small mb-4">Pošaljite zahtjev za praćenje da biste vidjeli sadržaj i storyje ovog profila.</p>
-                        <button class="btn btn-vibe rounded-pill px-4" onclick="sendFollowRequest('${handle}')">Pošalji Zahtjev za Praćenje</button>
-                    </div>
-                `;
-            } else {
-                let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-                let userStories = handle === '@my_profile' ? localTrails : [
-                    { title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false },
-                    { title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true }
-                ];
-                
-                bodyEl.innerHTML = `
-                    <div class="py-3 text-start">
-                        <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom border-secondary border-opacity-25">
-                            <div class="vibe-ring" style="width: 70px; height: 70px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900"></div>
-                            <div>
-                                <h5 class="fw-bold text-white mb-1">${handle} <i class="fa-solid fa-circle-check text-warning ms-1" title="Verified"></i></h5>
-                                <span class="badge bg-success rounded-pill">Public Profile • Active Stories</span>
-                            </div>
-                        </div>
-                        <h6 class="fw-bold mb-3 text-white">Stories & Posts</h6>
-                        <div class="row g-3">
-                            ${userStories.map(s => `
-                                <div class="col-md-4">
-                                    <div class="social-card p-2 cursor-pointer" onclick="openStoryViewer(${JSON.stringify(s).replace(/"/g, '&quot;')})">
-                                        <img src="${s.media || s.img_url}" class="rounded-3 mb-2" style="width:100%; height:120px; object-fit:cover;">
-                                        <span class="small fw-semibold text-white d-block text-truncate">${s.title}</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
+        function openExternalProfile(handle) {
+            const body = document.getElementById('extProfileBody');
+            document.getElementById('extProfileTitle').innerText = handle + ' Profile';
+            body.innerHTML = `
+                <div class="brand-pill mx-auto fw-bold text-white fs-3 mb-3" style="width:70px; height:70px;">${handle.substring(1,3).toUpperCase()}</div>
+                <h4 class="fw-bold text-white mb-1">${handle}</h4>
+                <p class="small text-muted mb-4">Verified Evolysium Creator & Trendsetter</p>
+                <div class="d-flex justify-content-center gap-3 mb-4">
+                    <button class="btn btn-vibe py-2 px-4 rounded-pill" onclick="alert('Zatraženo praćenje korisnika ${handle}!')">Zaprati</button>
+                    <button class="btn btn-outline-info py-2 px-4 rounded-pill" onclick="startChatWithUser('${handle}')">Pošalji poruku</button>
+                </div>
+            `;
             new bootstrap.Modal(document.getElementById('externalProfileModal')).show();
         }
 
-        // Upravljanje inbox porukama i chatom
-        function renderConversations() {
-            const listEl = document.getElementById('conversationsList');
-            if (!listEl) return;
-            listEl.innerHTML = conversations.map(c => `
-                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 cursor-pointer d-flex justify-content-between align-items-center" onclick="selectChat('${c.id}')">
-                    <div>
-                        <span class="fw-bold text-white small d-block">${c.user}</span>
-                        <span class="text-muted" style="font-size:0.72rem;">${c.messages[c.messages.length - 1]?.text || 'Nema poruka'}</span>
+        function toggleAccountType() {
+            isPrivateProfile = !isPrivateProfile;
+            localStorage.setItem('evolysium_is_private', JSON.stringify(isPrivateProfile));
+            const statusText = document.getElementById('accountModeStatusText');
+            const sidebarTypeLabel = document.getElementById('sidebarProfileTypeLabel');
+            const badgeEl = document.getElementById('navbarProfileBadge');
+
+            if (isPrivateProfile) {
+                if (statusText) statusText.innerText = 'Current: Privatni Profil (Zahtjevi za praćenje aktivni)';
+                if (sidebarTypeLabel) sidebarTypeLabel.innerText = 'Private Profile';
+                if (badgeEl) badgeEl.innerText = 'PRIVATE FEED';
+            } else {
+                if (statusText) statusText.innerText = 'Current: Javni / Poslovni Profil';
+                if (sidebarTypeLabel) sidebarTypeLabel.innerText = 'Public Profile';
+                if (badgeEl) badgeEl.innerText = 'PUBLIC FEED';
+            }
+            alert('Vrsta profila uspješno promijenjena u ' + (isPrivateProfile ? 'Privatni' : 'Javni/Poslovni'));
+        }
+
+        function updateProfileStats() {
+            document.getElementById('pendingRequestsCount').innerText = followRequests.length;
+            document.getElementById('statFollowersCount').innerText = 340 + approvedUsers.length;
+            document.getElementById('statLikesCount').innerText = likedItems.size * 14;
+            document.getElementById('statInboxCount').innerText = conversations.length;
+
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            document.getElementById('statStoriesCount').innerText = localTrails.length;
+
+            const reqList = document.getElementById('followRequestsList');
+            if (followRequests.length === 0) {
+                reqList.innerHTML = '<span class="small text-muted">Nema novih zahtjeva za praćenje.</span>';
+            } else {
+                reqList.innerHTML = followRequests.map((req, idx) => `
+                    <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                        <span class="small text-white fw-bold">${req} želi vas pratiti</span>
+                        <div class="d-flex gap-1">
+                            <button class="btn btn-sm btn-success py-0 px-2" onclick="approveRequest(${idx})">Prihvati</button>
+                            <button class="btn btn-sm btn-outline-danger py-0 px-2" onclick="rejectRequest(${idx})">Odbij</button>
+                        </div>
                     </div>
-                    <i class="fa-solid fa-chevron-right text-muted small"></i>
-                </div>
-            `).join('');
+                `).join('');
+            }
+
+            const storiesList = document.getElementById('userStoriesList');
+            if (localTrails.length === 0) {
+                storiesList.innerHTML = '<div class="col-12"><span class="small text-muted">Nemate objavljenih storyja.</span></div>';
+            } else {
+                storiesList.innerHTML = localTrails.map(t => `
+                    <div class="col-md-4">
+                        <div class="rounded-3 overflow-hidden bg-black position-relative" style="height:120px;">
+                            <img src="${t.media || t.img_url}" style="width:100%; height:100%; object-fit:cover;">
+                            <span class="position-absolute bottom-0 start-0 p-1 small text-white fw-bold bg-dark bg-opacity-75" style="font-size:0.65rem;">${t.title}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
         }
 
-        function selectChat(id) {
-            activeChatId = id;
-            const chat = conversations.find(c => c.id === id);
-            if (!chat) return;
-
-            document.getElementById('activeChatHeader').innerText = 'Razgovor s: ' + chat.user;
-            document.getElementById('chatMessageForm').classList.remove('d-none');
-            
-            const msgContainer = document.getElementById('activeChatMessages');
-            msgContainer.innerHTML = chat.messages.map(m => `
-                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 small text-start">
-                    <span class="fw-bold text-info">${m.sender}:</span> <span class="text-white">${m.text}</span>
-                </div>
-            `).join('');
+        function approveRequest(idx) {
+            const user = followRequests.splice(idx, 1)[0];
+            approvedUsers.push(user);
+            localStorage.setItem('evolysium_requests', JSON.stringify(followRequests));
+            localStorage.setItem('evolysium_approved', JSON.stringify(approvedUsers));
+            addNotification(`Prihvatili ste zahtjev za praćenje od ${user}`);
+            updateProfileStats();
         }
 
-        function sendChatMessage(event) {
-            event.preventDefault();
-            const input = document.getElementById('chatInputMessage');
-            const text = input.value;
-            if (!text || !activeChatId) return;
-
-            const chat = conversations.find(c => c.id === activeChatId);
-            const senderName = currentUser ? currentUser.name : '@my_profile';
-            chat.messages.push({ sender: senderName, text: text, time: 'Upravo' });
-
-            selectChat(activeChatId);
-            renderConversations();
-            input.value = '';
+        function rejectRequest(idx) {
+            followRequests.splice(idx, 1);
+            localStorage.setItem('evolysium_requests', JSON.stringify(followRequests));
+            updateProfileStats();
         }
 
-        function startNewChatPrompt() {
-            const targetUser = prompt('Unesite korisničko ime s kojim želite započeti chat (npr. @vibe_creator):');
-            if (!targetUser) return;
-            const newChat = { id: 'c_' + Date.now(), user: targetUser, messages: [{ sender: targetUser, text: 'Pozdrav! Kako vam mogu pomoći?', time: 'Upravo' }] };
-            conversations.push(newChat);
-            renderConversations();
-            selectChat(newChat.id);
-        }
-
-        // 4. Newsletter obavijesti i 5. Vidljivost notifikacija
         function addNotification(text) {
             appNotifications.unshift({ text, time: 'Upravo sada' });
             localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
@@ -1986,83 +1932,112 @@
         function updateNotificationBadge() {
             const badge = document.getElementById('notificationBadgeCount');
             const list = document.getElementById('notificationsDropdownList');
-            const inboxBadge = document.getElementById('inboxBadgeCount');
             if (!badge || !list) return;
 
-            if (unreadNotifications) {
-                badge.style.display = 'inline-block';
+            if (unreadNotifications && appNotifications.length > 0) {
+                badge.style.display = 'block';
                 badge.innerText = appNotifications.length;
-                if (inboxBadge) { inboxBadge.style.display = 'inline-block'; inboxBadge.innerText = conversations.length; }
             } else {
                 badge.style.display = 'none';
             }
 
             list.innerHTML = `
-                <li><h6 class="dropdown-header text-info fw-bold">Evolysium Newsletter & Alarmi</h6></li>
+                <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
                 <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                ${appNotifications.map(n => `
-                    <li><div class="dropdown-item-text small text-white py-2 border-bottom border-secondary border-opacity-10">
-                        <div><i class="fa-solid fa-envelope-open-text text-pink me-1"></i> ${n.text}</div>
-                        <span class="text-muted" style="font-size: 0.65rem;">${n.time}</span>
-                    </div></li>
-                `).join('')}
-            `;
+                ` + appNotifications.slice(0, 5).map(n => `
+                    <li><span class="dropdown-item-text small text-white d-block py-1">${n.text} <span class="d-block text-muted" style="font-size:0.65rem;">${n.time}</span></span></li>
+                `).join('');
         }
+        updateNotificationBadge();
 
         function markNotificationsRead() {
             unreadNotifications = false;
-            localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
-            updateNotificationBadge();
+            localStorage.setItem('evolysium_unread', JSON.stringify(false));
+            const badge = document.getElementById('notificationBadgeCount');
+            if (badge) badge.style.display = 'none';
         }
 
-        function updateProfileStats() {
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            document.getElementById('statStoriesCount').innerText = localTrails.length;
-            document.getElementById('statLikesCount').innerText = localTrails.reduce((acc, curr) => acc + (curr.likes || 1), 24);
-            document.getElementById('pendingRequestsCount').innerText = followRequests.length;
+        function renderConversations() {
+            const list = document.getElementById('conversationsList');
+            if (!list) return;
+            list.innerHTML = conversations.map(c => `
+                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 cursor-pointer" onclick="selectChat('${c.id}')" style="cursor:pointer;">
+                    <span class="fw-bold text-info d-block">${c.user}</span>
+                    <span class="small text-muted text-truncate d-block">${c.messages[c.messages.length - 1].text}</span>
+                </div>
+            `).join('');
+        }
+        renderConversations();
 
-            const reqList = document.getElementById('followRequestsList');
-            if (reqList) {
-                reqList.innerHTML = followRequests.length === 0 ? '<span class="small text-muted">Nema novih zahtjeva za praćenje</span>' : followRequests.map(u => `
-                    <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-dark border border-secondary border-opacity-25">
-                        <span class="small fw-bold text-white">${u}</span>
-                        <button class="btn btn-sm btn-vibe py-1 px-3" onclick="approveRequest('${u}')">Odobri</button>
-                    </div>
-                `).join('');
+        function selectChat(id) {
+            activeChatId = id;
+            const chat = conversations.find(c => c.id === id);
+            if (!chat) return;
+
+            document.getElementById('activeChatHeader').innerText = 'Razgovor s ' + chat.user;
+            const msgContainer = document.getElementById('activeChatMessages');
+            msgContainer.innerHTML = chat.messages.map(m => `
+                <div class="p-2 rounded-3 small ${m.sender === '@my_profile' ? 'bg-primary bg-opacity-25 ms-auto text-end' : 'bg-secondary bg-opacity-25 me-auto text-start'}" style="max-width: 80%;">
+                    <span class="fw-bold d-block text-info" style="font-size:0.65rem;">${m.sender}</span>
+                    <span class="text-white">${m.text}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('chatMessageForm').classList.remove('d-none');
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+        }
+
+        function sendChatMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('chatInputMessage');
+            const text = input.value;
+            if (!text || !activeChatId) return;
+
+            const chat = conversations.find(c => c.id === activeChatId);
+            if (chat) {
+                chat.messages.push({ sender: '@my_profile', text, time: 'Upravo sada' });
+                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+                selectChat(activeChatId);
+                renderConversations();
             }
-
-            const storiesList = document.getElementById('userStoriesList');
-            if (storiesList) {
-                storiesList.innerHTML = localTrails.length === 0 ? '<span class="small text-muted">Još nemate objavljenih storyja.</span>' : localTrails.map(s => `
-                    <div class="col-md-4">
-                        <div class="social-card p-2 cursor-pointer" onclick="openStoryViewer(${JSON.stringify(s).replace(/"/g, '&quot;')})">
-                            <img src="${s.media || s.img_url}" class="rounded-3 mb-2" style="width:100%; height:120px; object-fit:cover;">
-                            <span class="small fw-semibold text-white d-block text-truncate">${s.title}</span>
-                        </div>
-                    </div>
-                `).join('');
-            }
+            input.value = '';
         }
 
-        function openShareModal(title, url) {
-            document.getElementById('shareLinkInput').value = window.location.href + '?post=' + encodeURIComponent(title);
-            new bootstrap.Modal(document.getElementById('shareModal')).show();
-        }
-
-        function copyShareLink() {
-            const input = document.getElementById('shareLinkInput');
-            input.select();
-            document.execCommand('copy');
-            alert('Link kopiran u međuspremnik!');
-        }
-
-        // Inicijalizacija platforme pri učitavanju
-        window.addEventListener('DOMContentLoaded', () => {
-            loadBackendFeed();
-            updateNotificationBadge();
+        function startNewChatPrompt() {
+            const userHandle = prompt('Upišite @korisnika s kojim želite započeti chat:');
+            if (!userHandle) return;
+            const newChat = {
+                id: 'c_' + Date.now(),
+                user: userHandle.startsWith('@') ? userHandle : '@' + userHandle,
+                messages: [{ sender: userHandle, text: 'Pozdrav! Kako ste?', time: 'Upravo sada' }]
+            };
+            conversations.unshift(newChat);
+            localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
             renderConversations();
-            updateAccountTypeUI();
-        });
+            selectChat(newChat.id);
+        }
+
+        function startChatWithUser(handle) {
+            let chat = conversations.find(c => c.user === handle);
+            if (!chat) {
+                chat = {
+                    id: 'c_' + Date.now(),
+                    user: handle,
+                    messages: [{ sender: handle, text: 'Pozdrav! Vidio sam vaš profil na Evolysiumu.', time: 'Upravo sada' }]
+                };
+                conversations.unshift(chat);
+                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+            }
+            new bootstrap.Modal(document.getElementById('externalProfileModal')).hide();
+            new bootstrap.Modal(document.getElementById('inboxModal')).show();
+            renderConversations();
+            selectChat(chat.id);
+        }
+
+        // Inicijalno učitavanje streama
+        loadBackendFeed();
+        renderVibeStrip();
+        renderSocialNewsDrawer();
     </script>
 </body>
 </html>
