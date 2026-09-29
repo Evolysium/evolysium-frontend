@@ -595,7 +595,7 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'tech', this)">💻 Tech & AI</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'lifestyle', this)">⚡ Lifestyle</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'fitness', this)">🏋️‍♂️ Fitness & Health</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'travel', this)">✈️ Travel & Nature</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'travel', this)">✈️️ Travel & Nature</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'food', this)">🍔 Food & Recipe</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand', this)">📢 Brand / Ads</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
@@ -1272,7 +1272,7 @@
                 category: category,
                 title: title,
                 summary: `User published ${destination} (${privacy})`,
-                image: mediaUrl,
+                img_url: mediaUrl,
                 video_url: mediaType === 'video' ? mediaUrl : '',
                 is_story: destination === 'story'
             };
@@ -1350,8 +1350,8 @@
         }
 
         const fallbackItems = [
-            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'instagram', likes: 5210, comments: '312', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
-            { id: 'f2', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', likes: 1420, comments: '142', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
+            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'instagram', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
+            { id: 'f2', source: '@tiktok_viral_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'tiktok', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
         ];
 
         const socialNewsSignals = [
@@ -1436,7 +1436,7 @@
                 platform: (item.platform || 'tiktok').toLowerCase(),
                 likes: parseLikeCount(item.likes),
                 comments: item.comments || '142',
-                media: item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
+                media: item.img_url || item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
                 mediaType: item.mediaType || 'image',
                 summary: item.summary || 'Global trend post overview.',
                 tags: item.tags || [],
