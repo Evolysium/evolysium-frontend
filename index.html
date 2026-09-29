@@ -548,7 +548,7 @@
         </div>
 
         <!-- Interactive Filters & Search -->
-        <div class="social-card p-4 mb-5">
+        <div class="social-card p-4 mb-4">
             <div class="row g-3 align-items-center mb-4">
                 <div class="col-lg-8">
                     <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Search posts, tags (@user) or keywords..." oninput="renderFeed()">
@@ -560,7 +560,7 @@
                 </div>
             </div>
 
-            <!-- Platform filter chips (Evolysium Ecosystem uklonjen) -->
+            <!-- Platform filter chips -->
             <div class="d-flex flex-wrap gap-2 mb-3">
                 <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> Native Trails & Stories</button>
             </div>
@@ -570,7 +570,7 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'fashion', this)">✨ Fashion</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'tech', this)">💻 Tech & AI</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'lifestyle', this)">⚡ Lifestyle</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'fitness', this)">🏋️‍♂️ Fitness & Health</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'fitness', this)">🏋️️‍♂️ Fitness & Health</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'travel', this)">✈ Travel & Nature</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'food', this)">🍔 Food & Recipe</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand', this)">📢 Brand / Ads</button>
@@ -587,7 +587,7 @@
             </div>
         </div>
 
-        <!-- Featured Creators & Stories Strip (Pomaknuto dolje unutar glavnog feeda) -->
+        <!-- Vraćeno na originalno mjesto: Featured Creators & Stories Strip -->
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                 <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators</div>
@@ -595,7 +595,7 @@
             <div class="vibe-strip" id="dynamic-vibe-strip"></div>
         </div>
 
-        <!-- Trending Posts Section (Pomaknuto dolje unutar glavnog feeda) -->
+        <!-- Vraćeno na originalno mjesto: Trending Posts & News Section -->
         <div class="mb-5">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                 <div class="small fw-semibold" style="color: rgba(0, 240, 255, 0.85); letter-spacing: 0.5px;">⚡ Trending Posts & News</div>
@@ -1020,7 +1020,6 @@
         let feedItems = [];
         let likedItems = new Set(JSON.parse(localStorage.getItem('evolysium_likes') || '[]'));
         
-        // Uklonjen 'evolysium' iz defaultnih platformi jer je kategorija isključena
         let selectedPlatforms = ["trail"];
         let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
 
