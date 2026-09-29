@@ -449,11 +449,11 @@
                     <i class="fa-solid fa-crown text-warning"></i> Pricing
                 </button>
                 <div class="dropdown">
-                    <button class="social-pill position-relative" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()">
-                        <i class="fa-solid fa-bell text-info"></i>
-                        <span id="notificationBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
+                    <button class="social-pill position-relative" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()" style="z-index: 1050;">
+                        <i class="fa-solid fa-bell text-info"></i> Notifications
+                        <span id="notificationBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 5px 8px; display:none; z-index: 1060;">0</span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(17, 14, 29, 0.98); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 290px;" id="notificationsDropdownList">
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(17, 14, 29, 0.98); backdrop-filter: blur(20px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 290px; z-index: 1070;" id="notificationsDropdownList">
                         <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
                         <li><hr class="dropdown-divider border-secondary opacity-25"></li>
                         <li><span class="dropdown-item-text small text-muted">No new alerts</span></li>
@@ -541,23 +541,6 @@
     <!-- Main Content -->
     <main class="container py-4">
         
-        <!-- Featured Creators & Stories Strip -->
-        <div class="mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-2 px-1">
-                <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators</div>
-            </div>
-            <div class="vibe-strip" id="dynamic-vibe-strip"></div>
-        </div>
-
-        <!-- Trending Posts Section -->
-        <div class="mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-2 px-1">
-                <div class="small fw-semibold" style="color: rgba(0, 240, 255, 0.85); letter-spacing: 0.5px;">⚡ Trending Posts & News</div>
-                <span class="small font-mono text-muted" style="font-size: 0.7rem;"><i class="fa-solid fa-satellite-dish me-1 text-info"></i>PUBLIC STREAM</span>
-            </div>
-            <div class="news-drawer" id="social-news-drawer"></div>
-        </div>
-
         <!-- Hero welcome -->
         <div class="text-center my-4 py-3 position-relative">
             <div style="position:absolute; width:300px; height:150px; background:var(--pink-pop); filter:blur(110px); opacity:0.12; left:50%; top:20%; transform:translateX(-50%); z-index:-1;"></div>
@@ -577,9 +560,8 @@
                 </div>
             </div>
 
-            <!-- Platform filter chips -->
+            <!-- Platform filter chips (Evolysium Ecosystem uklonjen) -->
             <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="social-pill active" onclick="toggleSelection('platform', 'evolysium', this)"><i class="fa-solid fa-globe"></i> Evolysium Ecosystem</button>
                 <button class="social-pill active" onclick="toggleSelection('platform', 'trail', this)"><i class="fa-solid fa-footprints"></i> Native Trails & Stories</button>
             </div>
 
@@ -603,6 +585,23 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'popular', this)">🔥 Popular</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'trending', this)">📈 Trending</button>
             </div>
+        </div>
+
+        <!-- Featured Creators & Stories Strip (Pomaknuto dolje unutar glavnog feeda) -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+                <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators</div>
+            </div>
+            <div class="vibe-strip" id="dynamic-vibe-strip"></div>
+        </div>
+
+        <!-- Trending Posts Section (Pomaknuto dolje unutar glavnog feeda) -->
+        <div class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+                <div class="small fw-semibold" style="color: rgba(0, 240, 255, 0.85); letter-spacing: 0.5px;">⚡ Trending Posts & News</div>
+                <span class="small font-mono text-muted" style="font-size: 0.7rem;"><i class="fa-solid fa-satellite-dish me-1 text-info"></i>PUBLIC STREAM</span>
+            </div>
+            <div class="news-drawer" id="social-news-drawer"></div>
         </div>
 
         <!-- Feed Grid -->
@@ -1021,7 +1020,8 @@
         let feedItems = [];
         let likedItems = new Set(JSON.parse(localStorage.getItem('evolysium_likes') || '[]'));
         
-        let selectedPlatforms = ["evolysium", "trail"];
+        // Uklonjen 'evolysium' iz defaultnih platformi jer je kategorija isključena
+        let selectedPlatforms = ["trail"];
         let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
 
         let displayLimit = 12;
@@ -1258,7 +1258,6 @@
             stopCameraFeed();
         }
 
-        // POBOLJŠANO SLANJE I SPREMANJE OBJAVA (FRONTEND + LOKALNO SPRIJEČAVANJE RENDER GREŠKE)
         async function handleUniversalPostSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('univTitle').value;
@@ -1277,7 +1276,7 @@
                 title: title,
                 category: category,
                 cat: category,
-                platform: destination === 'story' ? 'trail' : 'evolysium',
+                platform: destination === 'story' ? 'trail' : 'trail',
                 likes: 1,
                 comments: '0',
                 img_url: mediaUrl,
@@ -1289,7 +1288,6 @@
                 isTrail: destination === 'story'
             };
 
-            // Spremi odmah u lokalni custom feed i u lokalne storyje da se odmah vrti u feedu i storyju
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             localFeedPosts.unshift(newPostItem);
             localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
@@ -1300,7 +1298,6 @@
                 localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
             }
 
-            // Pokušaj poslati na backend, ali ako pukne veza ili baza, frontend već sve prikazuje lokalno!
             try {
                 await fetch(`${API_BASE_URL}/api/posts/create`, {
                     method: 'POST',
@@ -1377,14 +1374,14 @@
         }
 
         const fallbackItems = [
-            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'evolysium', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
-            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'evolysium', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
+            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
+            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
         ];
 
         const socialNewsSignals = [
-            { platform: 'evolysium', handle: '@sama', badge: 'AI LABS', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '4m ago', tag: '#AGI' },
-            { platform: 'evolysium', handle: '@designsystems', badge: 'UI/UX', text: 'Glassmorphism 3.0 specs dropping: noise-diffusion shaders with zero GPU stutter on mobile viewports.', time: '19m ago', tag: '#Frontend' },
-            { platform: 'evolysium', handle: '@sarah_chen', badge: 'VENTURE', text: 'Autonomous algorithmic aggregators are outperforming legacy discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
+            { platform: 'trail', handle: '@sama', badge: 'AI LABS', text: 'Reasoning acceleration layers are shifting real-time multi-agent workflows into sub-second territory.', time: '4m ago', tag: '#AGI' },
+            { platform: 'trail', handle: '@designsystems', badge: 'UI/UX', text: 'Glassmorphism 3.0 specs dropping: noise-diffusion shaders with zero GPU stutter on mobile viewports.', time: '19m ago', tag: '#Frontend' },
+            { platform: 'trail', handle: '@sarah_chen', badge: 'VENTURE', text: 'Autonomous algorithmic aggregators are outperforming legacy discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
         ];
 
         async function startStripeCheckout(tier) {
@@ -1413,7 +1410,7 @@
             
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             let dynamicSignals = localFeedPosts.map(p => ({
-                platform: p.platform || 'evolysium',
+                platform: p.platform || 'trail',
                 handle: p.creator || '@my_profile',
                 badge: 'NEW POST',
                 text: p.title,
@@ -1473,7 +1470,7 @@
                 creator: item.source || item.creator || '@alpha_validator',
                 title: item.title || 'Public Post',
                 cat: item.category || item.cat || 'trending',
-                platform: item.platform || 'evolysium',
+                platform: item.platform || 'trail',
                 likes: parseLikeCount(item.likes),
                 comments: item.comments || '142',
                 media: item.img_url || item.image || item.media || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
