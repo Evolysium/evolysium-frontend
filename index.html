@@ -541,7 +541,7 @@
     <!-- Main Content -->
     <main class="container py-4">
         
-        <!-- Stories & Featured Creators - Premješteno iznad naslova -->
+        <!-- Stories & Featured Creators -->
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                 <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators</div>
@@ -632,6 +632,35 @@
     </footer>
 
     <!-- Modals -->
+
+    <!-- Story Full View Modal -->
+    <div class="modal fade" id="storyViewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content text-light" style="background: rgba(12, 10, 21, 0.98); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
+                <div class="modal-header border-0 pb-0 px-4 pt-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="brand-pill" style="width:36px; height:36px; font-size:0.9rem;" id="storyModalCreatorAvatar">✨</div>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-white" id="storyModalCreatorHandle">@creator</h6>
+                            <span class="small text-muted font-mono" style="font-size:0.7rem;" id="storyModalTime">Story Drop</span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <h5 class="fw-bold text-white mb-3" id="storyModalTitle" style="font-size:1.1rem;"></h5>
+                    <div class="rounded-4 overflow-hidden bg-black position-relative mb-3 d-flex align-items-center justify-content-center" style="max-height: 480px; border: 1px solid rgba(255,255,255,0.1);">
+                        <img id="storyModalImage" src="" alt="Story Media" style="max-width:100%; max-height:480px; object-fit:contain;">
+                        <video id="storyModalVideo" src="" autoplay loop muted playsinline style="max-width:100%; max-height:480px; object-fit:contain; display:none;"></video>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center px-2">
+                        <span class="small font-mono text-info" id="storyModalMusic"><i class="fa-solid fa-music me-1"></i> Original Audio</span>
+                        <button class="social-pill active py-1 px-3" data-bs-dismiss="modal">Close Story</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Sign In / Register Modal -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
@@ -1275,27 +1304,27 @@
                 title: title,
                 category: category,
                 cat: category,
-                platform: destination === 'story' ? 'trail' : 'trail',
+                platform: 'trail',
                 likes: 1,
                 comments: '0',
                 img_url: mediaUrl,
+                media: mediaUrl,
                 video_url: mediaType === 'video' ? mediaUrl : '',
                 mediaType: mediaType,
                 summary: `Published via ${destination} (${privacy})`,
                 isLive: false,
                 isPrivate: privacy === 'private',
-                isTrail: destination === 'story'
+                isTrail: true
             };
 
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             localFeedPosts.unshift(newPostItem);
             localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
 
-            if (destination === 'story') {
-                let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-                localTrails.unshift(newPostItem);
-                localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
-            }
+            // Svi storyji i ovi do sada objavljeni automatski spremljeni i u storyje i u trendove/feedu
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            localTrails.unshift(newPostItem);
+            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
             try {
                 await fetch(`${API_BASE_URL}/api/posts/create`, {
@@ -1308,15 +1337,15 @@
                         summary: newPostItem.summary,
                         img_url: newPostItem.img_url,
                         image: newPostItem.img_url,
-                        is_story: destination === 'story'
+                        is_story: true
                     })
                 });
             } catch (err) {
                 console.log('Backend sync warning (handled locally):', err);
             }
 
-            addNotification('Uspješno objavljeno! Vaša objava/story se sada vrti u feedu.');
-            alert('Uspješno objavljeno i dodano u feed, storyje i trending sekciju!');
+            addNotification('Uspješno objavljeno! Vaš story je uvršten u trendove i feed.');
+            alert('Uspješno objavljeno i dodano u donje trendove, storyje i feed!');
 
             const modalEl = document.getElementById('createPostModal');
             const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
@@ -1373,8 +1402,8 @@
         }
 
         const fallbackItems = [
-            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
-            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
+            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat', cat: 'fashion' },
+            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', media: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04', cat: 'lifestyle' }
         ];
 
         const socialNewsSignals = [
@@ -1408,19 +1437,29 @@
             if (!drawer) return;
             
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-            let dynamicSignals = localFeedPosts.map(p => ({
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            
+            // Osiguravamo da su svi storyji i objavljeni sadržaji uključeni u trending donji drawer
+            let combinedSources = [...localTrails, ...localFeedPosts];
+            let uniqueMap = new Map();
+            combinedSources.forEach(s => uniqueMap.set(s.id || s.title, s));
+
+            let dynamicSignals = Array.from(uniqueMap.values()).map(p => ({
                 platform: p.platform || 'trail',
-                handle: p.creator || '@my_profile',
-                badge: 'NEW POST',
+                handle: p.creator || p.source || '@my_profile',
+                badge: p.cat ? p.cat.toUpperCase() : 'TRENDING',
                 text: p.title,
                 time: 'Just now',
-                tag: '#' + (p.cat || 'trending')
+                tag: '#' + (p.cat || 'story'),
+                media: p.media || p.img_url,
+                mediaType: p.mediaType || 'image',
+                music: p.music || 'Evolysium Audio'
             }));
 
             let allSignals = [...dynamicSignals, ...socialNewsSignals];
 
-            drawer.innerHTML = allSignals.map(n => `
-                <div class="news-pill-card" onclick="alert('Public signal: ${n.handle}')">
+            drawer.innerHTML = allSignals.map((n, idx) => `
+                <div class="news-pill-card" onclick="openStoryViewer({creator: '${n.handle}', title: '${n.text.replace(/'/g, "\\'")}', media: '${n.media || ''}', mediaType: '${n.mediaType || 'image'}', music: '${n.music || 'Original'}'})">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex align-items-center gap-1.5">
                             <span class="small fw-bold text-white font-mono">${n.handle}</span>
@@ -1428,9 +1467,10 @@
                         </div>
                         <span class="small font-mono text-muted" style="font-size: 0.68rem;">${n.time}</span>
                     </div>
+                    ${n.media ? `<div class="mb-2 rounded-3 overflow-hidden" style="height: 110px;"><img src="${n.media}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
                     <p class="small text-melt mb-2" style="font-size:0.83rem; line-height: 1.4;">${n.text}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="font-mono text-secondary" style="font-size:0.7rem;">${n.tag}</span>
+                        <span class="font-mono text-secondary" style="font-size:0.7rem;">${n.tag} Click to view 🔍</span>
                         <i class="fa-solid fa-arrow-up-right-from-square text-muted" style="font-size:0.7rem;"></i>
                     </div>
                 </div>
@@ -1483,7 +1523,10 @@
             }));
             
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-            feedItems = append ? [...localFeedPosts, ...mapped] : [...localFeedPosts, ...mapped];
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            
+            // Osiguravamo spajanje svih prijašnjih i novih storyja u feed i trendove
+            feedItems = append ? [...localTrails, ...localFeedPosts, ...mapped] : [...localTrails, ...localFeedPosts, ...mapped];
             renderFeed();
             renderVibeStrip();
             renderSocialNewsDrawer();
@@ -1561,8 +1604,32 @@
             event.target.reset();
             stopCameraFeed();
             processIncomingItems([newStory], true);
-            addNotification('Your unlimited story was successfully published and added to feed!');
-            alert('Unlimited story successfully published!');
+            addNotification('Your unlimited story was successfully published and added to feed & trends!');
+            alert('Unlimited story successfully published and added to trends!');
+        }
+
+        // Funkcija za prikaz storyja u punom modalnom prikazu kada korisnik klikne na sliku/story
+        function openStoryViewer(storyData) {
+            document.getElementById('storyModalCreatorHandle').innerText = storyData.creator || storyData.handle || '@creator';
+            document.getElementById('storyModalTitle').innerText = storyData.title || storyData.text || 'Story View';
+            document.getElementById('storyModalMusic').innerHTML = `<i class="fa-solid fa-music me-1"></i> ${storyData.music || 'Evolysium Audio'}`;
+            
+            const imgEl = document.getElementById('storyModalImage');
+            const videoEl = document.getElementById('storyModalVideo');
+            const mediaSrc = storyData.media || storyData.img_url || '';
+
+            if (storyData.mediaType === 'video' || (mediaSrc && mediaSrc.startsWith('data:video'))) {
+                videoEl.src = mediaSrc;
+                videoEl.style.display = 'block';
+                imgEl.style.display = 'none';
+            } else {
+                imgEl.src = mediaSrc;
+                imgEl.style.display = 'block';
+                videoEl.style.display = 'none';
+            }
+
+            const modal = new bootstrap.Modal(document.getElementById('storyViewModal'));
+            modal.show();
         }
 
         function renderVibeStrip() {
@@ -1571,21 +1638,21 @@
 
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const defaultCreators = [
-                { handle: '@fashion_weekly', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', isLive: true },
-                { handle: '@creator_lab', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', isLive: false },
-                { handle: '@tech_guru', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', isLive: true },
-                { handle: '@luka_creator', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', isLive: false }
+                { handle: '@fashion_weekly', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', isLive: true, title: 'Milan Fashion Week' },
+                { handle: '@creator_lab', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', isLive: false, title: 'Studio Session' },
+                { handle: '@tech_guru', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', isLive: true, title: 'Desk Setup Live' },
+                { handle: '@luka_creator', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', isLive: false, title: 'Vibe Check' }
             ];
 
             strip.innerHTML = localTrails.map(t => `
-                <div class="vibe-item" onclick="openCreatorProfile('${t.creator || '@my_profile'}')">
+                <div class="vibe-item" onclick="openStoryViewer({creator: '${t.creator || t.source}', title: '${(t.title || 'Story').replace(/'/g, "\\'")}', media: '${t.media || t.img_url}', mediaType: '${t.mediaType || 'image'}', music: '${t.music || 'Audio'}'})">
                     <div class="vibe-ring ${t.isLive ? 'is-live' : ''}">
-                        <img src="${t.media}">
+                        <img src="${t.media || t.img_url}">
                     </div>
-                    <span class="small text-muted text-truncate mt-1" style="max-width: 76px; font-size: 0.72rem;">${t.creator || '@my_profile'}</span>
+                    <span class="small text-muted text-truncate mt-1" style="max-width: 76px; font-size: 0.72rem;">${t.creator || t.source || '@my_profile'}</span>
                 </div>
             `).join('') + defaultCreators.map(c => `
-                <div class="vibe-item" onclick="openCreatorProfile('${c.handle}')">
+                <div class="vibe-item" onclick="openStoryViewer({creator: '${c.handle}', title: '${c.title}', media: '${c.media}', mediaType: 'image', music: 'Vibe Audio'})">
                     <div class="vibe-ring ${c.isLive ? 'is-live' : ''}">
                         <img src="${c.media}">
                     </div>
@@ -1628,7 +1695,7 @@
                 return `
                     <div class="col-md-4">
                         <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media" onclick="openCreatorProfile('${item.creator}')">
+                            <div class="feed-media" onclick="openStoryViewer({creator: '${item.creator}', title: '${item.title.replace(/'/g, "\\'")}', media: '${item.media}', mediaType: '${item.mediaType}', music: '${item.music}'})">
                                 ${item.mediaType === 'video' ? `
                                     <video src="${item.media}" autoplay loop muted playsinline></video>
                                 ` : `
@@ -1728,26 +1795,13 @@
                                 <span class="badge bg-success rounded-pill">Public Profile • Active Stories</span>
                             </div>
                         </div>
-                        <div class="d-flex gap-2 mb-4">
-                            <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="openDirectChat('${handle}')"><i class="fa-solid fa-envelope me-1"></i> Send Message</button>
-                        </div>
-                        <h6 class="fw-bold mb-3">Active Stories</h6>
+                        <h6 class="fw-bold mb-3 text-white">Stories & Posts</h6>
                         <div class="row g-3">
                             ${userStories.map(s => `
-                                <div class="col-md-6">
-                                    <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
-                                        <div class="d-flex align-items-center gap-3 mb-2">
-                                            ${s.mediaType === 'video' ? `
-                                                <video src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
-                                            ` : `
-                                                <img src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
-                                            `}
-                                            <div>
-                                                <h6 class="fw-bold mb-1 text-white small">${s.title}</h6>
-                                                <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'}</span>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-sm btn-outline-danger rounded-pill w-100 mt-2" onclick="alert('Story liked!')"><i class="fa-solid fa-heart me-1"></i> Like Story (${s.likes})</button>
+                                <div class="col-md-4">
+                                    <div class="social-card p-2 cursor-pointer" onclick="openStoryViewer({creator: '${handle}', title: '${(s.title || 'Story').replace(/'/g, "\\'")}', media: '${s.media \vert{}\vert{} s.img_url}', mediaType: '${s.mediaType || 'image'}'})">
+                                        <img src="${s.media || s.img_url}" class="rounded-3 mb-2" style="width:100%; height:120px; object-fit:cover;">
+                                        <span class="small fw-semibold text-white d-block text-truncate">${s.title}</span>
                                     </div>
                                 </div>
                             `).join('')}
@@ -1755,177 +1809,35 @@
                     </div>
                 `;
             }
-            const extModalEl = document.getElementById('externalProfileModal');
-            const extModal = bootstrap.Modal.getInstance(extModalEl) || new bootstrap.Modal(extModalEl);
-            extModal.show();
+
+            const modalEl = document.getElementById('externalProfileModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modalInstance.show();
         }
 
-        function sendFollowRequest(handle) {
-            alert('Access request sent to ' + handle + '.');
-            const extModalEl = document.getElementById('externalProfileModal');
-            const extModal = bootstrap.Modal.getInstance(extModalEl);
-            if (extModal) extModal.hide();
+        function openShareModal(title, url) {
+            document.getElementById('shareLinkInput').value = window.location.href + '?post=' + encodeURIComponent(title);
+            const modalEl = document.getElementById('shareModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modalInstance.show();
         }
 
-        function updateProfileStats() {
-            updateAccountTypeUI();
-            const localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            const count = localTrails.length;
-            const simulatedViews = count * 180 + 410;
-            const totalLikes = localTrails.reduce((sum, item) => sum + item.likes, 12);
-
-            document.getElementById('statStoriesCount').innerText = count;
-            document.getElementById('statViewsCount').innerText = simulatedViews;
-            document.getElementById('statLikesCount').innerText = totalLikes;
-
-            const statusText = document.getElementById('profileVisibilityStatusText');
-            const privacyBtn = document.getElementById('toggleProfilePrivacyBtn');
-            if (isPrivateProfile) {
-                statusText.innerText = 'Current: Private Profile (Approval required for stories)';
-                privacyBtn.innerText = 'Switch to Public';
-                privacyBtn.className = 'btn btn-sm btn-outline-success rounded-pill px-3';
-            } else {
-                statusText.innerText = 'Current: Public Profile';
-                privacyBtn.innerText = 'Switch to Private';
-                privacyBtn.className = 'btn btn-sm btn-outline-info rounded-pill px-3';
-            }
-
-            document.getElementById('pendingRequestsCount').innerText = followRequests.length;
-            const reqListEl = document.getElementById('followRequestsList');
-            if (reqListEl) {
-                reqListEl.innerHTML = followRequests.length ? followRequests.map(user => `
-                    <div class="d-flex justify-content-between align-items-center p-2 rounded-3" style="background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05);">
-                        <span class="small font-mono text-white">${user} wants to view profile & stories</span>
-                        <button class="btn btn-sm btn-vibe py-1 px-3" onclick="approveRequest('${user}')">Approve</button>
-                    </div>
-                `).join('') : '<span class="small text-muted">No pending access requests.</span>';
-            }
-
-            const listEl = document.getElementById('userStoriesList');
-            if (listEl) {
-                listEl.innerHTML = localTrails.length ? localTrails.map(t => `
-                    <div class="col-md-6">
-                        <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-3">
-                                    ${t.mediaType === 'video' ? `
-                                        <video src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
-                                    ` : `
-                                        <img src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
-                                    `}
-                                    <div>
-                                        <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
-                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • ❤️ ${t.likes} likes • ${t.isPrivate ? '🔒 Private' : '🌐 Public'}</span>
-                                    </div>
-                                </div>
-                                <button class="btn btn-sm text-danger" onclick="deleteUserStory('${t.id}')" title="Delete Story"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('') : '<p class="text-muted small">No active stories published yet.</p>';
-            }
-        }
-
-        function deleteUserStory(id) {
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            localTrails = localTrails.filter(t => t.id !== id);
-            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
-            
-            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-            localFeedPosts = localFeedPosts.filter(p => p.id !== id);
-            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
-
-            updateProfileStats();
-            renderVibeStrip();
-            renderFeed();
-            alert('Story deleted and feed updated.');
-        }
-
-        function renderInbox() {
-            const listEl = document.getElementById('conversationsList');
-            if (!listEl) return;
-            
-            listEl.innerHTML = conversations.map(c => `
-                <div class="p-2 rounded-3 cursor-pointer d-flex justify-content-between align-items-center" style="background: ${activeChatId === c.id ? 'rgba(255,42,133,0.15)' : 'rgba(255,255,255,0.02)'}; border:1px solid rgba(255,255,255,0.05);" onclick="openChat('${c.id}')">
-                    <div>
-                        <span class="small fw-bold text-white d-block">${c.user}</span>
-                        <span class="small text-muted text-truncate d-block" style="max-width: 150px; font-size: 0.75rem;">${c.messages[c.messages.length - 1]?.text || 'No messages yet'}</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-muted" style="font-size:0.7rem;"></i>
-                </div>
-            `).join('');
-            
-            document.getElementById('inboxBadgeCount').style.display = conversations.length ? 'inline-block' : 'none';
-            document.getElementById('inboxBadgeCount').innerText = conversations.length;
-        }
-
-        function openChat(chatId) {
-            activeChatId = chatId;
-            renderInbox();
-            const chat = conversations.find(c => c.id === chatId);
-            if (!chat) return;
-
-            document.getElementById('activeChatHeader').innerText = 'Chat with ' + chat.user;
-            const messagesEl = document.getElementById('activeChatMessages');
-            messagesEl.innerHTML = chat.messages.map(m => `
-                <div class="p-2 rounded-3 mb-1" style="background: rgba(255,255,255,0.04); max-width: 80%;">
-                    <span class="small fw-bold text-info d-block" style="font-size:0.7rem;">${m.sender}</span>
-                    <span class="small text-white">${m.text}</span>
-                </div>
-            `).join('');
-            document.getElementById('chatMessageForm').classList.remove('d-none');
-        }
-
-        function sendChatMessage(event) {
-            event.preventDefault();
-            const input = document.getElementById('chatInputMessage');
-            const text = input.value.trim();
-            if (!text || !activeChatId) return;
-
-            const chat = conversations.find(c => c.id === activeChatId);
-            if (chat) {
-                chat.messages.push({ sender: currentUser ? currentUser.name : '@my_profile', text: text, time: 'Just now' });
-                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
-                openChat(activeChatId);
-                input.value = '';
-            }
-        }
-
-        function startNewChatPrompt() {
-            const handle = prompt('Enter creator handle to message (e.g., @fashion_weekly):');
-            if (!handle) return;
-            const newChat = { id: 'c_' + Date.now(), user: handle, messages: [{ sender: handle, text: 'Hello! Thanks for connecting on Evolysium.', time: 'Just now' }] };
-            conversations.unshift(newChat);
-            localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
-            openChat(newChat.id);
-        }
-
-        function openDirectChat(handle) {
-            const extModalEl = document.getElementById('externalProfileModal');
-            const extModal = bootstrap.Modal.getInstance(extModalEl);
-            if (extModal) extModal.hide();
-
-            let chat = conversations.find(c => c.user === handle);
-            if (!chat) {
-                chat = { id: 'c_' + Date.now(), user: handle, messages: [{ sender: handle, text: 'Started direct conversation.', time: 'Just now' }] };
-                conversations.unshift(chat);
-                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
-            }
-            const inboxModalEl = document.getElementById('inboxModal');
-            const inboxModal = new bootstrap.Modal(inboxModalEl);
-            inboxModal.show();
-            openChat(chat.id);
+        function copyShareLink() {
+            const input = document.getElementById('shareLinkInput');
+            input.select();
+            document.execCommand('copy');
+            alert('Link copied to clipboard!');
         }
 
         function addNotification(text) {
-            appNotifications.unshift({ text: text, time: 'Just now' });
+            appNotifications.unshift({ text, time: 'Just now' });
             localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
             unreadNotifications = true;
             localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
-            updateNotificationUI();
+            updateNotificationBadge();
         }
 
-        function updateNotificationUI() {
+        function updateNotificationBadge() {
             const badge = document.getElementById('notificationBadgeCount');
             const list = document.getElementById('notificationsDropdownList');
             if (!badge || !list) return;
@@ -1941,38 +1853,116 @@
                 <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
                 <li><hr class="dropdown-divider border-secondary opacity-25"></li>
                 ${appNotifications.map(n => `
-                    <li><a class="dropdown-item py-2 small text-light text-wrap" href="#">${n.text}<br><span class="text-muted" style="font-size:0.65rem;">${n.time}</span></a></li>
+                    <li><div class="dropdown-item-text small text-white py-2 border-bottom border-secondary border-opacity-10">
+                        <div>${n.text}</div>
+                        <span class="text-muted" style="font-size: 0.65rem;">${n.time}</span>
+                    </div></li>
                 `).join('')}
             `;
         }
 
         function markNotificationsRead() {
             unreadNotifications = false;
-            localStorage.setItem('evolysium_unread', JSON.stringify(false));
-            updateNotificationUI();
+            localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
+            updateNotificationBadge();
         }
 
-        function openShareModal(title, mediaUrl) {
-            const shareUrl = window.location.href.split('#')[0] + '?post=' + encodeURIComponent(title);
-            document.getElementById('shareLinkInput').value = shareUrl;
-            const modal = new bootstrap.Modal(document.getElementById('shareModal'));
-            modal.show();
-        }
+        function updateProfileStats() {
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            document.getElementById('statStoriesCount').innerText = localTrails.length;
+            document.getElementById('statViewsCount').innerText = localTrails.length * 142 + 350;
+            document.getElementById('statLikesCount').innerText = localTrails.reduce((acc, curr) => acc + (curr.likes || 1), 12);
+            document.getElementById('pendingRequestsCount').innerText = followRequests.length;
 
-        function copyShareLink() {
-            const input = document.getElementById('shareLinkInput');
-            input.select();
-            navigator.clipboard.writeText(input.value);
-            alert('Post link copied to clipboard!');
-        }
+            const reqList = document.getElementById('followRequestsList');
+            if (reqList) {
+                reqList.innerHTML = followRequests.length === 0 ? '<span class="small text-muted">No pending requests</span>' : followRequests.map(u => `
+                    <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-dark border border-secondary border-opacity-25">
+                        <span class="small fw-bold text-white">${u}</span>
+                        <button class="btn btn-sm btn-vibe py-1 px-3" onclick="approveRequest('${u}')">Approve</button>
+                    </div>
+                `).join('');
+            }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            updateAuthUI();
+            const userStoriesList = document.getElementById('userStoriesList');
+            if (userStoriesList) {
+                userStoriesList.innerHTML = localTrails.length === 0 ? '<div class="col-12 text-muted small">No stories published yet. Click Drop Story to create one.</div>' : localTrails.map(s => `
+                    <div class="col-md-4">
+                        <div class="social-card p-2 cursor-pointer" onclick="openStoryViewer({creator: '${s.creator || '@my_profile'}', title: '${(s.title || 'Story').replace(/'/g, "\\'")}', media: '${s.media || s.img_url}', mediaType: '${s.mediaType || 'image'}', music: '${s.music || 'Audio'}'})">
+                            <img src="${s.media || s.img_url}" class="rounded-3 mb-2" style="width:100%; height:120px; object-fit:cover;">
+                            <span class="small fw-semibold text-white d-block text-truncate">${s.title}</span>
+                            <span class="small font-mono text-muted" style="font-size:0.68rem;">❤️ ${s.likes || 1} likes</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
             updateAccountTypeUI();
-            updateNotificationUI();
-            renderInbox();
-            renderVibeStrip();
-            renderSocialNewsDrawer();
+        }
+
+        function renderConversationsList() {
+            const listEl = document.getElementById('conversationsList');
+            if (!listEl) return;
+            listEl.innerHTML = conversations.map(c => `
+                <div class="p-2 rounded-3 cursor-pointer d-flex justify-content-between align-items-center ${activeChatId === c.id ? 'bg-secondary bg-opacity-25 border border-info border-opacity-50' : 'bg-dark bg-opacity-50'}" onclick="selectChat('${c.id}')">
+                    <div>
+                        <span class="fw-bold text-white small d-block">${c.user}</span>
+                        <span class="small text-muted text-truncate d-inline-block" style="max-width: 170px; font-size: 0.72rem;">${c.messages[c.messages.length - 1]?.text || ''}</span>
+                    </div>
+                    <span class="badge bg-dark border border-secondary text-info" style="font-size: 0.6rem;">Chat</span>
+                </div>
+            `).join('');
+        }
+
+        function selectChat(id) {
+            activeChatId = id;
+            const chat = conversations.find(c => c.id === id);
+            if (!chat) return;
+
+            document.getElementById('activeChatHeader').innerText = 'Conversation with ' + chat.user;
+            document.getElementById('chatMessageForm').classList.remove('d-none');
+            
+            const msgContainer = document.getElementById('activeChatMessages');
+            msgContainer.innerHTML = chat.messages.map(m => `
+                <div class="p-2 rounded-3 ${m.sender === '@my_profile' ? 'bg-pink bg-opacity-25 ms-auto border border-pink border-opacity-25' : 'bg-dark bg-opacity-50 me-auto border border-secondary border-opacity-25'}" style="max-width: 80%;">
+                    <div class="small fw-bold text-info" style="font-size: 0.7rem;">${m.sender}</div>
+                    <div class="small text-white">${m.text}</div>
+                    <div class="text-muted text-end" style="font-size: 0.6rem;">${m.time}</div>
+                </div>
+            `).join('');
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+            renderConversationsList();
+        }
+
+        function sendChatMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('chatInputMessage');
+            const text = input.value.trim();
+            if (!text || !activeChatId) return;
+
+            const chat = conversations.find(c => c.id === activeChatId);
+            if (chat) {
+                chat.messages.push({ sender: currentUser?.name || '@my_profile', text, time: 'Just now' });
+                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+                selectChat(activeChatId);
+                input.value = '';
+            }
+        }
+
+        function startNewChatPrompt() {
+            const handle = prompt('Enter creator handle to message (e.g. @fashion_weekly):');
+            if (!handle) return;
+            const newId = 'c_' + Date.now();
+            conversations.push({ id: newId, user: handle, messages: [{ sender: handle, time: 'Just now', text: 'Hello! Let\'s chat about trends.' }] });
+            localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+            renderConversationsList();
+            selectChat(newId);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            updateNotificationBadge();
+            renderConversationsList();
             loadBackendFeed();
         });
     </script>
