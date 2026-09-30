@@ -63,7 +63,6 @@
             background: rgba(12, 10, 21, 0.65);
             backdrop-filter: blur(25px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            z-index: 1030;
         }
 
         .brand-pill {
@@ -376,7 +375,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease;
         }
 
         @media (max-width: 992px) {
@@ -405,7 +404,7 @@
     <div id="app-preloader">
         <div class="brand-pill fw-bold text-white fs-2 mb-3 animate-pulse" style="width: 70px; height: 70px; letter-spacing: -2px;">ƎE</div>
         <h4 class="fw-bold hero-headline mb-1">Evolysium</h4>
-        <p class="small text-muted font-mono">Loading your vibe instantly...</p>
+        <p class="small text-muted font-mono">Loading your vibe...</p>
     </div>
 
     <!-- Header -->
@@ -437,14 +436,11 @@
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
-                <button class="social-pill active" onclick="checkPostPermission()" title="Create Post">
-                    <i class="fa-solid fa-plus"></i> Create Post
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#createPostModal" title="Unlimited Post Creator">
+                    <i class="fa-solid fa-plus"></i> Create Post (<span class="text-warning">Unlimited</span>)
                 </button>
-                <button class="social-pill active" onclick="checkStoryPermission()" title="Drop Story">
-                    <i class="fa-solid fa-plus-circle"></i> Drop Story
-                </button>
-                <button class="social-pill" data-bs-toggle="modal" data-bs-target="#inviteModal">
-                    <i class="fa-solid fa-user-plus text-warning"></i> Invite Friends
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal" title="Unlimited Story Drop">
+                    <i class="fa-solid fa-plus-circle"></i> Drop Story (<span class="text-warning">Unlimited</span>)
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
                     <i class="fa-solid fa-user-gear text-info"></i> My Profile <span id="verifiedBadgeIcon" class="text-warning ms-1" style="display:none;" title="Verified Profile"><i class="fa-solid fa-circle-check"></i></span>
@@ -468,7 +464,7 @@
     </nav>
 
     <!-- Sidebar Offcanvas Menu -->
-    <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="background: rgba(12, 10, 21, 0.95); backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.1); z-index: 1080;">
+    <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="background: rgba(12, 10, 21, 0.95); backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.1);">
         <div class="offcanvas-header border-bottom border-secondary border-opacity-25 py-4 px-4">
             <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel"><i class="fa-solid fa-bars text-pink me-2"></i>Evolysium Menu</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -504,7 +500,15 @@
                 <i class="fa-solid fa-envelope text-pink fs-5" style="width:24px;"></i>
                 <div>
                     <span class="fw-semibold d-block">Messages</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Functional live inbox & real chats</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Conversations and chat overview</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Story replies overview.');">
+                <i class="fa-solid fa-comment-dots text-info fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Story Replies</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">What users commented on your stories</span>
                 </div>
             </a>
 
@@ -512,15 +516,23 @@
                 <i class="fa-solid fa-user-plus text-warning fs-5" style="width:24px;"></i>
                 <div>
                     <span class="fw-semibold d-block">Follow Requests</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Manage real connection requests</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Manage requests for your profile</span>
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inviteModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-paper-plane text-info fs-5" style="width:24px;"></i>
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Blocked users list is empty.');">
+                <i class="fa-solid fa-ban text-danger fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Invite Friends</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Send referral invitations</span>
+                    <span class="fw-semibold d-block">Blocked Users</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Manage blocked accounts</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Cookies and Privacy: All cookies comply with GDPR regulations.');">
+                <i class="fa-solid fa-cookie-bite text-warning fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Cookies</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Privacy and cookie settings</span>
                 </div>
             </a>
         </div>
@@ -622,7 +634,7 @@
     <!-- Modals -->
 
     <!-- Story Full View Modal -->
-    <div class="modal fade" id="storyViewModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <div class="modal fade" id="storyViewModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(12, 10, 21, 0.98); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
                 <div class="modal-header border-0 pb-0 px-4 pt-4">
@@ -641,25 +653,9 @@
                         <img id="storyModalImage" src="" alt="Story Media" style="max-width:100%; max-height:480px; object-fit:contain;">
                         <video id="storyModalVideo" src="" autoplay loop muted playsinline style="max-width:100%; max-height:480px; object-fit:contain; display:none;"></video>
                     </div>
-                    
-                    <!-- Functional Likes & Comments Section for Trends & Stories -->
-                    <div class="d-flex justify-content-between align-items-center px-2 mb-3">
+                    <div class="d-flex justify-content-between align-items-center px-2">
                         <span class="small font-mono text-info" id="storyModalMusic"><i class="fa-solid fa-music me-1"></i> Original Audio</span>
-                        <div class="d-flex gap-2">
-                            <button class="like-btn" id="storyModalLikeBtn" onclick="toggleStoryModalLike()">
-                                <i class="fa-solid fa-heart"></i> <span id="storyModalLikesCount">0</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Comments stream -->
-                    <div class="border-top border-secondary border-opacity-25 pt-3 text-start">
-                        <h6 class="fw-bold text-white small mb-2"><i class="fa-solid fa-comments me-1 text-pink"></i> Trend Comments (<span id="storyCommentsCount">0</span>)</h6>
-                        <div id="storyCommentsList" class="d-flex flex-column gap-2 mb-3" style="max-height: 120px; overflow-y: auto;"></div>
-                        <form onsubmit="handleStoryCommentSubmit(event)" class="d-flex gap-2">
-                            <input type="text" id="storyCommentInput" class="form-control auth-input form-control-sm" placeholder="Write a comment..." required>
-                            <button type="submit" class="btn btn-vibe btn-sm px-3 py-1">Post</button>
-                        </form>
+                        <button class="social-pill active py-1 px-3" data-bs-dismiss="modal">Close Story</button>
                     </div>
                 </div>
             </div>
@@ -667,7 +663,7 @@
     </div>
 
     <!-- Sign In / Register Modal -->
-    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
@@ -701,11 +697,11 @@
     </div>
 
     <!-- Inbox Modal -->
-    <div class="modal fade" id="inboxModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <div class="modal fade" id="inboxModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-envelope text-pink me-2"></i>Evolysium Real Inbox</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-envelope text-pink me-2"></i>Evolysium Inbox</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -713,7 +709,7 @@
                         <div class="col-md-5 border-end border-secondary border-opacity-25">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="fw-bold mb-0 text-white">Chats</h6>
-                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="startNewChatPrompt()">+ New Chat</button>
+                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="startNewChatPrompt()">+ New Message</button>
                             </div>
                             <div id="conversationsList" class="d-flex flex-column gap-2" style="max-height: 350px; overflow-y: auto;"></div>
                         </div>
@@ -722,7 +718,7 @@
                                 Select a conversation
                             </div>
                             <div id="activeChatMessages" class="py-3 flex-grow-1 overflow-auto d-flex flex-column gap-2" style="max-height: 270px;">
-                                <div class="text-center text-muted small my-auto">Choose a chat on the left to start real messaging.</div>
+                                <div class="text-center text-muted small my-auto">Choose a chat on the left to start messaging.</div>
                             </div>
                             <form id="chatMessageForm" class="d-flex gap-2 mt-2 pt-2 border-top border-secondary border-opacity-25 d-none" onsubmit="sendChatMessage(event)">
                                 <input type="text" id="chatInputMessage" class="form-control auth-input form-control-sm" placeholder="Type a message..." required>
@@ -735,18 +731,15 @@
         </div>
     </div>
 
-    <!-- Create Post Modal (Restricted & Unlimited) -->
-    <div class="modal fade" id="createPostModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <!-- Create Post Modal (Unlimited Posts) -->
+    <div class="modal fade" id="createPostModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-2"></i>Create Post</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-2"></i>Create Unlimited Post / Story</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div id="postRestrictionNotice" class="alert alert-warning small mb-3" style="display:none;">
-                        <strong>Free Registered Limit:</strong> You have reached your posting limit. Upgrade to a subscription pass for unlimited posting.
-                    </div>
                     <div class="mb-3 text-center">
                         <div id="univCameraContainer" class="position-relative rounded-4 overflow-hidden bg-black mb-2" style="height: 180px; display: none; border: 1px solid rgba(255,255,255,0.2);">
                             <video id="univCameraPreview" autoplay playsinline muted style="width:100%; height:100%; object-fit:cover;"></video>
@@ -767,8 +760,8 @@
                         <div class="mb-3">
                             <label class="form-label small text-muted">Publish Destination</label>
                             <select id="univDestination" class="form-control auth-input text-white">
-                                <option value="feed">⚡ Public / Private Feed</option>
-                                <option value="story">📖 Story Strip & Trending</option>
+                                <option value="feed">⚡ Public / Private Feed (Unlimited)</option>
+                                <option value="story">📖 Story Strip & Trending (Unlimited)</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -781,7 +774,7 @@
                         <div class="mb-3">
                             <label class="form-label small text-muted">Visibility Mode</label>
                             <select id="univPrivacy" class="form-control auth-input text-white">
-                                <option value="public">🌐 Public (Visible to everyone)</option>
+                                <option value="public">🌐 Public (Visible to everyone & Feed)</option>
                                 <option value="private">🔒 Private (Followers / Approved only)</option>
                             </select>
                         </div>
@@ -792,19 +785,19 @@
                             </div>
                             <input type="url" id="univMediaUrl" class="form-control auth-input" placeholder="https://images.unsplash.com/... or snapshot" required>
                         </div>
-                        <button type="submit" id="submitPostBtn" class="btn btn-vibe w-100 rounded-pill py-3">Publish Post</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Unlimited Post</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Drop Story Modal -->
-    <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <!-- Drop Story Modal (Unlimited Stories) -->
+    <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.92); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Drop Story (Camera / File)</h4>
+                    <h4 class="fw-bold mb-0">Drop Unlimited Story (Camera / File)</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -867,33 +860,7 @@
                             <input type="file" id="trailDeviceFile" class="form-control auth-input form-control-sm mb-2" accept="image/*,video/*" onchange="handleTrailFileUpload(event)">
                             <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/... or uploaded file" required>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Story</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Invite Friends Modal -->
-    <div class="modal fade" id="inviteModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.94); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
-                <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-paper-plane text-warning me-2"></i>Invite Friends & Earn Vibe</h4>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4 text-center">
-                    <p class="text-muted small mb-4">Send an exclusive invitation link to your friends so they can register and subscribe to Evolysium platform passes:</p>
-                    <div class="input-group mb-3">
-                        <input type="text" id="inviteLinkInput" class="form-control auth-input" value="https://evolysium.app/invite?ref=user_vibe" readonly>
-                        <button class="btn btn-vibe" onclick="copyInviteLink()">Copy Invite Link</button>
-                    </div>
-                    <form onsubmit="sendEmailInvitation(event)" class="text-start border-top border-secondary border-opacity-25 pt-3 mt-3">
-                        <label class="form-label small text-muted">Send Invitation via Email</label>
-                        <div class="input-group mb-2">
-                            <input type="email" id="inviteEmailInput" class="form-control auth-input" placeholder="friend@example.com" required>
-                            <button type="submit" class="btn btn-outline-info">Send</button>
-                        </div>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Unlimited Story</button>
                     </form>
                 </div>
             </div>
@@ -901,7 +868,7 @@
     </div>
 
     <!-- User Profile Modal -->
-    <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.94); backdrop-filter: blur(25px); border-radius: 32px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
@@ -934,33 +901,27 @@
                     </div>
 
                     <div class="mb-4">
-                        <h6 class="fw-bold mb-2">Pending Follow Requests (<span id="pendingRequestsCount">0</span>)</h6>
+                        <h6 class="fw-bold mb-2">Pending Requests (<span id="pendingRequestsCount">0</span>)</h6>
                         <div id="followRequestsList" class="d-flex flex-column gap-2"></div>
                     </div>
 
                     <div class="row g-3 mb-4">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="profile-stats-card">
-                                <span class="small text-muted d-block mb-1">Followers</span>
-                                <h3 class="fw-bold text-white mb-0" id="statFollowersCount">342</h3>
+                                <span class="small text-muted d-block mb-1">My Active Stories</span>
+                                <h3 class="fw-bold text-white mb-0" id="statStoriesCount">0</h3>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="profile-stats-card">
-                                <span class="small text-muted d-block mb-1">Total Likes</span>
-                                <h3 class="fw-bold text-info mb-0" id="statLikesCount">1,820</h3>
+                                <span class="small text-muted d-block mb-1">Story Views</span>
+                                <h3 class="fw-bold text-info mb-0" id="statViewsCount">0</h3>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="profile-stats-card">
-                                <span class="small text-muted d-block mb-1">Follow Requests</span>
-                                <h3 class="fw-bold text-warning mb-0" id="statRequestsCount">0</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="profile-stats-card">
-                                <span class="small text-muted d-block mb-1">Published Stories</span>
-                                <h3 class="fw-bold" style="color: var(--pink-pop);" id="statStoriesCount">0</h3>
+                                <span class="small text-muted d-block mb-1">Story Likes</span>
+                                <h3 class="fw-bold" style="color: var(--pink-pop);" id="statLikesCount">0</h3>
                             </div>
                         </div>
                     </div>
@@ -972,7 +933,7 @@
     </div>
 
     <!-- External User Profile View Modal -->
-    <div class="modal fade" id="externalProfileModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <div class="modal fade" id="externalProfileModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.94); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
@@ -985,7 +946,7 @@
     </div>
 
     <!-- Share Modal -->
-    <div class="modal fade" id="shareModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.94); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
@@ -993,7 +954,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4 text-center">
-                    <p class="text-muted small mb-4">Share this post internally within the Evolysium network:</p>
+                    <p class="text-melt small mb-4">Share this post internally within the Evolysium network:</p>
                     <div class="input-group">
                         <input type="text" id="shareLinkInput" class="form-control auth-input" readonly>
                         <button class="btn btn-vibe" onclick="copyShareLink()">Copy Link</button>
@@ -1004,7 +965,7 @@
     </div>
 
     <!-- Pricing Modal -->
-    <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
+    <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.9); backdrop-filter: blur(25px); border-radius: 32px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
@@ -1103,7 +1064,6 @@
 
         let isRegisterMode = false;
         let currentUser = JSON.parse(localStorage.getItem('evolysium_current_user') || 'null');
-        let isSubscribedUser = JSON.parse(localStorage.getItem('evolysium_is_subscribed') || 'false');
 
         let mediaStream = null;
         let univMediaStream = null;
@@ -1116,9 +1076,6 @@
             { id: 'c2', user: '@luka_creator', messages: [{ sender: '@luka_creator', text: 'Are we collaborating on the next trend feed?', time: '1h ago' }] }
         ]));
         let activeChatId = null;
-
-        let currentActiveStoryId = null;
-        let storyCommentsStore = JSON.parse(localStorage.getItem('evolysium_story_comments') || '{}');
 
         let currentThemeIndex = parseInt(localStorage.getItem('evolysium_theme_idx') || '0');
         const themes = ['', 'theme-matrix', 'theme-gold'];
@@ -1173,12 +1130,12 @@
             if (isRegisterMode) {
                 currentUser = { email, name };
                 localStorage.setItem('evolysium_current_user', JSON.stringify(currentUser));
-                addNotificationWithEmail('Account successfully registered! Welcome to Evolysium.', email);
+                addNotification('Account successfully created! Welcome to Evolysium.');
                 alert('Account registered and signed in successfully!');
             } else {
                 currentUser = { email, name: email.split('@')[0] };
                 localStorage.setItem('evolysium_current_user', JSON.stringify(currentUser));
-                addNotificationWithEmail('Signed in successfully to your account.', email);
+                addNotification('Signed in successfully.');
                 alert('Signed in successfully!');
             }
 
@@ -1187,42 +1144,6 @@
             const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
             modalInstance.hide();
             event.target.reset();
-        }
-
-        function checkPostPermission() {
-            if (!currentUser) {
-                alert('You must be registered or signed in to create posts or drop stories.');
-                new bootstrap.Modal(document.getElementById('authModal')).show();
-                return;
-            }
-            if (!isSubscribedUser) {
-                let userPostCount = parseInt(localStorage.getItem('evolysium_post_count') || '0');
-                if (userPostCount >= 3) {
-                    document.getElementById('postRestrictionNotice').style.display = 'block';
-                    document.getElementById('submitPostBtn').disabled = true;
-                } else {
-                    document.getElementById('postRestrictionNotice').style.display = 'none';
-                    document.getElementById('submitPostBtn').disabled = false;
-                }
-            }
-            new bootstrap.Modal(document.getElementById('createPostModal')).show();
-        }
-
-        function checkStoryPermission() {
-            if (!currentUser) {
-                alert('You must be registered or signed in to drop a story.');
-                new bootstrap.Modal(document.getElementById('authModal')).show();
-                return;
-            }
-            if (!isSubscribedUser) {
-                let userStoryCount = parseInt(localStorage.getItem('evolysium_story_count') || '0');
-                if (userStoryCount >= 2) {
-                    alert('Free registered users are restricted to 2 story drops. Upgrade to a subscription pass for unlimited sharing.');
-                    new bootstrap.Modal(document.getElementById('pricingModal')).show();
-                    return;
-                }
-            }
-            new bootstrap.Modal(document.getElementById('trailModal')).show();
         }
 
         async function startUnivCamera() {
@@ -1367,15 +1288,6 @@
 
         async function handleUniversalPostSubmit(event) {
             event.preventDefault();
-            if (!isSubscribedUser) {
-                let userPostCount = parseInt(localStorage.getItem('evolysium_post_count') || '0');
-                if (userPostCount >= 3) {
-                    alert('Limit reached for registered users. Please subscribe for unlimited posting.');
-                    return;
-                }
-                localStorage.setItem('evolysium_post_count', userPostCount + 1);
-            }
-
             const title = document.getElementById('univTitle').value;
             const destination = document.getElementById('univDestination').value;
             const mediaType = document.getElementById('univType').value;
@@ -1409,12 +1321,31 @@
             localFeedPosts.unshift(newPostItem);
             localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
 
+            // Svi storyji i ovi do sada objavljeni automatski spremljeni i u storyje i u trendove/feedu
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             localTrails.unshift(newPostItem);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
-            addNotificationWithEmail('Your post was published successfully and added to trending feeds!', currentUser?.email);
-            alert('Post published successfully!');
+            try {
+                await fetch(`${API_BASE_URL}/api/posts/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        platform: newPostItem.platform,
+                        category: newPostItem.cat,
+                        title: newPostItem.title,
+                        summary: newPostItem.summary,
+                        img_url: newPostItem.img_url,
+                        image: newPostItem.img_url,
+                        is_story: true
+                    })
+                });
+            } catch (err) {
+                console.log('Backend sync warning (handled locally):', err);
+            }
+
+            addNotification('Uspješno objavljeno! Vaš story je uvršten u trendove i feed.');
+            alert('Uspješno objavljeno i dodano u donje trendove, storyje i feed!');
 
             const modalEl = document.getElementById('createPostModal');
             const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
@@ -1429,7 +1360,7 @@
             isVerifiedBadge = true;
             localStorage.setItem('evolysium_verified', JSON.stringify(isVerifiedBadge));
             updateAccountTypeUI();
-            addNotificationWithEmail('Congratulations! Your profile has received the verified badge.', currentUser?.email);
+            addNotification('Congratulations! Your profile has received the verified badge.');
             alert('Verified badge granted successfully!');
         }
 
@@ -1456,7 +1387,7 @@
                 if (sidebarLabel) sidebarLabel.innerText = 'Business Profile';
                 if (accountStatusText) accountStatusText.innerText = 'Current: Business Profile (Analytics enabled)';
             } else {
-                if (badgeEl) { badgeEl.innerText = isSubscribedUser ? 'PRO SUBSCRIBER' : 'PUBLIC FEED'; badgeEl.style.background = 'var(--pink-pop)'; badgeEl.style.color = '#fff'; }
+                if (badgeEl) { badgeEl.innerText = 'UNLIMITED FEED'; badgeEl.style.background = 'var(--pink-pop)'; badgeEl.style.color = '#fff'; }
                 if (sidebarLabel) sidebarLabel.innerText = 'Private Profile';
                 if (accountStatusText) accountStatusText.innerText = 'Current: Private Profile';
             }
@@ -1482,13 +1413,23 @@
         ];
 
         async function startStripeCheckout(tier) {
-            isSubscribedUser = true;
-            localStorage.setItem('evolysium_is_subscribed', JSON.stringify(true));
-            updateAccountTypeUI();
-            alert(`Successfully unlocked ${tier.toUpperCase()} pass with subscription privileges!`);
-            const modalEl = document.getElementById('pricingModal');
-            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-            modalInstance.hide();
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/payment/create-checkout-session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tier: tier })
+                });
+
+                const data = await response.json();
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert('Error starting checkout: ' + (data.error || 'Unknown error'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Could not connect to backend server for payment.');
+            }
         }
 
         function renderSocialNewsDrawer() {
@@ -1498,12 +1439,12 @@
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             
+            // Osiguravamo da su svi storyji i objavljeni sadržaji uključeni u trending donji drawer
             let combinedSources = [...localTrails, ...localFeedPosts];
             let uniqueMap = new Map();
             combinedSources.forEach(s => uniqueMap.set(s.id || s.title, s));
 
             let dynamicSignals = Array.from(uniqueMap.values()).map(p => ({
-                id: p.id,
                 platform: p.platform || 'trail',
                 handle: p.creator || p.source || '@my_profile',
                 badge: p.cat ? p.cat.toUpperCase() : 'TRENDING',
@@ -1512,14 +1453,13 @@
                 tag: '#' + (p.cat || 'story'),
                 media: p.media || p.img_url,
                 mediaType: p.mediaType || 'image',
-                music: p.music || 'Evolysium Audio',
-                likes: p.likes || 1
+                music: p.music || 'Evolysium Audio'
             }));
 
             let allSignals = [...dynamicSignals, ...socialNewsSignals];
 
-            drawer.innerHTML = allSignals.map((n) => `
-                <div class="news-pill-card" onclick="openStoryViewer({id: '${n.id || 'news_'+Math.random()}'.replace(/'/g, "\\'"), creator: '${n.handle}', title: '${n.text.replace(/'/g, "\\'")}', media: '${n.media || ''}', mediaType: '${n.mediaType || 'image'}', music: '${n.music || 'Original'}', likes: ${n.likes || 1}})">
+            drawer.innerHTML = allSignals.map((n, idx) => `
+                <div class="news-pill-card" onclick="openStoryViewer({creator: '${n.handle}', title: '${n.text.replace(/'/g, "\\'")}', media: '${n.media || ''}', mediaType: '${n.mediaType || 'image'}', music: '${n.music || 'Original'}'})">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex align-items-center gap-1.5">
                             <span class="small fw-bold text-white font-mono">${n.handle}</span>
@@ -1539,25 +1479,18 @@
 
         async function loadBackendFeed() {
             try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 4000);
-                const response = await fetch(API_FEED_URL, { signal: controller.signal });
-                clearTimeout(timeoutId);
+                const response = await fetch(API_FEED_URL);
                 if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
                 processIncomingItems(data?.items?.length ? data.items : fallbackItems, false);
             } catch (error) {
                 processIncomingItems(fallbackItems, false);
             } finally {
-                hidePreloader();
-            }
-        }
-
-        function hidePreloader() {
-            const preloader = document.getElementById('app-preloader');
-            if (preloader && preloader.style.display !== 'none') {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 300);
+                const preloader = document.getElementById('app-preloader');
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 500);
+                }
             }
         }
 
@@ -1592,6 +1525,7 @@
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             
+            // Osiguravamo spajanje svih prijašnjih i novih storyja u feed i trendove
             feedItems = append ? [...localTrails, ...localFeedPosts, ...mapped] : [...localTrails, ...localFeedPosts, ...mapped];
             renderFeed();
             renderVibeStrip();
@@ -1607,7 +1541,7 @@
             } else {
                 likedItems.add(itemId);
                 item.likes += 1;
-                addNotificationWithEmail(`You liked a post by ${item.creator}`, currentUser?.email);
+                addNotification(`You liked a post by ${item.creator}`);
             }
             localStorage.setItem('evolysium_likes', JSON.stringify(Array.from(likedItems)));
             renderFeed();
@@ -1631,15 +1565,6 @@
 
         function handleTrailSubmit(event) {
             event.preventDefault();
-            if (!isSubscribedUser) {
-                let userStoryCount = parseInt(localStorage.getItem('evolysium_story_count') || '0');
-                if (userStoryCount >= 2) {
-                    alert('Story drop limit reached for registered users. Subscribe for unlimited stories.');
-                    return;
-                }
-                localStorage.setItem('evolysium_story_count', userStoryCount + 1);
-            }
-
             const mode = document.getElementById('trailMode').value;
             const mediaType = document.getElementById('trailMediaType').value;
             const privacy = document.getElementById('trailPrivacy').value;
@@ -1679,12 +1604,12 @@
             event.target.reset();
             stopCameraFeed();
             processIncomingItems([newStory], true);
-            addNotificationWithEmail('Your story was successfully published!', currentUser?.email);
-            alert('Story successfully published!');
+            addNotification('Your unlimited story was successfully published and added to feed & trends!');
+            alert('Unlimited story successfully published and added to trends!');
         }
 
+        // Funkcija za prikaz storyja u punom modalnom prikazu kada korisnik klikne na sliku/story
         function openStoryViewer(storyData) {
-            currentActiveStoryId = storyData.id || ('story_' + Date.now());
             document.getElementById('storyModalCreatorHandle').innerText = storyData.creator || storyData.handle || '@creator';
             document.getElementById('storyModalTitle').innerText = storyData.title || storyData.text || 'Story View';
             document.getElementById('storyModalMusic').innerHTML = `<i class="fa-solid fa-music me-1"></i> ${storyData.music || 'Evolysium Audio'}`;
@@ -1703,84 +1628,8 @@
                 videoEl.style.display = 'none';
             }
 
-            const currentLikes = storyData.likes || 1;
-            const isLiked = likedItems.has(currentActiveStoryId);
-            const likeBtn = document.getElementById('storyModalLikeBtn');
-            if (isLiked) {
-                likeBtn.classList.add('liked');
-            } else {
-                likeBtn.classList.remove('liked');
-            }
-            document.getElementById('storyModalLikesCount').innerText = formatLikes(currentLikes);
-
-            renderStoryComments();
-
             const modal = new bootstrap.Modal(document.getElementById('storyViewModal'));
             modal.show();
-        }
-
-        function toggleStoryModalLike() {
-            if (!currentActiveStoryId) return;
-            const likeBtn = document.getElementById('storyModalLikeBtn');
-            const countEl = document.getElementById('storyModalLikesCount');
-            let currentCount = parseInt(countEl.innerText.replace('k', '000')) || 1;
-
-            if (likedItems.has(currentActiveStoryId)) {
-                likedItems.delete(currentActiveStoryId);
-                likeBtn.classList.remove('liked');
-                currentCount = Math.max(0, currentCount - 1);
-            } else {
-                likedItems.add(currentActiveStoryId);
-                likeBtn.classList.add('liked');
-                currentCount += 1;
-                addNotificationWithEmail('You liked a trend story.', currentUser?.email);
-            }
-            localStorage.setItem('evolysium_likes', JSON.stringify(Array.from(likedItems)));
-            countEl.innerText = formatLikes(currentCount);
-        }
-
-        function renderStoryComments() {
-            const listEl = document.getElementById('storyCommentsList');
-            const countEl = document.getElementById('storyCommentsCount');
-            if (!listEl || !currentActiveStoryId) return;
-
-            const comments = storyCommentsStore[currentActiveStoryId] || [
-                { user: '@fashion_weekly', text: 'Amazing vibe!', time: '5m ago' }
-            ];
-            countEl.innerText = comments.length;
-
-            listEl.innerHTML = comments.map(c => `
-                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 small">
-                    <div class="d-flex justify-content-between text-info fw-bold" style="font-size:0.72rem;">
-                        <span>${c.user}</span>
-                        <span class="text-muted font-mono" style="font-size:0.65rem;">${c.time}</span>
-                    </div>
-                    <div class="text-white mt-1" style="font-size:0.8rem;">${c.text}</div>
-                </div>
-            `).join('');
-        }
-
-        function handleStoryCommentSubmit(event) {
-            event.preventDefault();
-            const inputEl = document.getElementById('storyCommentInput');
-            const text = inputEl.value.trim();
-            if (!text || !currentActiveStoryId) return;
-
-            if (!storyCommentsStore[currentActiveStoryId]) {
-                storyCommentsStore[currentActiveStoryId] = [];
-            }
-
-            const userName = currentUser ? currentUser.name : '@my_profile';
-            storyCommentsStore[currentActiveStoryId].push({
-                user: userName,
-                text: text,
-                time: 'Just now'
-            });
-
-            localStorage.setItem('evolysium_story_comments', JSON.stringify(storyCommentsStore));
-            inputEl.value = '';
-            renderStoryComments();
-            addNotificationWithEmail('New comment posted on story.', currentUser?.email);
         }
 
         function renderVibeStrip() {
@@ -1796,14 +1645,14 @@
             ];
 
             strip.innerHTML = localTrails.map(t => `
-                <div class="vibe-item" onclick="openStoryViewer({id: '${t.id}', creator: '${t.creator || t.source}', title: '${(t.title || 'Story').replace(/'/g, "\\'")}', media: '${t.media || t.img_url}', mediaType: '${t.mediaType || 'image'}', music: '${t.music || 'Audio'}', likes: ${t.likes || 1}})">
+                <div class="vibe-item" onclick="openStoryViewer({creator: '${t.creator || t.source}', title: '${(t.title || 'Story').replace(/'/g, "\\'")}', media: '${t.media || t.img_url}', mediaType: '${t.mediaType || 'image'}', music: '${t.music || 'Audio'}'})">
                     <div class="vibe-ring ${t.isLive ? 'is-live' : ''}">
                         <img src="${t.media || t.img_url}">
                     </div>
                     <span class="small text-muted text-truncate mt-1" style="max-width: 76px; font-size: 0.72rem;">${t.creator || t.source || '@my_profile'}</span>
                 </div>
-            `).join('') + defaultCreators.map((c, i) => `
-                <div class="vibe-item" onclick="openStoryViewer({id: 'def_${i}', creator: '${c.handle}', title: '${c.title}', media: '${c.media}', mediaType: 'image', music: 'Vibe Audio', likes: 120})">
+            `).join('') + defaultCreators.map(c => `
+                <div class="vibe-item" onclick="openStoryViewer({creator: '${c.handle}', title: '${c.title}', media: '${c.media}', mediaType: 'image', music: 'Vibe Audio'})">
                     <div class="vibe-ring ${c.isLive ? 'is-live' : ''}">
                         <img src="${c.media}">
                     </div>
@@ -1846,7 +1695,7 @@
                 return `
                     <div class="col-md-4">
                         <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media" onclick="openStoryViewer({id: '${item.id}', creator: '${item.creator}', title: '${item.title.replace(/'/g, "\\'")}', media: '${item.media}', mediaType: '${item.mediaType}', music: '${item.music}', likes: ${item.likes}})">
+                            <div class="feed-media" onclick="openStoryViewer({creator: '${item.creator}', title: '${item.title.replace(/'/g, "\\'")}', media: '${item.media}', mediaType: '${item.mediaType}', music: '${item.music}'})">
                                 ${item.mediaType === 'video' ? `
                                     <video src="${item.media}" autoplay loop muted playsinline></video>
                                 ` : `
@@ -1892,7 +1741,7 @@
                         displayLimit += 6;
                         renderFeed();
                         isLoadingMore = false;
-                    }, 300);
+                    }, 400);
                 }
             }
         });
@@ -1910,13 +1759,8 @@
             localStorage.setItem('evolysium_requests', JSON.stringify(followRequests));
             localStorage.setItem('evolysium_approved', JSON.stringify(approvedUsers));
             updateProfileStats();
-            addNotificationWithEmail(`Approved follow request for ${username}`, currentUser?.email);
-            alert('Approved follow request for: ' + username);
-        }
-
-        function sendFollowRequest(handle) {
-            addNotificationWithEmail(`Follow request sent to ${handle}`, currentUser?.email);
-            alert('Follow request sent successfully to ' + handle);
+            addNotification(`Approved access request for ${username}`);
+            alert('Approved access request for: ' + username);
         }
 
         function openCreatorProfile(handle) {
@@ -1931,7 +1775,7 @@
                     <div class="py-5">
                         <i class="fa-solid fa-lock text-warning fs-1 mb-3"></i>
                         <h5 class="fw-bold text-white">This Profile is Private</h5>
-                        <p class="text-muted small mb-4">Send a follow request to view this profile and interact with its stories.</p>
+                        <p class="text-muted small mb-4">Send a request to view this profile and interact with its stories.</p>
                         <button class="btn btn-vibe rounded-pill px-4" onclick="sendFollowRequest('${handle}')">Request Access</button>
                     </div>
                 `;
@@ -1955,7 +1799,7 @@
                         <div class="row g-3">
                             ${userStories.map(s => `
                                 <div class="col-md-4">
-                                    <div class="social-card p-2 cursor-pointer" onclick="openStoryViewer({id: 'ext_${Math.random()}', creator: '${handle}', title: '${(s.title \vert{}\vert{} 'Story').replace(/'/g, "\\'")}', media: '${s.media || s.img_url}', mediaType: '${s.mediaType \vert{}\vert{} 'image'}', likes:${s.likes || 1}})">
+                                    <div class="social-card p-2 cursor-pointer" onclick="openStoryViewer({creator: '${handle}', title: '${(s.title || 'Story').replace(/'/g, "\\'")}', media: '${s.media \vert{}\vert{} s.img_url}', mediaType: '${s.mediaType || 'image'}'})">
                                         <img src="${s.media || s.img_url}" class="rounded-3 mb-2" style="width:100%; height:120px; object-fit:cover;">
                                         <span class="small fw-semibold text-white d-block text-truncate">${s.title}</span>
                                     </div>
@@ -1985,30 +1829,12 @@
             alert('Link copied to clipboard!');
         }
 
-        function copyInviteLink() {
-            const input = document.getElementById('inviteLinkInput');
-            input.select();
-            document.execCommand('copy');
-            alert('Invite link copied! Send it to your friends.');
-        }
-
-        function sendEmailInvitation(event) {
-            event.preventDefault();
-            const email = document.getElementById('inviteEmailInput').value;
-            alert(`Invitation email successfully sent to ${email}!`);
-            event.target.reset();
-        }
-
-        function addNotificationWithEmail(text, email) {
+        function addNotification(text) {
             appNotifications.unshift({ text, time: 'Just now' });
             localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
             unreadNotifications = true;
             localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
             updateNotificationBadge();
-
-            if (email) {
-                console.log(`[NEWSLETTER SENT TO ${email}]: ${text}`);
-            }
         }
 
         function updateNotificationBadge() {
@@ -2041,105 +1867,104 @@
             updateNotificationBadge();
         }
 
-        function renderConversationsList() {
-            const listEl = document.getElementById('conversationsList');
-            if (!listEl) return;
-
-            listEl.innerHTML = conversations.map(c => `
-                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 cursor-pointer" onclick="selectChat('${c.id}')" style="transition:0.2s;">
-                    <div class="fw-bold text-white small">${c.user}</div>
-                    <div class="text-muted small text-truncate" style="font-size:0.75rem;">${c.messages[c.messages.length - 1]?.text || 'No messages'}</div>
-                </div>
-            `).join('');
-        }
-
-        function selectChat(chatId) {
-            activeChatId = chatId;
-            const chat = conversations.find(c => c.id === chatId);
-            if (!chat) return;
-
-            document.getElementById('activeChatHeader').innerText = 'Chat with ' + chat.user;
-            document.getElementById('chatMessageForm').classList.remove('d-none');
-
-            const msgContainer = document.getElementById('activeChatMessages');
-            msgContainer.innerHTML = chat.messages.map(m => `
-                <div class="p-2 rounded-3 ${m.sender === '@my_profile' ? 'bg-primary bg-opacity-25 ms-auto' : 'bg-dark'} text-white small" style="max-width: 80%;">
-                    <div class="fw-bold text-info" style="font-size:0.68rem;">${m.sender}</div>
-                    <div>${m.text}</div>
-                </div>
-            `).join('');
-            msgContainer.scrollTop = msgContainer.scrollHeight;
-        }
-
-        function sendChatMessage(event) {
-            event.preventDefault();
-            const inputEl = document.getElementById('chatInputMessage');
-            const text = inputEl.value.trim();
-            if (!text || !activeChatId) return;
-
-            const chat = conversations.find(c => c.id === activeChatId);
-            if (chat) {
-                chat.messages.push({ sender: '@my_profile', text, time: 'Just now' });
-                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
-                inputEl.value = '';
-                selectChat(activeChatId);
-                renderConversationsList();
-            }
-        }
-
-        function startNewChatPrompt() {
-            const targetUser = prompt('Enter username to message (e.g. @luka_creator):');
-            if (!targetUser) return;
-            const newChat = {
-                id: 'c_' + Date.now(),
-                user: targetUser,
-                messages: [{ sender: targetUser, text: 'Hello! Connected via Evolysium inbox.', time: 'Just now' }]
-            };
-            conversations.unshift(newChat);
-            localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
-            renderConversationsList();
-            selectChat(newChat.id);
-        }
-
         function updateProfileStats() {
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             document.getElementById('statStoriesCount').innerText = localTrails.length;
-            document.getElementById('statLikesCount').innerText = localTrails.reduce((acc, curr) => acc + (curr.likes || 1), 1820);
-            document.getElementById('statRequestsCount').innerText = followRequests.length;
+            document.getElementById('statViewsCount').innerText = localTrails.length * 142 + 350;
+            document.getElementById('statLikesCount').innerText = localTrails.reduce((acc, curr) => acc + (curr.likes || 1), 12);
             document.getElementById('pendingRequestsCount').innerText = followRequests.length;
 
             const reqList = document.getElementById('followRequestsList');
             if (reqList) {
-                reqList.innerHTML = followRequests.length === 0 ? '<span class="small text-muted">No pending follow requests</span>' : followRequests.map(u => `
+                reqList.innerHTML = followRequests.length === 0 ? '<span class="small text-muted">No pending requests</span>' : followRequests.map(u => `
                     <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-dark border border-secondary border-opacity-25">
-                        <span class="small text-white fw-bold">${u}</span>
-                        <button class="btn btn-sm btn-success py-1 px-3 rounded-pill" onclick="approveRequest('${u}')">Approve</button>
+                        <span class="small fw-bold text-white">${u}</span>
+                        <button class="btn btn-sm btn-vibe py-1 px-3" onclick="approveRequest('${u}')">Approve</button>
                     </div>
                 `).join('');
             }
 
-            const storiesList = document.getElementById('userStoriesList');
-            if (storiesList) {
-                storiesList.innerHTML = localTrails.length === 0 ? '<div class="col-12 text-muted small">No stories published yet.</div>' : localTrails.map(s => `
+            const userStoriesList = document.getElementById('userStoriesList');
+            if (userStoriesList) {
+                userStoriesList.innerHTML = localTrails.length === 0 ? '<div class="col-12 text-muted small">No stories published yet. Click Drop Story to create one.</div>' : localTrails.map(s => `
                     <div class="col-md-4">
-                        <div class="social-card p-2">
-                            <img src="${s.media || s.img_url}" class="rounded-3 mb-2" style="width:100%; height:100px; object-fit:cover;">
-                            <span class="small text-white fw-semibold d-block text-truncate">${s.title}</span>
+                        <div class="social-card p-2 cursor-pointer" onclick="openStoryViewer({creator: '${s.creator || '@my_profile'}', title: '${(s.title || 'Story').replace(/'/g, "\\'")}', media: '${s.media || s.img_url}', mediaType: '${s.mediaType || 'image'}', music: '${s.music || 'Audio'}'})">
+                            <img src="${s.media || s.img_url}" class="rounded-3 mb-2" style="width:100%; height:120px; object-fit:cover;">
+                            <span class="small fw-semibold text-white d-block text-truncate">${s.title}</span>
+                            <span class="small font-mono text-muted" style="font-size:0.68rem;">❤️ ${s.likes || 1} likes</span>
                         </div>
                     </div>
                 `).join('');
             }
 
+            updateAccountTypeUI();
+        }
+
+        function renderConversationsList() {
+            const listEl = document.getElementById('conversationsList');
+            if (!listEl) return;
+            listEl.innerHTML = conversations.map(c => `
+                <div class="p-2 rounded-3 cursor-pointer d-flex justify-content-between align-items-center ${activeChatId === c.id ? 'bg-secondary bg-opacity-25 border border-info border-opacity-50' : 'bg-dark bg-opacity-50'}" onclick="selectChat('${c.id}')">
+                    <div>
+                        <span class="fw-bold text-white small d-block">${c.user}</span>
+                        <span class="small text-muted text-truncate d-inline-block" style="max-width: 170px; font-size: 0.72rem;">${c.messages[c.messages.length - 1]?.text || ''}</span>
+                    </div>
+                    <span class="badge bg-dark border border-secondary text-info" style="font-size: 0.6rem;">Chat</span>
+                </div>
+            `).join('');
+        }
+
+        function selectChat(id) {
+            activeChatId = id;
+            const chat = conversations.find(c => c.id === id);
+            if (!chat) return;
+
+            document.getElementById('activeChatHeader').innerText = 'Conversation with ' + chat.user;
+            document.getElementById('chatMessageForm').classList.remove('d-none');
+            
+            const msgContainer = document.getElementById('activeChatMessages');
+            msgContainer.innerHTML = chat.messages.map(m => `
+                <div class="p-2 rounded-3 ${m.sender === '@my_profile' ? 'bg-pink bg-opacity-25 ms-auto border border-pink border-opacity-25' : 'bg-dark bg-opacity-50 me-auto border border-secondary border-opacity-25'}" style="max-width: 80%;">
+                    <div class="small fw-bold text-info" style="font-size: 0.7rem;">${m.sender}</div>
+                    <div class="small text-white">${m.text}</div>
+                    <div class="text-muted text-end" style="font-size: 0.6rem;">${m.time}</div>
+                </div>
+            `).join('');
+            msgContainer.scrollTop = msgContainer.scrollHeight;
             renderConversationsList();
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadBackendFeed();
+        function sendChatMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('chatInputMessage');
+            const text = input.value.trim();
+            if (!text || !activeChatId) return;
+
+            const chat = conversations.find(c => c.id === activeChatId);
+            if (chat) {
+                chat.messages.push({ sender: currentUser?.name || '@my_profile', text, time: 'Just now' });
+                localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+                selectChat(activeChatId);
+                input.value = '';
+            }
+        }
+
+        function startNewChatPrompt() {
+            const handle = prompt('Enter creator handle to message (e.g. @fashion_weekly):');
+            if (!handle) return;
+            const newId = 'c_' + Date.now();
+            conversations.push({ id: newId, user: handle, messages: [{ sender: handle, time: 'Just now', text: 'Hello! Let\'s chat about trends.' }] });
+            localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+            renderConversationsList();
+            selectChat(newId);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
             updateAuthUI();
             updateNotificationBadge();
-            updateAccountTypeUI();
-            setTimeout(hidePreloader, 1500); // Fail-safe fallback da se preloader uvijek ukloni
+            renderConversationsList();
+            loadBackendFeed();
         });
     </script>
 </body>
-</html>
+                                    </html>
