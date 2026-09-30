@@ -436,11 +436,11 @@
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#createPostModal" title="Unlimited Post Creator">
-                    <i class="fa-solid fa-plus"></i> Create Post (<span class="text-warning">Unlimited</span>)
+                <button class="social-pill active" onclick="checkAuthAndOpenModal('createPostModal')" title="Post Creator">
+                    <i class="fa-solid fa-plus"></i> Create Post (<span class="text-warning" id="postLimitIndicator">3/3</span>)
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal" title="Unlimited Story Drop">
-                    <i class="fa-solid fa-plus-circle"></i> Drop Story (<span class="text-warning">Unlimited</span>)
+                <button class="social-pill active" onclick="checkAuthAndOpenModal('trailModal')" title="Story Drop">
+                    <i class="fa-solid fa-plus-circle"></i> Drop Story
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
                     <i class="fa-solid fa-user-gear text-info"></i> My Profile <span id="verifiedBadgeIcon" class="text-warning ms-1" style="display:none;" title="Verified Profile"><i class="fa-solid fa-circle-check"></i></span>
@@ -471,7 +471,7 @@
         </div>
         <div class="offcanvas-body p-4 d-flex flex-column gap-3">
             <div class="p-3 rounded-4 mb-2" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
-                <span class="small text-muted d-block mb-1 font-mono">CURRENT ACCOUNT TYPE</span>
+                <span class="small text-muted d-block mb-1 font-mono">CURRENT ACCOUNT TYPE (Privatni / Poslovni)</span>
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="fw-bold text-white" id="sidebarProfileTypeLabel">Private Profile</span>
                     <button class="btn btn-sm btn-vibe py-1 px-3" onclick="toggleAccountType()">Switch</button>
@@ -504,35 +504,19 @@
                 </div>
             </a>
 
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Story replies overview.');">
-                <i class="fa-solid fa-comment-dots text-info fs-5" style="width:24px;"></i>
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inviteModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-user-plus text-info fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Story Replies</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">What users commented on your stories</span>
+                    <span class="fw-semibold d-block">Pozovi prijatelje & Newsletter</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Pozivnice na e-mail i pretplata</span>
                 </div>
             </a>
 
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#profileModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-user-plus text-warning fs-5" style="width:24px;"></i>
+                <i class="fa-solid fa-user-check text-warning fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Follow Requests</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Manage requests for your profile</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Blocked users list is empty.');">
-                <i class="fa-solid fa-ban text-danger fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">Blocked Users</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Manage blocked accounts</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Cookies and Privacy: All cookies comply with GDPR regulations.');">
-                <i class="fa-solid fa-cookie-bite text-warning fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">Cookies</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Privacy and cookie settings</span>
+                    <span class="fw-semibold d-block">Zahtjevi za praćenje</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Upravljajte zahtjevima profila</span>
                 </div>
             </a>
         </div>
@@ -541,10 +525,10 @@
     <!-- Main Content -->
     <main class="container py-4">
         
-        <!-- Stories & Featured Creators - Premješteno iznad naslova -->
+        <!-- Stories & Featured Creators -->
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
-                <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators</div>
+                <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators (Klikni za Story)</div>
             </div>
             <div class="vibe-strip" id="dynamic-vibe-strip"></div>
         </div>
@@ -621,11 +605,11 @@
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
             <div class="d-flex align-items-center gap-2">
                 <span class="brand-name fw-bold text-white">Evolysium</span>
-                <span style="color: rgba(255,255,255,0.5);" class="small">© All Rights Reserved. Unlimited Ecosystem.</span>
+                <span style="color: rgba(255,255,255,0.5);" class="small">© All Rights Reserved. Ecosystem.</span>
             </div>
             <div class="d-flex align-items-center gap-4 small">
-                <a href="#">Privacy Policy</a>
-                <a href="#">GDPR Compliance</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#inviteModal">Pozovi prijatelje</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#inviteModal">Newsletter</a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#pricingModal">Upgrade Pass</a>
             </div>
         </div>
@@ -702,12 +686,46 @@
         </div>
     </div>
 
-    <!-- Create Post Modal (Unlimited Posts) -->
+    <!-- Pozivnice & Newsletter Modal -->
+    <div class="modal fade" id="inviteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-paper-plane text-cyan me-2"></i>Pozovite prijatelje & Newsletter</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+                        <h6 class="fw-bold text-white mb-2"><i class="fa-solid fa-user-plus text-pink me-1"></i> Pozivnica za prijatelje</h6>
+                        <p class="small text-muted mb-3">Pošaljite pozivnicu na e-mail adresu vašeg prijatelja i uključite ga u mrežu.</p>
+                        <form onsubmit="handleInviteFriend(event)">
+                            <div class="input-group mb-2">
+                                <input type="email" id="friendInviteEmail" class="form-control auth-input" placeholder="prijatelj@example.com" required>
+                                <button type="submit" class="btn btn-vibe">Pošalji</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold text-white mb-2"><i class="fa-solid fa-envelope-open-text text-info me-1"></i> Evolysium Newsletter</h6>
+                        <p class="small text-muted mb-3">Prijavite se na naš tjedni newsletter za najnovije trendove i ekskluzivne objave.</p>
+                        <form onsubmit="handleNewsletterSub(event)">
+                            <div class="input-group">
+                                <input type="email" id="newsletterEmail" class="form-control auth-input" placeholder="vas.email@example.com" required>
+                                <button type="submit" class="btn btn-outline-info">Pretplati se</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Post Modal (Limit 3 posts for registered users) -->
     <div class="modal fade" id="createPostModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-2"></i>Create Unlimited Post / Story</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-2"></i>Create Post (Max 3)</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -731,8 +749,8 @@
                         <div class="mb-3">
                             <label class="form-label small text-muted">Publish Destination</label>
                             <select id="univDestination" class="form-control auth-input text-white">
-                                <option value="feed">⚡ Public / Private Feed (Unlimited)</option>
-                                <option value="story">📖 Story Strip & Trending (Unlimited)</option>
+                                <option value="feed">⚡ Public / Private Feed</option>
+                                <option value="story">📖 Story Strip & Trending</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -745,7 +763,7 @@
                         <div class="mb-3">
                             <label class="form-label small text-muted">Visibility Mode</label>
                             <select id="univPrivacy" class="form-control auth-input text-white">
-                                <option value="public">🌐 Public (Visible to everyone & Feed)</option>
+                                <option value="public">🌐 Public (Visible to everyone)</option>
                                 <option value="private">🔒 Private (Followers / Approved only)</option>
                             </select>
                         </div>
@@ -756,19 +774,19 @@
                             </div>
                             <input type="url" id="univMediaUrl" class="form-control auth-input" placeholder="https://images.unsplash.com/... or snapshot" required>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Unlimited Post</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Post</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Drop Story Modal (Unlimited Stories) -->
+    <!-- Drop Story Modal -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.92); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Drop Unlimited Story (Camera / File)</h4>
+                    <h4 class="fw-bold mb-0">Drop Story (Camera / File)</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -831,14 +849,14 @@
                             <input type="file" id="trailDeviceFile" class="form-control auth-input form-control-sm mb-2" accept="image/*,video/*" onchange="handleTrailFileUpload(event)">
                             <input type="url" id="trailMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/... or uploaded file" required>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Unlimited Story</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Story</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- User Profile Modal -->
+    <!-- User Profile Modal (My Profile Dashboard: Zahtjevi, Likes, Stories, Views) -->
     <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.94); backdrop-filter: blur(25px); border-radius: 32px; border: 1px solid rgba(255,255,255,0.12);">
@@ -849,7 +867,7 @@
                 <div class="modal-body p-4">
                     <div class="p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                         <div>
-                            <h6 class="fw-bold mb-1 text-white">Account Mode (Private / Business)</h6>
+                            <h6 class="fw-bold mb-1 text-white">Account Mode (Privatni / Poslovni račun)</h6>
                             <span class="small text-muted" id="accountModeStatusText">Current: Private Profile</span>
                         </div>
                         <button class="btn btn-sm btn-vibe rounded-pill px-3" onclick="toggleAccountType()">Switch Account</button>
@@ -872,27 +890,33 @@
                     </div>
 
                     <div class="mb-4">
-                        <h6 class="fw-bold mb-2">Pending Requests (<span id="pendingRequestsCount">0</span>)</h6>
+                        <h6 class="fw-bold mb-2">Zahtjevi za praćenje (<span id="pendingRequestsCount">0</span>)</h6>
                         <div id="followRequestsList" class="d-flex flex-column gap-2"></div>
                     </div>
 
                     <div class="row g-3 mb-4">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="profile-stats-card">
-                                <span class="small text-muted d-block mb-1">My Active Stories</span>
+                                <span class="small text-muted d-block mb-1">My Stories</span>
                                 <h3 class="fw-bold text-white mb-0" id="statStoriesCount">0</h3>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="profile-stats-card">
                                 <span class="small text-muted d-block mb-1">Story Views</span>
                                 <h3 class="fw-bold text-info mb-0" id="statViewsCount">0</h3>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="profile-stats-card">
-                                <span class="small text-muted d-block mb-1">Story Likes</span>
+                                <span class="small text-muted d-block mb-1">Total Likes</span>
                                 <h3 class="fw-bold" style="color: var(--pink-pop);" id="statLikesCount">0</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="profile-stats-card">
+                                <span class="small text-muted d-block mb-1">Objavljeni postovi</span>
+                                <h3 class="fw-bold text-warning mb-0" id="statPostsCount">0/3</h3>
                             </div>
                         </div>
                     </div>
@@ -903,12 +927,12 @@
         </div>
     </div>
 
-    <!-- External User Profile View Modal -->
+    <!-- External User Profile & Story View Modal (Korisnici mogu vidjeti story drugog korisnika kada kliknu na njega) -->
     <div class="modal fade" id="externalProfileModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.94); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0" id="extProfileTitle">Creator Profile</h4>
+                    <h4 class="fw-bold mb-0" id="extProfileTitle">Creator Profile & Stories</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4 text-center" id="extProfileBody"></div>
@@ -952,8 +976,8 @@
                                     <h5>Free Starter</h5>
                                     <h3 class="fw-bold my-2">€0 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
-                                        <li><i class="fa-solid fa-check"></i> Unlimited public feed access</li>
-                                        <li><i class="fa-solid fa-check"></i> Unlimited story viewing</li>
+                                        <li><i class="fa-solid fa-check"></i> Public feed access (Listanje)</li>
+                                        <li><i class="fa-solid fa-check"></i> Max 3 objave za registrirane</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-outline-light w-100 rounded-pill py-2 mt-3" disabled>Current Base</button>
@@ -966,10 +990,9 @@
                                     <h5>Pro / Personal</h5>
                                     <h3 class="fw-bold my-2">€8.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
-                                        <li><i class="fa-solid fa-check"></i> Ad-free platform stream</li>
-                                        <li><i class="fa-solid fa-check"></i> Private/Public story controls</li>
-                                        <li><i class="fa-solid fa-check"></i> Custom profile theme variations</li>
-                                        <li><i class="fa-solid fa-check"></i> Direct creator messaging access</li>
+                                        <li><i class="fa-solid fa-check"></i> Poslovni ili privatni račun</li>
+                                        <li><i class="fa-solid fa-check"></i> Neograničene objave</li>
+                                        <li><i class="fa-solid fa-check"></i> Uređivanje profila i zahtjevi</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-outline-info w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('creator')">Select Creator</button>
@@ -982,10 +1005,8 @@
                                     <h5>Business / Creator</h5>
                                     <h3 class="fw-bold my-2">€11.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
-                                        <li><i class="fa-solid fa-check"></i> Priority public post placement</li>
-                                        <li><i class="fa-solid fa-check"></i> Advanced story analytics & stats</li>
-                                        <li><i class="fa-solid fa-check"></i> Business profile badge activation</li>
-                                        <li><i class="fa-solid fa-check"></i> Unlimited autonomous stream reach</li>
+                                        <li><i class="fa-solid fa-check"></i> Poslovne analitike i dosezi</li>
+                                        <li><i class="fa-solid fa-check"></i> Prioritetne objave i storyji</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-vibe w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('business')">Unlock Access</button>
@@ -998,10 +1019,8 @@
                                     <h5>VIP / Enterprise</h5>
                                     <h3 class="fw-bold my-2">€24.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
-                                        <li><i class="fa-solid fa-check"></i> White-label feed customization</li>
-                                        <li><i class="fa-solid fa-check"></i> Exclusive VIP status badge</li>
-                                        <li><i class="fa-solid fa-check"></i> 24/7 dedicated support channel</li>
-                                        <li><i class="fa-solid fa-check"></i> Early access to experimental features</li>
+                                        <li><i class="fa-solid fa-check"></i> White-label opcije</li>
+                                        <li><i class="fa-solid fa-check"></i> VIP status badge</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('elite')">Go VIP</button>
@@ -1035,11 +1054,12 @@
 
         let isRegisterMode = false;
         let currentUser = JSON.parse(localStorage.getItem('evolysium_current_user') || 'null');
+        let userPostCount = parseInt(localStorage.getItem('evolysium_user_post_count') || '0');
 
         let mediaStream = null;
         let univMediaStream = null;
 
-        let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to Evolysium platform!", "time": "Just now"}]');
+        let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Dobrodošli na Evolysium platformu!", "time": "Upravo sada"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
 
         let conversations = JSON.parse(localStorage.getItem('evolysium_conversations') || JSON.stringify([
@@ -1062,11 +1082,32 @@
 
         function updateAuthUI() {
             const labelEl = document.getElementById('authNavButtonLabel');
+            const postLimitEl = document.getElementById('postLimitIndicator');
             if (currentUser) {
                 if (labelEl) labelEl.innerText = currentUser.name || currentUser.email;
             } else {
                 if (labelEl) labelEl.innerText = 'Sign In';
             }
+            if (postLimitEl) {
+                postLimitEl.innerText = `${userPostCount}/3`;
+            }
+        }
+
+        function checkAuthAndOpenModal(modalId) {
+            if (!currentUser) {
+                alert('Morate biti registrirani i prijavljeni da biste objavljivali sadržaj! Neregistrirani korisnici mogu samo listati i pregledavati sadržaj.');
+                const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                authModal.show();
+                return;
+            }
+            if (userPostCount >= 3) {
+                alert('Iskoristili ste maksimalnih 3 besplatnih objava za registrirane korisnike. Nadogradite račun za neograničene objave.');
+                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
+                pricingModal.show();
+                return;
+            }
+            const targetModal = new bootstrap.Modal(document.getElementById(modalId));
+            targetModal.show();
         }
 
         function toggleAuthMode() {
@@ -1101,13 +1142,13 @@
             if (isRegisterMode) {
                 currentUser = { email, name };
                 localStorage.setItem('evolysium_current_user', JSON.stringify(currentUser));
-                addNotification('Account successfully created! Welcome to Evolysium.');
-                alert('Account registered and signed in successfully!');
+                addNotification('Račun uspješno kreiran! Dobrodošli na Evolysium.');
+                alert('Račun registriran i prijavljen!');
             } else {
                 currentUser = { email, name: email.split('@')[0] };
                 localStorage.setItem('evolysium_current_user', JSON.stringify(currentUser));
-                addNotification('Signed in successfully.');
-                alert('Signed in successfully!');
+                addNotification('Uspješna prijava.');
+                alert('Uspješno prijavljeni!');
             }
 
             updateAuthUI();
@@ -1259,6 +1300,11 @@
 
         async function handleUniversalPostSubmit(event) {
             event.preventDefault();
+            if (userPostCount >= 3) {
+                alert('Iskoristili ste limit od 3 objave.');
+                return;
+            }
+
             const title = document.getElementById('univTitle').value;
             const destination = document.getElementById('univDestination').value;
             const mediaType = document.getElementById('univType').value;
@@ -1268,6 +1314,10 @@
             const category = destination === 'story' ? 'story' : (mediaType === 'video' ? 'reels' : 'trending');
             const creatorName = currentUser ? currentUser.name : '@my_profile';
 
+            userPostCount++;
+            localStorage.setItem('evolysium_user_post_count', userPostCount);
+            updateAuthUI();
+
             const newPostItem = {
                 id: 'post_' + Date.now(),
                 source: creatorName,
@@ -1275,7 +1325,7 @@
                 title: title,
                 category: category,
                 cat: category,
-                platform: destination === 'story' ? 'trail' : 'trail',
+                platform: 'trail',
                 likes: 1,
                 comments: '0',
                 img_url: mediaUrl,
@@ -1297,26 +1347,8 @@
                 localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
             }
 
-            try {
-                await fetch(`${API_BASE_URL}/api/posts/create`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        platform: newPostItem.platform,
-                        category: newPostItem.cat,
-                        title: newPostItem.title,
-                        summary: newPostItem.summary,
-                        img_url: newPostItem.img_url,
-                        image: newPostItem.img_url,
-                        is_story: destination === 'story'
-                    })
-                });
-            } catch (err) {
-                console.log('Backend sync warning (handled locally):', err);
-            }
-
-            addNotification('Uspješno objavljeno! Vaša objava/story se sada vrti u feedu.');
-            alert('Uspješno objavljeno i dodano u feed, storyje i trending sekciju!');
+            addNotification('Uspješno objavljeno! (Preostalo objava: ' + (3 - userPostCount) + '/3)');
+            alert('Uspješno objavljeno! Ovo je vaša objava broj ' + userPostCount + ' od 3 dozvoljene.');
 
             const modalEl = document.getElementById('createPostModal');
             const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
@@ -1325,6 +1357,20 @@
             stopUnivCamera();
 
             processIncomingItems([newPostItem], true);
+        }
+
+        function handleInviteFriend(event) {
+            event.preventDefault();
+            const email = document.getElementById('friendInviteEmail').value;
+            alert('Pozivnica uspješno poslana na e-mail: ' + email);
+            event.target.reset();
+        }
+
+        function handleNewsletterSub(event) {
+            event.preventDefault();
+            const email = document.getElementById('newsletterEmail').value;
+            alert('Uspješno ste se pretplatili na Evolysium Newsletter s adresom: ' + email);
+            event.target.reset();
         }
 
         function requestVerificationBadge() {
@@ -1354,13 +1400,13 @@
             }
             
             if (isBusinessAccount) {
-                if (badgeEl) { badgeEl.innerText = 'BUSINESS PROFILE'; badgeEl.style.background = 'var(--cyan-pop)'; badgeEl.style.color = '#000'; }
-                if (sidebarLabel) sidebarLabel.innerText = 'Business Profile';
-                if (accountStatusText) accountStatusText.innerText = 'Current: Business Profile (Analytics enabled)';
+                if (badgeEl) { badgeEl.innerText = 'POSLOVNI RAČUN'; badgeEl.style.background = 'var(--cyan-pop)'; badgeEl.style.color = '#000'; }
+                if (sidebarLabel) sidebarLabel.innerText = 'Poslovni Račun (Business)';
+                if (accountStatusText) accountStatusText.innerText = 'Current: Poslovni Račun (Analitika uključena)';
             } else {
-                if (badgeEl) { badgeEl.innerText = 'UNLIMITED FEED'; badgeEl.style.background = 'var(--pink-pop)'; badgeEl.style.color = '#fff'; }
-                if (sidebarLabel) sidebarLabel.innerText = 'Private Profile';
-                if (accountStatusText) accountStatusText.innerText = 'Current: Private Profile';
+                if (badgeEl) { badgeEl.innerText = 'PRIVATNI RAČUN'; badgeEl.style.background = 'var(--pink-pop)'; badgeEl.style.color = '#fff'; }
+                if (sidebarLabel) sidebarLabel.innerText = 'Privatni Račun (Private)';
+                if (accountStatusText) accountStatusText.innerText = 'Current: Privatni Račun';
             }
         }
 
@@ -1369,7 +1415,7 @@
             localStorage.setItem('evolysium_is_business', JSON.stringify(isBusinessAccount));
             updateAccountTypeUI();
             updateProfileStats();
-            alert(isBusinessAccount ? 'Switched to BUSINESS profile.' : 'Switched to PRIVATE profile.');
+            alert(isBusinessAccount ? 'Prebačeno na POSLOVNI račun.' : 'Prebačeno na PRIVATNI račun.');
         }
 
         const fallbackItems = [
@@ -1498,7 +1544,7 @@
             } else {
                 likedItems.add(itemId);
                 item.likes += 1;
-                addNotification(`You liked a post by ${item.creator}`);
+                addNotification(`Stavili ste lajk na objavu od ${item.creator}`);
             }
             localStorage.setItem('evolysium_likes', JSON.stringify(Array.from(likedItems)));
             renderFeed();
@@ -1561,8 +1607,8 @@
             event.target.reset();
             stopCameraFeed();
             processIncomingItems([newStory], true);
-            addNotification('Your unlimited story was successfully published and added to feed!');
-            alert('Unlimited story successfully published!');
+            addNotification('Your story was successfully published!');
+            alert('Story uspješno objavljen!');
         }
 
         function renderVibeStrip() {
@@ -1683,7 +1729,7 @@
             isPrivateProfile = !isPrivateProfile;
             localStorage.setItem('evolysium_is_private', JSON.stringify(isPrivateProfile));
             updateProfileStats();
-            alert(isPrivateProfile ? 'Your profile is now PRIVATE.' : 'Your profile is now PUBLIC.');
+            alert(isPrivateProfile ? 'Vaš profil je sada PRIVATE.' : 'Vaš profil je sada PUBLIC.');
         }
 
         function approveRequest(username) {
@@ -1692,8 +1738,8 @@
             localStorage.setItem('evolysium_requests', JSON.stringify(followRequests));
             localStorage.setItem('evolysium_approved', JSON.stringify(approvedUsers));
             updateProfileStats();
-            addNotification(`Approved access request for ${username}`);
-            alert('Approved access request for: ' + username);
+            addNotification(`Odobren zahtjev za praćenje od ${username}`);
+            alert('Odobren zahtjev za: ' + username);
         }
 
         function openCreatorProfile(handle) {
@@ -1715,8 +1761,8 @@
             } else {
                 let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
                 let userStories = handle === '@my_profile' ? localTrails : [
-                    { title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false },
-                    { title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true }
+                    { id: 'ext_s1', title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false },
+                    { id: 'ext_s2', title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true }
                 ];
                 
                 bodyEl.innerHTML = `
@@ -1731,7 +1777,7 @@
                         <div class="d-flex gap-2 mb-4">
                             <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="openDirectChat('${handle}')"><i class="fa-solid fa-envelope me-1"></i> Send Message</button>
                         </div>
-                        <h6 class="fw-bold mb-3">Active Stories</h6>
+                        <h6 class="fw-bold mb-3">Aktivni Storyji Korisnika (Klikom vidljivi)</h6>
                         <div class="row g-3">
                             ${userStories.map(s => `
                                 <div class="col-md-6">
@@ -1747,7 +1793,7 @@
                                                 <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'}</span>
                                             </div>
                                         </div>
-                                        <button class="btn btn-sm btn-outline-danger rounded-pill w-100 mt-2" onclick="alert('Story liked!')"><i class="fa-solid fa-heart me-1"></i> Like Story (${s.likes})</button>
+                                        <button class="btn btn-sm btn-outline-danger rounded-pill w-100 mt-2" onclick="alert('Lajkali ste story korisnika!')"><i class="fa-solid fa-heart me-1"></i> Like Story (${s.likes})</button>
                                     </div>
                                 </div>
                             `).join('')}
@@ -1761,7 +1807,7 @@
         }
 
         function sendFollowRequest(handle) {
-            alert('Access request sent to ' + handle + '.');
+            alert('Zahtjev poslan korisniku ' + handle + '.');
             const extModalEl = document.getElementById('externalProfileModal');
             const extModal = bootstrap.Modal.getInstance(extModalEl);
             if (extModal) extModal.hide();
@@ -1777,6 +1823,7 @@
             document.getElementById('statStoriesCount').innerText = count;
             document.getElementById('statViewsCount').innerText = simulatedViews;
             document.getElementById('statLikesCount').innerText = totalLikes;
+            document.getElementById('statPostsCount').innerText = `${userPostCount}/3`;
 
             const statusText = document.getElementById('profileVisibilityStatusText');
             const privacyBtn = document.getElementById('toggleProfilePrivacyBtn');
@@ -1795,10 +1842,10 @@
             if (reqListEl) {
                 reqListEl.innerHTML = followRequests.length ? followRequests.map(user => `
                     <div class="d-flex justify-content-between align-items-center p-2 rounded-3" style="background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05);">
-                        <span class="small font-mono text-white">${user} wants to view profile & stories</span>
+                        <span class="small font-mono text-white">${user} želi pratiti vaš profil</span>
                         <button class="btn btn-sm btn-vibe py-1 px-3" onclick="approveRequest('${user}')">Approve</button>
                     </div>
-                `).join('') : '<span class="small text-muted">No pending access requests.</span>';
+                `).join('') : '<span class="small text-muted">Nema novih zahtjeva za praćenje.</span>';
             }
 
             const listEl = document.getElementById('userStoriesList');
@@ -1822,7 +1869,7 @@
                             </div>
                         </div>
                     </div>
-                `).join('') : '<p class="text-muted small">No active stories published yet.</p>';
+                `).join('') : '<p class="text-muted small">Nema objavljenih storyja.</p>';
             }
         }
 
@@ -1838,7 +1885,7 @@
             updateProfileStats();
             renderVibeStrip();
             renderFeed();
-            alert('Story deleted and feed updated.');
+            alert('Story obrisan.');
         }
 
         function renderInbox() {
@@ -1918,7 +1965,7 @@
         }
 
         function addNotification(text) {
-            appNotifications.unshift({ text: text, time: 'Just now' });
+            appNotifications.unshift({ text: text, time: 'Upravo sada' });
             localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
             unreadNotifications = true;
             localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
@@ -1977,4 +2024,4 @@
         });
     </script>
 </body>
-        </html>
+</html>
