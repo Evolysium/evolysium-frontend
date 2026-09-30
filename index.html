@@ -1003,7 +1003,7 @@
         </div>
     </div>
 
-    <!-- Pricing Modal (UNTOUCHED PRICING) -->
+    <!-- Pricing Modal -->
     <div class="modal fade" id="pricingModal" tabindex="-1" aria-hidden="true" style="z-index: 1090;">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.9); backdrop-filter: blur(25px); border-radius: 32px; border: 1px solid rgba(255,255,255,0.12);">
@@ -1539,18 +1539,25 @@
 
         async function loadBackendFeed() {
             try {
-                const response = await fetch(API_FEED_URL);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
+                const response = await fetch(API_FEED_URL, { signal: controller.signal });
+                clearTimeout(timeoutId);
                 if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
                 processIncomingItems(data?.items?.length ? data.items : fallbackItems, false);
             } catch (error) {
                 processIncomingItems(fallbackItems, false);
             } finally {
-                const preloader = document.getElementById('app-preloader');
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => preloader.style.display = 'none', 300);
-                }
+                hidePreloader();
+            }
+        }
+
+        function hidePreloader() {
+            const preloader = document.getElementById('app-preloader');
+            if (preloader && preloader.style.display !== 'none') {
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 300);
             }
         }
 
@@ -1743,7 +1750,7 @@
             countEl.innerText = comments.length;
 
             listEl.innerHTML = comments.map(c => `
-                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-2fs small">
+                <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 small">
                     <div class="d-flex justify-content-between text-info fw-bold" style="font-size:0.72rem;">
                         <span>${c.user}</span>
                         <span class="text-muted font-mono" style="font-size:0.65rem;">${c.time}</span>
@@ -2131,6 +2138,7 @@
             updateAuthUI();
             updateNotificationBadge();
             updateAccountTypeUI();
+            setTimeout(hidePreloader, 1500); // Fail-safe fallback da se preloader uvijek ukloni
         });
     </script>
 </body>
