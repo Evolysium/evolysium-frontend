@@ -1098,7 +1098,6 @@
         let isBusinessAccount = JSON.parse(localStorage.getItem('evolysium_is_business') || 'false');
         let isVerifiedBadge = JSON.parse(localStorage.getItem('evolysium_verified') || 'false');
         
-        // Funkcionalni zahtjevi za praćenje
         let followRequests = JSON.parse(localStorage.getItem('evolysium_requests') || '["@luka_creator", "@ana_vibe"]');
         let approvedUsers = JSON.parse(localStorage.getItem('evolysium_approved') || '[]');
 
@@ -1109,11 +1108,9 @@
         let mediaStream = null;
         let univMediaStream = null;
 
-        // Notifikacije i newsletter simulacija
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to Evolysium platform!", "time": "Just now"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
 
-        // Stvarni funkcionalni inbox i poruke
         let conversations = JSON.parse(localStorage.getItem('evolysium_conversations') || JSON.stringify([
             { id: 'c1', user: '@fashion_weekly', messages: [{ sender: '@fashion_weekly', text: 'Hey! Loved your latest story drop.', time: '10m ago' }] },
             { id: 'c2', user: '@luka_creator', messages: [{ sender: '@luka_creator', text: 'Are we collaborating on the next trend feed?', time: '1h ago' }] }
@@ -1192,7 +1189,6 @@
             event.target.reset();
         }
 
-        // Restrikcije za registrirane vs pretplaćene korisnike
         function checkPostPermission() {
             if (!currentUser) {
                 alert('You must be registered or signed in to create posts or drop stories.');
@@ -1680,7 +1676,6 @@
             alert('Story successfully published!');
         }
 
-        // Stvarni i funkcionalni lajkovi i komentari u trendovima i storyjima
         function openStoryViewer(storyData) {
             currentActiveStoryId = storyData.id || ('story_' + Date.now());
             document.getElementById('storyModalCreatorHandle').innerText = storyData.creator || storyData.handle || '@creator';
@@ -1701,7 +1696,6 @@
                 videoEl.style.display = 'none';
             }
 
-            // Ažuriranje lajkova za ovaj story/trend
             const currentLikes = storyData.likes || 1;
             const isLiked = likedItems.has(currentActiveStoryId);
             const likeBtn = document.getElementById('storyModalLikeBtn');
@@ -1998,7 +1992,6 @@
             event.target.reset();
         }
 
-        // Notifikacije i Newsletter
         function addNotificationWithEmail(text, email) {
             appNotifications.unshift({ text, time: 'Just now' });
             localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
@@ -2041,7 +2034,6 @@
             updateNotificationBadge();
         }
 
-        // Funkcionalni Inbox i chatovi
         function renderConversationsList() {
             const listEl = document.getElementById('conversationsList');
             if (!listEl) return;
