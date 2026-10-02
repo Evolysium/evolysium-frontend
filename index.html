@@ -962,7 +962,7 @@
         </div>
     </div>
 
-    <!-- Story Viewer Modal (Popup za pregled slike/videozapisa klikom na story) -->
+    <!-- Story Viewer Modal -->
     <div class="modal fade" id="storyViewerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light bg-black" style="border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
@@ -1101,7 +1101,7 @@
         let currentUser = JSON.parse(localStorage.getItem('evolysium_current_user') || 'null');
 
         let mediaStream = null;
-        let currentViewingStory = null; // Spremanje trenutno otvorene priče za dijeljenje
+        let currentViewingStory = null;
 
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to the Evolysium platform!", "time": "Just now"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
@@ -1590,7 +1590,6 @@
         }
 
         function openStoryViewer(title, mediaUrl, mediaType, creator) {
-            // Spremanje trenutne priče u globalnu varijablu za lakše dijeljenje
             currentViewingStory = { title, media: mediaUrl, mediaType, creator };
 
             document.getElementById('viewerModalTitle').innerText = title;
@@ -1607,7 +1606,6 @@
             viewerModal.show();
         }
 
-        // Funkcija za dijeljenje priče unutar platforme (u Inbox/Chat)
         function shareCurrentStoryToInbox() {
             if (!currentViewingStory) return;
             const targetUser = prompt('Unesite korisničko ime prijatelja (npr. @luka_creator) s kojim želite podijeliti ovaj story:');
@@ -1628,7 +1626,6 @@
             alert('Story je uspješno poslan u vaš Inbox korisniku ' + targetUser + '!');
         }
 
-        // Funkcija za dijeljenje priče izvan platforme (Web Share API ili kopiranje linka)
         function shareCurrentStoryExternal() {
             if (!currentViewingStory) return;
             const shareData = {
@@ -1641,7 +1638,7 @@
                 navigator.share(shareData).catch((err) => console.log('Greška pri dijeljenju:', err));
             } else {
                 navigator.clipboard.writeText(currentViewingStory.media);
-                alert('Poveznica na story medij je kopirana u međuspremnik (clipboard)! Možete ju zalijepiti bilo gdje.');
+                alert('Poveznica na story medij je kopirana u međuspremnik (clipboard)!');
             }
         }
 
