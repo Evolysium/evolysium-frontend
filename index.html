@@ -973,9 +973,13 @@
                 <div class="modal-body p-0 text-center position-relative" style="min-height: 400px; display: flex; align-items: center; justify-content: center; background: #000;">
                     <div id="viewerMediaContainer" style="width: 100%; max-height: 70vh; overflow: hidden;"></div>
                 </div>
-                <div class="modal-footer border-0 p-3 justify-content-between">
+                <div class="modal-footer border-0 p-3 justify-content-between flex-wrap gap-2">
                     <span class="small text-muted font-mono" id="viewerModalCreator">@creator</span>
-                    <button class="btn btn-sm btn-outline-danger rounded-pill px-4" onclick="alert('Liked this story media!')"><i class="fa-solid fa-heart me-1"></i> Like Story</button>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="shareCurrentStoryToInbox()"><i class="fa-solid fa-paper-plane me-1"></i> Share to Inbox</button>
+                        <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="shareCurrentStoryExternal()"><i class="fa-solid fa-share-nodes me-1"></i> Share Externally</button>
+                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="alert('Liked this story media!')"><i class="fa-solid fa-heart me-1"></i> Like Story</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1097,6 +1101,7 @@
         let currentUser = JSON.parse(localStorage.getItem('evolysium_current_user') || 'null');
 
         let mediaStream = null;
+        let currentViewingStory = null; // Spremanje trenutno otvorene priče za dijeljenje
 
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to the Evolysium platform!", "time": "Just now"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
@@ -1176,7 +1181,6 @@
             event.target.reset();
         }
 
-        // Opcija 1: Brand Story submit
         function handleBrandStorySubmit(event) {
             event.preventDefault();
             const creator = document.getElementById('brandStoryCreator').value;
@@ -1220,7 +1224,6 @@
             alert('Brand story successfully published!');
         }
 
-        // Opcija 4: Creator Hub (Recepti, DIY, Digitalne knjige, Svjetski trendovi)
         function handleCreatorContentSubmit(event) {
             event.preventDefault();
             const contentType = document.getElementById('creatorContentType').value;
@@ -1586,8 +1589,10 @@
             alert('Story successfully published!');
         }
 
-        // Opcija 2: Klik na story otvara prozor za pregled slike/videozapisa (uključujući već objavljene)
         function openStoryViewer(title, mediaUrl, mediaType, creator) {
+            // Spremanje trenutne priče u globalnu varijablu za lakše dijeljenje
+            currentViewingStory = { title, media: mediaUrl, mediaType, creator };
+
             document.getElementById('viewerModalTitle').innerText = title;
             document.getElementById('viewerModalCreator').innerText = 'Published by: ' + creator;
             const container = document.getElementById('viewerMediaContainer');
@@ -1600,6 +1605,44 @@
 
             const viewerModal = new bootstrap.Modal(document.getElementById('storyViewerModal'));
             viewerModal.show();
+        }
+
+        // Funkcija za dijeljenje priče unutar platforme (u Inbox/Chat)
+        function shareCurrentStoryToInbox() {
+            if (!currentViewingStory) return;
+            const targetUser = prompt('Unesite korisničko ime prijatelja (npr. @luka_creator) s kojim želite podijeliti ovaj story:');
+            if (!targetUser) return;
+
+            let chat = conversations.find(c => c.user === targetUser);
+            const shareText = `📌 Podijeljeni story: "${currentViewingStory.title}" (${currentViewingStory.media})`;
+            
+            if (!chat) {
+                chat = { id: 'c_' + Date.now(), user: targetUser, messages: [{ sender: currentUser ? currentUser.name : '@my_profile', text: shareText, time: 'Just now' }] };
+                conversations.unshift(chat);
+            } else {
+                chat.messages.push({ sender: currentUser ? currentUser.name : '@my_profile', text: shareText, time: 'Just now' });
+            }
+            localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
+            renderInbox();
+
+            alert('Story je uspješno poslan u vaš Inbox korisniku ' + targetUser + '!');
+        }
+
+        // Funkcija za dijeljenje priče izvan platforme (Web Share API ili kopiranje linka)
+        function shareCurrentStoryExternal() {
+            if (!currentViewingStory) return;
+            const shareData = {
+                title: currentViewingStory.title,
+                text: `Pogledajte ovaj sjajan story na Evolysiumu od ${currentViewingStory.creator}: ${currentViewingStory.title}`,
+                url: currentViewingStory.media
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch((err) => console.log('Greška pri dijeljenju:', err));
+            } else {
+                navigator.clipboard.writeText(currentViewingStory.media);
+                alert('Poveznica na story medij je kopirana u međuspremnik (clipboard)! Možete ju zalijepiti bilo gdje.');
+            }
         }
 
         function renderVibeStrip() {
