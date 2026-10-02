@@ -436,11 +436,14 @@
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
-                <button class="social-pill active" onclick="checkAuthAndOpenModal('createPostModal')" title="Post Creator">
-                    <i class="fa-solid fa-plus"></i> Create Post (<span class="text-warning" id="postLimitIndicator">3/3</span>)
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#brandStoryModal" title="Drop Brand Story">
+                    <i class="fa-solid fa-bullhorn text-warning"></i> Brand Story
                 </button>
-                <button class="social-pill active" onclick="checkAuthAndOpenModal('trailModal')" title="Story Drop">
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal" title="Story Drop">
                     <i class="fa-solid fa-plus-circle"></i> Drop Story
+                </button>
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#creatorContentModal" title="Add Recipe, DIY, Digital Book or Trend">
+                    <i class="fa-solid fa-wand-magic-sparkles text-info"></i> Creator Hub
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
                     <i class="fa-solid fa-user-gear text-info"></i> My Profile <span id="verifiedBadgeIcon" class="text-warning ms-1" style="display:none;" title="Verified Profile"><i class="fa-solid fa-circle-check"></i></span>
@@ -528,7 +531,7 @@
         <!-- Stories & Featured Creators -->
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
-                <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators (Click to view Story)</div>
+                <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators (Click to view media, pictures & videos)</div>
             </div>
             <div class="vibe-strip" id="dynamic-vibe-strip"></div>
         </div>
@@ -575,6 +578,11 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'travel', this)">✈ Travel & Nature</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'food', this)">🍔 Food & Recipe</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand', this)">📢 Brand / Ads</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'brand_story', this)">🏷️ Brand Story</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'recipe', this)">🍳 Recipes</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'diy', this)">🛠️ DIY</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'digital_book', this)">📚 Digital Books</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'world_trend', this)">🌍 World Trend</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'luxury', this)">💎 Luxury</button>
                 <button class="social-pill active" onclick="toggleSelection('category', '18+content', this)">🔞 18+ Content</button>
@@ -720,61 +728,75 @@
         </div>
     </div>
 
-    <!-- Create Post Modal (Limit 3 posts for registered users) -->
-    <div class="modal fade" id="createPostModal" tabindex="-1" aria-hidden="true">
+    <!-- Brand Story Modal -->
+    <div class="modal fade" id="brandStoryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-plus text-cyan me-2"></i>Create Post (Max 3)</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bullhorn text-warning me-2"></i>Publish Brand Story</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="mb-3 text-center">
-                        <div id="univCameraContainer" class="position-relative rounded-4 overflow-hidden bg-black mb-2" style="height: 180px; display: none; border: 1px solid rgba(255,255,255,0.2);">
-                            <video id="univCameraPreview" autoplay playsinline muted style="width:100%; height:100%; object-fit:cover;"></video>
-                            <canvas id="univCameraCanvas" style="display:none;"></canvas>
+                    <form onsubmit="handleBrandStorySubmit(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Brand Name / Handle</label>
+                            <input type="text" id="brandStoryCreator" class="form-control auth-input" placeholder="@your_brand" required>
                         </div>
-                        <div class="d-flex gap-2 justify-content-center flex-wrap">
-                            <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="startUnivCamera()"><i class="fa-solid fa-camera me-1"></i> Use Camera</button>
-                            <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 d-none" id="univCaptureBtn" onclick="captureUnivCamera()"><i class="fa-solid fa-circle-dot me-1"></i> Snap Photo</button>
-                            <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 d-none" id="univStopCamBtn" onclick="stopUnivCamera()">Close Camera</button>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Story Title / Brand Hook</label>
+                            <input type="text" id="brandStoryTitle" class="form-control auth-input" placeholder="Discover our brand experience..." required>
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Targeted Specific Audience</label>
+                            <input type="text" id="brandStoryAudience" class="form-control auth-input" placeholder="e.g., Tech enthusiasts, luxury fashion lovers..." required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Brand Experience Description / Summary</label>
+                            <textarea id="brandStorySummary" class="form-control auth-input" rows="3" placeholder="Describe the unique experience of using your brand..." required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Media URL (Image / Video)</label>
+                            <input type="url" id="brandStoryMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/..." required>
+                        </div>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Brand Story</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <form onsubmit="handleUniversalPostSubmit(event)">
+    <!-- Creator Hub Modal (Recipes, DIY, Digital Books, World Trends) -->
+    <div class="modal fade" id="creatorContentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i>Creator Trend Content Hub</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form onsubmit="handleCreatorContentSubmit(event)">
                         <div class="mb-3">
-                            <label class="form-label small text-muted">Post Title / Caption</label>
-                            <input type="text" id="univTitle" class="form-control auth-input" placeholder="What's on your mind or trend?" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Publish Destination</label>
-                            <select id="univDestination" class="form-control auth-input text-white">
-                                <option value="feed">⚡ Public / Private Feed</option>
-                                <option value="story">📖 Story Strip & Trending</option>
+                            <label class="form-label small text-muted">Content Category</label>
+                            <select id="creatorContentType" class="form-control auth-input text-white">
+                                <option value="recipe">🍳 Kitchen Recipe</option>
+                                <option value="diy">🛠️ DIY (Do It Yourself)</option>
+                                <option value="digital_book">📚 Digital Book / E-Book</option>
+                                <option value="world_trend">🌍 World / New Trend</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-muted">Content Type</label>
-                            <select id="univType" class="form-control auth-input text-white">
-                                <option value="image">🖼️ Picture / Image</option>
-                                <option value="video">🎬 Video Clip</option>
-                            </select>
+                            <label class="form-label small text-muted">Title / Name</label>
+                            <input type="text" id="creatorContentTitle" class="form-control auth-input" placeholder="Delicious Pasta Recipe / Ultimate DIY Desk..." required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-muted">Visibility Mode</label>
-                            <select id="univPrivacy" class="form-control auth-input text-white">
-                                <option value="public">🌐 Public (Visible to everyone)</option>
-                                <option value="private">🔒 Private (Followers / Approved only)</option>
-                            </select>
+                            <label class="form-label small text-muted">Description / Details</label>
+                            <textarea id="creatorContentSummary" class="form-control auth-input" rows="3" placeholder="Provide instructions, steps, or overview..." required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-muted">Upload File / Media URL</label>
-                            <div class="d-flex gap-2 mb-2">
-                                <input type="file" id="univFileUpload" class="form-control auth-input form-control-sm" accept="image/*,video/*" onchange="handleFileUpload(event)">
-                            </div>
-                            <input type="url" id="univMediaUrl" class="form-control auth-input" placeholder="https://images.unsplash.com/... or snapshot" required>
+                            <label class="form-label small text-muted">Media URL (Image / Cover / Video)</label>
+                            <input type="url" id="creatorContentMedia" class="form-control auth-input" placeholder="https://images.unsplash.com/..." required>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Post</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Trend Content</button>
                     </form>
                 </div>
             </div>
@@ -915,8 +937,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="profile-stats-card">
-                                <span class="small text-muted d-block mb-1">Published Posts</span>
-                                <h3 class="fw-bold text-warning mb-0" id="statPostsCount">0/3</h3>
+                                <span class="small text-muted d-block mb-1">Published Items</span>
+                                <h3 class="fw-bold text-warning mb-0" id="statPostsCount">Active</h3>
                             </div>
                         </div>
                     </div>
@@ -936,6 +958,25 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4 text-center" id="extProfileBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Viewer Modal (Popup za pregled slike/videozapisa klikom na story) -->
+    <div class="modal fade" id="storyViewerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content text-light bg-black" style="border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
+                <div class="modal-header border-0 pt-3 px-4">
+                    <h5 class="fw-bold text-white mb-0" id="viewerModalTitle">Story Preview</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0 text-center position-relative" style="min-height: 400px; display: flex; align-items: center; justify-content: center; background: #000;">
+                    <div id="viewerMediaContainer" style="width: 100%; max-height: 70vh; overflow: hidden;"></div>
+                </div>
+                <div class="modal-footer border-0 p-3 justify-content-between">
+                    <span class="small text-muted font-mono" id="viewerModalCreator">@creator</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill px-4" onclick="alert('Liked this story media!')"><i class="fa-solid fa-heart me-1"></i> Like Story</button>
+                </div>
             </div>
         </div>
     </div>
@@ -977,7 +1018,7 @@
                                     <h3 class="fw-bold my-2">€0 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
                                         <li><i class="fa-solid fa-check"></i> Public feed access (Browsing)</li>
-                                        <li><i class="fa-solid fa-check"></i> Max 3 posts for registered users</li>
+                                        <li><i class="fa-solid fa-check"></i> Standard story viewing</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-outline-light w-100 rounded-pill py-2 mt-3" disabled>Current Base</button>
@@ -991,7 +1032,7 @@
                                     <h3 class="fw-bold my-2">€8.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
                                         <li><i class="fa-solid fa-check"></i> Business or private account</li>
-                                        <li><i class="fa-solid fa-check"></i> Unlimited posts</li>
+                                        <li><i class="fa-solid fa-check"></i> Unlimited stories & recipes</li>
                                         <li><i class="fa-solid fa-check"></i> Profile management & requests</li>
                                     </ul>
                                 </div>
@@ -1005,8 +1046,8 @@
                                     <h5>Business / Creator</h5>
                                     <h3 class="fw-bold my-2">€11.99 <span class="fs-6 fw-normal" style="color:rgba(255,255,255,0.5)">/mo</span></h3>
                                     <ul class="pricing-perks">
-                                        <li><i class="fa-solid fa-check"></i> Business analytics & reach</li>
-                                        <li><i class="fa-solid fa-check"></i> Priority posts & stories</li>
+                                        <li><i class="fa-solid fa-check"></i> Brand story custom targeting</li>
+                                        <li><i class="fa-solid fa-check"></i> Priority feed placement</li>
                                     </ul>
                                 </div>
                                 <button class="btn btn-vibe w-100 rounded-pill py-2 mt-3" onclick="startStripeCheckout('business')">Unlock Access</button>
@@ -1040,7 +1081,7 @@
         let likedItems = new Set(JSON.parse(localStorage.getItem('evolysium_likes') || '[]'));
         
         let selectedPlatforms = ["trail"];
-        let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
+        let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "brand_story", "recipe", "diy", "digital_book", "world_trend", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
 
         let displayLimit = 12;
         let isLoadingMore = false;
@@ -1054,10 +1095,8 @@
 
         let isRegisterMode = false;
         let currentUser = JSON.parse(localStorage.getItem('evolysium_current_user') || 'null');
-        let userPostCount = parseInt(localStorage.getItem('evolysium_user_post_count') || '0');
 
         let mediaStream = null;
-        let univMediaStream = null;
 
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to the Evolysium platform!", "time": "Just now"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
@@ -1082,32 +1121,11 @@
 
         function updateAuthUI() {
             const labelEl = document.getElementById('authNavButtonLabel');
-            const postLimitEl = document.getElementById('postLimitIndicator');
             if (currentUser) {
                 if (labelEl) labelEl.innerText = currentUser.name || currentUser.email;
             } else {
                 if (labelEl) labelEl.innerText = 'Sign In';
             }
-            if (postLimitEl) {
-                postLimitEl.innerText = `${userPostCount}/3`;
-            }
-        }
-
-        function checkAuthAndOpenModal(modalId) {
-            if (!currentUser) {
-                alert('You must be registered and signed in to publish content! Unregistered users can only browse and view content.');
-                const authModal = new bootstrap.Modal(document.getElementById('authModal'));
-                authModal.show();
-                return;
-            }
-            if (userPostCount >= 3) {
-                alert('You have reached the maximum limit of 3 free posts for registered users. Upgrade your account for unlimited posts.');
-                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
-                pricingModal.show();
-                return;
-            }
-            const targetModal = new bootstrap.Modal(document.getElementById(modalId));
-            targetModal.show();
         }
 
         function toggleAuthMode() {
@@ -1158,74 +1176,92 @@
             event.target.reset();
         }
 
-        async function startUnivCamera() {
-            const container = document.getElementById('univCameraContainer');
-            const videoEl = document.getElementById('univCameraPreview');
-            const captureBtn = document.getElementById('univCaptureBtn');
-            const stopBtn = document.getElementById('univStopCamBtn');
+        // Opcija 1: Brand Story submit
+        function handleBrandStorySubmit(event) {
+            event.preventDefault();
+            const creator = document.getElementById('brandStoryCreator').value;
+            const title = document.getElementById('brandStoryTitle').value;
+            const audience = document.getElementById('brandStoryAudience').value;
+            const summary = document.getElementById('brandStorySummary').value;
+            const media = document.getElementById('brandStoryMedia').value;
 
-            try {
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    throw new Error('MediaDevices API not supported.');
-                }
-                univMediaStream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: 'user' }, 
-                    audio: false 
-                });
-                videoEl.srcObject = univMediaStream;
-                videoEl.setAttribute('playsinline', 'true');
-                videoEl.setAttribute('autoplay', 'true');
-                await videoEl.play().catch(e => console.log("Auto-play prevented:", e));
-                
-                container.style.display = 'block';
-                captureBtn.classList.remove('d-none');
-                stopBtn.classList.remove('d-none');
-            } catch (err) {
-                console.error('Camera access error:', err);
-                alert('Unable to access camera. Please ensure permissions are granted or use file upload.');
-            }
-        }
-
-        function stopUnivCamera() {
-            if (univMediaStream) {
-                univMediaStream.getTracks().forEach(track => track.stop());
-                univMediaStream = null;
-            }
-            const videoEl = document.getElementById('univCameraPreview');
-            if (videoEl) videoEl.srcObject = null;
-            document.getElementById('univCameraContainer').style.display = 'none';
-            document.getElementById('univCaptureBtn').classList.add('d-none');
-            document.getElementById('univStopCamBtn').classList.add('d-none');
-        }
-
-        function captureUnivCamera() {
-            const videoEl = document.getElementById('univCameraPreview');
-            const canvas = document.getElementById('univCameraCanvas');
-            canvas.width = videoEl.videoWidth || 640;
-            canvas.height = videoEl.videoHeight || 480;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
-            const dataUrl = canvas.toDataURL('image/png');
-            
-            document.getElementById('univMediaUrl').value = dataUrl;
-            alert('Camera snapshot captured successfully!');
-            stopUnivCamera();
-        }
-
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('univMediaUrl').value = e.target.result;
-                if (file.type.startsWith('video/')) {
-                    document.getElementById('univType').value = 'video';
-                } else {
-                    document.getElementById('univType').value = 'image';
-                }
-                alert('File loaded successfully into media URL field!');
+            const newBrandStory = {
+                id: 'brand_story_' + Date.now(),
+                source: creator,
+                creator: creator,
+                title: title,
+                cat: 'brand_story',
+                platform: 'trail',
+                likes: 1,
+                comments: '0',
+                img_url: media,
+                mediaType: 'image',
+                summary: `Target Audience: ${audience} — ${summary}`,
+                isLive: false,
+                isPrivate: false,
+                isTrail: true
             };
-            reader.readAsDataURL(file);
+
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            localTrails.unshift(newBrandStory);
+            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
+
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            localFeedPosts.unshift(newBrandStory);
+            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+
+            const modalEl = document.getElementById('brandStoryModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modalInstance.hide();
+            event.target.reset();
+
+            processIncomingItems([newBrandStory], true);
+            addNotification('Brand story successfully published and added to feed & trending!');
+            alert('Brand story successfully published!');
+        }
+
+        // Opcija 4: Creator Hub (Recepti, DIY, Digitalne knjige, Svjetski trendovi)
+        function handleCreatorContentSubmit(event) {
+            event.preventDefault();
+            const contentType = document.getElementById('creatorContentType').value;
+            const title = document.getElementById('creatorContentTitle').value;
+            const summary = document.getElementById('creatorContentSummary').value;
+            const media = document.getElementById('creatorContentMedia').value;
+            const creatorName = currentUser ? currentUser.name : '@my_profile';
+
+            const newContent = {
+                id: 'content_' + Date.now(),
+                source: creatorName,
+                creator: creatorName,
+                title: title,
+                cat: contentType,
+                platform: 'trail',
+                likes: 1,
+                comments: '0',
+                img_url: media,
+                mediaType: 'image',
+                summary: summary,
+                isLive: false,
+                isPrivate: false,
+                isTrail: true
+            };
+
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            localTrails.unshift(newContent);
+            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
+
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            localFeedPosts.unshift(newContent);
+            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+
+            const modalEl = document.getElementById('creatorContentModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modalInstance.hide();
+            event.target.reset();
+
+            processIncomingItems([newContent], true);
+            addNotification('Trend content successfully published into feed!');
+            alert('Successfully published!');
         }
 
         function handleTrailFileUpload(event) {
@@ -1296,67 +1332,6 @@
             document.getElementById('trailMedia').value = dataUrl;
             alert('Snapshot captured successfully!');
             stopCameraFeed();
-        }
-
-        async function handleUniversalPostSubmit(event) {
-            event.preventDefault();
-            if (userPostCount >= 3) {
-                alert('You have reached the limit of 3 posts.');
-                return;
-            }
-
-            const title = document.getElementById('univTitle').value;
-            const destination = document.getElementById('univDestination').value;
-            const mediaType = document.getElementById('univType').value;
-            const privacy = document.getElementById('univPrivacy').value;
-            const mediaUrl = document.getElementById('univMediaUrl').value;
-
-            const category = destination === 'story' ? 'story' : (mediaType === 'video' ? 'reels' : 'trending');
-            const creatorName = currentUser ? currentUser.name : '@my_profile';
-
-            userPostCount++;
-            localStorage.setItem('evolysium_user_post_count', userPostCount);
-            updateAuthUI();
-
-            const newPostItem = {
-                id: 'post_' + Date.now(),
-                source: creatorName,
-                creator: creatorName,
-                title: title,
-                category: category,
-                cat: category,
-                platform: 'trail',
-                likes: 1,
-                comments: '0',
-                img_url: mediaUrl,
-                video_url: mediaType === 'video' ? mediaUrl : '',
-                mediaType: mediaType,
-                summary: `Published via ${destination} (${privacy})`,
-                isLive: false,
-                isPrivate: privacy === 'private',
-                isTrail: destination === 'story'
-            };
-
-            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-            localFeedPosts.unshift(newPostItem);
-            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
-
-            if (destination === 'story') {
-                let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-                localTrails.unshift(newPostItem);
-                localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
-            }
-
-            addNotification('Successfully published! (Remaining posts: ' + (3 - userPostCount) + '/3)');
-            alert('Successfully published! This is your post number ' + userPostCount + ' out of 3 allowed.');
-
-            const modalEl = document.getElementById('createPostModal');
-            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-            modalInstance.hide();
-            event.target.reset();
-            stopUnivCamera();
-
-            processIncomingItems([newPostItem], true);
         }
 
         function handleInviteFriend(event) {
@@ -1457,7 +1432,7 @@
             let dynamicSignals = localFeedPosts.map(p => ({
                 platform: p.platform || 'trail',
                 handle: p.creator || '@my_profile',
-                badge: 'NEW POST',
+                badge: 'NEW TREND',
                 text: p.title,
                 time: 'Just now',
                 tag: '#' + (p.cat || 'trending')
@@ -1607,8 +1582,24 @@
             event.target.reset();
             stopCameraFeed();
             processIncomingItems([newStory], true);
-            addNotification('Your story was successfully published!');
+            addNotification('Your story was successfully published and added to trending feed!');
             alert('Story successfully published!');
+        }
+
+        // Opcija 2: Klik na story otvara prozor za pregled slike/videozapisa (uključujući već objavljene)
+        function openStoryViewer(title, mediaUrl, mediaType, creator) {
+            document.getElementById('viewerModalTitle').innerText = title;
+            document.getElementById('viewerModalCreator').innerText = 'Published by: ' + creator;
+            const container = document.getElementById('viewerMediaContainer');
+            
+            if (mediaType === 'video') {
+                container.innerHTML = `<video src="${mediaUrl}" controls autoplay style="width:100%; max-height:70vh; object-fit:contain;"></video>`;
+            } else {
+                container.innerHTML = `<img src="${mediaUrl}" style="width:100%; max-height:70vh; object-fit:contain;">`;
+            }
+
+            const viewerModal = new bootstrap.Modal(document.getElementById('storyViewerModal'));
+            viewerModal.show();
         }
 
         function renderVibeStrip() {
@@ -1617,25 +1608,20 @@
 
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const defaultCreators = [
-                { handle: '@fashion_weekly', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', isLive: true },
-                { handle: '@creator_lab', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', isLive: false },
-                { handle: '@tech_guru', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', isLive: true },
-                { handle: '@luka_creator', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', isLive: false }
+                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true },
+                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false },
+                { handle: '@tech_guru', title: 'Tech Setup', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: true },
+                { handle: '@luka_creator', title: 'Vibe Check', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false }
             ];
 
-            strip.innerHTML = localTrails.map(t => `
-                <div class="vibe-item" onclick="openCreatorProfile('${t.creator || '@my_profile'}')">
+            let combinedStories = [...localTrails, ...defaultCreators];
+
+            strip.innerHTML = combinedStories.map(t => `
+                <div class="vibe-item" onclick="openStoryViewer('${t.title || 'Story Drop'}', '${t.media || t.img_url}', '${t.mediaType || 'image'}', '${t.creator || t.handle}')">
                     <div class="vibe-ring ${t.isLive ? 'is-live' : ''}">
-                        <img src="${t.media}">
+                        <img src="${t.media || t.img_url}">
                     </div>
-                    <span class="small text-muted text-truncate mt-1" style="max-width: 76px; font-size: 0.72rem;">${t.creator || '@my_profile'}</span>
-                </div>
-            `).join('') + defaultCreators.map(c => `
-                <div class="vibe-item" onclick="openCreatorProfile('${c.handle}')">
-                    <div class="vibe-ring ${c.isLive ? 'is-live' : ''}">
-                        <img src="${c.media}">
-                    </div>
-                    <span class="small text-muted text-truncate mt-1" style="max-width: 76px; font-size: 0.72rem;">${c.handle}</span>
+                    <span class="small text-muted text-truncate mt-1" style="max-width: 76px; font-size: 0.72rem;">${t.creator || t.handle}</span>
                 </div>
             `).join('');
         }
@@ -1674,7 +1660,7 @@
                 return `
                     <div class="col-md-4">
                         <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media" onclick="openCreatorProfile('${item.creator}')">
+                            <div class="feed-media" onclick="openStoryViewer('${item.title}', '${item.media}', '${item.mediaType}', '${item.creator}')">
                                 ${item.mediaType === 'video' ? `
                                     <video src="${item.media}" autoplay loop muted playsinline></video>
                                 ` : `
@@ -1777,11 +1763,11 @@
                         <div class="d-flex gap-2 mb-4">
                             <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="openDirectChat('${handle}')"><i class="fa-solid fa-envelope me-1"></i> Send Message</button>
                         </div>
-                        <h6 class="fw-bold mb-3">Active User Stories (Clickable)</h6>
+                        <h6 class="fw-bold mb-3">Active User Stories (Clickable to view media)</h6>
                         <div class="row g-3">
                             ${userStories.map(s => `
                                 <div class="col-md-6">
-                                    <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
+                                    <div class="p-3 rounded-4 cursor-pointer" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);" onclick="openStoryViewer('${s.title}', '${s.media}', '${s.mediaType || 'image'}', '${handle}')">
                                         <div class="d-flex align-items-center gap-3 mb-2">
                                             ${s.mediaType === 'video' ? `
                                                 <video src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
@@ -1793,7 +1779,6 @@
                                                 <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'}</span>
                                             </div>
                                         </div>
-                                        <button class="btn btn-sm btn-outline-danger rounded-pill w-100 mt-2" onclick="alert('You liked this user story!')"><i class="fa-solid fa-heart me-1"></i> Like Story (${s.likes})</button>
                                     </div>
                                 </div>
                             `).join('')}
@@ -1823,7 +1808,6 @@
             document.getElementById('statStoriesCount').innerText = count;
             document.getElementById('statViewsCount').innerText = simulatedViews;
             document.getElementById('statLikesCount').innerText = totalLikes;
-            document.getElementById('statPostsCount').innerText = `${userPostCount}/3`;
 
             const statusText = document.getElementById('profileVisibilityStatusText');
             const privacyBtn = document.getElementById('toggleProfilePrivacyBtn');
@@ -1854,7 +1838,7 @@
                     <div class="col-md-6">
                         <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-3">
+                                <div class="d-flex align-items-center gap-3 cursor-pointer" onclick="openStoryViewer('${t.title}', '${t.media}', '${t.mediaType}', '${t.creator}')">
                                     ${t.mediaType === 'video' ? `
                                         <video src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
                                     ` : `
