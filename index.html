@@ -491,12 +491,12 @@
 
             <hr class="border-secondary opacity-25 my-1">
 
-            <!-- Arhiva spremljenih objava u izborniku -->
+            <!-- Saved Stories Archive in Menu -->
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#archiveModal" data-bs-dismiss="offcanvas" onclick="renderArchiveModal()">
                 <i class="fa-solid fa-box-archive text-warning fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Arhiva spremljenih objava</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Pregled spremljenih objava</span>
+                    <span class="fw-semibold d-block">Saved Archive</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">View saved posts & stories</span>
                 </div>
             </a>
 
@@ -634,18 +634,18 @@
 
     <!-- Modals -->
 
-    <!-- Archive Modal (Arhiva spremljenih objava) -->
+    <!-- Archive Modal -->
     <div class="modal fade" id="archiveModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-box-archive text-warning me-2"></i>Arhivirane objave</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-box-archive text-warning me-2"></i>Archived Posts</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <p class="small text-muted mb-3">Ovdje se nalaze vaše spremljene i arhivirane objave.</p>
+                    <p class="small text-muted mb-3">Here you can find your saved and archived posts.</p>
                     <div id="archiveModalContent" class="row g-3">
-                        <!-- Popunjava se dinamički -->
+                        <!-- Dynamically populated -->
                     </div>
                 </div>
             </div>
@@ -860,10 +860,10 @@
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Story Title</label>
                             <input type="text" id="trailTitle" class="form-control auth-input" placeholder="What's happening in your story?" required>
                         </div>
-                        <!-- Lokacija objavljenog storyja -->
+                        <!-- Story Location -->
                         <div class="mb-3">
-                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Lokacija objave</label>
-                            <input type="text" id="trailLocation" class="form-control auth-input" placeholder="npr. Zagreb, Hrvatska">
+                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Story Location</label>
+                            <input type="text" id="trailLocation" class="form-control auth-input" placeholder="e.g., London, UK">
                         </div>
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Mention Creators</label>
@@ -1008,10 +1008,10 @@
                 <div class="modal-footer border-0 p-3 justify-content-between flex-wrap gap-2">
                     <div>
                         <span class="small text-muted font-mono d-block" id="viewerModalCreator">@creator</span>
-                        <span class="small text-info font-mono d-block" id="viewerModalLocation" style="font-size:0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>Nepoznata lokacija</span>
+                        <span class="small text-info font-mono d-block" id="viewerModalLocation" style="font-size:0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>Unknown Location</span>
                     </div>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="archiveCurrentStory()"><i class="fa-solid fa-bookmark me-1"></i> Spremi u arhivu</button>
+                        <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="archiveCurrentStory()"><i class="fa-solid fa-bookmark me-1"></i> Save to Archive</button>
                         <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="shareCurrentStoryToInbox()"><i class="fa-solid fa-paper-plane me-1"></i> Share to Inbox</button>
                         <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="shareCurrentStoryExternal()"><i class="fa-solid fa-share-nodes me-1"></i> Share Externally</button>
                     </div>
@@ -1219,11 +1219,10 @@
         function handleBrandStorySubmit(event) {
             event.preventDefault();
 
-            // Provjera restrikcije: 1 objava za publish brand story bez registracije i pretplate
             if (!currentUser) {
                 let brandCount = parseInt(localStorage.getItem('evolysium_guest_brand_count') || '0');
                 if (brandCount >= 1) {
-                    alert('Dostigli ste limit od 1 besplatne objave brand storyja bez registracije ili pretplate. Molimo prijavite se ili nadogradite račun.');
+                    alert('You have reached the limit of 1 free brand story publication without registration or subscription. Please sign in or upgrade your account.');
                     const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                     authModal.show();
                     return;
@@ -1275,11 +1274,10 @@
         function handleCreatorContentSubmit(event) {
             event.preventDefault();
 
-            // Provjera restrikcije: 2 objave limit za creator hub bez registracije i pretplate
             if (!currentUser) {
                 let creatorHubCount = parseInt(localStorage.getItem('evolysium_guest_creator_hub_count') || '0');
                 if (creatorHubCount >= 2) {
-                    alert('Dostigli ste limit od 2 besplatne objave u Creator Hubu bez registracije ili pretplate. Molimo prijavite se ili nadogradite račun.');
+                    alert('You have reached the limit of 2 free creator hub posts without registration or subscription. Please sign in or upgrade your account.');
                     const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                     authModal.show();
                     return;
@@ -1458,8 +1456,8 @@
         }
 
         const fallbackItems = [
-            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat', location: 'Milano, Italija' },
-            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04', location: 'Berlin, Njemačka' }
+            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat', location: 'Milano, Italy' },
+            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04', location: 'Berlin, Germany' }
         ];
 
         const socialNewsSignals = [
@@ -1609,11 +1607,10 @@
         function handleTrailSubmit(event) {
             event.preventDefault();
 
-            // Provjera restrikcije: 2 storyja limit bez registracije i pretplate za drop story
             if (!currentUser) {
                 let dropStoryCount = parseInt(localStorage.getItem('evolysium_guest_drop_story_count') || '0');
                 if (dropStoryCount >= 2) {
-                    alert('Dostigli ste limit od 2 besplatna storyja bez registracije ili pretplate. Molimo prijavite se ili nadogradite račun.');
+                    alert('You have reached the limit of 2 free stories without registration or subscription. Please sign in or upgrade your account.');
                     const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                     authModal.show();
                     return;
@@ -1627,7 +1624,7 @@
             const rawTags = document.getElementById('trailTags').value;
             const tags = rawTags ? rawTags.split(',').map(t => t.trim()) : [];
             const creatorName = document.getElementById('trailCreator').value || '@my_profile';
-            const locationVal = document.getElementById('trailLocation').value || 'Nepoznata lokacija';
+            const locationVal = document.getElementById('trailLocation').value || 'Unknown Location';
 
             const newStory = {
                 id: 'story_' + Date.now(),
@@ -1690,9 +1687,9 @@
             if (!archive.some(item => item.media === currentViewingStory.media && item.title === currentViewingStory.title)) {
                 archive.unshift(currentViewingStory);
                 localStorage.setItem('evolysium_archive', JSON.stringify(archive));
-                alert('Story je uspješno spremljen u vašu arhivu objava!');
+                alert('Story successfully saved to your archive!');
             } else {
-                alert('Ovaj story se već nalazi u arhivi.');
+                alert('This story is already in your archive.');
             }
         }
 
@@ -1701,7 +1698,7 @@
             let archive = JSON.parse(localStorage.getItem('evolysium_archive') || '[]');
             
             if (archive.length === 0) {
-                archiveContent.innerHTML = `<div class="col-12 text-center text-muted small py-4">Nemate arhiviranih objava.</div>`;
+                archiveContent.innerHTML = `<div class="col-12 text-center text-muted small py-4">No archived posts.</div>`;
                 return;
             }
 
@@ -1720,11 +1717,11 @@
 
         function shareCurrentStoryToInbox() {
             if (!currentViewingStory) return;
-            const targetUser = prompt('Unesite korisničko ime prijatelja (npr. @luka_creator) s kojim želite podijeliti ovaj story:');
+            const targetUser = prompt('Enter friend handle (e.g., @luka_creator) to share this story with:');
             if (!targetUser) return;
 
             let chat = conversations.find(c => c.user === targetUser);
-            const shareText = `📌 Podijeljeni story: "${currentViewingStory.title}" (${currentViewingStory.media})`;
+            const shareText = `📌 Shared story: "${currentViewingStory.title}" (${currentViewingStory.media})`;
             
             if (!chat) {
                 chat = { id: 'c_' + Date.now(), user: targetUser, messages: [{ sender: currentUser ? currentUser.name : '@my_profile', text: shareText, time: 'Just now' }] };
@@ -1735,22 +1732,22 @@
             localStorage.setItem('evolysium_conversations', JSON.stringify(conversations));
             renderInbox();
 
-            alert('Story je uspješno poslan u vaš Inbox korisniku ' + targetUser + '!');
+            alert('Story successfully sent to your Inbox for user ' + targetUser + '!');
         }
 
         function shareCurrentStoryExternal() {
             if (!currentViewingStory) return;
             const shareData = {
                 title: currentViewingStory.title,
-                text: `Pogledajte ovaj sjajan story na Evolysiumu od ${currentViewingStory.creator}: ${currentViewingStory.title}`,
+                text: `Check out this great story on Evolysium by ${currentViewingStory.creator}: ${currentViewingStory.title}`,
                 url: currentViewingStory.media
             };
 
             if (navigator.share) {
-                navigator.share(shareData).catch((err) => console.log('Greška pri dijeljenju:', err));
+                navigator.share(shareData).catch((err) => console.log('Sharing error:', err));
             } else {
                 navigator.clipboard.writeText(currentViewingStory.media);
-                alert('Poveznica na story medij je kopirana u međuspremnik (clipboard)!');
+                alert('Story media link copied to clipboard!');
             }
         }
 
@@ -1760,8 +1757,8 @@
 
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const defaultCreators = [
-                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true, location: 'Milano' },
-                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false, location: 'Pariz' },
+                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true, location: 'Milan' },
+                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false, location: 'Paris' },
                 { handle: '@tech_guru', title: 'Tech Setup', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: true, location: 'London' },
                 { handle: '@luka_creator', title: 'Vibe Check', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false, location: 'Zagreb' }
             ];
@@ -1900,8 +1897,8 @@
             } else {
                 let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
                 let userStories = handle === '@my_profile' ? localTrails : [
-                    { id: 'ext_s1', title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false, location: 'Milano' },
-                    { id: 'ext_s2', title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true, location: 'Pariz' }
+                    { id: 'ext_s1', title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false, location: 'Milan' },
+                    { id: 'ext_s2', title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true, location: 'Paris' }
                 ];
                 
                 bodyEl.innerHTML = `
@@ -2098,67 +2095,7 @@
             const inboxModalEl = document.getElementById('inboxModal');
             const inboxModal = new bootstrap.Modal(inboxModalEl);
             inboxModal.show();
-            openChat(chat.id);
         }
-
-        function addNotification(text) {
-            appNotifications.unshift({ text: text, time: 'Just now' });
-            localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
-            unreadNotifications = true;
-            localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
-            updateNotificationUI();
-        }
-
-        function updateNotificationUI() {
-            const badge = document.getElementById('notificationBadgeCount');
-            const list = document.getElementById('notificationsDropdownList');
-            if (!badge || !list) return;
-
-            if (unreadNotifications) {
-                badge.style.display = 'inline-block';
-                badge.innerText = appNotifications.length;
-            } else {
-                badge.style.display = 'none';
-            }
-
-            list.innerHTML = `
-                <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
-                <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                ${appNotifications.map(n => `
-                    <li><a class="dropdown-item py-2 small text-light text-wrap" href="#">${n.text}<br><span class="text-muted" style="font-size:0.65rem;">${n.time}</span></a></li>
-                `).join('')}
-            `;
-        }
-
-        function markNotificationsRead() {
-            unreadNotifications = false;
-            localStorage.setItem('evolysium_unread', JSON.stringify(false));
-            updateNotificationUI();
-        }
-
-        function openShareModal(title, mediaUrl) {
-            const shareUrl = window.location.href.split('#')[0] + '?post=' + encodeURIComponent(title);
-            document.getElementById('shareLinkInput').value = shareUrl;
-            const modal = new bootstrap.Modal(document.getElementById('shareModal'));
-            modal.show();
-        }
-
-        function copyShareLink() {
-            const input = document.getElementById('shareLinkInput');
-            input.select();
-            navigator.clipboard.writeText(input.value);
-            alert('Post link copied to clipboard!');
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updateAuthUI();
-            updateAccountTypeUI();
-            updateNotificationUI();
-            renderInbox();
-            renderVibeStrip();
-            renderSocialNewsDrawer();
-            loadBackendFeed();
-        });
     </script>
 </body>
 </html>
