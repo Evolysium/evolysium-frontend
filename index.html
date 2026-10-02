@@ -491,6 +491,15 @@
 
             <hr class="border-secondary opacity-25 my-1">
 
+            <!-- Arhiva spremljenih objava u izborniku -->
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#archiveModal" data-bs-dismiss="offcanvas" onclick="renderArchiveModal()">
+                <i class="fa-solid fa-box-archive text-warning fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Arhiva spremljenih objava</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Pregled spremljenih objava</span>
+                </div>
+            </a>
+
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#authModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-right-to-bracket text-success fs-5" style="width:24px;"></i>
                 <div>
@@ -624,6 +633,24 @@
     </footer>
 
     <!-- Modals -->
+
+    <!-- Archive Modal (Arhiva spremljenih objava) -->
+    <div class="modal fade" id="archiveModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-box-archive text-warning me-2"></i>Arhivirane objave</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-3">Ovdje se nalaze vaše spremljene i arhivirane objave.</p>
+                    <div id="archiveModalContent" class="row g-3">
+                        <!-- Popunjava se dinamički -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Sign In / Register Modal -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
@@ -833,6 +860,11 @@
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Story Title</label>
                             <input type="text" id="trailTitle" class="form-control auth-input" placeholder="What's happening in your story?" required>
                         </div>
+                        <!-- Lokacija objavljenog storyja -->
+                        <div class="mb-3">
+                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Lokacija objave</label>
+                            <input type="text" id="trailLocation" class="form-control auth-input" placeholder="npr. Zagreb, Hrvatska">
+                        </div>
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Mention Creators</label>
                             <input type="text" id="trailTags" class="form-control auth-input" placeholder="@anna, @luke, @mark">
@@ -974,11 +1006,14 @@
                     <div id="viewerMediaContainer" style="width: 100%; max-height: 70vh; overflow: hidden;"></div>
                 </div>
                 <div class="modal-footer border-0 p-3 justify-content-between flex-wrap gap-2">
-                    <span class="small text-muted font-mono" id="viewerModalCreator">@creator</span>
+                    <div>
+                        <span class="small text-muted font-mono d-block" id="viewerModalCreator">@creator</span>
+                        <span class="small text-info font-mono d-block" id="viewerModalLocation" style="font-size:0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>Nepoznata lokacija</span>
+                    </div>
                     <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="archiveCurrentStory()"><i class="fa-solid fa-bookmark me-1"></i> Spremi u arhivu</button>
                         <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="shareCurrentStoryToInbox()"><i class="fa-solid fa-paper-plane me-1"></i> Share to Inbox</button>
                         <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="shareCurrentStoryExternal()"><i class="fa-solid fa-share-nodes me-1"></i> Share Externally</button>
-                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="alert('Liked this story media!')"><i class="fa-solid fa-heart me-1"></i> Like Story</button>
                     </div>
                 </div>
             </div>
@@ -1183,6 +1218,19 @@
 
         function handleBrandStorySubmit(event) {
             event.preventDefault();
+
+            // Provjera restrikcije: 1 objava za publish brand story bez registracije i pretplate
+            if (!currentUser) {
+                let brandCount = parseInt(localStorage.getItem('evolysium_guest_brand_count') || '0');
+                if (brandCount >= 1) {
+                    alert('Dostigli ste limit od 1 besplatne objave brand storyja bez registracije ili pretplate. Molimo prijavite se ili nadogradite račun.');
+                    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                    authModal.show();
+                    return;
+                }
+                localStorage.setItem('evolysium_guest_brand_count', brandCount + 1);
+            }
+
             const creator = document.getElementById('brandStoryCreator').value;
             const title = document.getElementById('brandStoryTitle').value;
             const audience = document.getElementById('brandStoryAudience').value;
@@ -1226,6 +1274,19 @@
 
         function handleCreatorContentSubmit(event) {
             event.preventDefault();
+
+            // Provjera restrikcije: 2 objave limit za creator hub bez registracije i pretplate
+            if (!currentUser) {
+                let creatorHubCount = parseInt(localStorage.getItem('evolysium_guest_creator_hub_count') || '0');
+                if (creatorHubCount >= 2) {
+                    alert('Dostigli ste limit od 2 besplatne objave u Creator Hubu bez registracije ili pretplate. Molimo prijavite se ili nadogradite račun.');
+                    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                    authModal.show();
+                    return;
+                }
+                localStorage.setItem('evolysium_guest_creator_hub_count', creatorHubCount + 1);
+            }
+
             const contentType = document.getElementById('creatorContentType').value;
             const title = document.getElementById('creatorContentTitle').value;
             const summary = document.getElementById('creatorContentSummary').value;
@@ -1397,8 +1458,8 @@
         }
 
         const fallbackItems = [
-            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
-            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
+            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat', location: 'Milano, Italija' },
+            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04', location: 'Berlin, Njemačka' }
         ];
 
         const socialNewsSignals = [
@@ -1501,6 +1562,7 @@
                 summary: item.summary || 'Global trend post overview.',
                 tags: item.tags || [],
                 music: item.music || 'Original Audio',
+                location: item.location || 'Global',
                 isLive: item.isLive || false,
                 isPrivate: item.isPrivate || false,
                 isTrail: item.isTrail || false
@@ -1546,12 +1608,26 @@
 
         function handleTrailSubmit(event) {
             event.preventDefault();
+
+            // Provjera restrikcije: 2 storyja limit bez registracije i pretplate za drop story
+            if (!currentUser) {
+                let dropStoryCount = parseInt(localStorage.getItem('evolysium_guest_drop_story_count') || '0');
+                if (dropStoryCount >= 2) {
+                    alert('Dostigli ste limit od 2 besplatna storyja bez registracije ili pretplate. Molimo prijavite se ili nadogradite račun.');
+                    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                    authModal.show();
+                    return;
+                }
+                localStorage.setItem('evolysium_guest_drop_story_count', dropStoryCount + 1);
+            }
+
             const mode = document.getElementById('trailMode').value;
             const mediaType = document.getElementById('trailMediaType').value;
             const privacy = document.getElementById('trailPrivacy').value;
             const rawTags = document.getElementById('trailTags').value;
             const tags = rawTags ? rawTags.split(',').map(t => t.trim()) : [];
             const creatorName = document.getElementById('trailCreator').value || '@my_profile';
+            const locationVal = document.getElementById('trailLocation').value || 'Nepoznata lokacija';
 
             const newStory = {
                 id: 'story_' + Date.now(),
@@ -1564,6 +1640,7 @@
                 cat: 'story',
                 platform: 'trail',
                 music: document.getElementById('trailMusic').value || 'Evolysium Audio',
+                location: locationVal,
                 isLive: mode === 'live',
                 isPrivate: privacy === 'private',
                 likes: 1,
@@ -1589,11 +1666,12 @@
             alert('Story successfully published!');
         }
 
-        function openStoryViewer(title, mediaUrl, mediaType, creator) {
-            currentViewingStory = { title, media: mediaUrl, mediaType, creator };
+        function openStoryViewer(title, mediaUrl, mediaType, creator, location = 'Global') {
+            currentViewingStory = { title, media: mediaUrl, mediaType, creator, location };
 
             document.getElementById('viewerModalTitle').innerText = title;
             document.getElementById('viewerModalCreator').innerText = 'Published by: ' + creator;
+            document.getElementById('viewerModalLocation').innerHTML = `<i class="fa-solid fa-location-dot me-1"></i>${location}`;
             const container = document.getElementById('viewerMediaContainer');
             
             if (mediaType === 'video') {
@@ -1604,6 +1682,40 @@
 
             const viewerModal = new bootstrap.Modal(document.getElementById('storyViewerModal'));
             viewerModal.show();
+        }
+
+        function archiveCurrentStory() {
+            if (!currentViewingStory) return;
+            let archive = JSON.parse(localStorage.getItem('evolysium_archive') || '[]');
+            if (!archive.some(item => item.media === currentViewingStory.media && item.title === currentViewingStory.title)) {
+                archive.unshift(currentViewingStory);
+                localStorage.setItem('evolysium_archive', JSON.stringify(archive));
+                alert('Story je uspješno spremljen u vašu arhivu objava!');
+            } else {
+                alert('Ovaj story se već nalazi u arhivi.');
+            }
+        }
+
+        function renderArchiveModal() {
+            const archiveContent = document.getElementById('archiveModalContent');
+            let archive = JSON.parse(localStorage.getItem('evolysium_archive') || '[]');
+            
+            if (archive.length === 0) {
+                archiveContent.innerHTML = `<div class="col-12 text-center text-muted small py-4">Nemate arhiviranih objava.</div>`;
+                return;
+            }
+
+            archiveContent.innerHTML = archive.map((item, idx) => `
+                <div class="col-md-6">
+                    <div class="p-3 rounded-4 d-flex align-items-center gap-3" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
+                        <img src="${item.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
+                        <div>
+                            <h6 class="fw-bold mb-1 text-white small">${item.title}</h6>
+                            <span class="small text-muted font-mono" style="font-size: 0.7rem;">${item.creator} • ${item.location}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function shareCurrentStoryToInbox() {
@@ -1648,16 +1760,16 @@
 
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const defaultCreators = [
-                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true },
-                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false },
-                { handle: '@tech_guru', title: 'Tech Setup', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: true },
-                { handle: '@luka_creator', title: 'Vibe Check', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false }
+                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true, location: 'Milano' },
+                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false, location: 'Pariz' },
+                { handle: '@tech_guru', title: 'Tech Setup', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: true, location: 'London' },
+                { handle: '@luka_creator', title: 'Vibe Check', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false, location: 'Zagreb' }
             ];
 
             let combinedStories = [...localTrails, ...defaultCreators];
 
             strip.innerHTML = combinedStories.map(t => `
-                <div class="vibe-item" onclick="openStoryViewer('${t.title || 'Story Drop'}', '${t.media || t.img_url}', '${t.mediaType || 'image'}', '${t.creator || t.handle}')">
+                <div class="vibe-item" onclick="openStoryViewer('${t.title || 'Story Drop'}', '${t.media || t.img_url}', '${t.mediaType || 'image'}', '${t.creator || t.handle}', '${t.location || 'Global'}')">
                     <div class="vibe-ring ${t.isLive ? 'is-live' : ''}">
                         <img src="${t.media || t.img_url}">
                     </div>
@@ -1700,7 +1812,7 @@
                 return `
                     <div class="col-md-4">
                         <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media" onclick="openStoryViewer('${item.title}', '${item.media}', '${item.mediaType}', '${item.creator}')">
+                            <div class="feed-media" onclick="openStoryViewer('${item.title}', '${item.media}', '${item.mediaType}', '${item.creator}', '${item.location || 'Global'}')">
                                 ${item.mediaType === 'video' ? `
                                     <video src="${item.media}" autoplay loop muted playsinline></video>
                                 ` : `
@@ -1714,7 +1826,8 @@
                             <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
                                 <div>
                                     <h5 class="fw-bold text-white mb-2 fs-6" style="line-height: 1.4;">${item.title}</h5>
-                                    <p class="small text-muted mb-3" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
+                                    <p class="small text-muted mb-2" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
+                                    <span class="small font-mono text-info d-block mb-3" style="font-size: 0.72rem;"><i class="fa-solid fa-location-dot me-1"></i>${item.location || 'Global'}</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-10">
                                     <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
@@ -1787,8 +1900,8 @@
             } else {
                 let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
                 let userStories = handle === '@my_profile' ? localTrails : [
-                    { id: 'ext_s1', title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false },
-                    { id: 'ext_s2', title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true }
+                    { id: 'ext_s1', title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false, location: 'Milano' },
+                    { id: 'ext_s2', title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true, location: 'Pariz' }
                 ];
                 
                 bodyEl.innerHTML = `
@@ -1807,7 +1920,7 @@
                         <div class="row g-3">
                             ${userStories.map(s => `
                                 <div class="col-md-6">
-                                    <div class="p-3 rounded-4 cursor-pointer" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);" onclick="openStoryViewer('${s.title}', '${s.media}', '${s.mediaType || 'image'}', '${handle}')">
+                                    <div class="p-3 rounded-4 cursor-pointer" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);" onclick="openStoryViewer('${s.title}', '${s.media}', '${s.mediaType || 'image'}', '${handle}', '${s.location || 'Global'}')">
                                         <div class="d-flex align-items-center gap-3 mb-2">
                                             ${s.mediaType === 'video' ? `
                                                 <video src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
@@ -1816,7 +1929,7 @@
                                             `}
                                             <div>
                                                 <h6 class="fw-bold mb-1 text-white small">${s.title}</h6>
-                                                <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'}</span>
+                                                <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'} • 📍 ${s.location || 'Global'}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1878,7 +1991,7 @@
                     <div class="col-md-6">
                         <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-3 cursor-pointer" onclick="openStoryViewer('${t.title}', '${t.media}', '${t.mediaType}', '${t.creator}')">
+                                <div class="d-flex align-items-center gap-3 cursor-pointer" onclick="openStoryViewer('${t.title}', '${t.media}', '${t.mediaType}', '${t.creator}', '${t.location || 'Global'}')">
                                     ${t.mediaType === 'video' ? `
                                         <video src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
                                     ` : `
@@ -1886,7 +1999,7 @@
                                     `}
                                     <div>
                                         <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
-                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • ❤️ ${t.likes} likes • ${t.isPrivate ? '🔒 Private' : '🌐 Public'}</span>
+                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • 📍 ${t.location || 'Global'} • ❤️ ${t.likes} likes</span>
                                     </div>
                                 </div>
                                 <button class="btn btn-sm text-danger" onclick="deleteUserStory('${t.id}')" title="Delete Story"><i class="fa-solid fa-trash"></i></button>
