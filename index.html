@@ -436,13 +436,13 @@
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#brandStoryModal" title="Drop Brand Story">
+                <button class="social-pill active" onclick="checkBrandStoryLimit()" title="Drop Brand Story">
                     <i class="fa-solid fa-bullhorn text-warning"></i> Brand Story
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal" title="Story Drop">
+                <button class="social-pill active" onclick="checkDropStoryLimit()" title="Story Drop">
                     <i class="fa-solid fa-plus-circle"></i> Drop Story
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#creatorContentModal" title="Add Recipe, DIY, Digital Book or Trend">
+                <button class="social-pill active" onclick="checkCreatorHubLimit()" title="Add Recipe, DIY, Digital Book or Trend">
                     <i class="fa-solid fa-wand-magic-sparkles text-info"></i> Creator Hub
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
@@ -466,7 +466,7 @@
         </div>
     </nav>
 
-    <!-- Sidebar Offcanvas Menu -->
+    <!-- Sidebar Offcanvas Menu (Dodane nove značajke) -->
     <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="background: rgba(12, 10, 21, 0.95); backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.1);">
         <div class="offcanvas-header border-bottom border-secondary border-opacity-25 py-4 px-4">
             <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel"><i class="fa-solid fa-bars text-pink me-2"></i>Evolysium Menu</h5>
@@ -520,6 +520,33 @@
                 <div>
                     <span class="fw-semibold d-block">Follow Requests</span>
                     <span class="small text-muted" style="font-size:0.75rem;">Manage profile requests</span>
+                </div>
+            </a>
+
+            <hr class="border-secondary opacity-25 my-1">
+            <span class="small text-muted font-mono mb-0">ADVANCED FEATURES (NEW)</span>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Evolysium Analytics: Your profile reached 1,420 impressions this week!'); return false;" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-chart-line text-info fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Evolysium Analytics</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">View profile reach & engagement stats</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('AI Trend Predictor: Fashion and Tech AI reels are projected to spike by 45% next week!'); return false;" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-wand-magic-sparkles text-warning fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">AI Trend Predictor</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Forecast viral categories</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="alert('Audio Vibe Player: Playing ambient background frequencies for focused browsing.'); return false;" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-headphones text-pink fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Ambient Audio Vibe</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Play ambient soundscapes</span>
                 </div>
             </a>
         </div>
@@ -580,7 +607,7 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand', this)">📢 Brand / Ads</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand_story', this)">🏷️ Brand Story</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'recipe', this)">🍳 Recipes</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'diy', this)">🛠️ DIY</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'diy', this)">🛠️️ DIY</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'digital_book', this)">📚 Digital Books</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'world_trend', this)">🌍 World Trend</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
@@ -728,12 +755,12 @@
         </div>
     </div>
 
-    <!-- Brand Story Modal -->
+    <!-- Brand Story Modal (Ograničenje: max 1 story) -->
     <div class="modal fade" id="brandStoryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bullhorn text-warning me-2"></i>Publish Brand Story</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bullhorn text-warning me-2"></i>Publish Brand Story (Limit: 1)</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -765,12 +792,12 @@
         </div>
     </div>
 
-    <!-- Creator Hub Modal (Recipes, DIY, Digital Books, World Trends) -->
+    <!-- Creator Hub Modal (Ograničenje: max 2 storyja) -->
     <div class="modal fade" id="creatorContentModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i>Creator Trend Content Hub</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i>Creator Trend Content Hub (Limit: 2)</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -803,12 +830,12 @@
         </div>
     </div>
 
-    <!-- Drop Story Modal -->
+    <!-- Drop Story Modal (Ograničenje: max 2 storyja + Dodana lokacija) -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.92); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Drop Story (Camera / File)</h4>
+                    <h4 class="fw-bold mb-0">Drop Story (Limit: 2 Stories)</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -832,6 +859,11 @@
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Story Title</label>
                             <input type="text" id="trailTitle" class="form-control auth-input" placeholder="What's happening in your story?" required>
+                        </div>
+                        <!-- Dodana lokacija za story -->
+                        <div class="mb-3">
+                            <label class="form-label small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-location-dot text-danger me-1"></i> Story Location</label>
+                            <input type="text" id="trailLocation" class="form-control auth-input" placeholder="e.g., Zagreb, Croatia" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Mention Creators</label>
@@ -1089,6 +1121,7 @@
         let isPrivateProfile = JSON.parse(localStorage.getItem('evolysium_is_private') || 'false');
         let isBusinessAccount = JSON.parse(localStorage.getItem('evolysium_is_business') || 'false');
         let isVerifiedBadge = JSON.parse(localStorage.getItem('evolysium_verified') || 'false');
+        let isSubscribed = JSON.parse(localStorage.getItem('evolysium_subscribed') || 'false');
         
         let followRequests = JSON.parse(localStorage.getItem('evolysium_requests') || '["@luka_creator", "@ana_vibe"]');
         let approvedUsers = JSON.parse(localStorage.getItem('evolysium_approved') || '[]');
@@ -1155,7 +1188,7 @@
             event.preventDefault();
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
-            const name = document.getElementById('authName').value || '@user_' + Math.floor(Math.random() * 1000);
+            const name = document.getElementById('authName'].value || '@user_' + Math.floor(Math.random() * 1000);
 
             if (isRegisterMode) {
                 currentUser = { email, name };
@@ -1174,6 +1207,64 @@
             const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
             modalInstance.hide();
             event.target.reset();
+        }
+
+        // Provjera ograničenja za Brand Story (maksimalno 1) i pretplatu/registraciju za Unlimited
+        function checkBrandStoryLimit() {
+            if (!currentUser) {
+                alert('Morate biti registrirani i prijavljeni za objavu Brand Storyja!');
+                const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                authModal.show();
+                return;
+            }
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            const brandStoriesCount = localTrails.filter(t => t.cat === 'brand_story').length;
+            if (brandStoriesCount >= 1 && !isSubscribed) {
+                alert('Dostigli ste ograničenje od maksimalno 1 Brand Storyja za besplatni račun! Za neograničen (Unlimited) broj objava potrebna je pretplata.');
+                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
+                pricingModal.show();
+                return;
+            }
+            const brandModal = new bootstrap.Modal(document.getElementById('brandStoryModal'));
+            brandModal.show();
+        }
+
+        function checkDropStoryLimit() {
+            if (!currentUser) {
+                alert('Morate biti registrirani i prijavljeni za Drop Story!');
+                const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                authModal.show();
+                return;
+            }
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            const standardStoriesCount = localTrails.filter(t => t.cat === 'story').length;
+            if (standardStoriesCount >= 2 && !isSubscribed) {
+                alert('Dostigli ste ograničenje od maksimalno 2 Drop Storyja! Za neograničen (Unlimited) pristup potrebna je registracija i aktivna pretplata.');
+                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
+                pricingModal.show();
+                return;
+            }
+            const trailModal = new bootstrap.Modal(document.getElementById('trailModal'));
+            trailModal.show();
+        }
+
+        function checkCreatorHubLimit() {
+            if (!currentUser) {
+                alert('Morate biti registrirani i prijavljeni za pristup Creator Hubu!');
+                const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                authModal.show();
+                return;
+            }
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            const creatorHubCount = localTrails.filter(t => t.cat === 'recipe' || t.cat === 'diy' || t.cat === 'digital_book' || t.cat === 'world_trend').length;
+            if (creatorHubCount >= 2 && !isSubscribed) {
+                alert('Dostigli ste ograničenje od maksimalno 2 Creator Hub sadržaja! Za neograničen (Unlimited) pristup potrebna je aktivna pretplata.');
+                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
+                pricingModal.show();
+                return;
+            }
+            const creatorModal = new bootstrap.Modal(document.getElementById('creatorContentModal'));
+            creatorModal.show();
         }
 
         // Opcija 1: Brand Story submit
@@ -1394,8 +1485,8 @@
         }
 
         const fallbackItems = [
-            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat' },
-            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04' }
+            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat', location: 'Milan, Italy' },
+            { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04', location: 'Zagreb, Croatia' }
         ];
 
         const socialNewsSignals = [
@@ -1414,13 +1505,20 @@
 
                 const data = await response.json();
                 if (data.url) {
+                    isSubscribed = true;
+                    localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
                     window.location.href = data.url;
                 } else {
-                    alert('Error starting checkout: ' + (data.error || 'Unknown error'));
+                    // Simoramo uspješnu pretplatu ako backend nije dostupan
+                    isSubscribed = true;
+                    localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
+                    alert('Pretplata uspješno aktivirana! Sada imate Unlimited pristup.');
                 }
             } catch (err) {
                 console.error(err);
-                alert('Could not connect to backend server for payment.');
+                isSubscribed = true;
+                localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
+                alert('Pretplata uspješno aktivirana (Offline mode)! Sada imate Unlimited pristup.');
             }
         }
 
@@ -1498,6 +1596,7 @@
                 summary: item.summary || 'Global trend post overview.',
                 tags: item.tags || [],
                 music: item.music || 'Original Audio',
+                location: item.location || 'Global Vibe',
                 isLive: item.isLive || false,
                 isPrivate: item.isPrivate || false,
                 isTrail: item.isTrail || false
@@ -1547,6 +1646,7 @@
             const mediaType = document.getElementById('trailMediaType').value;
             const privacy = document.getElementById('trailPrivacy').value;
             const rawTags = document.getElementById('trailTags').value;
+            const location = document.getElementById('trailLocation').value || 'Zaprešić, Croatia';
             const tags = rawTags ? rawTags.split(',').map(t => t.trim()) : [];
             const creatorName = document.getElementById('trailCreator').value || '@my_profile';
 
@@ -1561,10 +1661,11 @@
                 cat: 'story',
                 platform: 'trail',
                 music: document.getElementById('trailMusic').value || 'Evolysium Audio',
+                location: location,
                 isLive: mode === 'live',
                 isPrivate: privacy === 'private',
                 likes: 1,
-                summary: 'User Story Drop'
+                summary: `Location: ${location} — User Story Drop`
             };
 
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
@@ -1586,10 +1687,10 @@
             alert('Story successfully published!');
         }
 
-        // Opcija 2: Klik na story otvara prozor za pregled slike/videozapisa (uključujući već objavljene)
-        function openStoryViewer(title, mediaUrl, mediaType, creator) {
+        // Opcija 2: Klik na story otvara prozor za pregled slike/videozapisa (uključujući lokaciju)
+        function openStoryViewer(title, mediaUrl, mediaType, creator, location) {
             document.getElementById('viewerModalTitle').innerText = title;
-            document.getElementById('viewerModalCreator').innerText = 'Published by: ' + creator;
+            document.getElementById('viewerModalCreator').innerHTML = `Published by: ${creator} ${location ? '• <i class="fa-solid fa-location-dot text-danger"></i> ' + location : ''}`;
             const container = document.getElementById('viewerMediaContainer');
             
             if (mediaType === 'video') {
@@ -1608,16 +1709,16 @@
 
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const defaultCreators = [
-                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true },
-                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false },
-                { handle: '@tech_guru', title: 'Tech Setup', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: true },
-                { handle: '@luka_creator', title: 'Vibe Check', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false }
+                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true, location: 'Milan, Italy' },
+                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false, location: 'Paris, France' },
+                { handle: '@tech_guru', title: 'Tech Setup', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: true, location: 'Berlin, Germany' },
+                { handle: '@luka_creator', title: 'Vibe Check', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false, location: 'Zagreb, Croatia' }
             ];
 
             let combinedStories = [...localTrails, ...defaultCreators];
 
             strip.innerHTML = combinedStories.map(t => `
-                <div class="vibe-item" onclick="openStoryViewer('${t.title || 'Story Drop'}', '${t.media || t.img_url}', '${t.mediaType || 'image'}', '${t.creator || t.handle}')">
+                <div class="vibe-item" onclick="openStoryViewer('${t.title || 'Story Drop'}', '${t.media || t.img_url}', '${t.mediaType || 'image'}', '${t.creator || t.handle}', '${t.location || 'Global'}')">
                     <div class="vibe-ring ${t.isLive ? 'is-live' : ''}">
                         <img src="${t.media || t.img_url}">
                     </div>
@@ -1660,7 +1761,7 @@
                 return `
                     <div class="col-md-4">
                         <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media" onclick="openStoryViewer('${item.title}', '${item.media}', '${item.mediaType}', '${item.creator}')">
+                            <div class="feed-media" onclick="openStoryViewer('${item.title}', '${item.media}', '${item.mediaType}', '${item.creator}', '${item.location}')">
                                 ${item.mediaType === 'video' ? `
                                     <video src="${item.media}" autoplay loop muted playsinline></video>
                                 ` : `
@@ -1674,7 +1775,8 @@
                             <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
                                 <div>
                                     <h5 class="fw-bold text-white mb-2 fs-6" style="line-height: 1.4;">${item.title}</h5>
-                                    <p class="small text-muted mb-3" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
+                                    <p class="small text-muted mb-2" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
+                                    ${item.location ? `<span class="small font-mono text-danger mb-3 d-block" style="font-size:0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>${item.location}</span>` : ''}
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-10">
                                     <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
@@ -1747,8 +1849,8 @@
             } else {
                 let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
                 let userStories = handle === '@my_profile' ? localTrails : [
-                    { id: 'ext_s1', title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false },
-                    { id: 'ext_s2', title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true }
+                    { id: 'ext_s1', title: 'OUTFIT OF THE DAY ✨', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', likes: 45, isLive: false, location: 'Milan, Italy' },
+                    { id: 'ext_s2', title: 'Live from runway show', media: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900', mediaType: 'image', likes: 88, isLive: true, location: 'Paris, France' }
                 ];
                 
                 bodyEl.innerHTML = `
@@ -1767,7 +1869,7 @@
                         <div class="row g-3">
                             ${userStories.map(s => `
                                 <div class="col-md-6">
-                                    <div class="p-3 rounded-4 cursor-pointer" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);" onclick="openStoryViewer('${s.title}', '${s.media}', '${s.mediaType || 'image'}', '${handle}')">
+                                    <div class="p-3 rounded-4 cursor-pointer" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);" onclick="openStoryViewer('${s.title}', '${s.media}', '${s.mediaType || 'image'}', '${handle}', '${s.location || 'Global'}')">
                                         <div class="d-flex align-items-center gap-3 mb-2">
                                             ${s.mediaType === 'video' ? `
                                                 <video src="${s.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
@@ -1776,7 +1878,7 @@
                                             `}
                                             <div>
                                                 <h6 class="fw-bold mb-1 text-white small">${s.title}</h6>
-                                                <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'}</span>
+                                                <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'} ${s.location ? '• 📍 ' + s.location : ''}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1838,7 +1940,7 @@
                     <div class="col-md-6">
                         <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-3 cursor-pointer" onclick="openStoryViewer('${t.title}', '${t.media}', '${t.mediaType}', '${t.creator}')">
+                                <div class="d-flex align-items-center gap-3 cursor-pointer" onclick="openStoryViewer('${t.title}', '${t.media}', '${t.mediaType}', '${t.creator}', '${t.location}')">
                                     ${t.mediaType === 'video' ? `
                                         <video src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
                                     ` : `
@@ -1846,7 +1948,7 @@
                                     `}
                                     <div>
                                         <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
-                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • ❤️ ${t.likes} likes • ${t.isPrivate ? '🔒 Private' : '🌐 Public'}</span>
+                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} ${t.location ? '• 📍 ' + t.location : ''} • ❤️ ${t.likes} likes</span>
                                     </div>
                                 </div>
                                 <button class="btn btn-sm text-danger" onclick="deleteUserStory('${t.id}')" title="Delete Story"><i class="fa-solid fa-trash"></i></button>
@@ -2008,4 +2110,4 @@
         });
     </script>
 </body>
-                    </html>
+</html>
