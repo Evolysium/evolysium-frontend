@@ -436,13 +436,13 @@
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#brandStoryModal" title="Drop Brand Story">
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#brandStoryModal" title="Publish Brand Story">
                     <i class="fa-solid fa-bullhorn text-warning"></i> Brand Story
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal" title="Story Drop">
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#trailModal" title="Drop Story">
                     <i class="fa-solid fa-plus-circle"></i> Drop Story
                 </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#creatorContentModal" title="Add Recipe, DIY, Digital Book or Trend">
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#creatorContentModal" title="Creator Hub">
                     <i class="fa-solid fa-wand-magic-sparkles text-info"></i> Creator Hub
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
@@ -491,12 +491,11 @@
 
             <hr class="border-secondary opacity-25 my-1">
 
-            <!-- Saved Stories Archive in Menu -->
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#archiveModal" data-bs-dismiss="offcanvas" onclick="renderArchiveModal()">
-                <i class="fa-solid fa-box-archive text-warning fs-5" style="width:24px;"></i>
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#savedArchiveModal" data-bs-dismiss="offcanvas" onclick="renderSavedArchive()">
+                <i class="fa-solid fa-bookmark text-warning fs-5" style="width:24px;"></i>
                 <div>
-                    <span class="fw-semibold d-block">Saved Archive</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">View saved posts & stories</span>
+                    <span class="fw-semibold d-block">Saved Posts Archive</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">View your bookmarked and saved items</span>
                 </div>
             </a>
 
@@ -587,7 +586,7 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'travel', this)">✈ Travel & Nature</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'food', this)">🍔 Food & Recipe</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand', this)">📢 Brand / Ads</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'brand_story', this)">🏷️ Brand Story</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'brand_story', this)">🏷️️ Brand Story</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'recipe', this)">🍳 Recipes</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'diy', this)">🛠️ DIY</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'digital_book', this)">📚 Digital Books</button>
@@ -595,7 +594,7 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'luxury', this)">💎 Luxury</button>
                 <button class="social-pill active" onclick="toggleSelection('category', '18+content', this)">🔞 18+ Content</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'architecture', this)">🏛️ Architecture</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'architecture', this)">🏛️️ Architecture</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'funny', this)">😂 Funny</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'movies', this)">🎬 Movies</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'reels', this)">⚡ Reels</button>
@@ -634,18 +633,18 @@
 
     <!-- Modals -->
 
-    <!-- Archive Modal -->
-    <div class="modal fade" id="archiveModal" tabindex="-1" aria-hidden="true">
+    <!-- Saved Posts Archive Modal -->
+    <div class="modal fade" id="savedArchiveModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-box-archive text-warning me-2"></i>Archived Posts</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bookmark text-warning me-2"></i>Saved Posts Archive</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <p class="small text-muted mb-3">Here you can find your saved and archived posts.</p>
-                    <div id="archiveModalContent" class="row g-3">
-                        <!-- Dynamically populated -->
+                    <p class="small text-muted mb-3">Here you can find all your bookmarked and saved posts across the platform.</p>
+                    <div id="savedArchiveList" class="row g-3" style="max-height: 400px; overflow-y: auto;">
+                        <div class="col-12 text-center text-muted py-4">No saved posts in archive yet.</div>
                     </div>
                 </div>
             </div>
@@ -792,7 +791,7 @@
         </div>
     </div>
 
-    <!-- Creator Hub Modal (Recipes, DIY, Digital Books, World Trends) -->
+    <!-- Creator Hub Modal -->
     <div class="modal fade" id="creatorContentModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.95); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
@@ -860,10 +859,9 @@
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Story Title</label>
                             <input type="text" id="trailTitle" class="form-control auth-input" placeholder="What's happening in your story?" required>
                         </div>
-                        <!-- Story Location -->
                         <div class="mb-3">
-                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Story Location</label>
-                            <input type="text" id="trailLocation" class="form-control auth-input" placeholder="e.g., London, UK">
+                            <label class="form-label small" style="color:rgba(255,255,255,0.6)">Location</label>
+                            <input type="text" id="trailLocation" class="form-control auth-input" placeholder="e.g., Zagreb, Croatia / New York">
                         </div>
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Mention Creators</label>
@@ -1006,14 +1004,14 @@
                     <div id="viewerMediaContainer" style="width: 100%; max-height: 70vh; overflow: hidden;"></div>
                 </div>
                 <div class="modal-footer border-0 p-3 justify-content-between flex-wrap gap-2">
-                    <div>
-                        <span class="small text-muted font-mono d-block" id="viewerModalCreator">@creator</span>
-                        <span class="small text-info font-mono d-block" id="viewerModalLocation" style="font-size:0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>Unknown Location</span>
+                    <div class="d-flex flex-column text-start">
+                        <span class="small text-muted font-mono" id="viewerModalCreator">@creator</span>
+                        <span class="small text-info font-mono" id="viewerModalLocation" style="display:none;"><i class="fa-solid fa-location-dot me-1"></i> Location</span>
                     </div>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="archiveCurrentStory()"><i class="fa-solid fa-bookmark me-1"></i> Save to Archive</button>
                         <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="shareCurrentStoryToInbox()"><i class="fa-solid fa-paper-plane me-1"></i> Share to Inbox</button>
                         <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="shareCurrentStoryExternal()"><i class="fa-solid fa-share-nodes me-1"></i> Share Externally</button>
+                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="alert('Liked this story media!')"><i class="fa-solid fa-heart me-1"></i> Like Story</button>
                     </div>
                 </div>
             </div>
@@ -1118,6 +1116,7 @@
         const API_FEED_URL = `${API_BASE_URL}/api/feed`;
         let feedItems = [];
         let likedItems = new Set(JSON.parse(localStorage.getItem('evolysium_likes') || '[]'));
+        let savedItems = new Set(JSON.parse(localStorage.getItem('evolysium_saved') || '[]'));
         
         let selectedPlatforms = ["trail"];
         let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "brand_story", "recipe", "diy", "digital_book", "world_trend", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
@@ -1128,6 +1127,7 @@
         let isPrivateProfile = JSON.parse(localStorage.getItem('evolysium_is_private') || 'false');
         let isBusinessAccount = JSON.parse(localStorage.getItem('evolysium_is_business') || 'false');
         let isVerifiedBadge = JSON.parse(localStorage.getItem('evolysium_verified') || 'false');
+        let isSubscribed = JSON.parse(localStorage.getItem('evolysium_subscribed') || 'false');
         
         let followRequests = JSON.parse(localStorage.getItem('evolysium_requests') || '["@luka_creator", "@ana_vibe"]');
         let approvedUsers = JSON.parse(localStorage.getItem('evolysium_approved') || '[]');
@@ -1218,16 +1218,14 @@
 
         function handleBrandStorySubmit(event) {
             event.preventDefault();
-
-            if (!currentUser) {
-                let brandCount = parseInt(localStorage.getItem('evolysium_guest_brand_count') || '0');
-                if (brandCount >= 1) {
-                    alert('You have reached the limit of 1 free brand story publication without registration or subscription. Please sign in or upgrade your account.');
-                    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
-                    authModal.show();
-                    return;
-                }
-                localStorage.setItem('evolysium_guest_brand_count', brandCount + 1);
+            
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            const brandStoriesCount = localTrails.filter(t => t.cat === 'brand_story').length;
+            if (brandStoriesCount >= 1 && !isSubscribed) {
+                alert('Publish brand story limit reached (1 max). Please register and subscribe for unlimited publishing.');
+                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
+                pricingModal.show();
+                return;
             }
 
             const creator = document.getElementById('brandStoryCreator').value;
@@ -1253,7 +1251,6 @@
                 isTrail: true
             };
 
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             localTrails.unshift(newBrandStory);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
@@ -1273,16 +1270,14 @@
 
         function handleCreatorContentSubmit(event) {
             event.preventDefault();
-
-            if (!currentUser) {
-                let creatorHubCount = parseInt(localStorage.getItem('evolysium_guest_creator_hub_count') || '0');
-                if (creatorHubCount >= 2) {
-                    alert('You have reached the limit of 2 free creator hub posts without registration or subscription. Please sign in or upgrade your account.');
-                    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
-                    authModal.show();
-                    return;
-                }
-                localStorage.setItem('evolysium_guest_creator_hub_count', creatorHubCount + 1);
+            
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            const creatorHubCount = localTrails.filter(t => ['recipe', 'diy', 'digital_book', 'world_trend'].includes(t.cat)).length;
+            if (creatorHubCount >= 2 && !isSubscribed) {
+                alert('Creator hub limit reached (2 posts max). Please register and subscribe for unlimited publishing.');
+                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
+                pricingModal.show();
+                return;
             }
 
             const contentType = document.getElementById('creatorContentType').value;
@@ -1308,7 +1303,6 @@
                 isTrail: true
             };
 
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             localTrails.unshift(newContent);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
@@ -1456,7 +1450,7 @@
         }
 
         const fallbackItems = [
-            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat', location: 'Milano, Italy' },
+            { id: 'f1', source: '@fashion_weekly', title: 'Milan Fashion Week Spring/Summer Streetstyle Trends', category: 'fashion', platform: 'trail', likes: 5210, comments: '312', img_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', summary: 'Streetstyle photography capturing top Milan fashion week highlights.', tags: ['@milan_style', '@vogue'], music: 'Runway Techno - Beat', location: 'Milan, Italy' },
             { id: 'f2', source: '@creator_lab', title: 'POV: Building a modular desk setup under €800', category: 'lifestyle', platform: 'trail', likes: 1420, comments: '142', img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900', summary: 'Clean cable management and ambient workspace lighting ideas.', tags: ['@tech_guru', '@desk_setup'], music: 'Lo-Fi Chill - Beat 04', location: 'Berlin, Germany' }
         ];
 
@@ -1468,21 +1462,15 @@
 
         async function startStripeCheckout(tier) {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/payment/create-checkout-session`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tier: tier })
-                });
-
-                const data = await response.json();
-                if (data.url) {
-                    window.location.href = data.url;
-                } else {
-                    alert('Error starting checkout: ' + (data.error || 'Unknown error'));
-                }
+                isSubscribed = true;
+                localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
+                alert('Subscription successful! You now have unlimited publishing access.');
+                const pricingModalEl = document.getElementById('pricingModal');
+                const modal = bootstrap.Modal.getInstance(pricingModalEl);
+                if (modal) modal.hide();
             } catch (err) {
                 console.error(err);
-                alert('Could not connect to backend server for payment.');
+                alert('Could not process subscription.');
             }
         }
 
@@ -1560,7 +1548,7 @@
                 summary: item.summary || 'Global trend post overview.',
                 tags: item.tags || [],
                 music: item.music || 'Original Audio',
-                location: item.location || 'Global',
+                location: item.location || 'Global Vibe',
                 isLive: item.isLive || false,
                 isPrivate: item.isPrivate || false,
                 isTrail: item.isTrail || false
@@ -1588,6 +1576,42 @@
             renderFeed();
         }
 
+        function toggleSave(itemId) {
+            if (savedItems.has(itemId)) {
+                savedItems.delete(itemId);
+                alert('Post removed from saved archive.');
+            } else {
+                savedItems.add(itemId);
+                alert('Post successfully saved to archive!');
+            }
+            localStorage.setItem('evolysium_saved', JSON.stringify(Array.from(savedItems)));
+            renderFeed();
+            renderSavedArchive();
+        }
+
+        function renderSavedArchive() {
+            const listEl = document.getElementById('savedArchiveList');
+            if (!listEl) return;
+            
+            const savedList = feedItems.filter(i => savedItems.has(i.id));
+            if (savedList.length === 0) {
+                listEl.innerHTML = '<div class="col-12 text-center text-muted py-4">No saved posts in archive yet.</div>';
+                return;
+            }
+
+            listEl.innerHTML = savedList.map(item => `
+                <div class="col-md-6">
+                    <div class="p-3 rounded-4 d-flex align-items-center gap-3" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
+                        <img src="${item.media}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 12px;">
+                        <div>
+                            <h6 class="fw-bold mb-1 text-white small">${item.title}</h6>
+                            <span class="small text-muted font-mono" style="font-size: 0.7rem;">${item.creator} • ❤️ ${item.likes}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         function formatLikes(num) {
             if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
             if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
@@ -1606,25 +1630,22 @@
 
         function handleTrailSubmit(event) {
             event.preventDefault();
-
-            if (!currentUser) {
-                let dropStoryCount = parseInt(localStorage.getItem('evolysium_guest_drop_story_count') || '0');
-                if (dropStoryCount >= 2) {
-                    alert('You have reached the limit of 2 free stories without registration or subscription. Please sign in or upgrade your account.');
-                    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
-                    authModal.show();
-                    return;
-                }
-                localStorage.setItem('evolysium_guest_drop_story_count', dropStoryCount + 1);
+            
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            if (localTrails.length >= 2 && !isSubscribed) {
+                alert('Drop story limit reached (2 stories max). Please register and subscribe for unlimited story drops.');
+                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
+                pricingModal.show();
+                return;
             }
 
             const mode = document.getElementById('trailMode').value;
             const mediaType = document.getElementById('trailMediaType').value;
             const privacy = document.getElementById('trailPrivacy').value;
             const rawTags = document.getElementById('trailTags').value;
+            const location = document.getElementById('trailLocation').value || 'Global';
             const tags = rawTags ? rawTags.split(',').map(t => t.trim()) : [];
             const creatorName = document.getElementById('trailCreator').value || '@my_profile';
-            const locationVal = document.getElementById('trailLocation').value || 'Unknown Location';
 
             const newStory = {
                 id: 'story_' + Date.now(),
@@ -1637,14 +1658,13 @@
                 cat: 'story',
                 platform: 'trail',
                 music: document.getElementById('trailMusic').value || 'Evolysium Audio',
-                location: locationVal,
+                location: location,
                 isLive: mode === 'live',
                 isPrivate: privacy === 'private',
                 likes: 1,
                 summary: 'User Story Drop'
             };
 
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             localTrails.unshift(newStory);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
@@ -1663,14 +1683,20 @@
             alert('Story successfully published!');
         }
 
-        function openStoryViewer(title, mediaUrl, mediaType, creator, location = 'Global') {
+        function openStoryViewer(title, mediaUrl, mediaType, creator, location) {
             currentViewingStory = { title, media: mediaUrl, mediaType, creator, location };
 
             document.getElementById('viewerModalTitle').innerText = title;
             document.getElementById('viewerModalCreator').innerText = 'Published by: ' + creator;
-            document.getElementById('viewerModalLocation').innerHTML = `<i class="fa-solid fa-location-dot me-1"></i>${location}`;
+            const locEl = document.getElementById('viewerModalLocation');
+            if (location && location !== 'undefined') {
+                locEl.style.display = 'inline-block';
+                locEl.innerHTML = `<i class="fa-solid fa-location-dot me-1"></i> ${location}`;
+            } else {
+                locEl.style.display = 'none';
+            }
+
             const container = document.getElementById('viewerMediaContainer');
-            
             if (mediaType === 'video') {
                 container.innerHTML = `<video src="${mediaUrl}" controls autoplay style="width:100%; max-height:70vh; object-fit:contain;"></video>`;
             } else {
@@ -1681,43 +1707,9 @@
             viewerModal.show();
         }
 
-        function archiveCurrentStory() {
-            if (!currentViewingStory) return;
-            let archive = JSON.parse(localStorage.getItem('evolysium_archive') || '[]');
-            if (!archive.some(item => item.media === currentViewingStory.media && item.title === currentViewingStory.title)) {
-                archive.unshift(currentViewingStory);
-                localStorage.setItem('evolysium_archive', JSON.stringify(archive));
-                alert('Story successfully saved to your archive!');
-            } else {
-                alert('This story is already in your archive.');
-            }
-        }
-
-        function renderArchiveModal() {
-            const archiveContent = document.getElementById('archiveModalContent');
-            let archive = JSON.parse(localStorage.getItem('evolysium_archive') || '[]');
-            
-            if (archive.length === 0) {
-                archiveContent.innerHTML = `<div class="col-12 text-center text-muted small py-4">No archived posts.</div>`;
-                return;
-            }
-
-            archiveContent.innerHTML = archive.map((item, idx) => `
-                <div class="col-md-6">
-                    <div class="p-3 rounded-4 d-flex align-items-center gap-3" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
-                        <img src="${item.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;">
-                        <div>
-                            <h6 class="fw-bold mb-1 text-white small">${item.title}</h6>
-                            <span class="small text-muted font-mono" style="font-size: 0.7rem;">${item.creator} • ${item.location}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
         function shareCurrentStoryToInbox() {
             if (!currentViewingStory) return;
-            const targetUser = prompt('Enter friend handle (e.g., @luka_creator) to share this story with:');
+            const targetUser = prompt('Enter friend username (e.g. @luka_creator) to share this story with:');
             if (!targetUser) return;
 
             let chat = conversations.find(c => c.user === targetUser);
@@ -1744,7 +1736,7 @@
             };
 
             if (navigator.share) {
-                navigator.share(shareData).catch((err) => console.log('Sharing error:', err));
+                navigator.share(shareData).catch((err) => console.log('Share error:', err));
             } else {
                 navigator.clipboard.writeText(currentViewingStory.media);
                 alert('Story media link copied to clipboard!');
@@ -1757,10 +1749,10 @@
 
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const defaultCreators = [
-                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true, location: 'Milan' },
-                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false, location: 'Paris' },
-                { handle: '@tech_guru', title: 'Tech Setup', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: true, location: 'London' },
-                { handle: '@luka_creator', title: 'Vibe Check', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false, location: 'Zagreb' }
+                { handle: '@fashion_weekly', title: 'Milan Style', media: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900', mediaType: 'image', isLive: true, location: 'Milan, Italy' },
+                { handle: '@creator_lab', title: 'Lab POV', media: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900', mediaType: 'image', isLive: false, location: 'Paris, France' },
+                { handle: '@tech_guru', title: 'Tech Setup', media: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900', mediaType: 'image', isLive: true, location: 'Tokyo, Japan' },
+                { handle: '@luka_creator', title: 'Vibe Check', media: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900', mediaType: 'image', isLive: false, location: 'London, UK' }
             ];
 
             let combinedStories = [...localTrails, ...defaultCreators];
@@ -1806,10 +1798,11 @@
 
             grid.innerHTML = displayedItems.map(item => {
                 const isLiked = likedItems.has(item.id);
+                const isSaved = savedItems.has(item.id);
                 return `
                     <div class="col-md-4">
                         <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media" onclick="openStoryViewer('${item.title}', '${item.media}', '${item.mediaType}', '${item.creator}', '${item.location || 'Global'}')">
+                            <div class="feed-media" onclick="openStoryViewer('${item.title}', '${item.media}', '${item.mediaType}', '${item.creator}', '${item.location}')">
                                 ${item.mediaType === 'video' ? `
                                     <video src="${item.media}" autoplay loop muted playsinline></video>
                                 ` : `
@@ -1824,12 +1817,17 @@
                                 <div>
                                     <h5 class="fw-bold text-white mb-2 fs-6" style="line-height: 1.4;">${item.title}</h5>
                                     <p class="small text-muted mb-2" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
-                                    <span class="small font-mono text-info d-block mb-3" style="font-size: 0.72rem;"><i class="fa-solid fa-location-dot me-1"></i>${item.location || 'Global'}</span>
+                                    ${item.location ? `<span class="small text-info font-mono d-block mb-3" style="font-size:0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>${item.location}</span>` : ''}
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-10">
-                                    <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
-                                        <i class="fa-solid fa-heart"></i> <span id="likes-count-${item.id}">${formatLikes(item.likes)}</span>
-                                    </button>
+                                    <div class="d-flex gap-2">
+                                        <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
+                                            <i class="fa-solid fa-heart"></i> <span id="likes-count-${item.id}">${formatLikes(item.likes)}</span>
+                                        </button>
+                                        <button class="like-btn ${isSaved ? 'liked text-warning' : ''}" onclick="toggleSave('${item.id}')" title="Save to Archive">
+                                            <i class="fa-solid fa-bookmark"></i>
+                                        </button>
+                                    </div>
                                     <div class="d-flex gap-2">
                                         <button class="social-pill py-1 px-3 fs-7" onclick="openShareModal('${item.title}', '${item.media}')">
                                             <i class="fa-solid fa-share-nodes"></i> Share
@@ -1926,7 +1924,7 @@
                                             `}
                                             <div>
                                                 <h6 class="fw-bold mb-1 text-white small">${s.title}</h6>
-                                                <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'} • 📍 ${s.location || 'Global'}</span>
+                                                <span class="small text-muted font-mono" style="font-size: 0.7rem;">${s.isLive ? '🔴 LIVE' : '📖 Story'}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1988,7 +1986,7 @@
                     <div class="col-md-6">
                         <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-3 cursor-pointer" onclick="openStoryViewer('${t.title}', '${t.media}', '${t.mediaType}', '${t.creator}', '${t.location || 'Global'}')">
+                                <div class="d-flex align-items-center gap-3 cursor-pointer" onclick="openStoryViewer('${t.title}', '${t.media}', '${t.mediaType}', '${t.creator}', '${t.location}')">
                                     ${t.mediaType === 'video' ? `
                                         <video src="${t.media}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 12px;" muted autoplay loop playsinline></video>
                                     ` : `
@@ -1996,7 +1994,7 @@
                                     `}
                                     <div>
                                         <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
-                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • 📍 ${t.location || 'Global'} • ❤️ ${t.likes} likes</span>
+                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} • ❤️ ${t.likes} likes • ${t.isPrivate ? '🔒 Private' : '🌐 Public'}</span>
                                     </div>
                                 </div>
                                 <button class="btn btn-sm text-danger" onclick="deleteUserStory('${t.id}')" title="Delete Story"><i class="fa-solid fa-trash"></i></button>
@@ -2095,7 +2093,67 @@
             const inboxModalEl = document.getElementById('inboxModal');
             const inboxModal = new bootstrap.Modal(inboxModalEl);
             inboxModal.show();
+            openChat(chat.id);
         }
+
+        function addNotification(text) {
+            appNotifications.unshift({ text: text, time: 'Just now' });
+            localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
+            unreadNotifications = true;
+            localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
+            updateNotificationUI();
+        }
+
+        function updateNotificationUI() {
+            const badge = document.getElementById('notificationBadgeCount');
+            const list = document.getElementById('notificationsDropdownList');
+            if (!badge || !list) return;
+
+            if (unreadNotifications) {
+                badge.style.display = 'inline-block';
+                badge.innerText = appNotifications.length;
+            } else {
+                badge.style.display = 'none';
+            }
+
+            list.innerHTML = `
+                <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
+                <li><hr class="dropdown-divider border-secondary opacity-25"></li>
+                ${appNotifications.map(n => `
+                    <li><a class="dropdown-item py-2 small text-light text-wrap" href="#">${n.text}<br><span class="text-muted" style="font-size:0.65rem;">${n.time}</span></a></li>
+                `).join('')}
+            `;
+        }
+
+        function markNotificationsRead() {
+            unreadNotifications = false;
+            localStorage.setItem('evolysium_unread', JSON.stringify(false));
+            updateNotificationUI();
+        }
+
+        function openShareModal(title, mediaUrl) {
+            const shareUrl = window.location.href.split('#')[0] + '?post=' + encodeURIComponent(title);
+            document.getElementById('shareLinkInput').value = shareUrl;
+            const modal = new bootstrap.Modal(document.getElementById('shareModal'));
+            modal.show();
+        }
+
+        function copyShareLink() {
+            const input = document.getElementById('shareLinkInput');
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            alert('Post link copied to clipboard!');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            updateAccountTypeUI();
+            updateNotificationUI();
+            renderInbox();
+            renderVibeStrip();
+            renderSocialNewsDrawer();
+            loadBackendFeed();
+        });
     </script>
 </body>
 </html>
