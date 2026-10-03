@@ -499,6 +499,15 @@
                 </div>
             </a>
 
+            <!-- LOG OUT BUTTON -->
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="handleLogout()" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-right-from-bracket text-danger fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Log Out</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">End current session</span>
+                </div>
+            </a>
+
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inboxModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-envelope text-pink fs-5" style="width:24px;"></i>
                 <div>
@@ -1166,6 +1175,16 @@
             } else {
                 if (labelEl) labelEl.innerText = 'Sign In';
             }
+        }
+
+        // LOG OUT FUNCTIONALITY
+        function handleLogout() {
+            localStorage.removeItem('evolysium_current_user');
+            currentUser = null;
+            updateAuthUI();
+            addNotification('Uspješno ste se odjavili iz računa.');
+            alert('Uspješno ste se odjavili iz računa!');
+            window.location.reload();
         }
 
         function toggleAuthMode() {
@@ -1950,7 +1969,7 @@
                                     `}
                                     <div>
                                         <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
-                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} ${t.location ? '• 📍 ' + t.location : ''} • ❤️ ${t.likes} likes</span>
+                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} ${t.location ? '• 📍 ' + t.location : ''} • ❤️️ ${t.likes} likes</span>
                                     </div>
                                 </div>
                                 <button class="btn btn-sm text-danger" onclick="deleteUserStory('${t.id}')" title="Delete Story"><i class="fa-solid fa-trash"></i></button>
@@ -2097,11 +2116,12 @@
         function copyShareLink() {
             const input = document.getElementById('shareLinkInput');
             input.select();
+            input.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(input.value);
             alert('Link copied to clipboard!');
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', () => {
             updateAuthUI();
             updateNotificationUI();
             renderInbox();
