@@ -586,7 +586,7 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'travel', this)">✈ Travel & Nature</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'food', this)">🍔 Food & Recipe</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'brand', this)">📢 Brand / Ads</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'brand_story', this)">🏷️️ Brand Story</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'brand_story', this)">🏷 Brand Story</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'recipe', this)">🍳 Recipes</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'diy', this)">🛠️ DIY</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'digital_book', this)">📚 Digital Books</button>
@@ -594,7 +594,7 @@
                 <button class="social-pill active" onclick="toggleSelection('category', 'gaming', this)">🎮 Gaming</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'luxury', this)">💎 Luxury</button>
                 <button class="social-pill active" onclick="toggleSelection('category', '18+content', this)">🔞 18+ Content</button>
-                <button class="social-pill active" onclick="toggleSelection('category', 'architecture', this)">🏛️️ Architecture</button>
+                <button class="social-pill active" onclick="toggleSelection('category', 'architecture', this)">🏛 Architecture</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'funny', this)">😂 Funny</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'movies', this)">🎬 Movies</button>
                 <button class="social-pill active" onclick="toggleSelection('category', 'reels', this)">⚡ Reels</button>
@@ -1219,15 +1219,6 @@
         function handleBrandStorySubmit(event) {
             event.preventDefault();
             
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            const brandStoriesCount = localTrails.filter(t => t.cat === 'brand_story').length;
-            if (brandStoriesCount >= 1 && !isSubscribed) {
-                alert('Publish brand story limit reached (1 max). Please register and subscribe for unlimited publishing.');
-                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
-                pricingModal.show();
-                return;
-            }
-
             const creator = document.getElementById('brandStoryCreator').value;
             const title = document.getElementById('brandStoryTitle').value;
             const audience = document.getElementById('brandStoryAudience').value;
@@ -1251,6 +1242,7 @@
                 isTrail: true
             };
 
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             localTrails.unshift(newBrandStory);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
@@ -1271,15 +1263,6 @@
         function handleCreatorContentSubmit(event) {
             event.preventDefault();
             
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            const creatorHubCount = localTrails.filter(t => ['recipe', 'diy', 'digital_book', 'world_trend'].includes(t.cat)).length;
-            if (creatorHubCount >= 2 && !isSubscribed) {
-                alert('Creator hub limit reached (2 posts max). Please register and subscribe for unlimited publishing.');
-                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
-                pricingModal.show();
-                return;
-            }
-
             const contentType = document.getElementById('creatorContentType').value;
             const title = document.getElementById('creatorContentTitle').value;
             const summary = document.getElementById('creatorContentSummary').value;
@@ -1303,6 +1286,7 @@
                 isTrail: true
             };
 
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             localTrails.unshift(newContent);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
@@ -1460,17 +1444,18 @@
             { platform: 'trail', handle: '@sarah_chen', badge: 'VENTURE', text: 'Autonomous algorithmic aggregators are outperforming legacy discovery by 3.4x in early test cohorts.', time: '45m ago', tag: '#Growth' }
         ];
 
+        // Stripe Checkout integracija (odnosi se isključivo na odabir pretplate)
         async function startStripeCheckout(tier) {
             try {
                 isSubscribed = true;
                 localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
-                alert('Subscription successful! You now have unlimited publishing access.');
+                alert(`Successfully connected with Stripe for package: ${tier.toUpperCase()}. Subscription active!`);
                 const pricingModalEl = document.getElementById('pricingModal');
                 const modal = bootstrap.Modal.getInstance(pricingModalEl);
                 if (modal) modal.hide();
             } catch (err) {
                 console.error(err);
-                alert('Could not process subscription.');
+                alert('Could not process Stripe checkout.');
             }
         }
 
@@ -1630,14 +1615,6 @@
 
         function handleTrailSubmit(event) {
             event.preventDefault();
-            
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            if (localTrails.length >= 2 && !isSubscribed) {
-                alert('Drop story limit reached (2 stories max). Please register and subscribe for unlimited story drops.');
-                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
-                pricingModal.show();
-                return;
-            }
 
             const mode = document.getElementById('trailMode').value;
             const mediaType = document.getElementById('trailMediaType').value;
@@ -1665,6 +1642,7 @@
                 summary: 'User Story Drop'
             };
 
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             localTrails.unshift(newStory);
             localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
 
@@ -2097,62 +2075,61 @@
         }
 
         function addNotification(text) {
-            appNotifications.unshift({ text: text, time: 'Just now' });
+            appNotifications.unshift({ text, time: 'Just now' });
             localStorage.setItem('evolysium_notifications', JSON.stringify(appNotifications));
             unreadNotifications = true;
             localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
-            updateNotificationUI();
-        }
-
-        function updateNotificationUI() {
-            const badge = document.getElementById('notificationBadgeCount');
-            const list = document.getElementById('notificationsDropdownList');
-            if (!badge || !list) return;
-
-            if (unreadNotifications) {
-                badge.style.display = 'inline-block';
-                badge.innerText = appNotifications.length;
-            } else {
-                badge.style.display = 'none';
-            }
-
-            list.innerHTML = `
-                <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
-                <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                ${appNotifications.map(n => `
-                    <li><a class="dropdown-item py-2 small text-light text-wrap" href="#">${n.text}<br><span class="text-muted" style="font-size:0.65rem;">${n.time}</span></a></li>
-                `).join('')}
-            `;
+            updateNotificationsUI();
         }
 
         function markNotificationsRead() {
             unreadNotifications = false;
-            localStorage.setItem('evolysium_unread', JSON.stringify(false));
-            updateNotificationUI();
+            localStorage.setItem('evolysium_unread', JSON.stringify(unreadNotifications));
+            const badge = document.getElementById('notificationBadgeCount');
+            if (badge) badge.style.display = 'none';
         }
 
-        function openShareModal(title, mediaUrl) {
-            const shareUrl = window.location.href.split('#')[0] + '?post=' + encodeURIComponent(title);
-            document.getElementById('shareLinkInput').value = shareUrl;
-            const modal = new bootstrap.Modal(document.getElementById('shareModal'));
-            modal.show();
+        function updateNotificationsUI() {
+            const listEl = document.getElementById('notificationsDropdownList');
+            const badge = document.getElementById('notificationBadgeCount');
+            if (!listEl) return;
+
+            if (unreadNotifications && appNotifications.length > 0) {
+                if (badge) {
+                    badge.style.display = 'inline-block';
+                    badge.innerText = appNotifications.length;
+                }
+            } else {
+                if (badge) badge.style.display = 'none';
+            }
+
+            listEl.innerHTML = `
+                <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
+                <li><hr class="dropdown-divider border-secondary opacity-25"></li>
+                ${appNotifications.slice(0, 5).map(n => `
+                    <li><a class="dropdown-item py-2 text-wrap small text-light" href="#">${n.text}<br><span class="text-muted" style="font-size:0.65rem;">${n.time}</span></a></li>
+                `).join('')}
+            `;
+        }
+
+        function openShareModal(title, media) {
+            document.getElementById('shareLinkInput').value = media;
+            const shareModal = new bootstrap.Modal(document.getElementById('shareModal'));
+            shareModal.show();
         }
 
         function copyShareLink() {
             const input = document.getElementById('shareLinkInput');
             input.select();
             navigator.clipboard.writeText(input.value);
-            alert('Post link copied to clipboard!');
+            alert('Link copied to clipboard!');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            updateAuthUI();
-            updateAccountTypeUI();
-            updateNotificationUI();
-            renderInbox();
-            renderVibeStrip();
-            renderSocialNewsDrawer();
             loadBackendFeed();
+            updateAuthUI();
+            updateNotificationsUI();
+            renderInbox();
         });
     </script>
 </body>
