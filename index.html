@@ -466,7 +466,7 @@
         </div>
     </nav>
 
-    <!-- Sidebar Offcanvas Menu (Proširene značajke) -->
+    <!-- Sidebar Offcanvas Menu -->
     <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="background: rgba(12, 10, 21, 0.95); backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.1);">
         <div class="offcanvas-header border-bottom border-secondary border-opacity-25 py-4 px-4">
             <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel"><i class="fa-solid fa-bars text-pink me-2"></i>Evolysium Menu</h5>
@@ -577,7 +577,7 @@
             <h1 class="hero-headline display-4 mb-2">Discover What's Popping.</h1>
         </div>
 
-        <!-- Trending Posts & News Section (Sada sadrži i objavljene storyje) -->
+        <!-- Trending Posts & News Section -->
         <div class="mb-5">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                 <div class="small fw-semibold" style="color: rgba(0, 240, 255, 0.85); letter-spacing: 0.5px;">⚡ Trending Posts & News</div>
@@ -868,7 +868,6 @@
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Story Title</label>
                             <input type="text" id="trailTitle" class="form-control auth-input" placeholder="What's happening in your story?" required>
                         </div>
-                        <!-- Lokacija -->
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)"><i class="fa-solid fa-location-dot text-danger me-1"></i> Story Location</label>
                             <input type="text" id="trailLocation" class="form-control auth-input" placeholder="e.g., Zagreb, Croatia" required>
@@ -1526,7 +1525,6 @@
             }
         }
 
-        // Prikaz i storyja u sekciji trendova / vijesti (Korak 3)
         function renderSocialNewsDrawer() {
             const drawer = document.getElementById('social-news-drawer');
             if (!drawer) return;
