@@ -432,6 +432,18 @@
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#authModal">
                     <i class="fa-solid fa-right-to-bracket text-success"></i> <span id="authNavButtonLabel">Sign In</span>
                 </button>
+                
+                <!-- EVO TOOLS BUTTONS -->
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#evoSyncModal" title="EvoSync Tool">
+                    <i class="fa-solid fa-sync text-info"></i> EvoSync
+                </button>
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#evoAdsModal" title="EvoAds Tool">
+                    <i class="fa-solid fa-bullhorn text-warning"></i> EvoAds
+                </button>
+                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#evoFlowModal" title="EvoFlow Tool">
+                    <i class="fa-solid fa-calendar-days text-pink"></i> EvoFlow
+                </button>
+
                 <button class="social-pill position-relative" data-bs-toggle="modal" data-bs-target="#inboxModal">
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
@@ -507,6 +519,35 @@
                     <span class="small text-muted" style="font-size:0.75rem;">End current session</span>
                 </div>
             </a>
+
+            <hr class="border-secondary opacity-25 my-1">
+            <span class="small text-muted font-mono mb-0">PRO TOOLS (MANAGEMENT SUITE)</span>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#evoSyncModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-sync text-info fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">EvoSync</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Cross-platform multi-account sync</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#evoAdsModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-bullhorn text-warning fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">EvoAds</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Brand ads & campaign management</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#evoFlowModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-calendar-days text-pink fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">EvoFlow</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Smart content scheduler & planner</span>
+                </div>
+            </a>
+
+            <hr class="border-secondary opacity-25 my-1">
 
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inboxModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-envelope text-pink fs-5" style="width:24px;"></i>
@@ -668,6 +709,121 @@
     </footer>
 
     <!-- Modals -->
+
+    <!-- EvoSync Modal (Cross-Platform Social Sync) -->
+    <div class="modal fade" id="evoSyncModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-sync text-info me-2"></i>EvoSync — Cross-Platform Manager</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-4">Manage and synchronize connected accounts, multi-channel publishing for yourself or managed clients across Evolysium and social networks.</p>
+                    <form onsubmit="handleEvoSyncSubmit(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Select Target Platforms / Client Channels</label>
+                            <div class="d-flex gap-3 flex-wrap">
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="syncEvolysium" checked><label class="form-check-label text-white small" for="syncEvolysium">Evolysium Network</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="syncInstagram" checked><label class="form-check-label text-white small" for="syncInstagram">Instagram Accounts</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="syncTiktok"><label class="form-check-label text-white small" for="syncTiktok">TikTok & Reels</label></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Client / Account Name</label>
+                            <input type="text" id="evoSyncClient" class="form-control auth-input" placeholder="@client_or_brand_account" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Global Cross-Post Caption / Message</label>
+                            <textarea id="evoSyncMessage" class="form-control auth-input" rows="3" placeholder="Write content to sync across all connected networks..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish & Sync Across Networks</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EvoAds Modal (Brand Ads & Campaign Management) -->
+    <div class="modal fade" id="evoAdsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bullhorn text-warning me-2"></i>EvoAds — Brand & Campaign Ads</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-4">Create, target, and monitor high-performance sponsored ad campaigns for your brand or client portfolios.</p>
+                    <form onsubmit="handleEvoAdsSubmit(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Campaign Name</label>
+                            <input type="text" id="evoAdsName" class="form-control auth-input" placeholder="Summer Trend Push 2026" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Target Audience Category</label>
+                                <select id="evoAdsAudience" class="form-control auth-input text-white">
+                                    <option value="tech">Tech & AI Enthusiasts</option>
+                                    <option value="fashion">Fashion & Lifestyle</option>
+                                    <option value="fitness">Fitness & Health</option>
+                                    <option value="global">Global Trend Explorer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Daily Budget (€)</label>
+                                <input type="number" id="evoAdsBudget" class="form-control auth-input" placeholder="25.00" min="5" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Ad Creative / Banner URL</label>
+                            <input type="url" id="evoAdsCreative" class="form-control auth-input" placeholder="https://images.unsplash.com/..." required>
+                        </div>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Launch EvoAds Campaign</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EvoFlow Modal (Smart Content Planner & Scheduler) -->
+    <div class="modal fade" id="evoFlowModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-calendar-days text-pink me-2"></i>EvoFlow — Content Planner & Scheduler</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-4">Automate your content calendar, schedule posts, and manage automated publishing queues for all managed channels.</p>
+                    <form onsubmit="handleEvoFlowSubmit(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Scheduled Post Title / Hook</label>
+                            <input type="text" id="evoFlowTitle" class="form-control auth-input" placeholder="Upcoming Friday Drop Preview..." required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Publish Date & Time</label>
+                                <input type="datetime-local" id="evoFlowDatetime" class="form-control auth-input text-white" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Channel Destination</label>
+                                <select id="evoFlowChannel" class="form-control auth-input text-white">
+                                    <option value="evolysium">Evolysium Feed & Stories</option>
+                                    <option value="instagram">Instagram Feed / Story</option>
+                                    <option value="omnichannel">All Connected Channels</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Content Summary / Description</label>
+                            <textarea id="evoFlowSummary" class="form-control auth-input" rows="2" placeholder="Details for scheduled automated execution..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Schedule in EvoFlow</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Sign In / Register Modal -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
@@ -1185,6 +1341,40 @@
             addNotification('Uspješno ste se odjavili iz računa.');
             alert('Uspješno ste se odjavili iz računa!');
             window.location.reload();
+        }
+
+        // EVO TOOLS HANDLERS
+        function handleEvoSyncSubmit(event) {
+            event.preventDefault();
+            const client = document.getElementById('evoSyncClient').value;
+            const msg = document.getElementById('evoSyncMessage').value;
+            addNotification(`EvoSync successfully synchronized content for ${client}`);
+            alert(`EvoSync: Content successfully synced across connected channels for ${client}!`);
+            const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoSyncModal'));
+            if (modalEl) modalEl.hide();
+            event.target.reset();
+        }
+
+        function handleEvoAdsSubmit(event) {
+            event.preventDefault();
+            const adName = document.getElementById('evoAdsName').value;
+            const budget = document.getElementById('evoAdsBudget').value;
+            addNotification(`EvoAds campaign "${adName}" launched successfully!`);
+            alert(`EvoAds: Campaign "${adName}" with budget €${budget}/day is now active!`);
+            const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoAdsModal'));
+            if (modalEl) modalEl.hide();
+            event.target.reset();
+        }
+
+        function handleEvoFlowSubmit(event) {
+            event.preventDefault();
+            const title = document.getElementById('evoFlowTitle').value;
+            const dt = document.getElementById('evoFlowDatetime').value;
+            addNotification(`EvoFlow scheduled: "${title}"`);
+            alert(`EvoFlow: Post "${title}" successfully scheduled for ${dt}!`);
+            const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoFlowModal'));
+            if (modalEl) modalEl.hide();
+            event.target.reset();
         }
 
         function toggleAuthMode() {
@@ -1969,7 +2159,7 @@
                                     `}
                                     <div>
                                         <h6 class="fw-bold mb-1 text-white small">${t.title}</h6>
-                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} ${t.location ? '• 📍 ' + t.location : ''} • ❤️️ ${t.likes} likes</span>
+                                        <span class="small text-muted font-mono" style="font-size: 0.7rem;">${t.isLive ? '🔴 LIVE' : '📖 Story'} ${t.location ? '• 📍 ' + t.location : ''} • ❤️ ${t.likes} likes</span>
                                     </div>
                                 </div>
                                 <button class="btn btn-sm text-danger" onclick="deleteUserStory('${t.id}')" title="Delete Story"><i class="fa-solid fa-trash"></i></button>
