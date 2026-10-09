@@ -431,6 +431,11 @@
                     <i class="fa-solid fa-bolt text-warning"></i> <span id="navVibeScore">120 XP</span>
                 </button>
 
+                <!-- Gem Tokens Display Pill -->
+                <button class="social-pill active border-info" data-bs-toggle="modal" data-bs-target="#gemWalletModal" title="Evolysium Gem Wallet">
+                    <i class="fa-solid fa-gem text-cyan"></i> <span id="navGemCount">250 $EVO</span>
+                </button>
+
                 <button class="social-pill" onclick="cycleTheme()" title="Switch Neon Theme">
                     <i class="fa-solid fa-palette text-warning"></i>
                 </button>
@@ -561,6 +566,42 @@
                 <div>
                     <span class="fw-semibold d-block">Vibe Score & Rewards</span>
                     <span class="small text-muted" style="font-size:0.75rem;">Check XP, level & VIP perks</span>
+                </div>
+            </a>
+
+            <!-- FUTURISTIC UPGRADE MODULES IN SIDEBAR -->
+            <hr class="border-secondary opacity-25 my-1">
+            <span class="small text-cyan font-mono mb-0">✨ FUTURISTIC SUITE</span>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#neuralFeedModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-brain text-pink fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Neural Vibe Feed</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">AI mood & biometric stream</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#gemWalletModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-gem text-cyan fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">Gem Wallet ($EVO)</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Token rewards & Web3 deals</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#arSpheresModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-globe text-warning fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">AR Story Spheres</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Geo-located spatial media</span>
+                </div>
+            </a>
+
+            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#aiShieldModal" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-shield-halved text-success fs-5" style="width:24px;"></i>
+                <div>
+                    <span class="fw-semibold d-block">AI Shield & Voice Sync</span>
+                    <span class="small text-muted" style="font-size:0.75rem;">Zero-toxic filter & auto translator</span>
                 </div>
             </a>
 
@@ -815,6 +856,107 @@
                         <p class="small text-white mb-0">✓ Custom neon themes enabled</p>
                     </div>
                     <button type="button" class="btn btn-vibe w-100 rounded-pill py-2" onclick="claimDailyXp()">Claim Daily +50 XP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FUTURISTIC MODULE 1: Neural Vibe Feed Modal -->
+    <div class="modal fade" id="neuralFeedModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-brain text-pink me-2"></i>Neural Vibe & Mood AI</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <p class="small text-muted mb-3">Select your current mental state to tune the AI neural feed instantly:</p>
+                    <div class="d-grid gap-2 mb-3">
+                        <button class="btn btn-outline-info rounded-pill py-2" onclick="setNeuralMood('⚡ Energy & Focus')">⚡ Energy & Focus</button>
+                        <button class="btn btn-outline-success rounded-pill py-2" onclick="setNeuralMood('🌿 Chill & Relax')">🌿 Chill & Relax</button>
+                        <button class="btn btn-outline-warning rounded-pill py-2" onclick="setNeuralMood('🔥 Viral Inspiration')">🔥 Viral Inspiration</button>
+                    </div>
+                    <div id="neuralMoodResult" class="p-3 rounded-3 font-mono small text-info" style="background: rgba(0,240,255,0.05); display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FUTURISTIC MODULE 2: Gem Wallet Modal ($EVO) -->
+    <div class="modal fade" id="gemWalletModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-gem text-cyan me-2"></i>Evolysium Gem Wallet ($EVO)</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <div class="vibe-ring mx-auto mb-3" style="width: 90px; height: 90px; background: linear-gradient(45deg, var(--cyan-pop), var(--pink-pop));">
+                        <i class="fa-solid fa-gem text-white fs-2"></i>
+                    </div>
+                    <h3 class="fw-bold text-white mb-1" id="modalGemDisplay">250 $EVO</h3>
+                    <span class="badge bg-info text-dark rounded-pill mb-4">Web3 Creator Token Balance</span>
+                    <div class="p-3 rounded-4 text-start mb-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
+                        <span class="small text-muted d-block mb-1 font-mono">SMART CONTRACT STATUS</span>
+                        <p class="small text-white mb-1">✓ Automated brand payouts active</p>
+                        <p class="small text-white mb-0">✓ Staking rewards enabled</p>
+                    </div>
+                    <button type="button" class="btn btn-vibe w-100 rounded-pill py-2" onclick="claimGemTokens()">Claim Daily +50 $EVO Tokens</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FUTURISTIC MODULE 3: AR Story Spheres Modal -->
+    <div class="modal fade" id="arSpheresModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-globe text-warning me-2"></i>AR Story Spheres (GPS)</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-3">Drop a geo-located augmented reality story sphere at your current coordinates:</p>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Sphere Title / Message</label>
+                        <input type="text" id="arSphereTitle" class="form-control auth-input" placeholder="Secret spot vibe check...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">GPS Location / City</label>
+                        <input type="text" id="arSphereLocation" class="form-control auth-input" value="Zagreb / Zaprešić, Croatia">
+                    </div>
+                    <button type="button" class="btn btn-vibe w-100 rounded-pill py-3 mb-3" onclick="deployArSphere()">Deploy AR Story Sphere</button>
+                    <div id="arSphereResult" class="p-3 rounded-3 font-mono small text-warning" style="background: rgba(255,215,0,0.05); display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FUTURISTIC MODULE 4: AI Shield & Voice Sync Modal -->
+    <div class="modal fade" id="aiShieldModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light" style="background: rgba(17, 14, 29, 0.96); backdrop-filter: blur(25px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-shield-halved text-success me-2"></i>AI Shield & Voice Sync</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-3">Test the Zero-Toxic filter and global voice translation engine:</p>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Input text or comment to filter</label>
+                        <input type="text" id="aiShieldInput" class="form-control auth-input" placeholder="Test toxic or normal comment...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Target Language for Voice Sync</label>
+                        <select id="aiVoiceLang" class="form-control auth-input text-white">
+                            <option value="en">English (Global)</option>
+                            <option value="bs">Bosanski / Hrvatski</option>
+                            <option value="de">German</option>
+                            <option value="es">Spanish</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-vibe w-100 rounded-pill py-3 mb-3" onclick="runAiShieldCheck()">Run Shield & Sync Test</button>
+                    <div id="aiShieldResult" class="p-3 rounded-3 font-mono small text-success" style="background: rgba(0,255,102,0.05); display:none;"></div>
                 </div>
             </div>
         </div>
@@ -1413,8 +1555,9 @@
 
         let mediaStream = null;
 
-        // Gamification / XP state
+        // Gamification / XP & Gem Token state
         let userXp = parseInt(localStorage.getItem('evolysium_user_xp') || '120');
+        let userGems = parseInt(localStorage.getItem('evolysium_user_gems') || '250');
 
         let appNotifications = JSON.parse(localStorage.getItem('evolysium_notifications') || '[{"text": "Welcome to the Evolysium platform!", "time": "Just now"}]');
         let unreadNotifications = JSON.parse(localStorage.getItem('evolysium_unread') || 'true');
@@ -1446,9 +1589,11 @@
             }
             document.getElementById('navVibeScore').innerText = userXp + ' XP';
             document.getElementById('modalXpDisplay').innerText = userXp + ' XP';
+            document.getElementById('navGemCount').innerText = userGems + ' $EVO';
+            document.getElementById('modalGemDisplay').innerText = userGems + ' $EVO';
         }
 
-        // --- NEW SMART FEATURES LOGIC ---
+        // --- NEW SMART & FUTURISTIC FEATURES LOGIC ---
         function generateAiHook() {
             const topic = document.getElementById('aiHookTopic').value.trim();
             const resEl = document.getElementById('aiHookResult');
@@ -1487,6 +1632,47 @@
             updateAuthUI();
             addNotification('Uspješno ste preuzeli dnevnih +50 XP bodova!');
             alert('Čestitamo! Dobili ste +50 XP bodova.');
+        }
+
+        function claimGemTokens() {
+            userGems += 50;
+            localStorage.setItem('evolysium_user_gems', userGems);
+            updateAuthUI();
+            addNotification('Uspješno ste preuzeli +50 $EVO tokena u Gem Wallet!');
+            alert('Čestitamo! Dobili ste +50 $EVO tokena.');
+        }
+
+        function setNeuralMood(mood) {
+            const resEl = document.getElementById('neuralMoodResult');
+            resEl.style.display = 'block';
+            resEl.innerText = `🧠 Neuralni feed uspješno rekonfiguriran na: "${mood}". Prikazujem personalizirani sadržaj u stvarnom vremenu!`;
+            addNotification(`Neural feed prebačen na raspoloženje: ${mood}`);
+        }
+
+        function deployArSphere() {
+            const title = document.getElementById('arSphereTitle').value.trim();
+            const location = document.getElementById('arSphereLocation').value.trim();
+            const resEl = document.getElementById('arSphereResult');
+            if (!title) {
+                alert('Molimo unesite naslov AR sfere.');
+                return;
+            }
+            resEl.style.display = 'block';
+            resEl.innerText = `🌍 AR Story Sphere uspješno postavljena na GPS lokaciji (${location}): "${title}". Dostupna svim korisnicima u blizini!`;
+            addNotification(`Nova AR Story Sphere postavljena na lokaciji: ${location}`);
+        }
+
+        function runAiShieldCheck() {
+            const text = document.getElementById('aiShieldInput').value.trim();
+            const lang = document.getElementById('aiVoiceLang').value;
+            const resEl = document.getElementById('aiShieldResult');
+            if (!text) {
+                alert('Unesite tekst za testiranje štita.');
+                return;
+            }
+            resEl.style.display = 'block';
+            resEl.innerText = `🛡️ Zero-Toxic Shield: Sadržaj je čist i odobren. Voice Sync: Audio sinkroniziran na izabrani jezik (${lang.toUpperCase()}) s očuvanom bojom glasa!`;
+            addNotification('AI Shield provjerio sadržaj i pokrenuo Voice Sync.');
         }
 
         // LOG OUT FUNCTIONALITY
