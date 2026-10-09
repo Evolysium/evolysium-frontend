@@ -90,10 +90,22 @@
         }
 
         .navbar-custom {
-            background: rgba(12, 10, 21, 0.75);
+            background: rgba(12, 10, 21, 0.85);
             backdrop-filter: blur(25px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
+
+        /* Optimizirano za mobitele - scrollable gumbi u navbaru da se ne prelijevaju */
+        .navbar-actions-scroll {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            max-width: 100%;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+        .navbar-actions-scroll::-webkit-scrollbar { display: none; }
 
         .brand-pill {
             background: linear-gradient(135deg, var(--pink-pop), #7928ca);
@@ -105,6 +117,7 @@
             justify-content: center;
             box-shadow: 0 0 25px rgba(255, 42, 133, 0.3);
             position: relative;
+            flex-shrink: 0;
         }
         .brand-pill::after {
             content: '';
@@ -195,6 +208,7 @@
             gap: 6px;
             cursor: pointer;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .social-pill:hover {
@@ -458,14 +472,21 @@
             border-color: rgba(255, 42, 133, 0.3);
         }
 
+        /* Dodatna mobilna prilagodba da se spriječi prelijevanje i preklapanje */
         @media (max-width: 992px) {
-            .navbar .container-fluid {
+            .navbar-custom .container-fluid {
                 flex-direction: row;
                 align-items: center !important;
-                gap: 6px;
+                gap: 8px;
+                padding-left: 8px;
+                padding-right: 8px;
             }
-            .navbar-custom .d-flex.flex-wrap {
-                gap: 6px !important;
+            .hero-headline {
+                font-size: 2rem !important;
+            }
+            main.container-fluid {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
             }
         }
     </style>
@@ -542,11 +563,11 @@
     <!-- Main App Content Wrapper -->
     <div class="app-main-wrapper">
 
-        <!-- Header -->
-        <nav class="navbar navbar-dark sticky-top navbar-custom py-3 px-3 px-md-4">
+        <!-- Header - Optimizirano za mobitel sa scrollable trakom -->
+        <nav class="navbar navbar-dark sticky-top navbar-custom py-2 px-2 px-md-4">
             <div class="container-fluid d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-2">
-                    <button class="social-pill d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+                    <button class="social-pill d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" style="padding: 8px 12px;">
                         <i class="fa-solid fa-bars text-white"></i>
                     </button>
                     <div class="d-none d-lg-block">
@@ -555,7 +576,7 @@
                     </div>
                 </div>
                 
-                <div class="d-flex align-items-center gap-2 flex-wrap">
+                <div class="navbar-actions-scroll">
                     <!-- Vibe Score Display Pill -->
                     <button class="social-pill active border-warning" data-bs-toggle="modal" data-bs-target="#gamificationModal" title="Vibe Score & XP">
                         <i class="fa-solid fa-bolt text-warning"></i> <span id="navVibeScore">120 XP</span>
