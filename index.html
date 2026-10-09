@@ -950,7 +950,7 @@
                         <label class="form-label small text-muted">Target Language for Voice Sync</label>
                         <select id="aiVoiceLang" class="form-control auth-input text-white">
                             <option value="en">English (Global)</option>
-                            <option value="bs">Bosanski / Hrvatski</option>
+                            <option value="bs">Bosnian / Croatian</option>
                             <option value="de">German</option>
                             <option value="es">Spanish</option>
                         </select>
@@ -1598,18 +1598,18 @@
             const topic = document.getElementById('aiHookTopic').value.trim();
             const resEl = document.getElementById('aiHookResult');
             if (!topic) {
-                alert('Molimo unesite temu ili opis objave.');
+                alert('Please enter a topic or post description.');
                 return;
             }
             const hooks = [
-                `🔥 "Nitko vam ovo ne govori o ${topic}..." #viral #${topic.replace(/\s+/g, '')}`,
-                `⚡ POV: Kada konačno shvatite kako funkcionira ${topic} 🚀 #trending`,
-                `💎 3 tajne za ${topic} koje morate znati danas! #mustwatch`
+                `🔥 "Nobody is telling you this about ${topic}..." #viral #${topic.replace(/\s+/g, '')}`,
+                `⚡ POV: When you finally figure out how ${topic} works 🚀 #trending`,
+                `💎 3 secrets about ${topic} you need to know today! #mustwatch`
             ];
             const chosen = hooks[Math.floor(Math.random() * hooks.length)];
             resEl.style.display = 'block';
             resEl.innerText = chosen;
-            addNotification('AI Hook Generator kreirao je novu viralnu rečenicu!');
+            addNotification('AI Hook Generator created a new viral hook!');
         }
 
         function runAiNegotiation() {
@@ -1617,36 +1617,36 @@
             const offer = parseFloat(document.getElementById('dealInitialOffer').value) || 100;
             const resEl = document.getElementById('aiDealResult');
             if (!brand) {
-                alert('Molimo unesite naziv brenda.');
+                alert('Please enter a brand name.');
                 return;
             }
             const counterOffer = Math.round(offer * 1.45);
             resEl.style.display = 'block';
-            resEl.innerText = `🤖 AI Agent uspješno pregovara s brendom ${brand}! Početna ponuda od €${offer} odbijena je, a poslana je protuponuda od €${counterOffer} bazirana na vašem Vibe Score dosegu.`;
-            addNotification(`AI Agent pokrenuo je pregovore s brendom ${brand}`);
+            resEl.innerText = `🤖 AI Agent successfully negotiating with ${brand}! Initial offer of €${offer} declined, counter-offer of €${counterOffer} sent based on your Vibe Score reach.`;
+            addNotification(`AI Agent started negotiations with ${brand}`);
         }
 
         function claimDailyXp() {
             userXp += 50;
             localStorage.setItem('evolysium_user_xp', userXp);
             updateAuthUI();
-            addNotification('Uspješno ste preuzeli dnevnih +50 XP bodova!');
-            alert('Čestitamo! Dobili ste +50 XP bodova.');
+            addNotification('Successfully claimed daily +50 XP points!');
+            alert('Congratulations! You received +50 XP points.');
         }
 
         function claimGemTokens() {
             userGems += 50;
             localStorage.setItem('evolysium_user_gems', userGems);
             updateAuthUI();
-            addNotification('Uspješno ste preuzeli +50 $EVO tokena u Gem Wallet!');
-            alert('Čestitamo! Dobili ste +50 $EVO tokena.');
+            addNotification('Successfully claimed +50 $EVO tokens in Gem Wallet!');
+            alert('Congratulations! You received +50 $EVO tokens.');
         }
 
         function setNeuralMood(mood) {
             const resEl = document.getElementById('neuralMoodResult');
             resEl.style.display = 'block';
-            resEl.innerText = `🧠 Neuralni feed uspješno rekonfiguriran na: "${mood}". Prikazujem personalizirani sadržaj u stvarnom vremenu!`;
-            addNotification(`Neural feed prebačen na raspoloženje: ${mood}`);
+            resEl.innerText = `🧠 Neural feed successfully reconfigured to: "${mood}". Displaying personalized content in real-time!`;
+            addNotification(`Neural feed switched to mood: ${mood}`);
         }
 
         function deployArSphere() {
@@ -1654,12 +1654,12 @@
             const location = document.getElementById('arSphereLocation').value.trim();
             const resEl = document.getElementById('arSphereResult');
             if (!title) {
-                alert('Molimo unesite naslov AR sfere.');
+                alert('Please enter an AR sphere title.');
                 return;
             }
             resEl.style.display = 'block';
-            resEl.innerText = `🌍 AR Story Sphere uspješno postavljena na GPS lokaciji (${location}): "${title}". Dostupna svim korisnicima u blizini!`;
-            addNotification(`Nova AR Story Sphere postavljena na lokaciji: ${location}`);
+            resEl.innerText = `🌍 AR Story Sphere successfully deployed at GPS location (${location}): "${title}". Accessible to all users nearby!`;
+            addNotification(`New AR Story Sphere deployed at location: ${location}`);
         }
 
         function runAiShieldCheck() {
@@ -1667,12 +1667,12 @@
             const lang = document.getElementById('aiVoiceLang').value;
             const resEl = document.getElementById('aiShieldResult');
             if (!text) {
-                alert('Unesite tekst za testiranje štita.');
+                alert('Please enter text to test the shield.');
                 return;
             }
             resEl.style.display = 'block';
-            resEl.innerText = `🛡️ Zero-Toxic Shield: Sadržaj je čist i odobren. Voice Sync: Audio sinkroniziran na izabrani jezik (${lang.toUpperCase()}) s očuvanom bojom glasa!`;
-            addNotification('AI Shield provjerio sadržaj i pokrenuo Voice Sync.');
+            resEl.innerText = `🛡️ Zero-Toxic Shield: Content is clean and approved. Voice Sync: Audio synchronized to selected language (${lang.toUpperCase()}) preserving voice timbre!`;
+            addNotification('AI Shield checked content and started Voice Sync.');
         }
 
         // LOG OUT FUNCTIONALITY
@@ -1680,8 +1680,8 @@
             localStorage.removeItem('evolysium_current_user');
             currentUser = null;
             updateAuthUI();
-            addNotification('Uspješno ste se odjavili iz računa.');
-            alert('Uspješno ste se odjavili iz računa!');
+            addNotification('Successfully logged out of your account.');
+            alert('Successfully logged out!');
             window.location.reload();
         }
 
@@ -1769,7 +1769,7 @@
 
         function checkBrandStoryLimit() {
             if (!currentUser) {
-                alert('Morate biti registrirani i prijavljeni za objavu Brand Storyja!');
+                alert('You must be registered and signed in to publish a Brand Story!');
                 const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                 authModal.show();
                 return;
@@ -1777,7 +1777,7 @@
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const brandStoriesCount = localTrails.filter(t => t.cat === 'brand_story').length;
             if (brandStoriesCount >= 1 && !isSubscribed) {
-                alert('Dostigli ste ograničenje od maksimalno 1 Brand Storyja za besplatni račun! Za neograničen broj objava potrebna je pretplata.');
+                alert('You have reached the limit of maximum 1 Brand Story for free accounts! A subscription is required for unlimited publications.');
                 const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
                 pricingModal.show();
                 return;
@@ -1788,7 +1788,7 @@
 
         function checkDropStoryLimit() {
             if (!currentUser) {
-                alert('Morate biti registrirani i prijavljeni za Drop Story!');
+                alert('You must be registered and signed in to drop a story!');
                 const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                 authModal.show();
                 return;
@@ -1796,7 +1796,7 @@
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const standardStoriesCount = localTrails.filter(t => t.cat === 'story').length;
             if (standardStoriesCount >= 2 && !isSubscribed) {
-                alert('Dostigli ste ograničenje od maksimalno 2 Drop Storyja! Za neograničen pristup potrebna je pretplata.');
+                alert('You have reached the limit of maximum 2 Drop Stories! A subscription is required for unlimited access.');
                 const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
                 pricingModal.show();
                 return;
@@ -1807,7 +1807,7 @@
 
         function checkCreatorHubLimit() {
             if (!currentUser) {
-                alert('Morate biti registrirani i prijavljeni za pristup Creator Hubu!');
+                alert('You must be registered and signed in to access the Creator Hub!');
                 const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                 authModal.show();
                 return;
@@ -1815,7 +1815,7 @@
             let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
             const creatorHubCount = localTrails.filter(t => t.cat === 'recipe' || t.cat === 'diy' || t.cat === 'digital_book' || t.cat === 'world_trend').length;
             if (creatorHubCount >= 2 && !isSubscribed) {
-                alert('Dostigli ste ograničenje od maksimalno 2 Creator Hub sadržaja! Za neograničen pristup potrebna je pretplata.');
+                alert('You have reached the limit of maximum 2 Creator Hub contents! A subscription is required for unlimited access.');
                 const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
                 pricingModal.show();
                 return;
@@ -2066,13 +2066,13 @@
                 } else {
                     isSubscribed = true;
                     localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
-                    alert('Pretplata uspješno aktivirana! Sada imate Unlimited pristup.');
+                    alert('Subscription successfully activated! You now have Unlimited access.');
                 }
             } catch (err) {
                 console.error(err);
                 isSubscribed = true;
                 localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
-                alert('Pretplata uspješno aktivirana (Offline mode)! Sada imate Unlimited pristup.');
+                alert('Subscription successfully activated (Offline mode)! You now have Unlimited access.');
             }
         }
 
