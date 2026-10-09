@@ -182,9 +182,9 @@
 
         .social-pill {
             border-radius: 999px;
-            padding: 10px 20px;
+            padding: 8px 16px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-muted);
             background: rgba(255, 255, 255, 0.03);
@@ -192,8 +192,9 @@
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .social-pill:hover {
@@ -458,10 +459,13 @@
         }
 
         @media (max-width: 992px) {
-            .navbar .container {
+            .navbar .container-fluid {
                 flex-direction: row;
                 align-items: center !important;
-                gap: 8px;
+                gap: 6px;
+            }
+            .navbar-custom .d-flex.flex-wrap {
+                gap: 6px !important;
             }
         }
     </style>
@@ -539,9 +543,9 @@
     <div class="app-main-wrapper">
 
         <!-- Header -->
-        <nav class="navbar navbar-dark sticky-top navbar-custom py-3 px-4">
+        <nav class="navbar navbar-dark sticky-top navbar-custom py-3 px-3 px-md-4">
             <div class="container-fluid d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-2">
                     <button class="social-pill d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
                         <i class="fa-solid fa-bars text-white"></i>
                     </button>
@@ -622,11 +626,12 @@
                 <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#evoFlowModal" data-bs-dismiss="offcanvas"><i class="fa-solid fa-calendar-days text-pink" style="width:20px;"></i> EvoFlow</a>
                 <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#inboxModal" data-bs-dismiss="offcanvas"><i class="fa-solid fa-envelope text-pink" style="width:20px;"></i> Messages</a>
                 <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#inviteModal" data-bs-dismiss="offcanvas"><i class="fa-solid fa-user-plus text-info" style="width:20px;"></i> Invite & Newsletter</a>
+                <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#pricingModal" data-bs-dismiss="offcanvas"><i class="fa-solid fa-crown text-warning" style="width:20px;"></i> Upgrade Pass</a>
             </div>
         </div>
 
         <!-- Main Content Container -->
-        <main class="container-fluid px-4 py-4">
+        <main class="container-fluid px-3 px-md-4 py-4">
             
             <!-- Stories & Featured Creators -->
             <div class="mb-4">
@@ -652,7 +657,7 @@
             </div>
 
             <!-- Interactive Filters & Search Bento Card -->
-            <div class="social-card p-4 mb-4">
+            <div class="social-card p-3 p-md-4 mb-4">
                 <div class="row g-3 align-items-center mb-4">
                     <div class="col-lg-8">
                         <input type="text" id="keyword-search" class="form-control search-box" placeholder="✨ Search posts, tags (@user) or keywords..." oninput="renderFeed()">
