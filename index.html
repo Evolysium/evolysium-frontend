@@ -36,18 +36,21 @@
             --gold-pop: #ff6600 !important;
         }
 
-        /* 1. PROMJENA: Dinamična, duboka pozadina s fluidnim svjetlosnim snopovima (Melted Neon) i fiksiranim gradijentima */
+        /* Larven AI - Advanced Grid & Atmospheric Glow Backdrop */
         body {
-            background-color: var(--bg-main) !important;
+            background-color: #07060c !important;
             color: var(--text-main);
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
                 radial-gradient(circle at 15% 15%, rgba(255, 42, 133, 0.22) 0%, transparent 48%),
                 radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.16) 0%, transparent 48%),
                 radial-gradient(circle at 50% 50%, rgba(7, 6, 12, 0.98) 0%, rgba(7, 6, 12, 1) 100%);
+            background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%, 100% 100%;
             background-attachment: fixed;
             overflow-x: hidden;
             margin: 0;
@@ -56,7 +59,7 @@
 
         main { flex: 1; }
 
-        /* 4. PROMJENA: Oštrija, futuristička tipografija (Outfit & Plus Jakarta Sans) */
+        /* Typography */
         h1, h2, h3, h4, h5, .brand-name {
             font-family: 'Outfit', sans-serif;
             letter-spacing: -0.4px;
@@ -117,8 +120,7 @@
             align-items: center;
             cursor: pointer;
             min-width: 76px;
-            /* 5. PROMJENA: Fluidne animacije (Cubic Bezier) */
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
         .vibe-item:hover {
             transform: scale(1.08);
@@ -135,6 +137,7 @@
             justify-content: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.6);
             position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
         .vibe-ring.is-live::before {
             content: 'LIVE';
@@ -166,18 +169,15 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-muted);
             background: rgba(255, 255, 255, 0.03);
-            /* 2. PROMJENA: Izraženiji Glassmorphism blur */
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            /* 5. PROMJENA: Fluidni Cubic Bezier prijelazi */
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
         }
 
-        /* 3. PROMJENA: Svjetlosni rubovi (Hover Glow Effects) */
         .social-pill:hover {
             color: #fff;
             border-color: rgba(0, 240, 255, 0.5);
@@ -194,21 +194,21 @@
             backdrop-filter: blur(25px);
         }
 
-        /* 2. & 3. PROMJENA: Premium Glassmorphism i Svjetlosni rubovi (Glow na hover za kartice) */
+        /* Glassmorphism za Larven AI stil */
         .social-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+            background: rgba(15, 12, 25, 0.65);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 26px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
         .social-card:hover {
-            border-color: rgba(0, 240, 255, 0.6);
+            border-color: rgba(0, 240, 255, 0.5);
+            box-shadow: 0 30px 70px -15px rgba(0, 240, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
             transform: translateY(-5px);
-            box-shadow: 0 30px 65px -15px rgba(0, 240, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.3);
         }
 
         .feed-media {
@@ -313,7 +313,7 @@
             border-radius: 20px;
             padding: 18px;
             cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
         .news-pill-card:hover {
             background: rgba(255, 255, 255, 0.07);
@@ -808,7 +808,7 @@
         </div>
     </footer>
 
-    <!-- Modals for 4 New Smart Features -->
+    <!-- Modals for Smart Features -->
 
     <!-- 1. AI Hook Generator Modal -->
     <div class="modal fade" id="aiHookModal" tabindex="-1" aria-hidden="true">
@@ -913,7 +913,6 @@
                         <p class="small text-white mb-1">✓ Priority feed placement unlocked</p>
                         <p class="small text-white mb-0">✓ Custom neon themes enabled</p>
                     </div>
-                    <!-- BALANCED REWARDS: Claim +5 XP (sustained growth) -->
                     <button type="button" class="btn btn-vibe w-100 rounded-pill py-2" onclick="claimDailyXp()">Claim Daily +5 XP</button>
                 </div>
             </div>
@@ -960,7 +959,6 @@
                         <p class="small text-white mb-1">✓ Automated brand payouts active</p>
                         <p class="small text-white mb-0">✓ Staking rewards enabled</p>
                     </div>
-                    <!-- BALANCED REWARDS: Claim +2 $EVO to prevent token inflation -->
                     <button type="button" class="btn btn-vibe w-100 rounded-pill py-2" onclick="claimGemTokens()">Claim Daily +2 $EVO Tokens</button>
                 </div>
             </div>
@@ -1022,7 +1020,7 @@
         </div>
     </div>
 
-    <!-- EvoSync Modal (Cross-Platform Social Sync) -->
+    <!-- EvoSync Modal -->
     <div class="modal fade" id="evoSyncModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -1056,7 +1054,7 @@
         </div>
     </div>
 
-    <!-- EvoAds Modal (Brand Ads & Campaign Management) -->
+    <!-- EvoAds Modal -->
     <div class="modal fade" id="evoAdsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -1097,7 +1095,7 @@
         </div>
     </div>
 
-    <!-- EvoFlow Modal (Smart Content Planner & Scheduler) -->
+    <!-- EvoFlow Modal -->
     <div class="modal fade" id="evoFlowModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -1589,7 +1587,7 @@
         </div>
     </div>
 
-    <!-- Onboarding Welcome Modal for New Users -->
+    <!-- Onboarding Welcome Modal -->
     <div class="modal fade" id="onboardingModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(35px); border-radius: 30px; border: 1px solid rgba(0, 240, 255, 0.25);">
