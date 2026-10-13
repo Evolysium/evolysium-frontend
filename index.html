@@ -2401,10 +2401,11 @@
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             processIncomingItems([...localFeedPosts, ...fallbackItems], false);
             
+            // Popravljeno: prisilno i trenutačno uklanjanje preloadera bez zastoja
             const preloader = document.getElementById('app-preloader');
             if (preloader) {
                 preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 500);
+                setTimeout(() => preloader.style.display = 'none', 100);
             }
         }
 
