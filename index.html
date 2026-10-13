@@ -2578,6 +2578,7 @@ function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj 
 }
 
 
+
         function openTipJarModal() {
             const tipModal = new bootstrap.Modal(document.getElementById('tipJarModal'));
             tipModal.show();
@@ -2656,44 +2657,44 @@ function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj 
 
             grid.innerHTML = displayedItems.map(item => {
                 const isLiked = likedItems.has(item.id);
-                return `
-                    <div class="col-md-4">
-    <div class="social-card h-100 d-flex flex-column">
-        <div class="feed-media" onclick="openStoryViewerById('${item.id}')">
-            ${item.mediaType === 'video' ? `
-                <video src="${item.media}" autoplay loop muted playsinline></video>
-            ` : `
-                <img src="${item.media}" alt="${item.title}">
-            `}
-            <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
-                <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
-            </div>
-            <div class="trail-badge font-mono">${item.cat.toUpperCase()}</div>
-        </div>
-
-                            <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
-                                <div>
-                                    <h5 class="fw-bold text-white mb-2 fs-6" style="line-height: 1.4;">${item.title}</h5>
-                                    <p class="small text-muted mb-2" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
-                                    ${item.location ? `<span class="small font-mono text-danger mb-3 d-block" style="font-size:0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>${item.location}</span>` : ''}
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-10">
-                                    <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
-                                        <i class="fa-solid fa-heart"></i> <span id="likes-count-${item.id}">${formatLikes(item.likes)}</span>
-                                    </button>
-                                    <div class="d-flex gap-2">
-                                        <button class="social-pill py-1 px-3 fs-7" onclick="openCommentsModal('${item.id}')">
-                                            <i class="fa-solid fa-comments"></i> Comments
-                                        </button>
-                                        <button class="social-pill py-1 px-3 fs-7" onclick="openShareModal('${item.title}', '${item.media}')">
-                                            <i class="fa-solid fa-share-nodes"></i> Share
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+    return `
+        <div class="col-md-4">
+            <div class="social-card h-100 d-flex flex-column">
+                <div class="feed-media" onclick="openStoryViewerById('${item.id}')">
+                    ${item.mediaType === 'video' ? `
+                        <video src="${item.media || item.img_url}" autoplay loop muted playsinline></video>
+                    ` : `
+                        <img src="${item.media \vert{}\vert{} item.img_url}" alt="${item.title}">
+                    `}
+                    <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
+                        <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
+                    </div>
+                    <div class="trail-badge font-mono">${item.cat.toUpperCase()}</div>
+                </div>
+                <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
+                    <div>
+                        <h5 class="fw-bold text-white mb-2 fs-6" style="line-height: 1.4;">${item.title}</h5>
+                        <p class="small text-muted mb-2" style="font-size: 0.82rem; line-height: 1.4;">${item.summary}</p>
+                        ${item.location ? `<span class="small font-mono text-danger mb-3 d-block" style="font-size:0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>${item.location}</span>` : ''}
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary border-opacity-10">
+                        <button class="like-btn ${likedItems.has(item.id) ? 'liked' : ''}" onclick="toggleLike('${item.id}')">
+                            <i class="fa-solid fa-heart"></i> <span id="likes-count-${item.id}">${formatLikes(item.likes)}</span>
+                        </button>
+                        <div class="d-flex gap-2">
+                            <button class="social-pill py-1 px-3 fs-7" onclick="openCommentsModal('${item.id}')">
+                                <i class="fa-solid fa-comments"></i> Comments
+                            </button>
+                            <button class="social-pill py-1 px-3 fs-7" onclick="openShareModal('${item.title}', '${item.media || item.img_url}')">
+                                <i class="fa-solid fa-share-nodes"></i> Share
+                            </button>
                         </div>
                     </div>
-                `;
+                </div>
+            </div>
+        </div>
+    `;
+
             }).join('');
 
             const loader = document.getElementById('infinite-loader');
