@@ -1869,7 +1869,7 @@
             window.location.reload();
         }
 
-        // ISPARVLJENO: EvoSync funkcionalnost koja sprema i obavještava
+        // ISPRAVLJENO: EvoSync funkcionalnost koja sprema i obavještava
         function handleEvoSyncSubmit(event) {
             event.preventDefault();
             const client = document.getElementById('evoSyncClient').value;
@@ -2522,53 +2522,61 @@
             renderFeed();
         }
 
-        let activeStoryItem = null;
-        function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj = null) {
-            activeStoryItem = itemObj;
-            document.getElementById('viewerModalTitle').innerText = title;
-            document.getElementById('viewerModalCreator').innerHTML = `Published by: ${creator} ${location ? '• <i class="fa-solid fa-location-dot text-danger"></i> ' + location : ''}`;
-            const container = document.getElementById('viewerMediaContainer');
-            const stickersContainer = document.getElementById('viewerStickersContainer');
-            
-            if (mediaType === 'video') {
-                container.innerHTML = `<video src="${mediaUrl}" controls autoplay style="width:100%; max-height:55vh; object-fit:contain;"></video>`;
-            } else {
-                container.innerHTML = `<img src="${mediaUrl}" style="width:100%; max-height:55vh; object-fit:contain;">`;
-            }
+let activeStoryItem = null;
 
-            if (itemObj && (itemObj.poll || itemObj.qa)) {
-                stickersContainer.style.display = 'block';
-                let stickerHtml = '';
-                if (itemObj.poll) {
-                    stickerHtml += `
-                        <div class="p-2 mb-2 rounded-3 bg-dark border border-info text-center">
-                            <span class="small fw-bold text-info d-block mb-1"><i class="fa-solid fa-square-poll-horizontal me-1"></i>${itemObj.poll.question}</span>
-                            <div class="d-flex justify-content-center gap-2">
-                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: Yes!')">👍 Yes</button>
-                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: No!')">👎 No</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                if (itemObj.qa) {
-                    stickerHtml += `
-                        <div class="p-2 rounded-3 bg-dark border border-pink text-center">
-                            <span class="small fw-bold text-pink d-block mb-1"><i class="fa-solid fa-question me-1"></i>${itemObj.qa.prompt}</span>
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control auth-input" placeholder="Type your answer..." id="qaAnswerInput">
-                                <button class="btn btn-vibe btn-sm" onclick="alert('Answer submitted to creator!')">Send</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                stickersContainer.innerHTML = stickerHtml;
-            } else {
-                stickersContainer.style.display = 'none';
-            }
+function openStoryViewerById(itemId) {
+    const item = feedItems.find(i => i.id === itemId);
+    if (!item) return;
+    openStoryViewer(item.title, item.media || item.img_url, item.mediaType || 'image', item.creator, item.location, item);
+}
 
-            const viewerModal = new bootstrap.Modal(document.getElementById('storyViewerModal'));
-            viewerModal.show();
+function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj = null) {
+    activeStoryItem = itemObj;
+    document.getElementById('viewerModalTitle').innerText = title || 'Story Preview';
+    document.getElementById('viewerModalCreator').innerHTML = `Published by: ${creator || '@creator'} ${location ? '• <i class="fa-solid fa-location-dot text-danger"></i> ' + location : ''}`;
+    const container = document.getElementById('viewerMediaContainer');
+    const stickersContainer = document.getElementById('viewerStickersContainer');
+    
+    if (mediaType === 'video') {
+        container.innerHTML = `<video src="${mediaUrl}" controls autoplay style="width:100%; max-height:55vh; object-fit:contain;"></video>`;
+    } else {
+        container.innerHTML = `<img src="${mediaUrl}" style="width:100%; max-height:55vh; object-fit:contain;">`;
+    }
+
+    if (itemObj && (itemObj.poll || itemObj.qa)) {
+        stickersContainer.style.display = 'block';
+        let stickerHtml = '';
+        if (itemObj.poll) {
+            stickerHtml += `
+                <div class="p-2 mb-2 rounded-3 bg-dark border border-info text-center">
+                    <span class="small fw-bold text-info d-block mb-1"><i class="fa-solid fa-square-poll-horizontal me-1"></i>${itemObj.poll.question}</span>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: Yes!')">👍 Yes</button>
+                        <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: No!')">👎 No</button>
+                    </div>
+                </div>
+            `;
         }
+        if (itemObj.qa) {
+            stickerHtml += `
+                <div class="p-2 rounded-3 bg-dark border border-pink text-center">
+                    <span class="small fw-bold text-pink d-block mb-1"><i class="fa-solid fa-question me-1"></i>${itemObj.qa.prompt}</span>
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control auth-input" placeholder="Type your answer..." id="qaAnswerInput">
+                        <button class="btn btn-vibe btn-sm" onclick="alert('Answer submitted to creator!')">Send</button>
+                    </div>
+                </div>
+            `;
+        }
+        stickersContainer.innerHTML = stickerHtml;
+    } else {
+        stickersContainer.style.display = 'none';
+    }
+
+    const viewerModal = new bootstrap.Modal(document.getElementById('storyViewerModal'));
+    viewerModal.show();
+}
+
 
         function openTipJarModal() {
             const tipModal = new bootstrap.Modal(document.getElementById('tipJarModal'));
@@ -2650,18 +2658,19 @@
                 const isLiked = likedItems.has(item.id);
                 return `
                     <div class="col-md-4">
-                        <div class="social-card h-100 d-flex flex-column">
-                            <div class="feed-media" onclick="openStoryViewer('${item.title}', '${item.media}', '${item.mediaType}', '${item.creator}', '${item.location}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">
-                                ${item.mediaType === 'video' ? `
-                                    <video src="${item.media}" autoplay loop muted playsinline></video>
-                                ` : `
-                                    <img src="${item.media}" alt="${item.title}">
-                                `}
-                                <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
-                                    <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
-                                </div>
-                                <div class="trail-badge font-mono">${item.cat.toUpperCase()}</div>
-                            </div>
+    <div class="social-card h-100 d-flex flex-column">
+        <div class="feed-media" onclick="openStoryViewerById('${item.id}')">
+            ${item.mediaType === 'video' ? `
+                <video src="${item.media}" autoplay loop muted playsinline></video>
+            ` : `
+                <img src="${item.media}" alt="${item.title}">
+            `}
+            <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
+                <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
+            </div>
+            <div class="trail-badge font-mono">${item.cat.toUpperCase()}</div>
+        </div>
+
                             <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
                                 <div>
                                     <h5 class="fw-bold text-white mb-2 fs-6" style="line-height: 1.4;">${item.title}</h5>
