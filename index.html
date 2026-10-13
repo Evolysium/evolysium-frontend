@@ -2237,21 +2237,36 @@
             alert('Successfully published!');
         }
 
-        function handleTrailFileUpload(event) {
+                function handleTrailFileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
+            
+            // Sažimanje slike da ne preoptereti localStorage
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('trailMedia').value = e.target.result;
-                if (file.type.startsWith('video/')) {
-                    document.getElementById('trailMediaType').value = 'video';
-                } else {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    // Smanjujemo dimenzije radi brzine i memorije
+                    const maxWidth = 800;
+                    const scale = maxWidth / img.width;
+                    canvas.width = maxWidth;
+                    canvas.height = img.height * scale;
+                    
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    // Komprimiramo kvalitetu na 0.6
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.6);
+                    
+                    document.getElementById('trailMedia').value = compressedDataUrl;
                     document.getElementById('trailMediaType').value = 'image';
-                }
-                alert('Story file successfully uploaded from device!');
+                    alert('Slika je uspješno optimizirana i pripremljena za objavu!');
+                };
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
+
 
         async function startCameraFeed() {
             const container = document.getElementById('cameraContainer');
