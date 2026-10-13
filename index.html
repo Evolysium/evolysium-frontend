@@ -2746,7 +2746,8 @@
                                 ${item.mediaType === 'video' ? `
                                     <video src="${item.media || item.img_url}" autoplay loop muted playsinline></video>
                                 ` : `
-                                    <img src="${item.media \vert{}\vert{} item.img_url}" alt="${item.title}">
+                                    <img src="${item.media || item.img_url}" alt="${item.title}">
+
                                 `}
                                 <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
                                     <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
