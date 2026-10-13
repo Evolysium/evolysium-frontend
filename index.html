@@ -2401,7 +2401,7 @@
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             processIncomingItems([...localFeedPosts, ...fallbackItems], false);
             
-            // Popravljeno: prisilno i trenutačno uklanjanje preloadera bez zastoja
+            // Trenutačno uklanjanje preloadera (uklonjen zastoj i beskonačno čekanje)
             const preloader = document.getElementById('app-preloader');
             if (preloader) {
                 preloader.style.opacity = '0';
@@ -3002,6 +3002,15 @@
             updateNotificationUI();
             renderInbox();
             loadBackendFeed();
+
+            // Sigurnosni mehanizam: uklanja preloader unutar 1 sekunde ako backend zapne
+            setTimeout(() => {
+                const preloader = document.getElementById('app-preloader');
+                if (preloader && preloader.style.display !== 'none') {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 300);
+                }
+            }, 1000);
 
             if (!localStorage.getItem('evolysium_onboarded')) {
                 const onboardingModal = new bootstrap.Modal(document.getElementById('onboardingModal'));
