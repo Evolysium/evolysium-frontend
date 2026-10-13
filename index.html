@@ -2746,7 +2746,8 @@
                 return matchesPlatform && matchesCategory && matchesSearch;
             });
 
-            const displayedItems = filtered.slice(0, displayLimit);
+            const displayedItems = filtered;
+
 
             if (displayedItems.length === 0) {
                 grid.innerHTML = `
