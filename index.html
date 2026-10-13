@@ -1662,18 +1662,6 @@
         const API_BASE_URL = 'https://evolysium-backend.onrender.com';
         const API_FEED_URL = `${API_BASE_URL}/api/feed`;
         let feedItems = [];
-        function checkDropStoryLimit() {
-    const trailModal = new bootstrap.Modal(document.getElementById('trailModal'));
-    trailModal.show();
-}
-function checkBrandStoryLimit() {
-    const brandModal = new bootstrap.Modal(document.getElementById('brandStoryModal'));
-    brandModal.show();
-}
-function checkCreatorHubLimit() {
-    const creatorModal = new bootstrap.Modal(document.getElementById('creatorContentModal'));
-    creatorModal.show();
-}
 
         let likedItems = new Set(JSON.parse(localStorage.getItem('evolysium_likes') || '[]'));
         
@@ -1882,7 +1870,6 @@ function checkCreatorHubLimit() {
             window.location.reload();
         }
 
-        // ISPRAVLJENO: EvoSync funkcionalnost koja sprema i obavještava
         function handleEvoSyncSubmit(event) {
             event.preventDefault();
             const client = document.getElementById('evoSyncClient').value;
@@ -1917,7 +1904,6 @@ function checkCreatorHubLimit() {
             event.target.reset();
         }
 
-        // ISPRAVLJENO: EvoAds funkcionalnost koja kreira sponzorirani oglas u feedu
         function handleEvoAdsSubmit(event) {
             event.preventDefault();
             const adName = document.getElementById('evoAdsName').value;
@@ -1957,7 +1943,6 @@ function checkCreatorHubLimit() {
             event.target.reset();
         }
 
-        // ISPRAVLJENO: EvoFlow funkcionalnost za raspored objava
         function handleEvoFlowSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('evoFlowTitle').value;
@@ -2229,7 +2214,6 @@ function checkCreatorHubLimit() {
             stopCameraFeed();
         }
 
-        // ISPRAVLJENO: Funkcija za objavljivanje priča (Drop Story) koja je sada u potpunosti ispravna
         function handleTrailSubmit(event) {
             event.preventDefault();
             const mode = document.getElementById('trailMode').value;
@@ -2414,19 +2398,13 @@ function checkCreatorHubLimit() {
         }
 
         async function loadBackendFeed() {
-            try {
-                const response = await fetch(API_FEED_URL);
-                if (!response.ok) throw new Error('Network error');
-                const data = await response.json();
-                processIncomingItems(data?.items?.length ? data.items : fallbackItems, false);
-            } catch (error) {
-                processIncomingItems(fallbackItems, false);
-            } finally {
-                const preloader = document.getElementById('app-preloader');
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => preloader.style.display = 'none', 500);
-                }
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            processIncomingItems([...localFeedPosts, ...fallbackItems], false);
+            
+            const preloader = document.getElementById('app-preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
             }
         }
 
@@ -2535,62 +2513,60 @@ function checkCreatorHubLimit() {
             renderFeed();
         }
 
-let activeStoryItem = null;
+        let activeStoryItem = null;
 
-function openStoryViewerById(itemId) {
-    const item = feedItems.find(i => i.id === itemId);
-    if (!item) return;
-    openStoryViewer(item.title, item.media || item.img_url, item.mediaType || 'image', item.creator, item.location, item);
-}
-
-function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj = null) {
-    activeStoryItem = itemObj;
-    document.getElementById('viewerModalTitle').innerText = title || 'Story Preview';
-    document.getElementById('viewerModalCreator').innerHTML = `Published by: ${creator || '@creator'} ${location ? '• <i class="fa-solid fa-location-dot text-danger"></i> ' + location : ''}`;
-    const container = document.getElementById('viewerMediaContainer');
-    const stickersContainer = document.getElementById('viewerStickersContainer');
-    
-    if (mediaType === 'video') {
-        container.innerHTML = `<video src="${mediaUrl}" controls autoplay style="width:100%; max-height:55vh; object-fit:contain;"></video>`;
-    } else {
-        container.innerHTML = `<img src="${mediaUrl}" style="width:100%; max-height:55vh; object-fit:contain;">`;
-    }
-
-    if (itemObj && (itemObj.poll || itemObj.qa)) {
-        stickersContainer.style.display = 'block';
-        let stickerHtml = '';
-        if (itemObj.poll) {
-            stickerHtml += `
-                <div class="p-2 mb-2 rounded-3 bg-dark border border-info text-center">
-                    <span class="small fw-bold text-info d-block mb-1"><i class="fa-solid fa-square-poll-horizontal me-1"></i>${itemObj.poll.question}</span>
-                    <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: Yes!')">👍 Yes</button>
-                        <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: No!')">👎 No</button>
-                    </div>
-                </div>
-            `;
+        function openStoryViewerById(itemId) {
+            const item = feedItems.find(i => i.id === itemId);
+            if (!item) return;
+            openStoryViewer(item.title, item.media || item.img_url, item.mediaType || 'image', item.creator, item.location, item);
         }
-        if (itemObj.qa) {
-            stickerHtml += `
-                <div class="p-2 rounded-3 bg-dark border border-pink text-center">
-                    <span class="small fw-bold text-pink d-block mb-1"><i class="fa-solid fa-question me-1"></i>${itemObj.qa.prompt}</span>
-                    <div class="input-group input-group-sm">
-                        <input type="text" class="form-control auth-input" placeholder="Type your answer..." id="qaAnswerInput">
-                        <button class="btn btn-vibe btn-sm" onclick="alert('Answer submitted to creator!')">Send</button>
-                    </div>
-                </div>
-            `;
+
+        function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj = null) {
+            activeStoryItem = itemObj;
+            document.getElementById('viewerModalTitle').innerText = title || 'Story Preview';
+            document.getElementById('viewerModalCreator').innerHTML = `Published by: ${creator || '@creator'} ${location ? '• <i class="fa-solid fa-location-dot text-danger"></i> ' + location : ''}`;
+            const container = document.getElementById('viewerMediaContainer');
+            const stickersContainer = document.getElementById('viewerStickersContainer');
+            
+            if (mediaType === 'video') {
+                container.innerHTML = `<video src="${mediaUrl}" controls autoplay style="width:100%; max-height:55vh; object-fit:contain;"></video>`;
+            } else {
+                container.innerHTML = `<img src="${mediaUrl}" style="width:100%; max-height:55vh; object-fit:contain;">`;
+            }
+
+            if (itemObj && (itemObj.poll || itemObj.qa)) {
+                stickersContainer.style.display = 'block';
+                let stickerHtml = '';
+                if (itemObj.poll) {
+                    stickerHtml += `
+                        <div class="p-2 mb-2 rounded-3 bg-dark border border-info text-center">
+                            <span class="small fw-bold text-info d-block mb-1"><i class="fa-solid fa-square-poll-horizontal me-1"></i>${itemObj.poll.question}</span>
+                            <div class="d-flex justify-content-center gap-2">
+                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: Yes!')">👍 Yes</button>
+                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: No!')">👎 No</button>
+                            </div>
+                        </div>
+                    `;
+                }
+                if (itemObj.qa) {
+                    stickerHtml += `
+                        <div class="p-2 rounded-3 bg-dark border border-pink text-center">
+                            <span class="small fw-bold text-pink d-block mb-1"><i class="fa-solid fa-question me-1"></i>${itemObj.qa.prompt}</span>
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control auth-input" placeholder="Type your answer..." id="qaAnswerInput">
+                                <button class="btn btn-vibe btn-sm" onclick="alert('Answer submitted to creator!')">Send</button>
+                            </div>
+                        </div>
+                    `;
+                }
+                stickersContainer.innerHTML = stickerHtml;
+            } else {
+                stickersContainer.style.display = 'none';
+            }
+
+            const viewerModal = new bootstrap.Modal(document.getElementById('storyViewerModal'));
+            viewerModal.show();
         }
-        stickersContainer.innerHTML = stickerHtml;
-    } else {
-        stickersContainer.style.display = 'none';
-    }
-
-    const viewerModal = new bootstrap.Modal(document.getElementById('storyViewerModal'));
-    viewerModal.show();
-}
-
-
 
         function openTipJarModal() {
             const tipModal = new bootstrap.Modal(document.getElementById('tipJarModal'));
@@ -2668,7 +2644,7 @@ function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj 
                 return;
             }
 
-                        grid.innerHTML = displayedItems.map(item => {
+            grid.innerHTML = displayedItems.map(item => {
                 const isLiked = likedItems.has(item.id);
                 return `
                     <div class="col-md-4">
@@ -2708,7 +2684,6 @@ function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj 
                     </div>
                 `;
             }).join('');
-
 
             const loader = document.getElementById('infinite-loader');
             if (loader) {
