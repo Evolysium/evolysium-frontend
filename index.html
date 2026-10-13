@@ -222,7 +222,7 @@
         }
 
         .feed-media {
-            height: 380px; /* Larven AI vertikalni omjer */
+            height: 380px;
             position: relative;
             background: rgba(14, 11, 24, 0.85);
             cursor: pointer;
@@ -506,12 +506,12 @@
                     <i class="fa-solid fa-gem text-cyan"></i> <span id="navGemCount">250 $EVO</span>
                 </button>
 
-                <!-- Web3 Connect Button (Step 5) -->
+                <!-- Web3 Connect Button -->
                 <button class="social-pill active border-success" onclick="connectWeb3Wallet()" title="Connect MetaMask / Web3 Wallet">
                     <i class="fa-solid fa-wallet text-success"></i> <span id="web3WalletBtnLabel">Connect Web3</span>
                 </button>
 
-                <!-- PWA Install Button (Step 6) -->
+                <!-- PWA Install Button -->
                 <button class="social-pill active border-pink" id="pwaInstallBtn" onclick="installPwaApp()" style="display:none;" title="Install App">
                     <i class="fa-solid fa-mobile-screen text-pink"></i> Install App
                 </button>
@@ -601,7 +601,6 @@
                 </div>
             </a>
 
-            <!-- LOG OUT BUTTON -->
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" onclick="handleLogout()" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-right-from-bracket text-danger fs-5" style="width:24px;"></i>
                 <div>
@@ -611,9 +610,8 @@
             </a>
 
             <hr class="border-secondary opacity-25 my-1">
-            <span class="small text-muted font-mono mb-0">SMART AI & PRO FEATURES (NEW)</span>
+            <span class="small text-muted font-mono mb-0">SMART AI & PRO FEATURES</span>
 
-            <!-- Feature 1: AI Hook Generator -->
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#aiHookModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-wand-magic-sparkles text-pink fs-5" style="width:24px;"></i>
                 <div>
@@ -622,7 +620,6 @@
                 </div>
             </a>
 
-            <!-- Feature 2: AI Trend Radar -->
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#aiRadarModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-radar text-info fs-5" style="width:24px;"></i>
                 <div>
@@ -631,7 +628,6 @@
                 </div>
             </a>
 
-            <!-- Feature 3: Autonomous Deal Agent -->
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#aiDealModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-robot text-warning fs-5" style="width:24px;"></i>
                 <div>
@@ -640,7 +636,6 @@
                 </div>
             </a>
 
-            <!-- Feature 4: Gamification & Vibe Score -->
             <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#gamificationModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-trophy text-success fs-5" style="width:24px;"></i>
                 <div>
@@ -649,7 +644,6 @@
                 </div>
             </a>
 
-            <!-- FUTURISTIC UPGRADE MODULES IN SIDEBAR -->
             <hr class="border-secondary opacity-25 my-1">
             <span class="small text-cyan font-mono mb-0">✨ FUTURISTIC SUITE</span>
 
@@ -830,9 +824,7 @@
         </div>
     </footer>
 
-    <!-- Modals for Smart Features -->
-
-    <!-- 1. AI Hook Generator Modal -->
+    <!-- Modals -->
     <div class="modal fade" id="aiHookModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -853,7 +845,6 @@
         </div>
     </div>
 
-    <!-- 2. AI Trend Radar Modal -->
     <div class="modal fade" id="aiRadarModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -891,7 +882,6 @@
         </div>
     </div>
 
-    <!-- 3. Autonomous Brand Deal Agent Modal -->
     <div class="modal fade" id="aiDealModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -916,7 +906,6 @@
         </div>
     </div>
 
-    <!-- 4. Gamification & Vibe Score Modal -->
     <div class="modal fade" id="gamificationModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -941,7 +930,6 @@
         </div>
     </div>
 
-    <!-- FUTURISTIC MODULE 1: Neural Vibe Feed Modal -->
     <div class="modal fade" id="neuralFeedModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -962,7 +950,6 @@
         </div>
     </div>
 
-    <!-- FUTURISTIC MODULE 2: Gem Wallet Modal ($EVO) -->
     <div class="modal fade" id="gemWalletModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -987,7 +974,6 @@
         </div>
     </div>
 
-    <!-- FUTURISTIC MODULE 3: AR Story Spheres Modal -->
     <div class="modal fade" id="arSpheresModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -1012,7 +998,6 @@
         </div>
     </div>
 
-    <!-- FUTURISTIC MODULE 4: AI Shield & Voice Sync Modal -->
     <div class="modal fade" id="aiShieldModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -1335,12 +1320,12 @@
         </div>
     </div>
 
-    <!-- Drop Story Modal (With Step 2: Story Stickers Option) -->
+    <!-- Drop Story Modal -->
     <div class="modal fade" id="trailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0">Drop Story (Limit: 2 Stories)</h4>
+                    <h4 class="fw-bold mb-0">Drop Story</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -1357,6 +1342,7 @@
                     </div>
 
                     <form onsubmit="handleTrailSubmit(event)">
+                        <input type="hidden" id="trailMediaType" value="image">
                         <div class="mb-3">
                             <label class="form-label small" style="color:rgba(255,255,255,0.6)">Your Handle</label>
                             <input type="text" id="trailCreator" class="form-control auth-input" value="@my_profile" required>
@@ -1488,7 +1474,7 @@
         </div>
     </div>
 
-    <!-- Story Viewer Modal (Includes Step 2: Poll/Q&A Stickers & Step 3: Tip Jar Button) -->
+    <!-- Story Viewer Modal -->
     <div class="modal fade" id="storyViewerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light bg-black" style="border-radius: 28px; border: 1px solid rgba(255,255,255,0.15);">
@@ -1498,13 +1484,11 @@
                 </div>
                 <div class="modal-body p-0 text-center position-relative" style="min-height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #000;">
                     <div id="viewerMediaContainer" style="width: 100%; max-height: 55vh; overflow: hidden;"></div>
-                    <!-- Story Stickers Container (Step 2) -->
                     <div id="viewerStickersContainer" class="w-100 p-3 bg-dark bg-opacity-75 border-top border-secondary border-opacity-25" style="display:none;"></div>
                 </div>
                 <div class="modal-footer border-0 p-3 justify-content-between">
                     <span class="small text-muted font-mono" id="viewerModalCreator">@creator</span>
                     <div class="d-flex gap-2">
-                        <!-- Tip Jar Button (Step 3) -->
                         <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="openTipJarModal()"><i class="fa-solid fa-coins me-1"></i> Send Tip 🪙</button>
                         <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="alert('Liked this story media!')"><i class="fa-solid fa-heart me-1"></i> Like</button>
                     </div>
@@ -1513,7 +1497,7 @@
         </div>
     </div>
 
-    <!-- Post Comments & Details Modal (Step 1) -->
+    <!-- Post Comments Modal -->
     <div class="modal fade" id="commentsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
@@ -1535,7 +1519,7 @@
         </div>
     </div>
 
-    <!-- Tip Jar / Tipping Modal (Step 3) -->
+    <!-- Tip Jar Modal -->
     <div class="modal fade" id="tipJarModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light text-center" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,215,0,0.3);">
@@ -1711,12 +1695,10 @@
         ]));
         let activeChatId = null;
 
-        // Step 1: Post Comments storage
         let postComments = JSON.parse(localStorage.getItem('evolysium_post_comments') || JSON.stringify({
             'f1': [{ user: '@fashion_weekly', text: 'Stunning streetwear!' }, { user: '@luka_creator', text: 'Milan looks incredible this year.' }]
         }));
 
-        // Step 5: Web3 Wallet state
         let web3WalletConnected = JSON.parse(localStorage.getItem('evolysium_web3_connected') || 'false');
         let web3AccountAddress = localStorage.getItem('evolysium_web3_address') || null;
 
@@ -1744,14 +1726,12 @@
             document.getElementById('navGemCount').innerText = userGems + ' $EVO';
             document.getElementById('modalGemDisplay').innerText = userGems + ' $EVO';
 
-            // Update Web3 Wallet Button if connected
             if (web3WalletConnected && web3AccountAddress) {
                 const web3Btn = document.getElementById('web3WalletBtnLabel');
                 if (web3Btn) web3Btn.innerText = web3AccountAddress.substring(0, 6) + '...';
             }
         }
 
-        // STEP 5: Connect Web3 / MetaMask Wallet
         async function connectWeb3Wallet() {
             if (typeof window.ethereum !== 'undefined') {
                 try {
@@ -1768,7 +1748,6 @@
                     alert('User rejected Web3 connection request.');
                 }
             } else {
-                // Simulated Web3 connection if extension not installed
                 web3AccountAddress = '0x71C...39a2';
                 web3WalletConnected = true;
                 localStorage.setItem('evolysium_web3_connected', 'true');
@@ -1779,7 +1758,6 @@
             }
         }
 
-        // STEP 6: PWA Installation Prompt Setup
         let deferredPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -1891,34 +1869,112 @@
             window.location.reload();
         }
 
+        // ISPARVLJENO: EvoSync funkcionalnost koja sprema i obavještava
         function handleEvoSyncSubmit(event) {
             event.preventDefault();
             const client = document.getElementById('evoSyncClient').value;
             const msg = document.getElementById('evoSyncMessage').value;
+            
+            const syncPost = {
+                id: 'sync_' + Date.now(),
+                source: client,
+                creator: client,
+                title: msg,
+                cat: 'trending',
+                platform: 'trail',
+                likes: 1,
+                comments: '0',
+                img_url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900',
+                mediaType: 'image',
+                summary: `EvoSync Cross-Platform Publish for ${client}`,
+                isLive: false,
+                isPrivate: false,
+                isTrail: true
+            };
+
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            localFeedPosts.unshift(syncPost);
+            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+            processIncomingItems([syncPost], true);
+
             addNotification(`EvoSync successfully synchronized content for ${client}`);
-            alert(`EvoSync: Content successfully synced across connected channels for ${client}!`);
+            alert(`EvoSync: Content successfully synced across connected channels and added to feed for ${client}!`);
             const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoSyncModal'));
             if (modalEl) modalEl.hide();
             event.target.reset();
         }
 
+        // ISPRAVLJENO: EvoAds funkcionalnost koja kreira sponzorirani oglas u feedu
         function handleEvoAdsSubmit(event) {
             event.preventDefault();
             const adName = document.getElementById('evoAdsName').value;
+            const audience = document.getElementById('evoAdsAudience').value;
             const budget = document.getElementById('evoAdsBudget').value;
+            const creativeUrl = document.getElementById('evoAdsCreative').value;
+            const creatorName = currentUser ? currentUser.name : '@evolysium_ads';
+
+            const newAdPost = {
+                id: 'ad_' + Date.now(),
+                source: creatorName,
+                creator: creatorName,
+                title: `📢 [SPONSORED] ${adName}`,
+                cat: 'brand',
+                platform: 'trail',
+                likes: 15,
+                comments: '2',
+                img_url: creativeUrl,
+                media: creativeUrl,
+                mediaType: 'image',
+                summary: `Target Audience: ${audience.toUpperCase()} • Daily Budget: €${budget}`,
+                isLive: false,
+                isPrivate: false,
+                isTrail: true
+            };
+
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            localFeedPosts.unshift(newAdPost);
+            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+            processIncomingItems([newAdPost], true);
+
             addNotification(`EvoAds campaign "${adName}" launched successfully!`);
-            alert(`EvoAds: Campaign "${adName}" with budget €${budget}/day is now active!`);
+            alert(`EvoAds: Campaign "${adName}" is now active and visible in the feed!`);
+
             const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoAdsModal'));
             if (modalEl) modalEl.hide();
             event.target.reset();
         }
 
+        // ISPRAVLJENO: EvoFlow funkcionalnost za raspored objava
         function handleEvoFlowSubmit(event) {
             event.preventDefault();
             const title = document.getElementById('evoFlowTitle').value;
             const dt = document.getElementById('evoFlowDatetime').value;
+            const summary = document.getElementById('evoFlowSummary').value;
+
+            const scheduledPost = {
+                id: 'flow_' + Date.now(),
+                source: currentUser ? currentUser.name : '@my_profile',
+                creator: currentUser ? currentUser.name : '@my_profile',
+                title: `⏰ [SCHEDULED: ${dt}] ${title}`,
+                cat: 'trending',
+                platform: 'trail',
+                likes: 1,
+                comments: '0',
+                img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
+                mediaType: 'image',
+                summary: summary,
+                isLive: false,
+                isPrivate: false,
+                isTrail: true
+            };
+
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            localFeedPosts.unshift(scheduledPost);
+            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+            processIncomingItems([scheduledPost], true);
+
             addNotification(`EvoFlow scheduled: "${title}"`);
-            alert(`EvoFlow: Post "${title}" successfully scheduled for ${dt}!`);
+            alert(`EvoFlow: Post "${title}" successfully scheduled for ${dt} and added to queue!`);
             const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoFlowModal'));
             if (modalEl) modalEl.hide();
             event.target.reset();
@@ -1950,7 +2006,6 @@
         function handleAuthSubmit(event) {
             event.preventDefault();
             const email = document.getElementById('authEmail').value;
-            const password = document.getElementById('authPassword').value;
             const name = document.getElementById('authName').value || '@user_' + Math.floor(Math.random() * 1000);
 
             if (isRegisterMode) {
@@ -1981,14 +2036,6 @@
                 authModal.show();
                 return;
             }
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            const brandStoriesCount = localTrails.filter(t => t.cat === 'brand_story').length;
-            if (brandStoriesCount >= 1 && !isSubscribed) {
-                alert('You have reached the limit of maximum 1 Brand Story for free accounts! A subscription is required for unlimited publications.');
-                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
-                pricingModal.show();
-                return;
-            }
             const brandModal = new bootstrap.Modal(document.getElementById('brandStoryModal'));
             brandModal.show();
         }
@@ -2000,14 +2047,6 @@
                 authModal.show();
                 return;
             }
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            const standardStoriesCount = localTrails.filter(t => t.cat === 'story').length;
-            if (standardStoriesCount >= 2 && !isSubscribed) {
-                alert('You have reached the limit of maximum 2 Drop Stories! A subscription is required for unlimited access.');
-                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
-                pricingModal.show();
-                return;
-            }
             const trailModal = new bootstrap.Modal(document.getElementById('trailModal'));
             trailModal.show();
         }
@@ -2017,14 +2056,6 @@
                 alert('You must be registered and signed in to access the Creator Hub!');
                 const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                 authModal.show();
-                return;
-            }
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            const creatorHubCount = localTrails.filter(t => t.cat === 'recipe' || t.cat === 'diy' || t.cat === 'digital_book' || t.cat === 'world_trend').length;
-            if (creatorHubCount >= 2 && !isSubscribed) {
-                alert('You have reached the limit of maximum 2 Creator Hub contents! A subscription is required for unlimited access.');
-                const pricingModal = new bootstrap.Modal(document.getElementById('pricingModal'));
-                pricingModal.show();
                 return;
             }
             const creatorModal = new bootstrap.Modal(document.getElementById('creatorContentModal'));
@@ -2064,9 +2095,8 @@
             localFeedPosts.unshift(newBrandStory);
             localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
 
-            const modalEl = document.getElementById('brandStoryModal');
-            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-            modalInstance.hide();
+            const modalEl = bootstrap.Modal.getInstance(document.getElementById('brandStoryModal'));
+            if (modalEl) modalEl.hide();
             event.target.reset();
 
             processIncomingItems([newBrandStory], true);
@@ -2107,9 +2137,8 @@
             localFeedPosts.unshift(newContent);
             localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
 
-            const modalEl = document.getElementById('creatorContentModal');
-            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-            modalInstance.hide();
+            const modalEl = bootstrap.Modal.getInstance(document.getElementById('creatorContentModal'));
+            if (modalEl) modalEl.hide();
             event.target.reset();
 
             processIncomingItems([newContent], true);
@@ -2185,6 +2214,57 @@
             document.getElementById('trailMedia').value = dataUrl;
             alert('Snapshot captured successfully!');
             stopCameraFeed();
+        }
+
+        // ISPRAVLJENO: Funkcija za objavljivanje priča (Drop Story) koja je sada u potpunosti ispravna
+        function handleTrailSubmit(event) {
+            event.preventDefault();
+            const mode = document.getElementById('trailMode').value;
+            const mediaType = document.getElementById('trailMediaType').value;
+            const location = document.getElementById('trailLocation').value || 'Zaprešić, Croatia';
+            const creatorName = document.getElementById('trailCreator').value || '@my_profile';
+            const pollQ = document.getElementById('trailPollQuestion').value.trim();
+            const qaPrompt = document.getElementById('trailQaPrompt').value.trim();
+            const mediaUrl = document.getElementById('trailMedia').value;
+            const title = document.getElementById('trailTitle').value;
+
+            const newStory = {
+                id: 'story_' + Date.now(),
+                source: creatorName,
+                creator: creatorName,
+                title: title,
+                media: mediaUrl,
+                img_url: mediaUrl,
+                mediaType: mediaType,
+                cat: 'story',
+                platform: 'trail',
+                music: document.getElementById('trailMusic').value || 'Evolysium Audio',
+                location: location,
+                isLive: mode === 'live',
+                isPrivate: false,
+                likes: 1,
+                poll: pollQ ? { question: pollQ, options: ['Yes', 'No'] } : null,
+                qa: qaPrompt ? { prompt: qaPrompt } : null,
+                summary: `Location: ${location} — User Story Drop`
+            };
+
+            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
+            localTrails.unshift(newStory);
+            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
+
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            localFeedPosts.unshift(newStory);
+            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+
+            const modalEl = document.getElementById('trailModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+            
+            event.target.reset();
+            stopCameraFeed();
+            processIncomingItems([newStory], true);
+            addNotification('Your story was successfully published and added to trending feed!');
+            alert('Story successfully published!');
         }
 
         function handleInviteFriend(event) {
@@ -2393,7 +2473,6 @@
             renderFeed();
         }
 
-        // STEP 1: Open Comments Modal
         function openCommentsModal(itemId) {
             document.getElementById('activeCommentPostId').value = itemId;
             const container = document.getElementById('commentsListContainer');
@@ -2443,55 +2522,6 @@
             renderFeed();
         }
 
-        function handleTrailSubmit(event) {
-            event.preventDefault();
-            const mode = document.getElementById('trailMode').value;
-            const mediaType = document.getElementById('trailMediaType').value;
-            const location = document.getElementById('trailLocation').value || 'Zaprešić, Croatia';
-            const creatorName = document.getElementById('trailCreator').value || '@my_profile';
-            const pollQ = document.getElementById('trailPollQuestion').value.trim();
-            const qaPrompt = document.getElementById('trailQaPrompt').value.trim();
-
-            const newStory = {
-                id: 'story_' + Date.now(),
-                source: creatorName,
-                creator: creatorName,
-                title: document.getElementById('trailTitle').value,
-                media: document.getElementById('trailMedia').value,
-                img_url: document.getElementById('trailMedia').value,
-                mediaType: mediaType,
-                cat: 'story',
-                platform: 'trail',
-                music: document.getElementById('trailMusic').value || 'Evolysium Audio',
-                location: location,
-                isLive: mode === 'live',
-                isPrivate: false,
-                likes: 1,
-                poll: pollQ ? { question: pollQ, options: ['Yes', 'No'] } : null,
-                qa: qaPrompt ? { prompt: qaPrompt } : null,
-                summary: `Location: ${location} — User Story Drop`
-            };
-
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            localTrails.unshift(newStory);
-            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
-
-            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-            localFeedPosts.unshift(newStory);
-            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
-
-            const modalEl = document.getElementById('trailModal');
-            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-            modalInstance.hide();
-            
-            event.target.reset();
-            stopCameraFeed();
-            processIncomingItems([newStory], true);
-            addNotification('Your story was successfully published and added to trending feed!');
-            alert('Story successfully published!');
-        }
-
-        // STEP 2 & 3: Open Story Viewer with Stickers and Tip Jar integration
         let activeStoryItem = null;
         function openStoryViewer(title, mediaUrl, mediaType, creator, location, itemObj = null) {
             activeStoryItem = itemObj;
@@ -2506,7 +2536,6 @@
                 container.innerHTML = `<img src="${mediaUrl}" style="width:100%; max-height:55vh; object-fit:contain;">`;
             }
 
-            // Render Story Stickers (Step 2)
             if (itemObj && (itemObj.poll || itemObj.qa)) {
                 stickersContainer.style.display = 'block';
                 let stickerHtml = '';
@@ -2541,7 +2570,6 @@
             viewerModal.show();
         }
 
-        // STEP 3: Tip Jar trigger
         function openTipJarModal() {
             const tipModal = new bootstrap.Modal(document.getElementById('tipJarModal'));
             tipModal.show();
@@ -2645,7 +2673,6 @@
                                         <i class="fa-solid fa-heart"></i> <span id="likes-count-${item.id}">${formatLikes(item.likes)}</span>
                                     </button>
                                     <div class="d-flex gap-2">
-                                        <!-- Step 1: Comments Button -->
                                         <button class="social-pill py-1 px-3 fs-7" onclick="openCommentsModal('${item.id}')">
                                             <i class="fa-solid fa-comments"></i> Comments
                                         </button>
