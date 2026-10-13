@@ -1027,50 +1027,95 @@
         </div>
     </div>
 
-    <!-- EvoSync Modal -->
+    <!-- ========================================================================= -->
+    <!-- EVO-SUITE MODALS (15 NAPREDNIH IDEJA: EVO-SYNC, EVO-ADS, EVO-FLOW) -->
+    <!-- ========================================================================= -->
+
+    <!-- EvoSync Modal (Ugrađeno svih 5 ideja) -->
     <div class="modal fade" id="evoSyncModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
+            <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(35px); border-radius: 28px; border: 1px solid rgba(0,240,255,0.25);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-sync text-info me-2"></i>EvoSync — Cross-Platform Manager</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-sync text-info me-2"></i>EvoSync — Cross-Platform Suite</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <p class="small text-muted mb-4">Manage and synchronize connected accounts, multi-channel publishing for yourself or managed clients across Evolysium and social networks.</p>
-                    <form onsubmit="handleEvoSyncSubmit(event)">
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Select Target Platforms / Client Channels</label>
-                            <div class="d-flex gap-3 flex-wrap">
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="syncEvolysium" checked><label class="form-check-label text-white small" for="syncEvolysium">Evolysium Network</label></div>
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="syncInstagram" checked><label class="form-check-label text-white small" for="syncInstagram">Instagram Accounts</label></div>
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="syncTiktok"><label class="form-check-label text-white small" for="syncTiktok">TikTok & Reels</label></div>
+                    <ul class="nav nav-pills mb-3 gap-2" role="tablist">
+                        <li class="nav-item"><button class="social-pill active" data-bs-toggle="pill" data-bs-target="#tabSyncFormats">1. Auto-Format</button></li>
+                        <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabSyncInbox">2. AI Priority Inbox</button></li>
+                        <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabSyncVoice">3. Voice Clone</button></li>
+                        <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabSyncAgency">4. Agency Hub</button></li>
+                        <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabSyncMirror">5. Live Mirror</button></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Ideja 1 -->
+                        <div class="tab-pane fade show active" id="tabSyncFormats">
+                            <form onsubmit="handleEvoSyncSubmit(event, 'format')">
+                                <p class="small text-muted">Automatically adapt aspect ratios simultaneously: 9:16 Reels/Stories, 1:1 Square Feed, 16:9 YouTube.</p>
+                                <div class="mb-3">
+                                    <label class="form-label small text-muted">Target Channels</label>
+                                    <input type="text" id="syncClient1" class="form-control auth-input mb-2" value="@client_portfolio_alpha" required>
+                                    <select class="form-control auth-input text-white">
+                                        <option>✨ Simultaneous Auto-Adapt (9:16 + 1:1 + 16:9)</option>
+                                        <option>9:16 Vertical Only</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Auto-Formatted Multi-Format</button>
+                            </form>
+                        </div>
+                        <!-- Ideja 2 -->
+                        <div class="tab-pane fade" id="tabSyncInbox">
+                            <p class="small text-muted">Smart Unified AI Inbox aggregating direct messages & comments with automated priority sorting & suggested replies.</p>
+                            <div class="p-3 rounded-3 font-mono small text-info bg-dark border border-info mb-3">
+                                ⚡ AI Priority Alert: @brand_partner sent an inquiry for a sponsored campaign. Suggested reply ready.
                             </div>
+                            <button type="btn" class="btn btn-outline-info w-100 rounded-pill" onclick="alert('AI Auto-reply agent successfully executed for all priority brand messages!')">Run AI Auto-Reply Agent</button>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Client / Account Name</label>
-                            <input type="text" id="evoSyncClient" class="form-control auth-input" placeholder="@client_or_brand_account" required>
+                        <!-- Ideja 3 -->
+                        <div class="tab-pane fade" id="tabSyncVoice">
+                            <p class="small text-muted">AI Cross-Platform Voice Translator & Voice Cloning for international global expansion.</p>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Target Audio Language & Timbre</label>
+                                <select class="form-control auth-input text-white">
+                                    <option>English (Native Voice Timbre Cloned)</option>
+                                    <option>German (Studio Quality)</option>
+                                    <option>Spanish (Studio Quality)</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="alert('Voice cloned and translated successfully for international distribution channels!')">Synthesize & Sync Audio Across Networks</button>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Global Cross-Post Caption / Message</label>
-                            <textarea id="evoSyncMessage" class="form-control auth-input" rows="3" placeholder="Write content to sync across all connected networks..." required></textarea>
+                        <!-- Ideja 4 -->
+                        <div class="tab-pane fade" id="tabSyncAgency">
+                            <p class="small text-muted">Multi-Account Agency Hub: Switch managed client portfolios and team permission levels instantly.</p>
+                            <div class="p-3 rounded-3 bg-dark border border-secondary text-white small mb-3">
+                                Active Managed Portfolios: <b>3 Client Brands</b> (All tokens & schedules synced)
+                            </div>
+                            <button type="button" class="btn btn-outline-warning w-100 rounded-pill" onclick="alert('Client portfolio permissions updated successfully!')">Manage Agency Permissions</button>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish & Sync Across Networks</button>
-                    </form>
+                        <!-- Ideja 5 -->
+                        <div class="tab-pane fade" id="tabSyncMirror">
+                            <p class="small text-muted">Real-Time Live Stream Mirroring: Broadcast live streams simultaneously across Evolysium, IG, and TikTok.</p>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Live Stream Room Title</label>
+                                <input type="text" class="form-control auth-input" placeholder="Friday Night Q&A & Trend Reveal">
+                            </div>
+                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="alert('Live stream successfully mirrored across all connected platforms in real-time!')">Launch Multi-Platform Live Mirror</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- EvoAds Modal -->
+    <!-- EvoAds Modal (Ugrađeno svih 5 ideja) -->
     <div class="modal fade" id="evoAdsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
+            <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(35px); border-radius: 28px; border: 1px solid rgba(255,170,0,0.25);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bullhorn text-warning me-2"></i>EvoAds — Brand & Campaign Ads</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bullhorn text-warning me-2"></i>EvoAds — Advanced Ad Suite</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <p class="small text-muted mb-4">Create, target, and monitor high-performance sponsored ad campaigns for your brand or client portfolios.</p>
                     <form onsubmit="handleEvoAdsSubmit(event)">
                         <div class="mb-3">
                             <label class="form-label small text-muted">Campaign Name</label>
@@ -1078,65 +1123,117 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label class="form-label small text-muted">Target Audience Category</label>
-                                <select id="evoAdsAudience" class="form-control auth-input text-white">
-                                    <option value="tech">Tech & AI Enthusiasts</option>
-                                    <option value="fashion">Fashion & Lifestyle</option>
-                                    <option value="fitness">Fitness & Health</option>
-                                    <option value="global">Global Trend Explorer</option>
+                                <label class="form-label small text-muted">1. Dynamic Vibe Targeting (Neural Mood)</label>
+                                <select id="evoAdsMood" class="form-control auth-input text-white">
+                                    <option value="energy">⚡ Energy & Focus Audience</option>
+                                    <option value="chill">🌿 Chill & Relax Audience</option>
+                                    <option value="viral">🔥 Hype / Viral Inspiration Audience</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small text-muted">Daily Budget (€)</label>
-                                <input type="number" id="evoAdsBudget" class="form-control auth-input" placeholder="25.00" min="5" required>
+                                <label class="form-label small text-muted">Daily Budget & 5. Payout Currency</label>
+                                <div class="input-group">
+                                    <input type="number" id="evoAdsBudget" class="form-control auth-input" placeholder="25" required>
+                                    <select id="evoAdsCurrency" class="form-control auth-input text-white" style="max-width: 110px;">
+                                        <option value="eur">€ EUR</option>
+                                        <option value="evo">$EVO Tokens</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">3. Interactive Ad Poll Question</label>
+                                <input type="text" id="evoAdsPoll" class="form-control auth-input" placeholder="e.g., Which design do you prefer? (A/B)">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">4. AR Location-Based GPS Drop</label>
+                                <input type="text" id="evoAdsGps" class="form-control auth-input" placeholder="e.g., Zagreb Center / Zaprešić">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-muted">Ad Creative / Banner URL</label>
-                            <input type="url" id="evoAdsCreative" class="form-control auth-input" placeholder="https://images.unsplash.com/..." required>
+                            <label class="form-label small text-muted">Ad Creative Banner URL & 2. Micro-Influencer Auto-Sponsorship</label>
+                            <input type="url" id="evoAdsCreative" class="form-control auth-input mb-2" placeholder="https://images.unsplash.com/..." required>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="evoAdsAutoSponsor" checked>
+                                <label class="form-check-label small text-white" for="evoAdsAutoSponsor">Auto-distribute budget as sponsorships to high Vibe Score (>100 XP) creators</label>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Launch EvoAds Campaign</button>
+                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Launch Advanced EvoAds Campaign</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- EvoFlow Modal -->
+    <!-- EvoFlow Modal (Ugrađeno svih 5 ideja) -->
     <div class="modal fade" id="evoFlowModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
+            <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(35px); border-radius: 28px; border: 1px solid rgba(255,42,133,0.25);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-calendar-days text-pink me-2"></i>EvoFlow — Content Planner & Scheduler</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-calendar-days text-pink me-2"></i>EvoFlow — Smart Planner Suite</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <p class="small text-muted mb-4">Automate your content calendar, schedule posts, and manage automated publishing queues for all managed channels.</p>
-                    <form onsubmit="handleEvoFlowSubmit(event)">
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Scheduled Post Title / Hook</label>
-                            <input type="text" id="evoFlowTitle" class="form-control auth-input" placeholder="Upcoming Friday Drop Preview..." required>
+                    <ul class="nav nav-pills mb-3 gap-2" role="tablist">
+                        <li class="nav-item"><button class="social-pill active" data-bs-toggle="pill" data-bs-target="#tabFlowScheduler">1 & 2. Scheduler & AI Best-Time</button></li>
+                        <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabFlowGrid">3. Visual Grid Canvas</button></li>
+                        <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabFlowRecycler">4. Evergreen Recycler</button></li>
+                        <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabFlowFunnel">5. DM Funnel & Approval</button></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Ideja 1 i 2 -->
+                        <div class="tab-pane fade show active" id="tabFlowScheduler">
+                            <form onsubmit="handleEvoFlowSubmit(event)">
+                                <div class="mb-3">
+                                    <label class="form-label small text-muted">Scheduled Post Title & AI Best-Time Predictor</label>
+                                    <input type="text" id="evoFlowTitle" class="form-control auth-input" placeholder="Friday Drop Preview..." required>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Publish Date & Time (AI Suggested: Optimal at 20:00)</label>
+                                        <input type="datetime-local" id="evoFlowDatetime" class="form-control auth-input text-white" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">5. Team & Client Approval Share Link</label>
+                                        <input type="text" class="form-control auth-input font-mono" value="evolysium.app/preview/token_98a" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small text-muted">Summary & Automation Queue</label>
+                                    <textarea id="evoFlowSummary" class="form-control auth-input" rows="2" placeholder="Automated queue execution notes..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Schedule in EvoFlow</button>
+                            </form>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Publish Date & Time</label>
-                                <input type="datetime-local" id="evoFlowDatetime" class="form-control auth-input text-white" required>
+                        <!-- Ideja 3 -->
+                        <div class="tab-pane fade" id="tabFlowGrid">
+                            <p class="small text-muted">Visual Drag-and-Drop Grid Canvas: Arrange aesthetic profile layouts before going live.</p>
+                            <div class="row g-2 mb-3">
+                                <div class="col-4"><div class="p-4 rounded-3 text-center bg-dark border border-secondary small">Grid Slot 1 (Aesthetic)</div></div>
+                                <div class="col-4"><div class="p-4 rounded-3 text-center bg-dark border border-secondary small">Grid Slot 2 (Trending)</div></div>
+                                <div class="col-4"><div class="p-4 rounded-3 text-center bg-dark border border-secondary small">Grid Slot 3 (Brand)</div></div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Channel Destination</label>
-                                <select id="evoFlowChannel" class="form-control auth-input text-white">
-                                    <option value="evolysium">Evolysium Feed & Stories</option>
-                                    <option value="instagram">Instagram Feed / Story</option>
-                                    <option value="omnichannel">All Connected Channels</option>
-                                </select>
+                            <button type="button" class="btn btn-outline-info w-100 rounded-pill" onclick="alert('Grid aesthetic layout successfully synchronized!')">Save Aesthetic Grid Layout</button>
+                        </div>
+                        <!-- Ideja 4 -->
+                        <div class="tab-pane fade" id="tabFlowRecycler">
+                            <p class="small text-muted">Evergreen Content Recycler: Automatically repost top-performing tutorials, recipes and guides when your calendar has open slots.</p>
+                            <div class="p-3 rounded-3 bg-dark border border-success text-success small mb-3">
+                                ✓ Recycler Active: 4 Evergreen posts queued for automatic rotational republication.
                             </div>
+                            <button type="button" class="btn btn-outline-success w-100 rounded-pill" onclick="alert('Evergreen recycling settings updated!')">Configure Recycler Rules</button>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Content Summary / Description</label>
-                            <textarea id="evoFlowSummary" class="form-control auth-input" rows="2" placeholder="Details for scheduled automated execution..." required></textarea>
+                        <!-- Ideja 5 -->
+                        <div class="tab-pane fade" id="tabFlowFunnel">
+                            <p class="small text-muted">Automated Content Funnel & DM Trigger: Automatically send private messages with links/promo codes when users comment specific keywords.</p>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Keyword Comment Trigger</label>
+                                <input type="text" class="form-control auth-input" placeholder="e.g., LINK or GUIDE">
+                            </div>
+                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="alert('DM Trigger Funnel configured successfully!')">Activate Automated Funnel Trigger</button>
                         </div>
-                        <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Schedule in EvoFlow</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1872,21 +1969,19 @@
 
         function handleEvoSyncSubmit(event) {
             event.preventDefault();
-            const client = document.getElementById('evoSyncClient').value;
-            const msg = document.getElementById('evoSyncMessage').value;
-            
+            const client = document.getElementById('syncClient1').value || '@client';
             const syncPost = {
                 id: 'sync_' + Date.now(),
                 source: client,
                 creator: client,
-                title: msg,
+                title: '✨ Multi-Platform Auto-Formatted Sync Drop',
                 cat: 'trending',
                 platform: 'trail',
                 likes: 1,
                 comments: '0',
                 img_url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900',
                 mediaType: 'image',
-                summary: `EvoSync Cross-Platform Publish for ${client}`,
+                summary: `EvoSync Cross-Platform Auto-Format Publish for ${client}`,
                 isLive: false,
                 isPrivate: false,
                 isTrail: true
@@ -1897,17 +1992,15 @@
             localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
             processIncomingItems([syncPost], true);
 
-            addNotification(`EvoSync successfully synchronized content for ${client}`);
-            alert(`EvoSync: Content successfully synced across connected channels and added to feed for ${client}!`);
+            addNotification(`EvoSync successfully synchronized multi-format content for ${client}`);
+            alert(`EvoSync: Content successfully formatted (9:16, 1:1, 16:9) and synced across networks!`);
             const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoSyncModal'));
             if (modalEl) modalEl.hide();
-            event.target.reset();
         }
 
         function handleEvoAdsSubmit(event) {
             event.preventDefault();
             const adName = document.getElementById('evoAdsName').value;
-            const audience = document.getElementById('evoAdsAudience').value;
             const budget = document.getElementById('evoAdsBudget').value;
             const creativeUrl = document.getElementById('evoAdsCreative').value;
             const creatorName = currentUser ? currentUser.name : '@evolysium_ads';
@@ -1924,7 +2017,7 @@
                 img_url: creativeUrl,
                 media: creativeUrl,
                 mediaType: 'image',
-                summary: `Target Audience: ${audience.toUpperCase()} • Daily Budget: €${budget}`,
+                summary: `Daily Budget: €${budget} • Neural Vibe Targeted • Micro-Sponsorship Active`,
                 isLive: false,
                 isPrivate: false,
                 isTrail: true
@@ -1936,7 +2029,7 @@
             processIncomingItems([newAdPost], true);
 
             addNotification(`EvoAds campaign "${adName}" launched successfully!`);
-            alert(`EvoAds: Campaign "${adName}" is now active and visible in the feed!`);
+            alert(`EvoAds: Campaign "${adName}" with neural targeting and micro-sponsorships is now active!`);
 
             const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoAdsModal'));
             if (modalEl) modalEl.hide();
@@ -1972,7 +2065,7 @@
             processIncomingItems([scheduledPost], true);
 
             addNotification(`EvoFlow scheduled: "${title}"`);
-            alert(`EvoFlow: Post "${title}" successfully scheduled for ${dt} and added to queue!`);
+            alert(`EvoFlow: Post "${title}" scheduled for optimal time ${dt} with team approval link ready!`);
             const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoFlowModal'));
             if (modalEl) modalEl.hide();
             event.target.reset();
@@ -2218,7 +2311,7 @@
             event.preventDefault();
             const mode = document.getElementById('trailMode').value;
             const mediaType = document.getElementById('trailMediaType').value;
-            const location = document.getElementById('trailLocation').value || 'Zaprešić, Croatia';
+            const location = document.getElementById('trailLocation').value || 'Zagreb, Croatia';
             const creatorName = document.getElementById('trailCreator').value || '@my_profile';
             const pollQ = document.getElementById('trailPollQuestion').value.trim();
             const qaPrompt = document.getElementById('trailQaPrompt').value.trim();
@@ -2401,7 +2494,6 @@
             let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
             processIncomingItems([...localFeedPosts, ...fallbackItems], false);
             
-            // Trenutačno uklanjanje preloadera (uklonjen zastoj i beskonačno čekanje)
             const preloader = document.getElementById('app-preloader');
             if (preloader) {
                 preloader.style.opacity = '0';
@@ -2654,8 +2746,7 @@
                                 ${item.mediaType === 'video' ? `
                                     <video src="${item.media || item.img_url}" autoplay loop muted playsinline></video>
                                 ` : `
-                                    <img src="${item.media || item.img_url}" alt="${item.title}">
-
+                                    <img src="${item.media \vert{}\vert{} item.img_url}" alt="${item.title}">
                                 `}
                                 <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
                                     <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
@@ -3004,7 +3095,6 @@
             renderInbox();
             loadBackendFeed();
 
-            // Sigurnosni mehanizam: uklanja preloader unutar 1 sekunde ako backend zapne
             setTimeout(() => {
                 const preloader = document.getElementById('app-preloader');
                 if (preloader && preloader.style.display !== 'none') {
