@@ -2524,38 +2524,23 @@
 
                 async function loadBackendFeed() {
     let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-    
-    try {
-        const response = await fetch(API_FEED_URL);
-        const data = await response.json();
-        
-        if (data && Array.isArray(data)) {
-            processIncomingItems([...data, ...localFeedPosts, ...fallbackItems], false);
-        } else {
-            processIncomingItems([...localFeedPosts, ...fallbackItems], false);
-        }
-    } catch (err) {
-        console.error("Greška pri dohvaćanju s backenda:", err);
-        processIncomingItems([...localFeedPosts, ...fallbackItems], false);
-    }
+    processIncomingItems([...localFeedPosts, ...fallbackItems], false);
     
     const preloader = document.getElementById('app-preloader');
     if (preloader) {
-        preloader.style.opacity = '0';
-        setTimeout(() => preloader.style.display = 'none', 100);
+        preloader.style.display = 'none';
+    }
+
+    try {
+        const response = await fetch(API_FEED_URL);
+        const data = await response.json();
+        if (data && Array.isArray(data)) {
+            processIncomingItems([...data, ...localFeedPosts, ...fallbackItems], false);
+        }
+    } catch (err) {
+        console.log("Backend offline");
     }
 }
-
-
-            
-            const preloader = document.getElementById('app-preloader');
-            if (preloader) {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 100);
-            }
-        }
-
-
         function parseLikeCount(val) {
             if (typeof val === 'number') return val;
             if (typeof val === 'string') {
