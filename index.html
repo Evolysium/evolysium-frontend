@@ -2355,8 +2355,8 @@
         // Spremanje priče u Supabase bazu da ne nestane nakon refresh-a
     try {
         const { error } = await window.supabaseClient
-            .from('posts') // Ili naziv vaše tablice ako je drugačija
-            .insert([newStory]);
+  .from('vibe-trails')
+  .insert([newStory]);
             
         if (error) {
             console.error('Greška pri spremanju u bazu:', error);
