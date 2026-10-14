@@ -2060,32 +2060,7 @@
         isTrail: true
     };
 
-    processIncomingItems([scheduledPost], true);
-
-    addNotification(`EvoFlow scheduled: "${title}"`);
-    alert(`EvoFlow: Post "${title}" scheduled for optimal time ${dt} with team approval link ready!`);
-    const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoFlowModal'));
-    if (modalEl) modalEl.hide();
-    event.target.reset();
-}
-
-
-                        const { error } = await supabase.from('vibe_trails').insert([scheduledPost]);
-    if (error) {
-        console.error('Greška pri spremanju u bazu:', error);
-        alert('Došlo je do greške prilikom objave.');
-        return;
-    }
-
-
-
-            processIncomingItems([scheduledPost], true);
-
-            addNotification(`EvoFlow scheduled: "${title}"`);
-            alert(`EvoFlow: Post "${title}" scheduled for optimal time ${dt} with team approval link ready!`);
-            const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoFlowModal'));
-            if (modalEl) modalEl.hide();
-            event.target.reset();
+    
         }
 
         function toggleAuthMode() {
