@@ -2316,7 +2316,7 @@
             stopCameraFeed();
         }
 
-        function handleTrailSubmit(event) {
+     async function handleTrailSubmit(event) {
             event.preventDefault();
             const mode = document.getElementById('trailMode').value;
             const mediaType = document.getElementById('trailMediaType').value;
@@ -2346,12 +2346,26 @@
                 qa: qaPrompt ? { prompt: qaPrompt } : null,
                 summary: `Location: ${location} — User Story Drop`
             };
-    if (typeof userTrails !== 'undefined') {
-        userTrails.unshift(newStory);
+        // Spremanje priče u Supabase bazu da ne nestane nakon refresh-a
+    try {
+        const { error } = await supabase
+            .from('posts') // Ili naziv vaše tablice ako je drugačija
+            .insert([newStory]);
+            
+        if (error) {
+            console.error('Greška pri spremanju u bazu:', error);
+        } else {
+            if (typeof userTrails !== 'undefined') {
+                userTrails.unshift(newStory);
+            }
+            if (typeof renderStories === 'function') {
+                renderStories();
+            }
+        }
+    } catch (err) {
+        console.error('Greška:', err);
     }
-    if (typeof renderStories === 'function') {
-        renderStories();
-    }
+
 
             
 
