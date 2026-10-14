@@ -2354,14 +2354,28 @@
             
         if (error) {
             console.error('Greška pri spremanju u bazu:', error);
-        } else {
-            if (typeof userTrails !== 'undefined') {
-                userTrails.unshift(newStory);
-            }
-            if (typeof renderStories === 'function') {
-                renderStories();
-            }
+            } else {
+        // Dodajemo u radnu memoriju za priče i feed
+        if (typeof userTrails !== 'undefined' && Array.isArray(userTrails)) {
+            userTrails.unshift(newStory);
         }
+        
+        // Ako postoji globalni feed niz, ubacimo i tamo da se odmah vidi u feedu
+        if (typeof allPosts !== 'undefined' && Array.isArray(allPosts)) {
+            allPosts.unshift(newStory);
+        }
+
+        // Osvježavamo prikaz priča i feeda
+        if (typeof renderStories === 'function') {
+            renderStories();
+        }
+        if (typeof renderFeed === 'function') {
+            renderFeed();
+        } else if (typeof processIncomingItems === 'function') {
+            processIncomingItems([newStory], true);
+        }
+    }
+
     } catch (err) {
         console.error('Greška:', err);
     }
