@@ -2347,13 +2347,7 @@
                 summary: `Location: ${location} — User Story Drop`
             };
 
-            let localTrails = JSON.parse(localStorage.getItem('evolysium_user_trails') || '[]');
-            localTrails.unshift(newStory);
-            localStorage.setItem('evolysium_user_trails', JSON.stringify(localTrails));
-
-            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-            localFeedPosts.unshift(newStory);
-            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+            
 
             const modalEl = document.getElementById('trailModal');
             const modalInstance = bootstrap.Modal.getInstance(modalEl);
