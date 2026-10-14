@@ -2069,6 +2069,7 @@
     event.target.reset();
 }
 
+
                         const { error } = await supabase.from('vibe_trails').insert([scheduledPost]);
     if (error) {
         console.error('Greška pri spremanju u bazu:', error);
