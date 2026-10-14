@@ -2064,27 +2064,28 @@
         }
 
         function toggleAuthMode() {
-            isRegisterMode = !isRegisterMode;
-            const titleEl = document.getElementById('authModalTitle');
-            const submitBtn = document.getElementById('authSubmitBtn');
-            const switchText = document.getElementById('authSwitchText');
-            const switchBtn = document.getElementById('authSwitchBtn');
-            const nameField = document.getElementById('nameFieldContainer');
+    isRegisterMode = !isRegisterMode;
+    const titleEl = document.getElementById('authModalTitle');
+    const submitBtn = document.getElementById('authSubmitBtn');
+    const switchText = document.getElementById('authSwitchText');
+    const switchBtn = document.getElementById('authSwitchBtn');
+    const nameField = document.getElementById('nameFieldGroup');
 
-            if (isRegisterMode) {
-                titleEl.innerHTML = '<i class="fa-solid fa-user-plus text-pink me-2"></i>Create Evolysium Account';
-                submitBtn.innerText = 'Register';
-                switchText.innerText = 'Already have an account?';
-                switchBtn.innerText = 'Sign In here';
-                nameField.style.display = 'block';
-            } else {
-                titleEl.innerHTML = '<i class="fa-solid fa-right-to-bracket text-pink me-2"></i>Sign In to Evolysium';
-                submitBtn.innerText = 'Sign In';
-                switchText.innerText = "Don't have an account?";
-                switchBtn.innerText = 'Register here';
-                nameField.style.display = 'none';
-            }
-        }
+    if (isRegisterMode) {
+        titleEl.innerHTML = '<i class="bi bi-person-plus me-2"></i>Register Account';
+        submitBtn.innerText = 'Register';
+        switchText.innerText = 'Already have an account?';
+        switchBtn.innerText = 'Sign In';
+        nameField.style.display = 'block';
+    } else {
+        titleEl.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Sign In';
+        submitBtn.innerText = 'Sign In';
+        switchText.innerText = "Don't have an account?";
+        switchBtn.innerText = 'Register';
+        nameField.style.display = 'none';
+    }
+}
+
 
         function handleAuthSubmit(event) {
             event.preventDefault();
