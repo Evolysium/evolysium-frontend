@@ -2346,6 +2346,12 @@
                 qa: qaPrompt ? { prompt: qaPrompt } : null,
                 summary: `Location: ${location} — User Story Drop`
             };
+    if (typeof userTrails !== 'undefined') {
+        userTrails.unshift(newStory);
+    }
+    if (typeof renderStories === 'function') {
+        renderStories();
+    }
 
             
 
