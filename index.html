@@ -734,30 +734,31 @@
 
     <!-- Main Content -->
     <main class="container py-4">
-        <div class="card p-4 mt-4 shadow-sm">
-    <h4>Evolysium Social & P2P Hub 🥊</h4>
-    <p class="text-muted">Pošalji tokene prijatelju ili podijeli link na boksčkim meč / Watch Party za bonus XP i Gems!</p>
+        <div class="card p-4 mt-4 shadow-sm" style="background: rgba(25, 20, 35, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; backdrop-filter: blur(10px); border-radius: 16px;">
+    <h4 style="color: #fff;">Evolysium Social & P2P Hub 🥊</h4>
+    <p class="text-muted" style="color: #aaa !important;">Send tokens to a friend or share a link to a boxing match / Watch Party for bonus XP and Gems!</p>
     
-    <!-- P2P Forma -->
+    <!-- P2P Form -->
     <div class="mb-3">
-        <label for="p2p-username" class="form-label">Korisničko ime primatelja</label>
-        <input type="text" id="p2p-username" class="form-control" placeholder="Unesi username...">
+        <label for="p2p-username" class="form-label" style="color: #ddd;">Recipient Username</label>
+        <input type="text" id="p2p-username" class="form-control bg-dark text-white border-secondary" placeholder="Enter username...">
     </div>
     <div class="mb-3">
-        <label for="p2p-amount" class="form-label">Iznos Evo Money tokena</label>
-        <input type="number" id="p2p-amount" class="form-control" placeholder="0.00">
+        <label for="p2p-amount" class="form-label" style="color: #ddd;">Evo Money Amount</label>
+        <input type="number" id="p2p-amount" class="form-control bg-dark text-white border-secondary" placeholder="0.00">
     </div>
-    <button class="btn btn-primary w-100 mb-4" onclick="handleP2PSubmit()">Pošalji tokene i osvoji nagradu</button>
+    <button class="btn btn-primary w-100 mb-4" onclick="handleP2PSubmit()">Send Tokens & Claim Reward</button>
 
-    <hr>
+    <hr style="border-color: rgba(255, 255, 255, 0.1);">
 
-    <!-- Watch Party / Prijenos meča -->
+    <!-- Watch Party / Event Link -->
     <div class="mb-3 mt-3">
-        <label for="event-link" class="form-label">Link na meč / Watch Party</label>
-        <input type="url" id="event-link" class="form-control" placeholder="https://youtube.com/...">
+        <label for="event-link" class="form-label" style="color: #ddd;">Match / Watch Party Link</label>
+        <input type="url" id="event-link" class="form-control bg-dark text-white border-secondary" placeholder="https://youtube.com/...">
     </div>
-    <button class="btn btn-success w-100" onclick="shareWatchParty()">Podijeli meč s prijateljima (Bonus XP)</button>
+    <button class="btn btn-success w-100" onclick="shareWatchParty()">Share Match with Friends (Bonus XP)</button>
 </div>
+
 
         <!-- Stories & Featured Creators -->
         <div class="mb-4">
