@@ -734,7 +734,31 @@
 
     <!-- Main Content -->
     <main class="container py-4">
-        
+        <div class="card p-4 mt-4 shadow-sm">
+    <h4>Evolysium Social & P2P Hub 🥊</h4>
+    <p class="text-muted">Pošalji tokene prijatelju ili podijeli link na boksčkim meč / Watch Party za bonus XP i Gems!</p>
+    
+    <!-- P2P Forma -->
+    <div class="mb-3">
+        <label for="p2p-username" class="form-label">Korisničko ime primatelja</label>
+        <input type="text" id="p2p-username" class="form-control" placeholder="Unesi username...">
+    </div>
+    <div class="mb-3">
+        <label for="p2p-amount" class="form-label">Iznos Evo Money tokena</label>
+        <input type="number" id="p2p-amount" class="form-control" placeholder="0.00">
+    </div>
+    <button class="btn btn-primary w-100 mb-4" onclick="handleP2PSubmit()">Pošalji tokene i osvoji nagradu</button>
+
+    <hr>
+
+    <!-- Watch Party / Prijenos meča -->
+    <div class="mb-3 mt-3">
+        <label for="event-link" class="form-label">Link na meč / Watch Party</label>
+        <input type="url" id="event-link" class="form-control" placeholder="https://youtube.com/...">
+    </div>
+    <button class="btn btn-success w-100" onclick="shareWatchParty()">Podijeli meč s prijateljima (Bonus XP)</button>
+</div>
+
         <!-- Stories & Featured Creators -->
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
@@ -3253,6 +3277,53 @@ async function sendP2PMoney(receiverUsername, amount) {
     loadUserProfile(); 
     loadUserNotifications(); 
     return true;
+}
+// Funkcija koja hvata podatke iz P2P forme i poziva naš RPC
+async function handleP2PSubmit() {
+    const usernameInput = document.getElementById('p2p-username');
+    const amountInput = document.getElementById('p2p-amount');
+    
+    const username = usernameInput.value.trim();
+    const amount = amountInput.value;
+
+    if (!username || !amount) {
+        alert("Molimo unesite korisničko ime i iznos.");
+        return;
+    }
+
+    const success = await sendP2PMoney(username, amount);
+    if (success) {
+        usernameInput.value = '';
+        amountInput.value = '';
+    }
+}
+
+// Funkcija za dijeljenje Watch Party linka (mečevi)
+async function shareWatchParty() {
+    const linkInput = document.getElementById('event-link');
+    const link = linkInput.value.trim();
+
+    if (!link) {
+        alert("Unesite valjani link na događaj ili meč.");
+        return;
+    }
+
+    // Ovdje možemo nagraditi korisnika malim bonusom za dijeljenje sadržaja
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
+    if (!user) {
+        alert("Morate biti prijavljeni.");
+        return;
+    }
+
+    // Dodajemo sitan bonus XP-a za dijeljenje sadržaja zajednici
+    const { error } = await window.supabaseClient
+        .from('profiles')
+        .update({ xp: window.currentXP ? window.currentXP + 5 : 5 }) // ili direktno RPC ako želiš sigurnije
+        .eq('id', user.id);
+
+    alert("Uspješno ste podijelili Watch Party link i zaradili bonus bodove! 🚀");
+    linkInput.value = '';
+    loadUserProfile();
 }
 
     window.addEventListener('DOMContentLoaded', () => {
