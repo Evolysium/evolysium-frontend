@@ -3212,6 +3212,32 @@ async function spendEvoMoney(amount, actionDescription) {
   loadUserProfile();
   return true;
 }
+async function loadUserNotifications() {
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
+    if (!user) return;
+
+    const { data: notifications, error } = await window.supabaseClient
+        .from('notifications')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error("Greška pri dohvatu obavijesti:", error);
+        return;
+    }
+
+    const container = document.getElementById('notifications-container');
+    if (container && notifications) {
+        container.innerHTML = notifications.map(n => `
+            <div class="notification-item ${n.is_read ? '' : 'unread'} p-2 border-bottom">
+                <strong>${n.title}</strong>
+                <p class="mb-1">${n.message}</p>
+                <small class="text-muted">${new Date(n.created_at).toLocaleString()}</small>
+            </div>
+        `).join('');
+    }
+}
 
     window.addEventListener('DOMContentLoaded', () => {
         loadUserProfile(); // <--- OVDJE SE POZIVA FUNKCIJA
@@ -3219,7 +3245,8 @@ async function spendEvoMoney(amount, actionDescription) {
         updateNotificationUI();
         renderInbox();
         loadBackendFeed();
-        
+        loadUserNotifications();
+
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader && preloader.style) {
