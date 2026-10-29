@@ -3238,6 +3238,22 @@ async function loadUserNotifications() {
         `).join('');
     }
 }
+async function sendP2PMoney(receiverUsername, amount) {
+    const { data, error } = await window.supabaseClient.rpc('transfer_evo_money', {
+        receiver_username: receiverUsername,
+        amount: parseFloat(amount)
+    });
+
+    if (error) {
+        alert("Greška pri slanju: " + error.message);
+        return false;
+    }
+
+    alert("Uspješno ste poslali tokene i osvojili bonus XP i Gems!");
+    loadUserProfile(); 
+    loadUserNotifications(); 
+    return true;
+}
 
     window.addEventListener('DOMContentLoaded', () => {
         loadUserProfile(); // <--- OVDJE SE POZIVA FUNKCIJA
