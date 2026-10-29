@@ -3163,6 +3163,55 @@
         if (badgeElement) badgeElement.style.display = profile.is_verified ? 'inline-block' : 'none';
     }
     // ---------------------------------
+async function upgradeSubscription(newTier) {
+  const { data: { user } } = await window.supabaseClient.auth.getUser();
+  if (!user) {
+    alert("Morate biti prijavljeni za nadogradnju paketa!");
+    return;
+  }
+
+  const { error } = await window.supabaseClient
+    .from('profiles')
+    .update({ subscription_tier: newTier })
+    .eq('id', user.id);
+
+  if (error) {
+    alert("Greška pri nadogradnji paketa: " + error.message);
+  } else {
+    alert(`Uspješno ste nadogradili paket na: ${newTier.toUpperCase().replace('_', ' ')}! ⚡`);
+    loadUserProfile();
+  }
+}
+
+async function spendEvoMoney(amount, actionDescription) {
+  const { data: { user } } = await window.supabaseClient.auth.getUser();
+  if (!user) return alert("Prijavite se!");
+
+  const { data: profile } = await window.supabaseClient
+    .from('profiles')
+    .select('evo_money')
+    .eq('id', user.id)
+    .single();
+
+  if (profile.evo_money < amount) {
+    alert(`Nemate dovoljno Evo Money tokena! Potrebno: ${amount} EVON.`);
+    return false;
+  }
+
+  const { error } = await window.supabaseClient
+    .from('profiles')
+    .update({ evo_money: profile.evo_money - amount })
+    .eq('id', user.id);
+
+  if (error) {
+    alert("Greška u transakciji: " + error.message);
+    return false;
+  }
+
+  alert(`Uspješno kupljeno: ${actionDescription} (-${amount} EVON)`);
+  loadUserProfile();
+  return true;
+}
 
     window.addEventListener('DOMContentLoaded', () => {
         loadUserProfile(); // <--- OVDJE SE POZIVA FUNKCIJA
