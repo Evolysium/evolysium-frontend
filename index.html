@@ -3138,29 +3138,53 @@
             alert('Link copied to clipboard!');
         }
 
-        function completeOnboarding() {
-            localStorage.setItem('evolysium_onboarded', 'true');
-        }
+            function completeOnboarding() {
+        localStorage.setItem('evolysium_onboarded', 'true');
+    }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            updateAuthUI();
-            updateNotificationUI();
-            renderInbox();
-            loadBackendFeed();
+    // --- UBACI OVDJE NOVU FUNKCIJU ---
+    async function loadUserProfile() {
+        const { data: { user }, error: sessionError } = await window.supabaseClient.auth.getUser();
+        if (sessionError || !user) return;
 
-            setTimeout(() => {
-                const preloader = document.getElementById('app-preloader');
-                if (preloader && preloader.style.display !== 'none') {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => preloader.style.display = 'none', 300);
-                }
-            }, 1000);
+        const { data: profile, error } = await window.supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single();
 
-            if (!localStorage.getItem('evolysium_onboarded')) {
-                const onboardingModal = new bootstrap.Modal(document.getElementById('onboardingModal'));
-                onboardingModal.show();
+        if (error) return;
+
+        if (document.getElementById('user-name')) document.getElementById('user-name').innerText = profile.full_name || profile.email;
+        if (document.getElementById('user-tier')) document.getElementById('user-tier').innerText = profile.subscription_tier.toUpperCase();
+        if (document.getElementById('evo-money-balance')) document.getElementById('evo-money-balance').innerText = profile.evo_money + ' EVON';
+        
+        const badgeElement = document.getElementById('verification-badge');
+        if (badgeElement) badgeElement.style.display = profile.is_verified ? 'inline-block' : 'none';
+    }
+    // ---------------------------------
+
+    window.addEventListener('DOMContentLoaded', () => {
+        loadUserProfile(); // <--- OVDJE SE POZIVA FUNKCIJA
+        updateAuthUI();
+        updateNotificationUI();
+        renderInbox();
+        loadBackendFeed();
+        
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            if (preloader && preloader.style) {
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
             }
-        });
+        }, 1000);
+
+        if (!localStorage.getItem('evolysium_onboarded')) {
+            const onboardingModal = new bootstrap.Modal(document.getElementById('onboardingModal'));
+            onboardingModal.show();
+        }
+    });
+
     </script>
 </body>
 </html>
