@@ -3326,6 +3326,146 @@ async function shareWatchParty() {
     linkInput.value = '';
     loadUserProfile();
 }
+<!-- EVOlysiuM P2P ARENA -->
+<div id="p2p-arena-container" style="background: #09090b; border: 1px solid rgba(168,85,247,0.3); padding: 24px; border-radius: 16px; color: white; max-width: 450px; margin: 20px auto; font-family: inherit; box-shadow: 0 0 30px rgba(168,85,247,0.15);">
+  <h2 style="font-size: 20px; font-weight: bold; background: linear-gradient(to right, #fbbf24, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px;">
+    Evolysium P2P Arena
+  </h2>
+
+  <!-- Kreiraj izazov -->
+  <div style="background: rgba(24,24,27,0.5); padding: 16px; border-radius: 12px; border: 1px solid #27272a; margin-bottom: 16px;">
+    <label style="font-size: 13px; color: #a1a1aa; display: block; margin-bottom: 8px;">Kreiraj novi izazov</label>
+    <div style="display: flex; gap: 8px;">
+      <input type="number" id="wagerAmountInput" placeholder="Iznos u $EVO" style="flex: 1; background: black; border: 1px solid #27272a; border-radius: 10px; padding: 10px; color: white; outline: none; font-size: 14px;" />
+      <button onclick="createWagerOnChain()" style="padding: 10px 16px; background: linear-gradient(to right, #f59e0b, #9333ea); font-weight: bold; border-radius: 10px; border: none; color: black; cursor: pointer; font-size: 13px;">Baci Izazov</button>
+    </div>
+  </div>
+
+  <!-- Aktivni izazovi -->
+  <div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <span style="font-size: 13px; font-weight: 600; color: #d4d4d8;">Aktivni izazovi na čekanju</span>
+      <button onclick="loadActiveWagers()" style="background: none; border: none; color: #c084fc; font-size: 12px; cursor: pointer;">Osvježi</button>
+    </div>
+    <div id="activeWagersList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+      <p style="font-size: 12px; color: #71717a; text-align: center; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b;">Učitavanje izazova...</p>
+    </div>
+  </div>
+
+  <p id="p2pStatus" style="font-size: 12px; color: #fbbf24; background: #18181b; padding: 10px; border-radius: 8px; border: 1px solid #27272a; margin-top: 16px; display: none;"></p>
+</div>
+
+<!-- Skripta za pametne ugovore (Ethers.js v6) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script>
+  const WAGER_ADDR = "0xd8b934580fce35a11B58C6073aDeE468a2833fa8";
+  const TOKEN_ADDR = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+
+  const WAGER_ABI_JS = [
+    "function createWager(uint256 _amount) external returns (uint256)",
+    "function acceptWager(uint256 _wagerId) external",
+    "function wagerCounter() view returns (uint256)",
+    "function wagers(uint256) view returns (address player1, address player2, uint256 amount, bool isAccepted, bool isResolved, address winner)"
+  ];
+  const ERC20_ABI_JS = [
+    "function approve(address spender, uint256 amount) public returns (bool)"
+  ];
+
+  function showStatus(msg) {
+    const p = document.getElementById('p2pStatus');
+    p.style.display = 'block';
+    p.innerText = msg;
+  }
+
+  async function createWagerOnChain() {
+    try {
+      const val = document.getElementById('wagerAmountInput').value;
+      if (!val) return alert("Unesi iznos!");
+      if (!window.ethereum) return alert("Instaliraj MetaMask!");
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const token = new ethers.Contract(TOKEN_ADDR, ERC20_ABI_JS, signer);
+      const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
+
+      const parsed = ethers.parseUnits(val, 18);
+      showStatus("Odobravanje tokena...");
+      const tx1 = await token.approve(WAGER_ADDR, parsed);
+      await tx1.wait();
+
+      showStatus("Kreiranje oklade...");
+      const tx2 = await wager.createWager(parsed);
+      await tx2.wait();
+
+      showStatus("Uspješno kreiran izazov!");
+      loadActiveWagers();
+    } catch (err) {
+      console.error(err);
+      showStatus("Greška: " + (err.reason || err.message));
+    }
+  }
+
+  async function acceptWagerOnChain(id, amt) {
+    try {
+      if (!window.ethereum) return alert("Instaliraj MetaMask!");
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const token = new ethers.Contract(TOKEN_ADDR, ERC20_ABI_JS, signer);
+      const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
+
+      const parsed = ethers.parseUnits(amt, 18);
+      showStatus(`Odobravanje tokena za okladu #${id}...`);
+      const tx1 = await token.approve(WAGER_ADDR, parsed);
+      await tx1.wait();
+
+      showStatus(`Prihvaćanje oklade #${id}...`);
+      const tx2 = await wager.acceptWager(id);
+      await tx2.wait();
+
+      showStatus(`Oklada #${id} uspješno prihvaćena!`);
+      loadActiveWagers();
+    } catch (err) {
+      console.error(err);
+      showStatus("Greška: " + (err.reason || err.message));
+    }
+  }
+
+  async function loadActiveWagers() {
+    try {
+      if (!window.ethereum) return;
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, provider);
+      const count = await wager.wagerCounter();
+      
+      let html = "";
+      let activeFound = false;
+
+      for (let i = 1; i <= Number(count); i++) {
+        const w = await wager.wagers(i);
+        if (!w.isAccepted && !w.isResolved) {
+          activeFound = true;
+          const formattedAmt = ethers.formatUnits(w.amount, 18);
+          html += `
+            <div style="display: flex; justify-content: space-between; align-items: center; background: black; border: 1px solid #27272a; padding: 10px; border-radius: 8px;">
+              <div>
+                <p style="font-size: 12px; font-weight: bold; color: #fbbf24; margin: 0;">Oklada #${i}</p>
+                <p style="font-size: 11px; color: #a1a1aa; margin: 2px 0 0 0;">Ulog: <span style="color: white; font-weight: bold;">${formattedAmt} $EVO</span></p>
+              </div>
+              <button onclick="acceptWagerOnChain(${i}, '${formattedAmt}')" style="padding: 6px 12px; background: #9333ea; color: white; font-weight: bold; font-size: 11px; border-radius: 6px; border: none; cursor: pointer;">Prihvati</button>
+            </div>
+          `;
+        }
+      }
+
+      document.getElementById('activeWagersList').innerHTML = activeFound ? html : '<p style="font-size: 12px; color: #71717a; text-align: center; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b; margin: 0;">Trenutno nema aktivnih izazova.</p>';
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(loadActiveWagers, 1500);
+  });
 
     window.addEventListener('DOMContentLoaded', () => {
         loadUserProfile(); // <--- OVDJE SE POZIVA FUNKCIJA
@@ -3334,7 +3474,7 @@ async function shareWatchParty() {
         renderInbox();
         loadBackendFeed();
         loadUserNotifications();
-
+loadActiveWagers();
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader && preloader.style) {
