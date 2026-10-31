@@ -17,17 +17,20 @@
         'background_color':'#07060c',
         'theme_color':'#07060c'
     }">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  if (typeof window.supabaseClient === 'undefined') {
-    window.supabaseClient = window.supabase.createClient('https://bpndsntpdpukkjebrfnz.supabase.co', 'sb_publishable_lPudOW-mBnBKB-E9OEbWZQ_HzFuoZk6');
-  }
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      if (typeof window.supabaseClient === 'undefined') {
+        window.supabaseClient = window.supabase.createClient('https://bpndsntpdpukkjebrfnz.supabase.co', 'sb_publishable_lPudOW-mBnBKB-E9OEbWZQ_HzFuoZk6');
+      }
+    </script>
 
     <!-- Frameworks & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Ethers.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 
     <style>
         :root {
@@ -52,7 +55,6 @@
             --gold-pop: #ff6600 !important;
         }
 
-        /* Larven AI - Advanced Grid & Atmospheric Glow Backdrop */
         body {
             background-color: #07060c !important;
             color: var(--text-main);
@@ -75,7 +77,6 @@
 
         main { flex: 1; }
 
-        /* Typography */
         h1, h2, h3, h4, h5, .brand-name {
             font-family: 'Outfit', sans-serif;
             letter-spacing: -0.4px;
@@ -210,7 +211,6 @@
             backdrop-filter: blur(25px);
         }
 
-        /* Glassmorphism & Larven AI 9:16 Vertical Card Style */
         .social-card {
             background: rgba(15, 12, 25, 0.65);
             backdrop-filter: blur(40px);
@@ -502,22 +502,18 @@
             </div>
             
             <div class="d-flex align-items-center gap-2">
-                <!-- Vibe Score Display Pill -->
                 <button class="social-pill active border-warning" data-bs-toggle="modal" data-bs-target="#gamificationModal" title="Vibe Score & XP">
                     <i class="fa-solid fa-bolt text-warning"></i> <span id="navVibeScore">120 XP</span>
                 </button>
 
-                <!-- Gem Tokens Display Pill -->
                 <button class="social-pill active border-info" data-bs-toggle="modal" data-bs-target="#gemWalletModal" title="Evolysium Gem Wallet & Web3">
                     <i class="fa-solid fa-gem text-cyan"></i> <span id="navGemCount">250 $EVO</span>
                 </button>
 
-                <!-- Web3 Connect Button -->
                 <button class="social-pill active border-success" onclick="connectWeb3Wallet()" title="Connect MetaMask / Web3 Wallet">
                     <i class="fa-solid fa-wallet text-success"></i> <span id="web3WalletBtnLabel">Connect Web3</span>
                 </button>
 
-                <!-- PWA Install Button -->
                 <button class="social-pill active border-pink" id="pwaInstallBtn" onclick="installPwaApp()" style="display:none;" title="Install App">
                     <i class="fa-solid fa-mobile-screen text-pink"></i> Install App
                 </button>
@@ -529,7 +525,6 @@
                     <i class="fa-solid fa-right-to-bracket text-success"></i> <span id="authNavButtonLabel">Sign In</span>
                 </button>
                 
-                <!-- EVO TOOLS BUTTONS -->
                 <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#evoSyncModal" title="EvoSync Tool">
                     <i class="fa-solid fa-sync text-info"></i> EvoSync
                 </button>
@@ -735,33 +730,63 @@
     <!-- Main Content -->
     <main class="container py-4">
         <div class="card p-4 mt-4 shadow-sm" style="background: rgba(25, 20, 35, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; backdrop-filter: blur(10px); border-radius: 16px;">
-    <h4 style="color: #fff;">Evolysium Social & P2P Hub 🥊</h4>
-    <p class="text-muted" style="color: #aaa !important;">Send tokens to a friend or share a link to a boxing match / Watch Party for bonus XP and Gems!</p>
-    
-    <!-- P2P Form -->
-    <div class="mb-3">
-        <label for="p2p-username" class="form-label" style="color: #ddd;">Recipient Username</label>
-        <input type="text" id="p2p-username" class="form-control bg-dark text-white border-secondary" placeholder="Enter username...">
-    </div>
-    <div class="mb-3">
-        <label for="p2p-amount" class="form-label" style="color: #ddd;">Evo Money Amount</label>
-        <input type="number" id="p2p-amount" class="form-control bg-dark text-white border-secondary" placeholder="0.00">
-    </div>
-    <button class="btn btn-primary w-100 mb-4" onclick="handleP2PSubmit()">Send Tokens & Claim Reward</button>
+            <h4 style="color: #fff;">Evolysium Social & P2P Hub 🥊</h4>
+            <p class="text-muted" style="color: #aaa !important;">Send tokens to a friend or share a link to a boxing match / Watch Party for bonus XP and Gems!</p>
+            
+            <!-- P2P Form -->
+            <div class="mb-3">
+                <label for="p2p-username" class="form-label" style="color: #ddd;">Recipient Username</label>
+                <input type="text" id="p2p-username" class="form-control bg-dark text-white border-secondary" placeholder="Enter username...">
+            </div>
+            <div class="mb-3">
+                <label for="p2p-amount" class="form-label" style="color: #ddd;">Evo Money Amount</label>
+                <input type="number" id="p2p-amount" class="form-control bg-dark text-white border-secondary" placeholder="0.00">
+            </div>
+            <button class="btn btn-primary w-100 mb-4" onclick="handleP2PSubmit()">Send Tokens & Claim Reward</button>
 
-    <hr style="border-color: rgba(255, 255, 255, 0.1);">
+            <hr style="border-color: rgba(255, 255, 255, 0.1);">
 
-    <!-- Watch Party / Event Link -->
-    <div class="mb-3 mt-3">
-        <label for="event-link" class="form-label" style="color: #ddd;">Match / Watch Party Link</label>
-        <input type="url" id="event-link" class="form-control bg-dark text-white border-secondary" placeholder="https://youtube.com/...">
-    </div>
-    <button class="btn btn-success w-100" onclick="shareWatchParty()">Share Match with Friends (Bonus XP)</button>
-</div>
+            <!-- Watch Party / Event Link -->
+            <div class="mb-3 mt-3">
+                <label for="event-link" class="form-label" style="color: #ddd;">Match / Watch Party Link</label>
+                <input type="url" id="event-link" class="form-control bg-dark text-white border-secondary" placeholder="https://youtube.com/...">
+            </div>
+            <button class="btn btn-success w-100 mb-4" onclick="shareWatchParty()">Share Match with Friends (Bonus XP)</button>
 
+            <hr style="border-color: rgba(255, 255, 255, 0.1);">
+
+            <!-- EVOlysiuM P2P ARENA (HTML SUČELJE VRAĆENO NA PRAVO MJESTO) -->
+            <div id="p2p-arena-container" style="background: #09090b; border: 1px solid rgba(168,85,247,0.3); padding: 24px; border-radius: 16px; color: white; max-width: 100%; font-family: inherit; box-shadow: 0 0 30px rgba(168,85,247,0.15);">
+              <h2 style="font-size: 20px; font-weight: bold; background: linear-gradient(to right, #fbbf24, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px;">
+                Evolysium On-Chain P2P Arena ⚡
+              </h2>
+
+              <!-- Kreiraj izazov -->
+              <div style="background: rgba(24,24,27,0.5); padding: 16px; border-radius: 12px; border: 1px solid #27272a; margin-bottom: 16px;">
+                <label style="font-size: 13px; color: #a1a1aa; display: block; margin-bottom: 8px;">Kreiraj novi izazov u $EVO tokenima</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="number" id="wagerAmountInput" placeholder="Iznos u $EVO" style="flex: 1; background: black; border: 1px solid #27272a; border-radius: 10px; padding: 10px; color: white; outline: none; font-size: 14px;" />
+                  <button onclick="createWagerOnChain()" style="padding: 10px 16px; background: linear-gradient(to right, #f59e0b, #9333ea); font-weight: bold; border-radius: 10px; border: none; color: black; cursor: pointer; font-size: 13px;">Baci Izazov</button>
+                </div>
+              </div>
+
+              <!-- Aktivni izazovi -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 13px; font-weight: 600; color: #d4d4d8;">Aktivni izazovi na čekanju (Smart Contract)</span>
+                  <button onclick="loadActiveWagers()" style="background: none; border: none; color: #c084fc; font-size: 12px; cursor: pointer;">Osvježi</button>
+                </div>
+                <div id="activeWagersList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+                  <p style="font-size: 12px; color: #71717a; text-align: center; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b;">Učitavanje izazova...</p>
+                </div>
+              </div>
+
+              <p id="p2pStatus" style="font-size: 12px; color: #fbbf24; background: #18181b; padding: 10px; border-radius: 8px; border: 1px solid #27272a; margin-top: 16px; display: none;"></p>
+            </div>
+        </div>
 
         <!-- Stories & Featured Creators -->
-        <div class="mb-4">
+        <div class="mb-4 mt-4">
             <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                 <div class="small fw-semibold" style="color: rgba(255,255,255,0.7); letter-spacing: 0.5px;">✨ Stories & Featured Creators (Click to view media, pictures & videos)</div>
             </div>
@@ -1058,11 +1083,7 @@
         </div>
     </div>
 
-    <!-- ========================================================================= -->
-    <!-- EVO-SUITE MODALS (15 NAPREDNIH IDEJA: EVO-SYNC, EVO-ADS, EVO-FLOW) -->
-    <!-- ========================================================================= -->
-
-    <!-- EvoSync Modal (Ugrađeno svih 5 ideja) -->
+    <!-- EVO-SUITE MODALS -->
     <div class="modal fade" id="evoSyncModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(35px); border-radius: 28px; border: 1px solid rgba(0,240,255,0.25);">
@@ -1079,9 +1100,8 @@
                         <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabSyncMirror">5. Live Mirror</button></li>
                     </ul>
                     <div class="tab-content">
-                        <!-- Ideja 1 -->
                         <div class="tab-pane fade show active" id="tabSyncFormats">
-                            <form onsubmit="handleEvoSyncSubmit(event, 'format')">
+                            <form onsubmit="handleEvoSyncSubmit(event)">
                                 <p class="small text-muted">Automatically adapt aspect ratios simultaneously: 9:16 Reels/Stories, 1:1 Square Feed, 16:9 YouTube.</p>
                                 <div class="mb-3">
                                     <label class="form-label small text-muted">Target Channels</label>
@@ -1094,15 +1114,13 @@
                                 <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Publish Auto-Formatted Multi-Format</button>
                             </form>
                         </div>
-                        <!-- Ideja 2 -->
                         <div class="tab-pane fade" id="tabSyncInbox">
                             <p class="small text-muted">Smart Unified AI Inbox aggregating direct messages & comments with automated priority sorting & suggested replies.</p>
                             <div class="p-3 rounded-3 font-mono small text-info bg-dark border border-info mb-3">
                                 ⚡ AI Priority Alert: @brand_partner sent an inquiry for a sponsored campaign. Suggested reply ready.
                             </div>
-                            <button type="btn" class="btn btn-outline-info w-100 rounded-pill" onclick="alert('AI Auto-reply agent successfully executed for all priority brand messages!')">Run AI Auto-Reply Agent</button>
+                            <button type="button" class="btn btn-outline-info w-100 rounded-pill" onclick="alert('AI Auto-reply agent successfully executed for all priority brand messages!')">Run AI Auto-Reply Agent</button>
                         </div>
-                        <!-- Ideja 3 -->
                         <div class="tab-pane fade" id="tabSyncVoice">
                             <p class="small text-muted">AI Cross-Platform Voice Translator & Voice Cloning for international global expansion.</p>
                             <div class="mb-3">
@@ -1115,7 +1133,6 @@
                             </div>
                             <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="alert('Voice cloned and translated successfully for international distribution channels!')">Synthesize & Sync Audio Across Networks</button>
                         </div>
-                        <!-- Ideja 4 -->
                         <div class="tab-pane fade" id="tabSyncAgency">
                             <p class="small text-muted">Multi-Account Agency Hub: Switch managed client portfolios and team permission levels instantly.</p>
                             <div class="p-3 rounded-3 bg-dark border border-secondary text-white small mb-3">
@@ -1123,7 +1140,6 @@
                             </div>
                             <button type="button" class="btn btn-outline-warning w-100 rounded-pill" onclick="alert('Client portfolio permissions updated successfully!')">Manage Agency Permissions</button>
                         </div>
-                        <!-- Ideja 5 -->
                         <div class="tab-pane fade" id="tabSyncMirror">
                             <p class="small text-muted">Real-Time Live Stream Mirroring: Broadcast live streams simultaneously across Evolysium, IG, and TikTok.</p>
                             <div class="mb-3">
@@ -1138,7 +1154,6 @@
         </div>
     </div>
 
-    <!-- EvoAds Modal (Ugrađeno svih 5 ideja) -->
     <div class="modal fade" id="evoAdsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(35px); border-radius: 28px; border: 1px solid rgba(255,170,0,0.25);">
@@ -1197,7 +1212,6 @@
         </div>
     </div>
 
-    <!-- EvoFlow Modal (Ugrađeno svih 5 ideja) -->
     <div class="modal fade" id="evoFlowModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(35px); border-radius: 28px; border: 1px solid rgba(255,42,133,0.25);">
@@ -1213,7 +1227,6 @@
                         <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabFlowFunnel">5. DM Funnel & Approval</button></li>
                     </ul>
                     <div class="tab-content">
-                        <!-- Ideja 1 i 2 -->
                         <div class="tab-pane fade show active" id="tabFlowScheduler">
                             <form onsubmit="handleEvoFlowSubmit(event)">
                                 <div class="mb-3">
@@ -1237,7 +1250,6 @@
                                 <button type="submit" class="btn btn-vibe w-100 rounded-pill py-3">Schedule in EvoFlow</button>
                             </form>
                         </div>
-                        <!-- Ideja 3 -->
                         <div class="tab-pane fade" id="tabFlowGrid">
                             <p class="small text-muted">Visual Drag-and-Drop Grid Canvas: Arrange aesthetic profile layouts before going live.</p>
                             <div class="row g-2 mb-3">
@@ -1247,7 +1259,6 @@
                             </div>
                             <button type="button" class="btn btn-outline-info w-100 rounded-pill" onclick="alert('Grid aesthetic layout successfully synchronized!')">Save Aesthetic Grid Layout</button>
                         </div>
-                        <!-- Ideja 4 -->
                         <div class="tab-pane fade" id="tabFlowRecycler">
                             <p class="small text-muted">Evergreen Content Recycler: Automatically repost top-performing tutorials, recipes and guides when your calendar has open slots.</p>
                             <div class="p-3 rounded-3 bg-dark border border-success text-success small mb-3">
@@ -1255,7 +1266,6 @@
                             </div>
                             <button type="button" class="btn btn-outline-success w-100 rounded-pill" onclick="alert('Evergreen recycling settings updated!')">Configure Recycler Rules</button>
                         </div>
-                        <!-- Ideja 5 -->
                         <div class="tab-pane fade" id="tabFlowFunnel">
                             <p class="small text-muted">Automated Content Funnel & DM Trigger: Automatically send private messages with links/promo codes when users comment specific keywords.</p>
                             <div class="mb-3">
@@ -1280,7 +1290,7 @@
                 </div>
                 <div class="modal-body p-4">
                     <form id="authForm" onsubmit="handleAuthSubmit(event)">
-                        <div class="mb-3" id="nameFieldContainer" style="display: none;">
+                        <div class="mb-3" id="nameFieldGroup" style="display: none;">
                             <label class="form-label small text-muted">Full Name / Handle</label>
                             <input type="text" id="authName" class="form-control auth-input" placeholder="@your_handle">
                         </div>
@@ -1797,7 +1807,6 @@
         let selectedCategories = ["fashion", "tech", "lifestyle", "fitness", "travel", "food", "brand", "brand_story", "recipe", "diy", "digital_book", "world_trend", "gaming", "luxury", "18+content", "architecture", "funny", "movies", "reels", "story", "popular", "trending"];
 
         let displayLimit = 9999;
-
         let isLoadingMore = false;
 
         let isPrivateProfile = JSON.parse(localStorage.getItem('evolysium_is_private') || 'false');
@@ -2069,54 +2078,57 @@
         }
 
         async function handleEvoFlowSubmit(event) {
-    event.preventDefault();
-    const title = document.getElementById('evoFlowTitle').value;
-    const dt = document.getElementById('evoFlowDatetime').value;
-    const summary = document.getElementById('evoFlowSummary').value;
+            event.preventDefault();
+            const title = document.getElementById('evoFlowTitle').value;
+            const dt = document.getElementById('evoFlowDatetime').value;
+            const summary = document.getElementById('evoFlowSummary').value;
 
-    const scheduledPost = {
-        id: 'flow_' + Date.now(),
-        source: currentUser ? currentUser.name : '@my_profile',
-        creator: currentUser ? currentUser.name : '@my_profile',
-        title: `⏰ [SCHEDULED: ${dt}] ${title}`,
-        cat: 'trending',
-        platform: 'trail',
-        likes: 1,
-        comments: '0',
-        img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
-        mediaType: 'image',
-        summary: summary,
-        isLive: false,
-        isPrivate: false,
-        isTrail: true
-    };
-
-    
+            const scheduledPost = {
+                id: 'flow_' + Date.now(),
+                source: currentUser ? currentUser.name : '@my_profile',
+                creator: currentUser ? currentUser.name : '@my_profile',
+                title: `⏰ [SCHEDULED: ${dt}] ${title}`,
+                cat: 'trending',
+                platform: 'trail',
+                likes: 1,
+                comments: '0',
+                img_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900',
+                mediaType: 'image',
+                summary: summary,
+                isLive: false,
+                isPrivate: false,
+                isTrail: true
+            };
+            
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            localFeedPosts.unshift(scheduledPost);
+            localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
+            processIncomingItems([scheduledPost], true);
+            alert('Post scheduled in EvoFlow!');
         }
 
         function toggleAuthMode() {
-    isRegisterMode = !isRegisterMode;
-    const titleEl = document.getElementById('authModalTitle');
-    const submitBtn = document.getElementById('authSubmitBtn');
-    const switchText = document.getElementById('authSwitchText');
-    const switchBtn = document.getElementById('authSwitchBtn');
-    const nameField = document.getElementById('nameFieldGroup');
+            isRegisterMode = !isRegisterMode;
+            const titleEl = document.getElementById('authModalTitle');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const switchText = document.getElementById('authSwitchText');
+            const switchBtn = document.getElementById('authSwitchBtn');
+            const nameField = document.getElementById('nameFieldGroup');
 
-    if (isRegisterMode) {
-        titleEl.innerHTML = '<i class="bi bi-person-plus me-2"></i>Register Account';
-        submitBtn.innerText = 'Register';
-        switchText.innerText = 'Already have an account?';
-        switchBtn.innerText = 'Sign In';
-        nameField.style.display = 'block';
-    } else {
-        titleEl.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Sign In';
-        submitBtn.innerText = 'Sign In';
-        switchText.innerText = "Don't have an account?";
-        switchBtn.innerText = 'Register';
-        nameField.style.display = 'none';
-    }
-}
-
+            if (isRegisterMode) {
+                titleEl.innerHTML = '<i class="fa-solid fa-user-plus me-2"></i>Register Account';
+                submitBtn.innerText = 'Register';
+                switchText.innerText = 'Already have an account?';
+                switchBtn.innerText = 'Sign In';
+                nameField.style.display = 'block';
+            } else {
+                titleEl.innerHTML = '<i class="fa-solid fa-right-to-bracket me-2"></i>Sign In';
+                submitBtn.innerText = 'Sign In';
+                switchText.innerText = "Don't have an account?";
+                switchBtn.innerText = 'Register';
+                nameField.style.display = 'none';
+            }
+        }
 
         function handleAuthSubmit(event) {
             event.preventDefault();
@@ -2261,37 +2273,32 @@
             alert('Successfully published!');
         }
 
-                function handleTrailFileUpload(event) {
+        function handleTrailFileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
             
-            // Sažimanje slike da ne preoptereti localStorage
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    // Smanjujemo dimenzije radi brzine i memorije
                     const maxWidth = 800;
                     const scale = maxWidth / img.width;
                     canvas.width = maxWidth;
                     canvas.height = img.height * scale;
                     
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    // Komprimiramo kvalitetu na 0.6
                     const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.6);
                     
                     document.getElementById('trailMedia').value = compressedDataUrl;
                     document.getElementById('trailMediaType').value = 'image';
                     alert('Image successfully optimized and ready for publishing!');
-
                 };
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
-
 
         async function startCameraFeed() {
             const container = document.getElementById('cameraContainer');
@@ -2347,7 +2354,7 @@
             stopCameraFeed();
         }
 
-     async function handleTrailSubmit(event) {
+        async function handleTrailSubmit(event) {
             event.preventDefault();
             const mode = document.getElementById('trailMode').value;
             const mediaType = document.getElementById('trailMediaType').value;
@@ -2377,42 +2384,28 @@
                 qa: qaPrompt ? { prompt: qaPrompt } : null,
                 summary: `Location: ${location} — User Story Drop`
             };
-        // Spremanje priče u Supabase bazu da ne nestane nakon refresh-a
-    try {
-        const { error } = await window.supabaseClient
-  .from('vibe-trails')
-  .insert([newStory]);
-            
-        if (error) {
-            console.error('Greška pri spremanju u bazu:', error);
-            } else {
-        // Dodajemo u radnu memoriju za priče i feed
-        if (typeof userTrails !== 'undefined' && Array.isArray(userTrails)) {
-            userTrails.unshift(newStory);
-        }
-        
-        // Ako postoji globalni feed niz, ubacimo i tamo da se odmah vidi u feedu
-        if (typeof allPosts !== 'undefined' && Array.isArray(allPosts)) {
-            allPosts.unshift(newStory);
-        }
 
-        // Osvježavamo prikaz priča i feeda
-        if (typeof renderStories === 'function') {
-            renderStories();
-        }
-        if (typeof renderFeed === 'function') {
-            renderFeed();
-        } else if (typeof processIncomingItems === 'function') {
-            processIncomingItems([newStory], true);
-        }
-    }
-
-    } catch (err) {
-        console.error('Greška:', err);
-    }
-
-
-            
+            try {
+                const { error } = await window.supabaseClient
+                  .from('vibe-trails')
+                  .insert([newStory]);
+                    
+                if (error) {
+                    console.error('Greška pri spremanju u bazu:', error);
+                } else {
+                    if (typeof userTrails !== 'undefined' && Array.isArray(userTrails)) {
+                        userTrails.unshift(newStory);
+                    }
+                    if (typeof allPosts !== 'undefined' && Array.isArray(allPosts)) {
+                        allPosts.unshift(newStory);
+                    }
+                    if (typeof renderStories === 'function') renderStories();
+                    if (typeof renderFeed === 'function') renderFeed();
+                    else if (typeof processIncomingItems === 'function') processIncomingItems([newStory], true);
+                }
+            } catch (err) {
+                console.error('Greška:', err);
+            }
 
             const modalEl = document.getElementById('trailModal');
             const modalInstance = bootstrap.Modal.getInstance(modalEl);
@@ -2558,25 +2551,26 @@
             `).join('');
         }
 
-                async function loadBackendFeed() {
-    let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
-    processIncomingItems([...localFeedPosts, ...fallbackItems], false);
-    
-    const preloader = document.getElementById('app-preloader');
-    if (preloader) {
-        preloader.style.display = 'none';
-    }
+        async function loadBackendFeed() {
+            let localFeedPosts = JSON.parse(localStorage.getItem('evolysium_custom_feed_posts') || '[]');
+            processIncomingItems([...localFeedPosts, ...fallbackItems], false);
+            
+            const preloader = document.getElementById('app-preloader');
+            if (preloader) {
+                preloader.style.display = 'none';
+            }
 
-    try {
-        const response = await fetch(API_FEED_URL);
-        const data = await response.json();
-        if (data && Array.isArray(data)) {
-            processIncomingItems([...data, ...localFeedPosts, ...fallbackItems], false);
+            try {
+                const response = await fetch(API_FEED_URL);
+                const data = await response.json();
+                if (data && Array.isArray(data)) {
+                    processIncomingItems([...data, ...localFeedPosts, ...fallbackItems], false);
+                }
+            } catch (err) {
+                console.log("Backend offline");
+            }
         }
-    } catch (err) {
-        console.log("Backend offline");
-    }
-}
+
         function parseLikeCount(val) {
             if (typeof val === 'number') return val;
             if (typeof val === 'string') {
@@ -2802,7 +2796,6 @@
 
             const displayedItems = filtered;
 
-
             if (displayedItems.length === 0) {
                 grid.innerHTML = `
                     <div class="col-12 text-center py-5">
@@ -2824,7 +2817,6 @@
                                     <video src="${item.media || item.img_url}" autoplay loop muted playsinline></video>
                                 ` : `
                                     <img src="${item.media || item.img_url}" alt="${item.title}">
-
                                 `}
                                 <div class="creator-tag" onclick="event.stopPropagation(); openCreatorProfile('${item.creator}')">
                                     <i class="fa-solid fa-circle-user text-info"></i> ${item.creator}
@@ -3163,332 +3155,306 @@
             alert('Link copied to clipboard!');
         }
 
-            function completeOnboarding() {
-        localStorage.setItem('evolysium_onboarded', 'true');
-    }
+        function completeOnboarding() {
+            localStorage.setItem('evolysium_onboarded', 'true');
+        }
 
-    // --- UBACI OVDJE NOVU FUNKCIJU ---
-    async function loadUserProfile() {
-        const { data: { user }, error: sessionError } = await window.supabaseClient.auth.getUser();
-        if (sessionError || !user) return;
+        async function loadUserProfile() {
+            if (!window.supabaseClient || !window.supabaseClient.auth) return;
+            const { data: { user }, error: sessionError } = await window.supabaseClient.auth.getUser();
+            if (sessionError || !user) return;
 
-        const { data: profile, error } = await window.supabaseClient
+            const { data: profile, error } = await window.supabaseClient
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+
+            if (error) return;
+
+            if (document.getElementById('user-name')) document.getElementById('user-name').innerText = profile.full_name || profile.email;
+            if (document.getElementById('user-tier')) document.getElementById('user-tier').innerText = profile.subscription_tier.toUpperCase();
+            if (document.getElementById('evo-money-balance')) document.getElementById('evo-money-balance').innerText = profile.evo_money + ' EVON';
+            
+            const badgeElement = document.getElementById('verification-badge');
+            if (badgeElement) badgeElement.style.display = profile.is_verified ? 'inline-block' : 'none';
+        }
+
+        async function upgradeSubscription(newTier) {
+          const { data: { user } } = await window.supabaseClient.auth.getUser();
+          if (!user) {
+            alert("Morate biti prijavljeni za nadogradnju paketa!");
+            return;
+          }
+
+          const { error } = await window.supabaseClient
             .from('profiles')
-            .select('*')
+            .update({ subscription_tier: newTier })
+            .eq('id', user.id);
+
+          if (error) {
+            alert("Greška pri nadogradnji paketa: " + error.message);
+          } else {
+            alert(`Uspješno ste nadogradili paket na: ${newTier.toUpperCase().replace('_', ' ')}! ⚡`);
+            loadUserProfile();
+          }
+        }
+
+        async function spendEvoMoney(amount, actionDescription) {
+          const { data: { user } } = await window.supabaseClient.auth.getUser();
+          if (!user) return alert("Prijavite se!");
+
+          const { data: profile } = await window.supabaseClient
+            .from('profiles')
+            .select('evo_money')
             .eq('id', user.id)
             .single();
 
-        if (error) return;
+          if (profile.evo_money < amount) {
+            alert(`Nemate dovoljno Evo Money tokena! Potrebno: ${amount} EVON.`);
+            return false;
+          }
 
-        if (document.getElementById('user-name')) document.getElementById('user-name').innerText = profile.full_name || profile.email;
-        if (document.getElementById('user-tier')) document.getElementById('user-tier').innerText = profile.subscription_tier.toUpperCase();
-        if (document.getElementById('evo-money-balance')) document.getElementById('evo-money-balance').innerText = profile.evo_money + ' EVON';
-        
-        const badgeElement = document.getElementById('verification-badge');
-        if (badgeElement) badgeElement.style.display = profile.is_verified ? 'inline-block' : 'none';
-    }
-    // ---------------------------------
-async function upgradeSubscription(newTier) {
-  const { data: { user } } = await window.supabaseClient.auth.getUser();
-  if (!user) {
-    alert("Morate biti prijavljeni za nadogradnju paketa!");
-    return;
-  }
+          const { error } = await window.supabaseClient
+            .from('profiles')
+            .update({ evo_money: profile.evo_money - amount })
+            .eq('id', user.id);
 
-  const { error } = await window.supabaseClient
-    .from('profiles')
-    .update({ subscription_tier: newTier })
-    .eq('id', user.id);
+          if (error) {
+            alert("Greška u transakciji: " + error.message);
+            return false;
+          }
 
-  if (error) {
-    alert("Greška pri nadogradnji paketa: " + error.message);
-  } else {
-    alert(`Uspješno ste nadogradili paket na: ${newTier.toUpperCase().replace('_', ' ')}! ⚡`);
-    loadUserProfile();
-  }
-}
-
-async function spendEvoMoney(amount, actionDescription) {
-  const { data: { user } } = await window.supabaseClient.auth.getUser();
-  if (!user) return alert("Prijavite se!");
-
-  const { data: profile } = await window.supabaseClient
-    .from('profiles')
-    .select('evo_money')
-    .eq('id', user.id)
-    .single();
-
-  if (profile.evo_money < amount) {
-    alert(`Nemate dovoljno Evo Money tokena! Potrebno: ${amount} EVON.`);
-    return false;
-  }
-
-  const { error } = await window.supabaseClient
-    .from('profiles')
-    .update({ evo_money: profile.evo_money - amount })
-    .eq('id', user.id);
-
-  if (error) {
-    alert("Greška u transakciji: " + error.message);
-    return false;
-  }
-
-  alert(`Uspješno kupljeno: ${actionDescription} (-${amount} EVON)`);
-  loadUserProfile();
-  return true;
-}
-async function loadUserNotifications() {
-    const { data: { user } } = await window.supabaseClient.auth.getUser();
-    if (!user) return;
-
-    const { data: notifications, error } = await window.supabaseClient
-        .from('notifications')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-
-    if (error) {
-        console.error("Greška pri dohvatu obavijesti:", error);
-        return;
-    }
-
-    const container = document.getElementById('notifications-container');
-    if (container && notifications) {
-        container.innerHTML = notifications.map(n => `
-            <div class="notification-item ${n.is_read ? '' : 'unread'} p-2 border-bottom">
-                <strong>${n.title}</strong>
-                <p class="mb-1">${n.message}</p>
-                <small class="text-muted">${new Date(n.created_at).toLocaleString()}</small>
-            </div>
-        `).join('');
-    }
-}
-async function sendP2PMoney(receiverUsername, amount) {
-    const { data, error } = await window.supabaseClient.rpc('transfer_evo_money', {
-        receiver_username: receiverUsername,
-        amount: parseFloat(amount)
-    });
-
-    if (error) {
-        alert("Greška pri slanju: " + error.message);
-        return false;
-    }
-
-    alert("Uspješno ste poslali tokene i osvojili bonus XP i Gems!");
-    loadUserProfile(); 
-    loadUserNotifications(); 
-    return true;
-}
-// Funkcija koja hvata podatke iz P2P forme i poziva naš RPC
-async function handleP2PSubmit() {
-    const usernameInput = document.getElementById('p2p-username');
-    const amountInput = document.getElementById('p2p-amount');
-    
-    const username = usernameInput.value.trim();
-    const amount = amountInput.value;
-
-    if (!username || !amount) {
-        alert("Molimo unesite korisničko ime i iznos.");
-        return;
-    }
-
-    const success = await sendP2PMoney(username, amount);
-    if (success) {
-        usernameInput.value = '';
-        amountInput.value = '';
-    }
-}
-
-// Funkcija za dijeljenje Watch Party linka (mečevi)
-async function shareWatchParty() {
-    const linkInput = document.getElementById('event-link');
-    const link = linkInput.value.trim();
-
-    if (!link) {
-        alert("Unesite valjani link na događaj ili meč.");
-        return;
-    }
-
-    // Ovdje možemo nagraditi korisnika malim bonusom za dijeljenje sadržaja
-    const { data: { user } } = await window.supabaseClient.auth.getUser();
-    if (!user) {
-        alert("Morate biti prijavljeni.");
-        return;
-    }
-
-    // Dodajemo sitan bonus XP-a za dijeljenje sadržaja zajednici
-    const { error } = await window.supabaseClient
-        .from('profiles')
-        .update({ xp: window.currentXP ? window.currentXP + 5 : 5 }) // ili direktno RPC ako želiš sigurnije
-        .eq('id', user.id);
-
-    alert("Uspješno ste podijelili Watch Party link i zaradili bonus bodove! 🚀");
-    linkInput.value = '';
-    loadUserProfile();
-}
-<!-- EVOlysiuM P2P ARENA -->
-<div id="p2p-arena-container" style="background: #09090b; border: 1px solid rgba(168,85,247,0.3); padding: 24px; border-radius: 16px; color: white; max-width: 450px; margin: 20px auto; font-family: inherit; box-shadow: 0 0 30px rgba(168,85,247,0.15);">
-  <h2 style="font-size: 20px; font-weight: bold; background: linear-gradient(to right, #fbbf24, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px;">
-    Evolysium P2P Arena
-  </h2>
-
-  <!-- Kreiraj izazov -->
-  <div style="background: rgba(24,24,27,0.5); padding: 16px; border-radius: 12px; border: 1px solid #27272a; margin-bottom: 16px;">
-    <label style="font-size: 13px; color: #a1a1aa; display: block; margin-bottom: 8px;">Kreiraj novi izazov</label>
-    <div style="display: flex; gap: 8px;">
-      <input type="number" id="wagerAmountInput" placeholder="Iznos u $EVO" style="flex: 1; background: black; border: 1px solid #27272a; border-radius: 10px; padding: 10px; color: white; outline: none; font-size: 14px;" />
-      <button onclick="createWagerOnChain()" style="padding: 10px 16px; background: linear-gradient(to right, #f59e0b, #9333ea); font-weight: bold; border-radius: 10px; border: none; color: black; cursor: pointer; font-size: 13px;">Baci Izazov</button>
-    </div>
-  </div>
-
-  <!-- Aktivni izazovi -->
-  <div>
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-      <span style="font-size: 13px; font-weight: 600; color: #d4d4d8;">Aktivni izazovi na čekanju</span>
-      <button onclick="loadActiveWagers()" style="background: none; border: none; color: #c084fc; font-size: 12px; cursor: pointer;">Osvježi</button>
-    </div>
-    <div id="activeWagersList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-      <p style="font-size: 12px; color: #71717a; text-align: center; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b;">Učitavanje izazova...</p>
-    </div>
-  </div>
-
-  <p id="p2pStatus" style="font-size: 12px; color: #fbbf24; background: #18181b; padding: 10px; border-radius: 8px; border: 1px solid #27272a; margin-top: 16px; display: none;"></p>
-</div>
-
-<!-- Skripta za pametne ugovore (Ethers.js v6) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-<script>
-  const WAGER_ADDR = "0xd8b934580fce35a11B58C6073aDeE468a2833fa8";
-  const TOKEN_ADDR = "0xd9145CCE52D386f254917e481eB44e9943F39138";
-
-  const WAGER_ABI_JS = [
-    "function createWager(uint256 _amount) external returns (uint256)",
-    "function acceptWager(uint256 _wagerId) external",
-    "function wagerCounter() view returns (uint256)",
-    "function wagers(uint256) view returns (address player1, address player2, uint256 amount, bool isAccepted, bool isResolved, address winner)"
-  ];
-  const ERC20_ABI_JS = [
-    "function approve(address spender, uint256 amount) public returns (bool)"
-  ];
-
-  function showStatus(msg) {
-    const p = document.getElementById('p2pStatus');
-    p.style.display = 'block';
-    p.innerText = msg;
-  }
-
-  async function createWagerOnChain() {
-    try {
-      const val = document.getElementById('wagerAmountInput').value;
-      if (!val) return alert("Unesi iznos!");
-      if (!window.ethereum) return alert("Instaliraj MetaMask!");
-
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const token = new ethers.Contract(TOKEN_ADDR, ERC20_ABI_JS, signer);
-      const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
-
-      const parsed = ethers.parseUnits(val, 18);
-      showStatus("Odobravanje tokena...");
-      const tx1 = await token.approve(WAGER_ADDR, parsed);
-      await tx1.wait();
-
-      showStatus("Kreiranje oklade...");
-      const tx2 = await wager.createWager(parsed);
-      await tx2.wait();
-
-      showStatus("Uspješno kreiran izazov!");
-      loadActiveWagers();
-    } catch (err) {
-      console.error(err);
-      showStatus("Greška: " + (err.reason || err.message));
-    }
-  }
-
-  async function acceptWagerOnChain(id, amt) {
-    try {
-      if (!window.ethereum) return alert("Instaliraj MetaMask!");
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const token = new ethers.Contract(TOKEN_ADDR, ERC20_ABI_JS, signer);
-      const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
-
-      const parsed = ethers.parseUnits(amt, 18);
-      showStatus(`Odobravanje tokena za okladu #${id}...`);
-      const tx1 = await token.approve(WAGER_ADDR, parsed);
-      await tx1.wait();
-
-      showStatus(`Prihvaćanje oklade #${id}...`);
-      const tx2 = await wager.acceptWager(id);
-      await tx2.wait();
-
-      showStatus(`Oklada #${id} uspješno prihvaćena!`);
-      loadActiveWagers();
-    } catch (err) {
-      console.error(err);
-      showStatus("Greška: " + (err.reason || err.message));
-    }
-  }
-
-  async function loadActiveWagers() {
-    try {
-      if (!window.ethereum) return;
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, provider);
-      const count = await wager.wagerCounter();
-      
-      let html = "";
-      let activeFound = false;
-
-      for (let i = 1; i <= Number(count); i++) {
-        const w = await wager.wagers(i);
-        if (!w.isAccepted && !w.isResolved) {
-          activeFound = true;
-          const formattedAmt = ethers.formatUnits(w.amount, 18);
-          html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; background: black; border: 1px solid #27272a; padding: 10px; border-radius: 8px;">
-              <div>
-                <p style="font-size: 12px; font-weight: bold; color: #fbbf24; margin: 0;">Oklada #${i}</p>
-                <p style="font-size: 11px; color: #a1a1aa; margin: 2px 0 0 0;">Ulog: <span style="color: white; font-weight: bold;">${formattedAmt} $EVO</span></p>
-              </div>
-              <button onclick="acceptWagerOnChain(${i}, '${formattedAmt}')" style="padding: 6px 12px; background: #9333ea; color: white; font-weight: bold; font-size: 11px; border-radius: 6px; border: none; cursor: pointer;">Prihvati</button>
-            </div>
-          `;
+          alert(`Uspješno kupljeno: ${actionDescription} (-${amount} EVON)`);
+          loadUserProfile();
+          return true;
         }
-      }
 
-      document.getElementById('activeWagersList').innerHTML = activeFound ? html : '<p style="font-size: 12px; color: #71717a; text-align: center; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b; margin: 0;">Trenutno nema aktivnih izazova.</p>';
-    } catch (err) {
-      console.error(err);
-    }
-  }
+        async function loadUserNotifications() {
+            if (!window.supabaseClient || !window.supabaseClient.auth) return;
+            const { data: { user } } = await window.supabaseClient.auth.getUser();
+            if (!user) return;
 
-  window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(loadActiveWagers, 1500);
-  });
+            const { data: notifications, error } = await window.supabaseClient
+                .from('notifications')
+                .select('*')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false });
 
-    window.addEventListener('DOMContentLoaded', () => {
-        loadUserProfile(); // <--- OVDJE SE POZIVA FUNKCIJA
-        updateAuthUI();
-        updateNotificationUI();
-        renderInbox();
-        loadBackendFeed();
-        loadUserNotifications();
-loadActiveWagers();
-        setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            if (preloader && preloader.style) {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 500);
+            if (error) {
+                console.error("Greška pri dohvatu obavijesti:", error);
+                return;
             }
-        }, 1000);
 
-        if (!localStorage.getItem('evolysium_onboarded')) {
-            const onboardingModal = new bootstrap.Modal(document.getElementById('onboardingModal'));
-            onboardingModal.show();
+            const container = document.getElementById('notifications-container');
+            if (container && notifications) {
+                container.innerHTML = notifications.map(n => `
+                    <div class="notification-item ${n.is_read ? '' : 'unread'} p-2 border-bottom">
+                        <strong>${n.title}</strong>
+                        <p class="mb-1">${n.message}</p>
+                        <small class="text-muted">${new Date(n.created_at).toLocaleString()}</small>
+                    </div>
+                `).join('');
+            }
         }
-    });
 
+        async function sendP2PMoney(receiverUsername, amount) {
+            const { data, error } = await window.supabaseClient.rpc('transfer_evo_money', {
+                receiver_username: receiverUsername,
+                amount: parseFloat(amount)
+            });
+
+            if (error) {
+                alert("Greška pri slanju: " + error.message);
+                return false;
+            }
+
+            alert("Uspješno ste poslali tokene i osvojili bonus XP i Gems!");
+            loadUserProfile(); 
+            loadUserNotifications(); 
+            return true;
+        }
+
+        async function handleP2PSubmit() {
+            const usernameInput = document.getElementById('p2p-username');
+            const amountInput = document.getElementById('p2p-amount');
+            
+            const username = usernameInput.value.trim();
+            const amount = amountInput.value;
+
+            if (!username || !amount) {
+                alert("Molimo unesite korisničko ime i iznos.");
+                return;
+            }
+
+            const success = await sendP2PMoney(username, amount);
+            if (success) {
+                usernameInput.value = '';
+                amountInput.value = '';
+            }
+        }
+
+        async function shareWatchParty() {
+            const linkInput = document.getElementById('event-link');
+            const link = linkInput.value.trim();
+
+            if (!link) {
+                alert("Unesite valjani link na događaj ili meč.");
+                return;
+            }
+
+            const { data: { user } } = await window.supabaseClient.auth.getUser();
+            if (!user) {
+                alert("Morate biti prijavljeni.");
+                return;
+            }
+
+            const { error } = await window.supabaseClient
+                .from('profiles')
+                .update({ xp: window.currentXP ? window.currentXP + 5 : 5 })
+                .eq('id', user.id);
+
+            alert("Uspješno ste podijelili Watch Party link i zaradili bonus bodove! 🚀");
+            linkInput.value = '';
+            loadUserProfile();
+        }
+
+        // ==========================================
+        // SMART CONTRACT P2P ARENA JAVASCRIPT
+        // ==========================================
+        const WAGER_ADDR = "0xd8b934580fce35a11B58C6073aDeE468a2833fa8";
+        const TOKEN_ADDR = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+
+        const WAGER_ABI_JS = [
+          "function createWager(uint256 _amount) external returns (uint256)",
+          "function acceptWager(uint256 _wagerId) external",
+          "function wagerCounter() view returns (uint256)",
+          "function wagers(uint256) view returns (address player1, address player2, uint256 amount, bool isAccepted, bool isResolved, address winner)"
+        ];
+        const ERC20_ABI_JS = [
+          "function approve(address spender, uint256 amount) public returns (bool)"
+        ];
+
+        function showStatus(msg) {
+          const p = document.getElementById('p2pStatus');
+          if (p) {
+            p.style.display = 'block';
+            p.innerText = msg;
+          }
+        }
+
+        async function createWagerOnChain() {
+          try {
+            const val = document.getElementById('wagerAmountInput').value;
+            if (!val) return alert("Unesi iznos!");
+            if (!window.ethereum) return alert("Instaliraj MetaMask!");
+
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const token = new ethers.Contract(TOKEN_ADDR, ERC20_ABI_JS, signer);
+            const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
+
+            const parsed = ethers.parseUnits(val, 18);
+            showStatus("Odobravanje tokena...");
+            const tx1 = await token.approve(WAGER_ADDR, parsed);
+            await tx1.wait();
+
+            showStatus("Kreiranje oklade...");
+            const tx2 = await wager.createWager(parsed);
+            await tx2.wait();
+
+            showStatus("Uspješno kreiran izazov!");
+            loadActiveWagers();
+          } catch (err) {
+            console.error(err);
+            showStatus("Greška: " + (err.reason || err.message));
+          }
+        }
+
+        async function acceptWagerOnChain(id, amt) {
+          try {
+            if (!window.ethereum) return alert("Instaliraj MetaMask!");
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const token = new ethers.Contract(TOKEN_ADDR, ERC20_ABI_JS, signer);
+            const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
+
+            const parsed = ethers.parseUnits(amt, 18);
+            showStatus(`Odobravanje tokena za okladu #${id}...`);
+            const tx1 = await token.approve(WAGER_ADDR, parsed);
+            await tx1.wait();
+
+            showStatus(`Prihvaćanje oklade #${id}...`);
+            const tx2 = await wager.acceptWager(id);
+            await tx2.wait();
+
+            showStatus(`Oklada #${id} uspješno prihvaćena!`);
+            loadActiveWagers();
+          } catch (err) {
+            console.error(err);
+            showStatus("Greška: " + (err.reason || err.message));
+          }
+        }
+
+        async function loadActiveWagers() {
+          try {
+            if (!window.ethereum) return;
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, provider);
+            const count = await wager.wagerCounter();
+            
+            let html = "";
+            let activeFound = false;
+
+            for (let i = 1; i <= Number(count); i++) {
+              const w = await wager.wagers(i);
+              if (!w.isAccepted && !w.isResolved) {
+                activeFound = true;
+                const formattedAmt = ethers.formatUnits(w.amount, 18);
+                html += `
+                  <div style="display: flex; justify-content: space-between; align-items: center; background: black; border: 1px solid #27272a; padding: 10px; border-radius: 8px;">
+                    <div>
+                      <p style="font-size: 12px; font-weight: bold; color: #fbbf24; margin: 0;">Oklada #${i}</p>
+                      <p style="font-size: 11px; color: #a1a1aa; margin: 2px 0 0 0;">Ulog: <span style="color: white; font-weight: bold;">${formattedAmt} $EVO</span></p>
+                    </div>
+                    <button onclick="acceptWagerOnChain(${i}, '${formattedAmt}')" style="padding: 6px 12px; background: #9333ea; color: white; font-weight: bold; font-size: 11px; border-radius: 6px; border: none; cursor: pointer;">Prihvati</button>
+                  </div>
+                `;
+              }
+            }
+
+            const listEl = document.getElementById('activeWagersList');
+            if (listEl) {
+              listEl.innerHTML = activeFound ? html : '<p style="font-size: 12px; color: #71717a; text-align: center; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b; margin: 0;">Trenutno nema aktivnih izazova.</p>';
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }
+
+        // INITIALIZATION ON DOM LOAD
+        window.addEventListener('DOMContentLoaded', () => {
+            loadUserProfile();
+            updateAuthUI();
+            updateNotificationUI();
+            renderInbox();
+            loadBackendFeed();
+            loadUserNotifications();
+            loadActiveWagers();
+
+            setTimeout(() => {
+                const preloader = document.getElementById('app-preloader');
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 500);
+                }
+            }, 1000);
+
+            if (!localStorage.getItem('evolysium_onboarded')) {
+                const onboardingModal = new bootstrap.Modal(document.getElementById('onboardingModal'));
+                onboardingModal.show();
+            }
+        });
     </script>
 </body>
 </html>
