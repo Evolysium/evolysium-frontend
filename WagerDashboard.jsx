@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
-const WAGER_CONTRACT_ADDRESS = "OVDJE_STAVI_ADRESU_WAGER_UGOVORA"; // Ovdje upisuješ adresu onog drugog ugovora iz Remixa
+const WAGER_CONTRACT_ADDRESS = "0xd8b934580fce35a11B58C6073aDeE468a2833fa8";
 const EVO_TOKEN_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
 
 const WAGER_ABI = [
   "function createWager(uint256 _amount) external returns (uint256)",
   "function acceptWager(uint256 _wagerId) external",
-  "function wagerCounter() view returns (uint256)"
+  "function wagerCounter() view returns (uint256)",
+  "function wagers(uint256) view returns (address player1, address player2, uint256 amount, bool isAccepted, bool isResolved, address winner)"
 ];
 
 const ERC20_ABI = [
@@ -16,9 +17,41 @@ const ERC20_ABI = [
 
 export default function WagerDashboard() {
   const [amount, setAmount] = useState('');
-  const [wagerIdToAccept, setWagerIdToAccept] = useState('');
   const [status, setStatus] = useState('');
+  const [activeWagers, setActiveWagers] = useState([]);
 
+  // Funkcija za dohvat aktivnih oklada s pametnog ugovora
+  async function fetchWagers() {
+    try {
+      if (!window.ethereum) return;
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const wagerContract = new ethers.Contract(WAGER_CONTRACT_ADDRESS, WAGER_ABI, provider);
+
+      const count = await wagerContract.wagerCounter();
+      let wagersList = [];
+
+      for (let i = 1; i <= Number(count); i++) {
+        const wager = await wagerContract.wagers(i);
+        // Prikazujemo samo oklade koje još nisu prihvaćene ni završene
+        if (!wager.isAccepted && !wager.isResolved) {
+          wagersList.push({
+            id: i,
+            player1: wager.player1,
+            amount: ethers.formatUnits(wager.amount, 18)
+          });
+        }
+      }
+      setActiveWagers(wagersList);
+    } catch (err) {
+      console.error("Greška kod dohvata oklada:", err);
+    }
+  }
+
+  useEffect(() => {
+    fetchWagers();
+  }, []);
+
+  // 1. Kreiranje oklade
   async function handleCreateWager(e) {
     e.preventDefault();
     try {
@@ -40,76 +73,95 @@ export default function WagerDashboard() {
       await wagerTx.wait();
 
       setStatus("Oklada uspješno kreirana i zaključana u Escrowu!");
+      fetchWagers(); // Osvježi popis
     } catch (err) {
       console.error(err);
-      setStatus("Greška: " + err.reason);
+      setStatus("Greška: " + (err.reason || err.message));
     }
   }
 
-  async function handleAcceptWager(e) {
-    e.preventDefault();
+  // 2. Prihvaćanje oklade preko kartice
+  async function handleAcceptWager(wagerId, wagerAmount) {
     try {
       if (!window.ethereum) return alert("Instaliraj MetaMask!");
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
       const tokenContract = new ethers.Contract(EVO_TOKEN_ADDRESS, ERC20_ABI, signer);
-      const wagerContract = new ethers.Contract("0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8", WAGER_ABI, signer);
+      const wagerContract = new ethers.Contract(WAGER_CONTRACT_ADDRESS, WAGER_ABI, signer);
 
-      const parsedAmount = ethers.parseUnits("10", 18); 
+      const parsedAmount = ethers.parseUnits(wagerAmount, 18);
 
-      setStatus("Odobravanje tokena...");
+      setStatus(`Odobravanje tokena za okladu #${wagerId}...`);
       const approveTx = await tokenContract.approve(WAGER_CONTRACT_ADDRESS, parsedAmount);
       await approveTx.wait();
 
-      setStatus("Prihvaćanje oklade...");
-      const acceptTx = await wagerContract.acceptWager(wagerIdToAccept);
+      setStatus(`Prihvaćanje oklade #${wagerId}...`);
+      const acceptTx = await wagerContract.acceptWager(wagerId);
       await acceptTx.wait();
 
-      setStatus("Oklada uspješno prihvaćena! Sredstva su zaključana.");
+      setStatus(`Oklada #${wagerId} uspješno prihvaćena!`);
+      fetchWagers(); // Osvježi popis
     } catch (err) {
       console.error(err);
-      setStatus("Greška: " + err.reason);
+      setStatus("Greška: " + (err.reason || err.message));
     }
   }
 
   return (
-    <div className="bg-zinc-950 border border-purple-500/30 p-6 rounded-2xl text-white max-w-md mx-auto shadow-[0_0_30px_rgba(168,85,247,0.15)]">
-      <h2 className="text-xl font-bold bg-gradient-to-r from-amber-400 to-purple-400 bg-clip-text text-transparent mb-4">
+    <div className="bg-zinc-950 border border-purple-500/30 p-6 rounded-2xl text-white max-w-lg mx-auto shadow-[0_0_30px_rgba(168,85,247,0.15)] space-y-6">
+      <h2 className="text-xl font-bold bg-gradient-to-r from-amber-400 to-purple-400 bg-clip-text text-transparent">
         Evolysium P2P Arena
       </h2>
 
-      <form onSubmit={handleCreateWager} className="space-y-3 mb-6">
-        <label className="text-sm text-zinc-400">Kreiraj izazov ($EVO iznos)</label>
-        <input 
-          type="number" 
-          value={amount} 
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="npr. 50" 
-          className="w-full bg-black border border-zinc-800 rounded-xl p-3 text-white focus:border-purple-500 outline-none"
-        />
-        <button type="submit" className="w-full py-3 bg-gradient-to-r from-amber-500 to-purple-600 font-bold rounded-xl text-black hover:opacity-90">
-          Baci Izazov (Create Wager)
-        </button>
+      {/* Kreiraj okladu */}
+      <form onSubmit={handleCreateWager} className="space-y-3 bg-zinc-900/50 p-4 rounded-xl border border-zinc-800">
+        <label className="text-sm text-zinc-400 font-medium">Kreiraj novi izazov</label>
+        <div className="flex gap-2">
+          <input 
+            type="number" 
+            value={amount} 
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Iznos u $EVO" 
+            className="flex-1 bg-black border border-zinc-800 rounded-xl p-3 text-white focus:border-purple-500 outline-none text-sm"
+          />
+          <button type="submit" className="px-5 py-3 bg-gradient-to-r from-amber-500 to-purple-600 font-bold rounded-xl text-black hover:opacity-90 text-sm">
+            Baci Izazov
+          </button>
+        </div>
       </form>
 
-      <hr className="border-zinc-800 mb-6" />
+      {/* Popis aktivnih oklada */}
+      <div className="space-y-3">
+        <div className="flex justify-between items-center">
+          <h3 className="text-sm font-semibold text-zinc-300">Aktivni izazovi na čekanju</h3>
+          <button onClick={fetchWagers} className="text-xs text-purple-400 hover:underline">Osvježi</button>
+        </div>
 
-      <form onSubmit={handleAcceptWager} className="space-y-3">
-        <label className="text-sm text-zinc-400">Prihvati tuđi izazov (ID oklade)</label>
-        <input 
-          type="number" 
-          value={wagerIdToAccept} 
-          onChange={(e) => setWagerIdToAccept(e.target.value)}
-          placeholder="npr. 1" 
-          className="w-full bg-black border border-zinc-800 rounded-xl p-3 text-white focus:border-purple-500 outline-none"
-        />
-        <button type="submit" className="w-full py-3 bg-zinc-800 hover:bg-zinc-700 border border-purple-500/30 font-bold rounded-xl text-white">
-          Prihvati Okladu
-        </button>
-      </form>
+        {activeWagers.length === 0 ? (
+          <p className="text-xs text-zinc-500 italic bg-black/40 p-4 rounded-xl text-center border border-zinc-900">Trenutno nema aktivnih izazova.</p>
+        ) : (
+          <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+            {activeWagers.map((w) => (
+              <div key={w.id} className="flex items-center justify-between bg-black border border-zinc-800 p-3 rounded-xl">
+                <div>
+                  <p className="text-xs font-bold text-amber-400">Oklada #{w.id}</p>
+                  <p className="text-xs text-zinc-400">Ulog: <span className="text-white font-semibold">{w.amount} $EVO</span></p>
+                  <p className="text-[10px] text-zinc-600 truncate w-36">Creator: {w.player1}</p>
+                </div>
+                <button 
+                  onClick={() => handleAcceptWager(w.id, w.amount)}
+                  className="px-4 py-2 bg-purple-600 hover:bg-purple-500 font-bold text-xs rounded-lg text-white transition-colors"
+                >
+                  Prihvati
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-      {status && <p className="mt-4 text-xs text-amber-400 bg-zinc-900 p-3 rounded-lg border border-zinc-800">{status}</p>}
+      {status && <p className="text-xs text-amber-400 bg-zinc-900 p-3 rounded-lg border border-zinc-800">{status}</p>}
     </div>
   );
 }
