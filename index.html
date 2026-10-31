@@ -519,16 +519,17 @@
                 </button>
 
                 <!-- MODERN DROPDOWN: CREATE & PUBLISH -->
-                <div class="dropdown">
-                    <button class="social-pill active border-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-plus-circle text-warning"></i> Create Hub
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(30px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 220px;">
-                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkDropStoryLimit()"><i class="fa-solid fa-camera text-pink me-2"></i> Drop Story</a></li>
-                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkBrandStoryLimit()"><i class="fa-solid fa-bullhorn text-warning me-2"></i> Brand Story</a></li>
-                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkCreatorHubLimit()"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i> Creator Hub</a></li>
-                    </ul>
-                </div>
+<div class="dropdown">
+    <button class="social-pill active border-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-plus-circle text-warning"></i> Create Hub
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark shadow-lg p-2 mt-1" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(30px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 220px; z-index: 1080;">
+        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkDropStoryLimit()"><i class="fa-solid fa-camera text-pink me-2"></i> Drop Story</a></li>
+        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkBrandStoryLimit()"><i class="fa-solid fa-bullhorn text-warning me-2"></i> Brand Story</a></li>
+        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkCreatorHubLimit()"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i> Creator Hub</a></li>
+    </ul>
+</div>
+
 
                 <!-- MODERN DROPDOWN: SUITE TOOLS (EvoSync, EvoAds, EvoFlow) -->
                 <div class="dropdown">
@@ -560,15 +561,17 @@
                     <i class="fa-solid fa-crown text-warning"></i> Pricing
                 </button>
                 <div class="dropdown">
-                    <button class="social-pill position-relative" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()" style="z-index: 1050;">
-                        <i class="fa-solid fa-bell text-info"></i> Notifications
-                        <span id="notificationBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 5px 8px; display:none; z-index: 1060;">0</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(30px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 290px; z-index: 1070;" id="notificationsDropdownList">
-                        <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
-                        <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                        <li><span class="dropdown-item-text small text-muted">No new alerts</span></li>
-                    </ul>
+    <button class="social-pill position-relative dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsRead()" style="z-index: 1050;">
+        <i class="fa-solid fa-bell text-info"></i> Notifications
+        <span id="notificationBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 5px 8px; display:none; z-index: 1060;">0</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark shadow-lg p-2 mt-1" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(30px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 280px; max-width: 90vw; z-index: 1090;" id="notificationsDropdownList">
+        <li><h6 class="dropdown-header text-info fw-bold">Evolysium Notifications</h6></li>
+        <li><hr class="dropdown-divider border-secondary opacity-25"></li>
+        <li><span class="dropdown-item-text small text-muted">No new alerts</span></li>
+    </ul>
+</div>
+
                 </div>
             </div>
         </div>
@@ -588,6 +591,16 @@
                     <button class="btn btn-sm btn-vibe py-1 px-3" onclick="toggleAccountType()">Switch</button>
                 </div>
             </div>
+<hr class="border-secondary opacity-25 my-1">
+<span class="small text-muted font-mono mb-0">COMMUNITY & UPDATES</span>
+
+<a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inviteModal" data-bs-dismiss="offcanvas">
+    <i class="fa-solid fa-paper-plane text-cyan fs-5" style="width:24px;"></i>
+    <div>
+        <span class="fw-semibold d-block">Invite Friends & Newsletter</span>
+        <span class="small text-muted" style="font-size:0.75rem;">Get bonus $EVO tokens & weekly pulse</span>
+    </div>
+</a>
 
             <div class="p-3 rounded-4 mb-2" style="background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07);">
                 <span class="small text-muted d-block mb-1 font-mono">VERIFIED BADGE STATUS</span>
