@@ -483,7 +483,7 @@
         <p class="small text-muted font-mono">Loading your vibe</p>
     </div>
 
-    <!-- Header -->
+    <!-- Header Navbar -->
     <nav class="navbar navbar-dark sticky-top navbar-custom py-3">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-3">
@@ -518,6 +518,30 @@
                     <i class="fa-solid fa-mobile-screen text-pink"></i> Install App
                 </button>
 
+                <!-- MODERN DROPDOWN: CREATE & PUBLISH -->
+                <div class="dropdown">
+                    <button class="social-pill active border-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-plus-circle text-warning"></i> Create Hub
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(30px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 220px;">
+                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkDropStoryLimit()"><i class="fa-solid fa-camera text-pink me-2"></i> Drop Story</a></li>
+                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkBrandStoryLimit()"><i class="fa-solid fa-bullhorn text-warning me-2"></i> Brand Story</a></li>
+                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" onclick="checkCreatorHubLimit()"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i> Creator Hub</a></li>
+                    </ul>
+                </div>
+
+                <!-- MODERN DROPDOWN: SUITE TOOLS (EvoSync, EvoAds, EvoFlow) -->
+                <div class="dropdown">
+                    <button class="social-pill active border-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-layer-group text-info"></i> Suite Tools
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg p-2" style="background: rgba(14, 11, 24, 0.98); backdrop-filter: blur(30px); border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); width: 200px;">
+                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" data-bs-toggle="modal" data-bs-target="#evoSyncModal"><i class="fa-solid fa-sync text-info me-2"></i> EvoSync</a></li>
+                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" data-bs-toggle="modal" data-bs-target="#evoAdsModal"><i class="fa-solid fa-bullhorn text-warning me-2"></i> EvoAds</a></li>
+                        <li><a class="dropdown-item rounded-3 py-2 small text-white" href="#" data-bs-toggle="modal" data-bs-target="#evoFlowModal"><i class="fa-solid fa-calendar-days text-pink me-2"></i> EvoFlow</a></li>
+                    </ul>
+                </div>
+
                 <button class="social-pill" onclick="cycleTheme()" title="Switch Neon Theme">
                     <i class="fa-solid fa-palette text-warning"></i>
                 </button>
@@ -525,28 +549,9 @@
                     <i class="fa-solid fa-right-to-bracket text-success"></i> <span id="authNavButtonLabel">Sign In</span>
                 </button>
                 
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#evoSyncModal" title="EvoSync Tool">
-                    <i class="fa-solid fa-sync text-info"></i> EvoSync
-                </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#evoAdsModal" title="EvoAds Tool">
-                    <i class="fa-solid fa-bullhorn text-warning"></i> EvoAds
-                </button>
-                <button class="social-pill active" data-bs-toggle="modal" data-bs-target="#evoFlowModal" title="EvoFlow Tool">
-                    <i class="fa-solid fa-calendar-days text-pink"></i> EvoFlow
-                </button>
-
                 <button class="social-pill position-relative" data-bs-toggle="modal" data-bs-target="#inboxModal">
                     <i class="fa-solid fa-envelope text-pink"></i> Inbox
                     <span id="inboxBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.55rem; display:none;">0</span>
-                </button>
-                <button class="social-pill active" onclick="checkBrandStoryLimit()" title="Drop Brand Story">
-                    <i class="fa-solid fa-bullhorn text-warning"></i> Brand Story
-                </button>
-                <button class="social-pill active" onclick="checkDropStoryLimit()" title="Story Drop">
-                    <i class="fa-solid fa-plus-circle"></i> Drop Story
-                </button>
-                <button class="social-pill active" onclick="checkCreatorHubLimit()" title="Add Recipe, DIY, Digital Book or Trend">
-                    <i class="fa-solid fa-wand-magic-sparkles text-info"></i> Creator Hub
                 </button>
                 <button class="social-pill" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="updateProfileStats()">
                     <i class="fa-solid fa-user-gear text-info"></i> My Profile <span id="verifiedBadgeIcon" class="text-warning ms-1" style="display:none;" title="Verified Profile"><i class="fa-solid fa-circle-check"></i></span>
@@ -679,109 +684,80 @@
                     <span class="small text-muted" style="font-size:0.75rem;">Zero-toxic filter & auto translator</span>
                 </div>
             </a>
-
-            <hr class="border-secondary opacity-25 my-1">
-            <span class="small text-muted font-mono mb-0">MANAGEMENT SUITE</span>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#evoSyncModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-sync text-info fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">EvoSync</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Cross-platform multi-account sync</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#evoAdsModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-bullhorn text-warning fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">EvoAds</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Brand ads & campaign management</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#evoFlowModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-calendar-days text-pink fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">EvoFlow</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Smart content scheduler & planner</span>
-                </div>
-            </a>
-
-            <hr class="border-secondary opacity-25 my-1">
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inboxModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-envelope text-pink fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">Messages</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Conversations and chat overview</span>
-                </div>
-            </a>
-
-            <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-light p-2 rounded-3" data-bs-toggle="modal" data-bs-target="#inviteModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-user-plus text-info fs-5" style="width:24px;"></i>
-                <div>
-                    <span class="fw-semibold d-block">Invite Friends & Newsletter</span>
-                    <span class="small text-muted" style="font-size:0.75rem;">Email invitations and subscription</span>
-                </div>
-            </a>
         </div>
     </div>
 
     <!-- Main Content -->
     <main class="container py-4">
+        
+        <!-- UNIFIED P2P ARENA & SOCIAL HUB CARD -->
         <div class="card p-4 mt-4 shadow-sm" style="background: rgba(25, 20, 35, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; backdrop-filter: blur(10px); border-radius: 16px;">
-            <h4 style="color: #fff;">Evolysium Social & P2P Hub 🥊</h4>
-            <p class="text-muted" style="color: #aaa !important;">Send tokens to a friend or share a link to a boxing match / Watch Party for bonus XP and Gems!</p>
+            <h4 style="color: #fff;" class="mb-1">Evolysium P2P & Arena Hub 🥊</h4>
+            <p class="text-muted small mb-4">Send tokens to a friend, share a watch party link, or participate in on-chain wager battles!</p>
             
-            <!-- P2P Form -->
-            <div class="mb-3">
-                <label for="p2p-username" class="form-label" style="color: #ddd;">Recipient Username</label>
-                <input type="text" id="p2p-username" class="form-control bg-dark text-white border-secondary" placeholder="Enter username...">
-            </div>
-            <div class="mb-3">
-                <label for="p2p-amount" class="form-label" style="color: #ddd;">Evo Money Amount</label>
-                <input type="number" id="p2p-amount" class="form-control bg-dark text-white border-secondary" placeholder="0.00">
-            </div>
-            <button class="btn btn-primary w-100 mb-4" onclick="handleP2PSubmit()">Send Tokens & Claim Reward</button>
+            <!-- Navigation Tabs for Hub -->
+            <ul class="nav nav-pills mb-4 gap-2" role="tablist">
+                <li class="nav-item"><button class="social-pill active" data-bs-toggle="pill" data-bs-target="#tabP2PTransfer"><i class="fa-solid fa-paper-plane me-1"></i> P2P Transfer & Watch Party</button></li>
+                <li class="nav-item"><button class="social-pill" data-bs-toggle="pill" data-bs-target="#tabP2PArena"><i class="fa-solid fa-bolt me-1"></i> On-Chain Wager Arena</button></li>
+            </ul>
 
-            <hr style="border-color: rgba(255, 255, 255, 0.1);">
-
-            <!-- Watch Party / Event Link -->
-            <div class="mb-3 mt-3">
-                <label for="event-link" class="form-label" style="color: #ddd;">Match / Watch Party Link</label>
-                <input type="url" id="event-link" class="form-control bg-dark text-white border-secondary" placeholder="https://youtube.com/...">
-            </div>
-            <button class="btn btn-success w-100 mb-4" onclick="shareWatchParty()">Share Match with Friends (Bonus XP)</button>
-
-            <hr style="border-color: rgba(255, 255, 255, 0.1);">
-
-            <!-- EVOlysiuM P2P ARENA (HTML SUČELJE VRAĆENO NA PRAVO MJESTO) -->
-            <div id="p2p-arena-container" style="background: #09090b; border: 1px solid rgba(168,85,247,0.3); padding: 24px; border-radius: 16px; color: white; max-width: 100%; font-family: inherit; box-shadow: 0 0 30px rgba(168,85,247,0.15);">
-              <h2 style="font-size: 20px; font-weight: bold; background: linear-gradient(to right, #fbbf24, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px;">
-                Evolysium On-Chain P2P Arena ⚡
-              </h2>
-
-              <!-- Kreiraj izazov -->
-              <div style="background: rgba(24,24,27,0.5); padding: 16px; border-radius: 12px; border: 1px solid #27272a; margin-bottom: 16px;">
-                <label style="font-size: 13px; color: #a1a1aa; display: block; margin-bottom: 8px;">Kreiraj novi izazov u $EVO tokenima</label>
-                <div style="display: flex; gap: 8px;">
-                  <input type="number" id="wagerAmountInput" placeholder="Iznos u $EVO" style="flex: 1; background: black; border: 1px solid #27272a; border-radius: 10px; padding: 10px; color: white; outline: none; font-size: 14px;" />
-                  <button onclick="createWagerOnChain()" style="padding: 10px 16px; background: linear-gradient(to right, #f59e0b, #9333ea); font-weight: bold; border-radius: 10px; border: none; color: black; cursor: pointer; font-size: 13px;">Baci Izazov</button>
+            <div class="tab-content">
+                <!-- Tab 1: P2P Transfers & Watch Party -->
+                <div class="tab-pane fade show active" id="tabP2PTransfer">
+                    <div class="row g-4">
+                        <div class="col-md-6 border-end border-secondary border-opacity-25">
+                            <h6 class="fw-bold text-white mb-3">Send Tokens P2P</h6>
+                            <div class="mb-3">
+                                <label for="p2p-username" class="form-label small text-muted">Recipient Username</label>
+                                <input type="text" id="p2p-username" class="form-control auth-input" placeholder="Enter username...">
+                            </div>
+                            <div class="mb-3">
+                                <label for="p2p-amount" class="form-label small text-muted">Evo Money Amount</label>
+                                <input type="number" id="p2p-amount" class="form-control auth-input" placeholder="0.00">
+                            </div>
+                            <button class="btn btn-vibe w-100 rounded-pill" onclick="handleP2PSubmit()">Send Tokens & Claim Reward</button>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-white mb-3">Watch Party & Event Streaming</h6>
+                            <div class="mb-3">
+                                <label for="event-link" class="form-label small text-muted">Match / Watch Party Link</label>
+                                <input type="url" id="event-link" class="form-control auth-input" placeholder="https://youtube.com/...">
+                            </div>
+                            <button class="btn btn-outline-info w-100 rounded-pill py-3" onclick="shareWatchParty()">Share Match with Friends (Bonus XP)</button>
+                        </div>
+                    </div>
                 </div>
-              </div>
 
-              <!-- Aktivni izazovi -->
-              <div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <span style="font-size: 13px; font-weight: 600; color: #d4d4d8;">Aktivni izazovi na čekanju (Smart Contract)</span>
-                  <button onclick="loadActiveWagers()" style="background: none; border: none; color: #c084fc; font-size: 12px; cursor: pointer;">Osvježi</button>
-                </div>
-                <div id="activeWagersList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-                  <p style="font-size: 12px; color: #71717a; text-align: center; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b;">Učitavanje izazova...</p>
-                </div>
-              </div>
+                <!-- Tab 2: On-Chain Wager Arena -->
+                <div class="tab-pane fade" id="tabP2PArena">
+                    <div id="p2p-arena-container" style="background: #09090b; border: 1px solid rgba(168,85,247,0.3); padding: 20px; border-radius: 16px; color: white; width: 100%;">
+                      <h2 style="font-size: 18px; font-weight: bold; background: linear-gradient(to right, #fbbf24, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 14px;">
+                        Evolysium On-Chain P2P Arena ⚡
+                      </h2>
 
-              <p id="p2pStatus" style="font-size: 12px; color: #fbbf24; background: #18181b; padding: 10px; border-radius: 8px; border: 1px solid #27272a; margin-top: 16px; display: none;"></p>
+                      <!-- Create Wager -->
+                      <div style="background: rgba(24,24,27,0.5); padding: 14px; border-radius: 12px; border: 1px solid #27272a; margin-bottom: 14px;">
+                        <label style="font-size: 13px; color: #a1a1aa; display: block; margin-bottom: 6px;">Create New Challenge in $EVO Tokens</label>
+                        <div style="display: flex; gap: 8px;">
+                          <input type="number" id="wagerAmountInput" placeholder="Amount in $EVO" style="flex: 1; background: black; border: 1px solid #27272a; border-radius: 10px; padding: 10px; color: white; outline: none; font-size: 14px;" />
+                          <button onclick="createWagerOnChain()" style="padding: 10px 16px; background: linear-gradient(to right, #f59e0b, #9333ea); font-weight: bold; border-radius: 10px; border: none; color: black; cursor: pointer; font-size: 13px;">Create Wager</button>
+                        </div>
+                      </div>
+
+                      <!-- Active Wagers -->
+                      <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                          <span style="font-size: 13px; font-weight: 600; color: #d4d4d8;">Active Pending Challenges (Smart Contract)</span>
+                          <button onclick="loadActiveWagers()" style="background: none; border: none; color: #c084fc; font-size: 12px; cursor: pointer;">Refresh</button>
+                        </div>
+                        <div id="activeWagersList" style="max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+                          <p style="font-size: 12px; color: #71717a; text-align: center; padding: 14px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b;">Loading challenges...</p>
+                        </div>
+                      </div>
+
+                      <p id="p2pStatus" style="font-size: 12px; color: #fbbf24; background: #18181b; padding: 10px; border-radius: 8px; border: 1px solid #27272a; margin-top: 14px; display: none;"></p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1119,7 +1095,7 @@
                             <div class="p-3 rounded-3 font-mono small text-info bg-dark border border-info mb-3">
                                 ⚡ AI Priority Alert: @brand_partner sent an inquiry for a sponsored campaign. Suggested reply ready.
                             </div>
-                            <button type="button" class="btn btn-outline-info w-100 rounded-pill" onclick="alert('AI Auto-reply agent successfully executed for all priority brand messages!')">Run AI Auto-Reply Agent</button>
+                            <button type="button" class="btn btn-outline-info w-100 rounded-pill" onclick="showToastNotification('AI Auto-reply agent successfully executed for all priority brand messages!')">Run AI Auto-Reply Agent</button>
                         </div>
                         <div class="tab-pane fade" id="tabSyncVoice">
                             <p class="small text-muted">AI Cross-Platform Voice Translator & Voice Cloning for international global expansion.</p>
@@ -1131,14 +1107,14 @@
                                     <option>Spanish (Studio Quality)</option>
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="alert('Voice cloned and translated successfully for international distribution channels!')">Synthesize & Sync Audio Across Networks</button>
+                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="showToastNotification('Voice cloned and translated successfully for international distribution channels!')">Synthesize & Sync Audio Across Networks</button>
                         </div>
                         <div class="tab-pane fade" id="tabSyncAgency">
                             <p class="small text-muted">Multi-Account Agency Hub: Switch managed client portfolios and team permission levels instantly.</p>
                             <div class="p-3 rounded-3 bg-dark border border-secondary text-white small mb-3">
                                 Active Managed Portfolios: <b>3 Client Brands</b> (All tokens & schedules synced)
                             </div>
-                            <button type="button" class="btn btn-outline-warning w-100 rounded-pill" onclick="alert('Client portfolio permissions updated successfully!')">Manage Agency Permissions</button>
+                            <button type="button" class="btn btn-outline-warning w-100 rounded-pill" onclick="showToastNotification('Client portfolio permissions updated successfully!')">Manage Agency Permissions</button>
                         </div>
                         <div class="tab-pane fade" id="tabSyncMirror">
                             <p class="small text-muted">Real-Time Live Stream Mirroring: Broadcast live streams simultaneously across Evolysium, IG, and TikTok.</p>
@@ -1146,7 +1122,7 @@
                                 <label class="form-label small text-muted">Live Stream Room Title</label>
                                 <input type="text" class="form-control auth-input" placeholder="Friday Night Q&A & Trend Reveal">
                             </div>
-                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="alert('Live stream successfully mirrored across all connected platforms in real-time!')">Launch Multi-Platform Live Mirror</button>
+                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="showToastNotification('Live stream successfully mirrored across all connected platforms in real-time!')">Launch Multi-Platform Live Mirror</button>
                         </div>
                     </div>
                 </div>
@@ -1257,14 +1233,14 @@
                                 <div class="col-4"><div class="p-4 rounded-3 text-center bg-dark border border-secondary small">Grid Slot 2 (Trending)</div></div>
                                 <div class="col-4"><div class="p-4 rounded-3 text-center bg-dark border border-secondary small">Grid Slot 3 (Brand)</div></div>
                             </div>
-                            <button type="button" class="btn btn-outline-info w-100 rounded-pill" onclick="alert('Grid aesthetic layout successfully synchronized!')">Save Aesthetic Grid Layout</button>
+                            <button type="button" class="btn btn-outline-info w-100 rounded-pill" onclick="showToastNotification('Grid aesthetic layout successfully synchronized!')">Save Aesthetic Grid Layout</button>
                         </div>
                         <div class="tab-pane fade" id="tabFlowRecycler">
                             <p class="small text-muted">Evergreen Content Recycler: Automatically repost top-performing tutorials, recipes and guides when your calendar has open slots.</p>
                             <div class="p-3 rounded-3 bg-dark border border-success text-success small mb-3">
                                 ✓ Recycler Active: 4 Evergreen posts queued for automatic rotational republication.
                             </div>
-                            <button type="button" class="btn btn-outline-success w-100 rounded-pill" onclick="alert('Evergreen recycling settings updated!')">Configure Recycler Rules</button>
+                            <button type="button" class="btn btn-outline-success w-100 rounded-pill" onclick="showToastNotification('Evergreen recycling settings updated!')">Configure Recycler Rules</button>
                         </div>
                         <div class="tab-pane fade" id="tabFlowFunnel">
                             <p class="small text-muted">Automated Content Funnel & DM Trigger: Automatically send private messages with links/promo codes when users comment specific keywords.</p>
@@ -1272,7 +1248,7 @@
                                 <label class="form-label small text-muted">Keyword Comment Trigger</label>
                                 <input type="text" class="form-control auth-input" placeholder="e.g., LINK or GUIDE">
                             </div>
-                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="alert('DM Trigger Funnel configured successfully!')">Activate Automated Funnel Trigger</button>
+                            <button type="button" class="btn btn-vibe w-100 rounded-pill" onclick="showToastNotification('DM Trigger Funnel configured successfully!')">Activate Automated Funnel Trigger</button>
                         </div>
                     </div>
                 </div>
@@ -1388,7 +1364,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bullhorn text-warning me-2"></i>Publish Brand Story (Limit: 1)</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-bullhorn text-warning me-2"></i>Publish Brand Story</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -1425,7 +1401,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-light" style="background: rgba(14, 11, 24, 0.96); backdrop-filter: blur(30px); border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);">
                 <div class="modal-header border-0 pt-4 px-4">
-                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i>Creator Trend Content Hub (Limit: 2)</h4>
+                    <h4 class="fw-bold mb-0"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i>Creator Trend Content Hub</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -1628,7 +1604,7 @@
                     <span class="small text-muted font-mono" id="viewerModalCreator">@creator</span>
                     <div class="d-flex gap-2">
                         <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="openTipJarModal()"><i class="fa-solid fa-coins me-1"></i> Send Tip 🪙</button>
-                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="alert('Liked this story media!')"><i class="fa-solid fa-heart me-1"></i> Like</button>
+                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="showToastNotification('Liked this story media!')"><i class="fa-solid fa-heart me-1"></i> Like</button>
                     </div>
                 </div>
             </div>
@@ -1795,6 +1771,18 @@
         </div>
     </div>
 
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11000;">
+        <div id="liveToast" class="toast align-items-center text-white bg-dark border border-info shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">
+                    Action completed successfully.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_BASE_URL = 'https://evolysium-backend.onrender.com';
@@ -1843,6 +1831,19 @@
 
         let currentThemeIndex = parseInt(localStorage.getItem('evolysium_theme_idx') || '0');
         const themes = ['', 'theme-matrix', 'theme-gold'];
+        
+        function showToastNotification(msg) {
+            const toastEl = document.getElementById('liveToast');
+            const toastMsg = document.getElementById('toastMessage');
+            if (toastEl && toastMsg) {
+                toastMsg.innerText = msg;
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            } else {
+                alert(msg);
+            }
+        }
+
         function applyTheme(idx) {
             document.body.className = themes[idx];
             localStorage.setItem('evolysium_theme_idx', idx);
@@ -1881,10 +1882,10 @@
                     localStorage.setItem('evolysium_web3_address', web3AccountAddress);
                     updateAuthUI();
                     addNotification('Web3 Wallet successfully connected via MetaMask!');
-                    alert('MetaMask Wallet connected: ' + web3AccountAddress);
+                    showToastNotification('MetaMask Wallet connected: ' + web3AccountAddress.substring(0, 6) + '...');
                 } catch (err) {
                     console.error(err);
-                    alert('User rejected Web3 connection request.');
+                    showToastNotification('User rejected Web3 connection request.');
                 }
             } else {
                 web3AccountAddress = '0x71C...39a2';
@@ -1893,7 +1894,7 @@
                 localStorage.setItem('evolysium_web3_address', web3AccountAddress);
                 updateAuthUI();
                 addNotification('Web3 Simulated Wallet connected successfully!');
-                alert('Web3 Simulated Wallet connected: ' + web3AccountAddress);
+                showToastNotification('Web3 Simulated Wallet connected: 0x71C...39a2');
             }
         }
 
@@ -1914,7 +1915,7 @@
                 }
                 deferredPrompt = null;
             } else {
-                alert('PWA App is ready! On mobile devices, tap "Add to Home Screen" in your browser menu to install Evolysium.');
+                showToastNotification('PWA App is ready! On mobile devices, tap "Add to Home Screen" in your browser menu to install Evolysium.');
             }
         }
 
@@ -1922,7 +1923,7 @@
             const topic = document.getElementById('aiHookTopic').value.trim();
             const resEl = document.getElementById('aiHookResult');
             if (!topic) {
-                alert('Please enter a topic or post description.');
+                showToastNotification('Please enter a topic or post description.');
                 return;
             }
             const hooks = [
@@ -1941,7 +1942,7 @@
             const offer = parseFloat(document.getElementById('dealInitialOffer').value) || 100;
             const resEl = document.getElementById('aiDealResult');
             if (!brand) {
-                alert('Please enter a brand name.');
+                showToastNotification('Please enter a brand name.');
                 return;
             }
             const counterOffer = Math.round(offer * 1.45);
@@ -1955,7 +1956,7 @@
             localStorage.setItem('evolysium_user_xp', userXp);
             updateAuthUI();
             addNotification('Successfully claimed daily +5 XP points!');
-            alert('Congratulations! You received +5 XP points.');
+            showToastNotification('Congratulations! You received +5 XP points.');
         }
 
         function claimGemTokens() {
@@ -1963,7 +1964,7 @@
             localStorage.setItem('evolysium_user_gems', userGems);
             updateAuthUI();
             addNotification('Successfully claimed +2 $EVO tokens in Gem Wallet!');
-            alert('Congratulations! You received +2 $EVO tokens.');
+            showToastNotification('Congratulations! You received +2 $EVO tokens.');
         }
 
         function setNeuralMood(mood) {
@@ -1978,7 +1979,7 @@
             const location = document.getElementById('arSphereLocation').value.trim();
             const resEl = document.getElementById('arSphereResult');
             if (!title) {
-                alert('Please enter an AR sphere title.');
+                showToastNotification('Please enter an AR sphere title.');
                 return;
             }
             resEl.style.display = 'block';
@@ -1991,7 +1992,7 @@
             const lang = document.getElementById('aiVoiceLang').value;
             const resEl = document.getElementById('aiShieldResult');
             if (!text) {
-                alert('Please enter text to test the shield.');
+                showToastNotification('Please enter text to test the shield.');
                 return;
             }
             resEl.style.display = 'block';
@@ -2004,7 +2005,7 @@
             currentUser = null;
             updateAuthUI();
             addNotification('Successfully logged out of your account.');
-            alert('Successfully logged out!');
+            showToastNotification('Successfully logged out!');
             window.location.reload();
         }
 
@@ -2034,7 +2035,7 @@
             processIncomingItems([syncPost], true);
 
             addNotification(`EvoSync successfully synchronized multi-format content for ${client}`);
-            alert(`EvoSync: Content successfully formatted (9:16, 1:1, 16:9) and synced across networks!`);
+            showToastNotification(`EvoSync: Content successfully formatted (9:16, 1:1, 16:9) and synced across networks!`);
             const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoSyncModal'));
             if (modalEl) modalEl.hide();
         }
@@ -2070,7 +2071,7 @@
             processIncomingItems([newAdPost], true);
 
             addNotification(`EvoAds campaign "${adName}" launched successfully!`);
-            alert(`EvoAds: Campaign "${adName}" with neural targeting and micro-sponsorships is now active!`);
+            showToastNotification(`EvoAds: Campaign "${adName}" with neural targeting and micro-sponsorships is now active!`);
 
             const modalEl = bootstrap.Modal.getInstance(document.getElementById('evoAdsModal'));
             if (modalEl) modalEl.hide();
@@ -2104,7 +2105,7 @@
             localFeedPosts.unshift(scheduledPost);
             localStorage.setItem('evolysium_custom_feed_posts', JSON.stringify(localFeedPosts));
             processIncomingItems([scheduledPost], true);
-            alert('Post scheduled in EvoFlow!');
+            showToastNotification('Post scheduled in EvoFlow successfully!');
         }
 
         function toggleAuthMode() {
@@ -2141,12 +2142,12 @@
                 userGems += 10;
                 localStorage.setItem('evolysium_user_gems', userGems);
                 addNotification('Account successfully created! Welcome bonus +10 $EVO added.');
-                alert('Account registered, signed in and +10 $EVO bonus added!');
+                showToastNotification('Account registered, signed in and +10 $EVO bonus added!');
             } else {
                 currentUser = { email, name: email.split('@')[0] };
                 localStorage.setItem('evolysium_current_user', JSON.stringify(currentUser));
                 addNotification('Successful sign in.');
-                alert('Successfully signed in!');
+                showToastNotification('Successfully signed in!');
             }
 
             updateAuthUI();
@@ -2158,7 +2159,7 @@
 
         function checkBrandStoryLimit() {
             if (!currentUser) {
-                alert('You must be registered and signed in to publish a Brand Story!');
+                showToastNotification('You must be registered and signed in to publish a Brand Story!');
                 const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                 authModal.show();
                 return;
@@ -2169,7 +2170,7 @@
 
         function checkDropStoryLimit() {
             if (!currentUser) {
-                alert('You must be registered and signed in to drop a story!');
+                showToastNotification('You must be registered and signed in to drop a story!');
                 const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                 authModal.show();
                 return;
@@ -2180,7 +2181,7 @@
 
         function checkCreatorHubLimit() {
             if (!currentUser) {
-                alert('You must be registered and signed in to access the Creator Hub!');
+                showToastNotification('You must be registered and signed in to access the Creator Hub!');
                 const authModal = new bootstrap.Modal(document.getElementById('authModal'));
                 authModal.show();
                 return;
@@ -2228,7 +2229,7 @@
 
             processIncomingItems([newBrandStory], true);
             addNotification('Brand story successfully published and added to feed & trending!');
-            alert('Brand story successfully published!');
+            showToastNotification('Brand story successfully published!');
         }
 
         function handleCreatorContentSubmit(event) {
@@ -2270,7 +2271,7 @@
 
             processIncomingItems([newContent], true);
             addNotification('Trend content successfully published into feed!');
-            alert('Successfully published!');
+            showToastNotification('Successfully published trend content!');
         }
 
         function handleTrailFileUpload(event) {
@@ -2293,7 +2294,7 @@
                     
                     document.getElementById('trailMedia').value = compressedDataUrl;
                     document.getElementById('trailMediaType').value = 'image';
-                    alert('Image successfully optimized and ready for publishing!');
+                    showToastNotification('Image successfully optimized and ready for publishing!');
                 };
                 img.src = e.target.result;
             };
@@ -2324,7 +2325,7 @@
                 stopBtn.classList.remove('d-none');
             } catch (err) {
                 console.error('Camera access error:', err);
-                alert('Unable to access camera.');
+                showToastNotification('Unable to access camera.');
             }
         }
 
@@ -2350,7 +2351,7 @@
             const dataUrl = canvas.toDataURL('image/png');
             
             document.getElementById('trailMedia').value = dataUrl;
-            alert('Snapshot captured successfully!');
+            showToastNotification('Snapshot captured successfully!');
             stopCameraFeed();
         }
 
@@ -2391,7 +2392,7 @@
                   .insert([newStory]);
                     
                 if (error) {
-                    console.error('Greška pri spremanju u bazu:', error);
+                    console.error('Supabase error:', error);
                 } else {
                     if (typeof userTrails !== 'undefined' && Array.isArray(userTrails)) {
                         userTrails.unshift(newStory);
@@ -2404,7 +2405,7 @@
                     else if (typeof processIncomingItems === 'function') processIncomingItems([newStory], true);
                 }
             } catch (err) {
-                console.error('Greška:', err);
+                console.error('Error:', err);
             }
 
             const modalEl = document.getElementById('trailModal');
@@ -2415,7 +2416,7 @@
             stopCameraFeed();
             processIncomingItems([newStory], true);
             addNotification('Your story was successfully published and added to trending feed!');
-            alert('Story successfully published!');
+            showToastNotification('Story successfully published!');
         }
 
         function handleInviteFriend(event) {
@@ -2424,14 +2425,14 @@
             userGems += 5;
             localStorage.setItem('evolysium_user_gems', userGems);
             updateAuthUI();
-            alert('Invitation successfully sent to email: ' + email + '. You earned +5 $EVO referral bonus!');
+            showToastNotification('Invitation sent to: ' + email + '. You earned +5 $EVO referral bonus!');
             event.target.reset();
         }
 
         function handleNewsletterSub(event) {
             event.preventDefault();
             const email = document.getElementById('newsletterEmail').value;
-            alert('Successfully subscribed to Evolysium Newsletter with address: ' + email);
+            showToastNotification('Successfully subscribed to Evolysium Newsletter with address: ' + email);
             event.target.reset();
         }
 
@@ -2440,7 +2441,7 @@
             localStorage.setItem('evolysium_verified', JSON.stringify(isVerifiedBadge));
             updateAccountTypeUI();
             addNotification('Congratulations! Your profile has received the verified badge.');
-            alert('Verified badge granted successfully!');
+            showToastNotification('Verified badge granted successfully!');
         }
 
         function updateAccountTypeUI() {
@@ -2477,7 +2478,7 @@
             localStorage.setItem('evolysium_is_business', JSON.stringify(isBusinessAccount));
             updateAccountTypeUI();
             updateProfileStats();
-            alert(isBusinessAccount ? 'Switched to BUSINESS account.' : 'Switched to PRIVATE account.');
+            showToastNotification(isBusinessAccount ? 'Switched to BUSINESS account.' : 'Switched to PRIVATE account.');
         }
 
         const fallbackItems = [
@@ -2507,13 +2508,13 @@
                 } else {
                     isSubscribed = true;
                     localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
-                    alert('Subscription successfully activated! You now have Unlimited access.');
+                    showToastNotification('Subscription successfully activated! You now have Unlimited access.');
                 }
             } catch (err) {
                 console.error(err);
                 isSubscribed = true;
                 localStorage.setItem('evolysium_subscribed', JSON.stringify(true));
-                alert('Subscription successfully activated (Stripe connected mode)! You now have Unlimited access.');
+                showToastNotification('Subscription successfully activated (Stripe connected mode)!');
             }
         }
 
@@ -2534,7 +2535,7 @@
             let allSignals = [...dynamicSignals, ...socialNewsSignals];
 
             drawer.innerHTML = allSignals.map(n => `
-                <div class="news-pill-card" onclick="alert('Public signal: ${n.handle}')">
+                <div class="news-pill-card" onclick="showToastNotification('Public signal: ${n.handle}')">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex align-items-center gap-1.5">
                             <span class="small fw-bold text-white font-mono">${n.handle}</span>
@@ -2705,8 +2706,8 @@
                         <div class="p-2 mb-2 rounded-3 bg-dark border border-info text-center">
                             <span class="small fw-bold text-info d-block mb-1"><i class="fa-solid fa-square-poll-horizontal me-1"></i>${itemObj.poll.question}</span>
                             <div class="d-flex justify-content-center gap-2">
-                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: Yes!')">👍 Yes</button>
-                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="alert('Voted: No!')">👎 No</button>
+                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="showToastNotification('Voted: Yes!')">👍 Yes</button>
+                                <button class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="showToastNotification('Voted: No!')">👎 No</button>
                             </div>
                         </div>
                     `;
@@ -2717,7 +2718,7 @@
                             <span class="small fw-bold text-pink d-block mb-1"><i class="fa-solid fa-question me-1"></i>${itemObj.qa.prompt}</span>
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control auth-input" placeholder="Type your answer..." id="qaAnswerInput">
-                                <button class="btn btn-vibe btn-sm" onclick="alert('Answer submitted to creator!')">Send</button>
+                                <button class="btn btn-vibe btn-sm" onclick="showToastNotification('Answer submitted to creator!')">Send</button>
                             </div>
                         </div>
                     `;
@@ -2740,7 +2741,7 @@
             userGems += amount * 2;
             localStorage.setItem('evolysium_user_gems', userGems);
             updateAuthUI();
-            alert(`Successfully sent €${amount} tip to creator! You earned bonus tokens.`);
+            showToastNotification(`Successfully sent €${amount} tip to creator! You earned bonus tokens.`);
             const modal = bootstrap.Modal.getInstance(document.getElementById('tipJarModal'));
             if (modal) modal.hide();
         }
@@ -2748,7 +2749,7 @@
         function sendCustomTip() {
             const amt = parseFloat(document.getElementById('customTipAmount').value);
             if (!amt || amt <= 0) {
-                alert('Please enter a valid tip amount.');
+                showToastNotification('Please enter a valid tip amount.');
                 return;
             }
             sendTipAmount(amt);
@@ -2871,7 +2872,7 @@
             isPrivateProfile = !isPrivateProfile;
             localStorage.setItem('evolysium_is_private', JSON.stringify(isPrivateProfile));
             updateProfileStats();
-            alert(isPrivateProfile ? 'Your profile is now PRIVATE.' : 'Your profile is now PUBLIC.');
+            showToastNotification(isPrivateProfile ? 'Your profile is now PRIVATE.' : 'Your profile is now PUBLIC.');
         }
 
         function approveRequest(username) {
@@ -2881,7 +2882,7 @@
             localStorage.setItem('evolysium_approved', JSON.stringify(approvedUsers));
             updateProfileStats();
             addNotification(`Approved follow request from ${username}`);
-            alert('Approved request for: ' + username);
+            showToastNotification('Approved request for: ' + username);
         }
 
         function openCreatorProfile(handle) {
@@ -2948,7 +2949,7 @@
         }
 
         function sendFollowRequest(handle) {
-            alert('Request sent to user ' + handle + '.');
+            showToastNotification('Request sent to user ' + handle + '.');
             const extModalEl = document.getElementById('externalProfileModal');
             const extModal = bootstrap.Modal.getInstance(extModalEl);
             if (extModal) extModal.hide();
@@ -3025,7 +3026,7 @@
             updateProfileStats();
             renderVibeStrip();
             renderFeed();
-            alert('Story deleted.');
+            showToastNotification('Story deleted.');
         }
 
         function renderInbox() {
@@ -3152,7 +3153,7 @@
             input.select();
             input.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(input.value);
-            alert('Link copied to clipboard!');
+            showToastNotification('Link copied to clipboard!');
         }
 
         function completeOnboarding() {
@@ -3183,7 +3184,7 @@
         async function upgradeSubscription(newTier) {
           const { data: { user } } = await window.supabaseClient.auth.getUser();
           if (!user) {
-            alert("Morate biti prijavljeni za nadogradnju paketa!");
+            showToastNotification("You must be logged in to upgrade your subscription!");
             return;
           }
 
@@ -3193,16 +3194,16 @@
             .eq('id', user.id);
 
           if (error) {
-            alert("Greška pri nadogradnji paketa: " + error.message);
+            showToastNotification("Error upgrading subscription: " + error.message);
           } else {
-            alert(`Uspješno ste nadogradili paket na: ${newTier.toUpperCase().replace('_', ' ')}! ⚡`);
+            showToastNotification(`Successfully upgraded subscription to: ${newTier.toUpperCase().replace('_', ' ')}! ⚡`);
             loadUserProfile();
           }
         }
 
         async function spendEvoMoney(amount, actionDescription) {
           const { data: { user } } = await window.supabaseClient.auth.getUser();
-          if (!user) return alert("Prijavite se!");
+          if (!user) return showToastNotification("Please sign in!");
 
           const { data: profile } = await window.supabaseClient
             .from('profiles')
@@ -3211,7 +3212,7 @@
             .single();
 
           if (profile.evo_money < amount) {
-            alert(`Nemate dovoljno Evo Money tokena! Potrebno: ${amount} EVON.`);
+            showToastNotification(`Insufficient Evo Money! Required: ${amount} EVON.`);
             return false;
           }
 
@@ -3221,11 +3222,11 @@
             .eq('id', user.id);
 
           if (error) {
-            alert("Greška u transakciji: " + error.message);
+            showToastNotification("Transaction error: " + error.message);
             return false;
           }
 
-          alert(`Uspješno kupljeno: ${actionDescription} (-${amount} EVON)`);
+          showToastNotification(`Successfully purchased: ${actionDescription} (-${amount} EVON)`);
           loadUserProfile();
           return true;
         }
@@ -3242,7 +3243,7 @@
                 .order('created_at', { ascending: false });
 
             if (error) {
-                console.error("Greška pri dohvatu obavijesti:", error);
+                console.error("Error fetching notifications:", error);
                 return;
             }
 
@@ -3265,11 +3266,11 @@
             });
 
             if (error) {
-                alert("Greška pri slanju: " + error.message);
+                showToastNotification("Transfer error: " + error.message);
                 return false;
             }
 
-            alert("Uspješno ste poslali tokene i osvojili bonus XP i Gems!");
+            showToastNotification("Successfully sent tokens and earned bonus XP and Gems!");
             loadUserProfile(); 
             loadUserNotifications(); 
             return true;
@@ -3283,7 +3284,7 @@
             const amount = amountInput.value;
 
             if (!username || !amount) {
-                alert("Molimo unesite korisničko ime i iznos.");
+                showToastNotification("Please enter recipient username and amount.");
                 return;
             }
 
@@ -3299,13 +3300,13 @@
             const link = linkInput.value.trim();
 
             if (!link) {
-                alert("Unesite valjani link na događaj ili meč.");
+                showToastNotification("Please enter a valid match or watch party link.");
                 return;
             }
 
             const { data: { user } } = await window.supabaseClient.auth.getUser();
             if (!user) {
-                alert("Morate biti prijavljeni.");
+                showToastNotification("You must be signed in.");
                 return;
             }
 
@@ -3314,7 +3315,7 @@
                 .update({ xp: window.currentXP ? window.currentXP + 5 : 5 })
                 .eq('id', user.id);
 
-            alert("Uspješno ste podijelili Watch Party link i zaradili bonus bodove! 🚀");
+            showToastNotification("Successfully shared Watch Party link and earned bonus reward points! 🚀");
             linkInput.value = '';
             loadUserProfile();
         }
@@ -3346,8 +3347,8 @@
         async function createWagerOnChain() {
           try {
             const val = document.getElementById('wagerAmountInput').value;
-            if (!val) return alert("Unesi iznos!");
-            if (!window.ethereum) return alert("Instaliraj MetaMask!");
+            if (!val) return showToastNotification("Please enter wager amount!");
+            if (!window.ethereum) return showToastNotification("Please install MetaMask!");
 
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
@@ -3355,44 +3356,44 @@
             const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
 
             const parsed = ethers.parseUnits(val, 18);
-            showStatus("Odobravanje tokena...");
+            showStatus("Approving tokens...");
             const tx1 = await token.approve(WAGER_ADDR, parsed);
             await tx1.wait();
 
-            showStatus("Kreiranje oklade...");
+            showStatus("Creating challenge...");
             const tx2 = await wager.createWager(parsed);
             await tx2.wait();
 
-            showStatus("Uspješno kreiran izazov!");
+            showStatus("Challenge successfully created!");
             loadActiveWagers();
           } catch (err) {
             console.error(err);
-            showStatus("Greška: " + (err.reason || err.message));
+            showStatus("Error: " + (err.reason || err.message));
           }
         }
 
         async function acceptWagerOnChain(id, amt) {
           try {
-            if (!window.ethereum) return alert("Instaliraj MetaMask!");
+            if (!window.ethereum) return showToastNotification("Please install MetaMask!");
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
             const token = new ethers.Contract(TOKEN_ADDR, ERC20_ABI_JS, signer);
             const wager = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
 
             const parsed = ethers.parseUnits(amt, 18);
-            showStatus(`Odobravanje tokena za okladu #${id}...`);
+            showStatus(`Approving tokens for challenge #${id}...`);
             const tx1 = await token.approve(WAGER_ADDR, parsed);
             await tx1.wait();
 
-            showStatus(`Prihvaćanje oklade #${id}...`);
+            showStatus(`Accepting challenge #${id}...`);
             const tx2 = await wager.acceptWager(id);
             await tx2.wait();
 
-            showStatus(`Oklada #${id} uspješno prihvaćena!`);
+            showStatus(`Challenge #${id} successfully accepted!`);
             loadActiveWagers();
           } catch (err) {
             console.error(err);
-            showStatus("Greška: " + (err.reason || err.message));
+            showStatus("Error: " + (err.reason || err.message));
           }
         }
 
@@ -3414,10 +3415,10 @@
                 html += `
                   <div style="display: flex; justify-content: space-between; align-items: center; background: black; border: 1px solid #27272a; padding: 10px; border-radius: 8px;">
                     <div>
-                      <p style="font-size: 12px; font-weight: bold; color: #fbbf24; margin: 0;">Oklada #${i}</p>
-                      <p style="font-size: 11px; color: #a1a1aa; margin: 2px 0 0 0;">Ulog: <span style="color: white; font-weight: bold;">${formattedAmt} $EVO</span></p>
+                      <p style="font-size: 12px; font-weight: bold; color: #fbbf24; margin: 0;">Challenge #${i}</p>
+                      <p style="font-size: 11px; color: #a1a1aa; margin: 2px 0 0 0;">Wager: <span style="color: white; font-weight: bold;">${formattedAmt} $EVO</span></p>
                     </div>
-                    <button onclick="acceptWagerOnChain(${i}, '${formattedAmt}')" style="padding: 6px 12px; background: #9333ea; color: white; font-weight: bold; font-size: 11px; border-radius: 6px; border: none; cursor: pointer;">Prihvati</button>
+                    <button onclick="acceptWagerOnChain(${i}, '${formattedAmt}')" style="padding: 6px 12px; background: #9333ea; color: white; font-weight: bold; font-size: 11px; border-radius: 6px; border: none; cursor: pointer;">Accept</button>
                   </div>
                 `;
               }
@@ -3425,7 +3426,7 @@
 
             const listEl = document.getElementById('activeWagersList');
             if (listEl) {
-              listEl.innerHTML = activeFound ? html : '<p style="font-size: 12px; color: #71717a; text-align: center; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b; margin: 0;">Trenutno nema aktivnih izazova.</p>';
+              listEl.innerHTML = activeFound ? html : '<p style="font-size: 12px; color: #71717a; text-align: center; padding: 14px; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid #18181b; margin: 0;">No active challenges at the moment.</p>';
             }
           } catch (err) {
             console.error(err);
