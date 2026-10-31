@@ -33,47 +33,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 
     <style>
-        :root {
-            --bg-main: #07060c; 
-            --bg-card: rgba(18, 15, 30, 0.75);
-            --pink-pop: #ff2a85;
-            --cyan-pop: #00f0ff;
-            --gold-pop: #ffd700;
-            --text-main: rgba(255, 255, 255, 0.96);
-            --text-muted: rgba(160, 156, 176, 0.75);
-            color-scheme: dark;
-        }
+            :root {
+        --bg-main: #050308;
+        --bg-card: rgba(18, 14, 28, 0.75);
+        --pink-pop: #9333ea;
+        --cyan-pop: #f59e0b;
+        --gold-pop: #ffd700;
+        --text-main: rgba(243, 244, 246, 0.96);
+        --text-muted: rgba(160, 156, 176, 0.75);
+        color-scheme: dark;
+    }
 
-        body.theme-matrix {
-            --pink-pop: #00ff66 !important;
-            --cyan-pop: #00ccff !important;
-            --gold-pop: #33ff00 !important;
-        }
-        body.theme-gold {
-            --pink-pop: #ffaa00 !important;
-            --cyan-pop: #ffea00 !important;
-            --gold-pop: #ff6600 !important;
-        }
+    body.theme-matrix {
+        --pink-pop: #00ff66 !important;
+        --cyan-pop: #00ccff !important;
+        --gold-pop: #33ff00 !important;
+    }
+    body.theme-gold {
+        --pink-pop: #ffaa00 !important;
+        --cyan-pop: #ffea00 !important;
+        --gold-pop: #ff6600 !important;
+    }
 
-        body {
-            background-color: #07060c !important;
-            color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                radial-gradient(circle at 15% 15%, rgba(255, 42, 133, 0.22) 0%, transparent 48%),
-                radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.16) 0%, transparent 48%),
-                radial-gradient(circle at 50% 50%, rgba(7, 6, 12, 0.98) 0%, rgba(7, 6, 12, 1) 100%);
-            background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%, 100% 100%;
-            background-attachment: fixed;
-            overflow-x: hidden;
-            margin: 0;
-            color-scheme: dark;
-        }
+    body {
+        background-color: #050308 !important;
+        color: var(--text-main);
+        font-family: 'Outfit', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-image: 
+            radial-gradient(circle at 15% 15%, rgba(147, 51, 234, 0.18) 0%, transparent 45%),
+            radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.12) 0%, transparent 45%),
+            radial-gradient(circle at 50% 50%, rgba(5, 3, 8, 0.95) 0%, #050308 100%) !important;
+        background-attachment: fixed;
+        overflow-x: hidden;
+        margin: 0;
+        color-scheme: dark;
+    }
+
 
         main { flex: 1; }
 
