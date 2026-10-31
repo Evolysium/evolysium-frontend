@@ -1885,30 +1885,55 @@
         }
 
         async function connectWeb3Wallet() {
-            if (typeof window.ethereum !== 'undefined') {
-                try {
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    web3AccountAddress = accounts[0];
-                    web3WalletConnected = true;
-                    localStorage.setItem('evolysium_web3_connected', 'true');
+    if (typeof window.ethereum !== 'undefined') {
+        try {
+            showToastNotification('Connecting to Web3 wallet...');
+            
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            web3AccountAddress = accounts[0];
+            web3WalletConnected = true;
+            
+            if (window.ethers) {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                window.web3Signer = provider.getSigner();
+            }
+            
+            localStorage.setItem('evolysium_web3_connected', 'true');
+            localStorage.setItem('evolysium_web3_address', web3AccountAddress);
+            
+            updateAuthUI();
+            addNotification('Web3 Wallet connected: ' + web3AccountAddress.substring(0, 6) + '...' + web3AccountAddress.substring(38));
+            showToastNotification('Wallet successfully connected!');
+            
+            window.ethereum.on('accountsChanged', (newAccounts) => {
+                if (newAccounts.length > 0) {
+                    web3AccountAddress = newAccounts[0];
                     localStorage.setItem('evolysium_web3_address', web3AccountAddress);
                     updateAuthUI();
-                    addNotification('Web3 Wallet successfully connected via MetaMask!');
-                    showToastNotification('MetaMask Wallet connected: ' + web3AccountAddress.substring(0, 6) + '...');
-                } catch (err) {
-                    console.error(err);
-                    showToastNotification('User rejected Web3 connection request.');
+                    showToastNotification('Account changed: ' + web3AccountAddress.substring(0, 6) + '...');
+                } else {
+                    disconnectWeb3Wallet();
                 }
-            } else {
-                web3AccountAddress = '0x71C...39a2';
-                web3WalletConnected = true;
-                localStorage.setItem('evolysium_web3_connected', 'true');
-                localStorage.setItem('evolysium_web3_address', web3AccountAddress);
-                updateAuthUI();
-                addNotification('Web3 Simulated Wallet connected successfully!');
-                showToastNotification('Web3 Simulated Wallet connected: 0x71C...39a2');
-            }
+            });
+
+        } catch (err) {
+            console.error('Web3 connection error:', err);
+            showToastNotification('Connection request rejected.');
         }
+    } else {
+        showToastNotification('No Web3 wallet detected! Please install MetaMask or Trust Wallet.');
+    }
+}
+
+function disconnectWeb3Wallet() {
+    web3WalletConnected = false;
+    web3AccountAddress = null;
+    localStorage.removeItem('evolysium_web3_connected');
+    localStorage.removeItem('evolysium_web3_address');
+    updateAuthUI();
+    showToastNotification('Wallet disconnected.');
+}
+
 
         let deferredPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
