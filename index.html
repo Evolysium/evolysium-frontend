@@ -1930,7 +1930,8 @@
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 window.web3Signer = provider.getSigner();
             }
-            
+            checkVerification(accounts[0]);
+
             localStorage.setItem('evolysium_web3_connected', 'true');
             localStorage.setItem('evolysium_web3_address', web3AccountAddress);
             
@@ -3494,6 +3495,21 @@ function disconnectWeb3Wallet() {
             showStatus("Error: " + (err.reason || err.message));
           }
         }
+// Popis verificiranih adresa (stavi svoju adresu malim slovima unutar navodnika)
+const VERIFIED_ADDRESSES = [
+    "0x3ac0aa8b9...", 
+];
+
+function checkVerification(userAddress) {
+    const badge = document.getElementById('verifiedBadge');
+    if (badge) {
+        if (VERIFIED_ADDRESSES.includes(userAddress.toLowerCase())) {
+            badge.style.display = 'inline-block';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+}
 
         async function loadActiveWagers() {
           try {
