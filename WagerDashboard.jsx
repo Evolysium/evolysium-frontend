@@ -15,13 +15,45 @@ const ERC20_ABI = [
   "function approve(address spender, uint256 amount) public returns (bool)"
 ];
 
+const VERIFICATION_CONTRACT_ADDRESS = "0xBceD6293Cb21f19DFC507042a0642d7241305Eb0";
+const VERIFICATION_ABI = [
+    "function isVerified(address _user) view returns (bool)"
+];
+        "inputs": [{"internalType": "address", "name": "", "type": "address"}],
+        "name": "isVerified",
+        "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
+        "stateMutability": "view",
+        "type": "function"
+    }
+];
 export default function WagerDashboard() {
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
-  const [activeWagers, setActiveWagers] = useState([]);
+    const [activeWagers, setActiveWagers] = useState([]);
+    const [isUserVerified, setIsUserVerified] = useState(false);
 
-  // Funkcija za dohvat aktivnih oklada s pametnog ugovora
-  async function fetchWagers() {
+    useEffect(() => {
+        async function checkBadgeOnChain() {
+            if (!window.ethereum) return;
+            try {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer = await provider.getSigner();
+                const userAddress = await signer.getAddress();
+
+                const contract = new ethers.Contract(VERIFICATION_CONTRACT_ADDRESS, VERIFICATION_ABI, provider);
+                const verifiedStatus = await contract.isVerified(userAddress);
+                
+                setIsUserVerified(verifiedStatus);
+            } catch (err) {
+                console.error("Greška pri dohvatu verifikacije s blockchaina:", err);
+            }
+        }
+        
+        checkBadgeOnChain();
+    }, []);
+
+    // Funkcija za dohvat aktivnih oklada s pametnog ugovora
+    async function fetchWagers() {
     try {
       if (!window.ethereum) return;
       const provider = new ethers.BrowserProvider(window.ethereum);
