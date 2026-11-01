@@ -3556,7 +3556,34 @@ function checkVerification(userAddress) {
             console.error(err);
           }
         }
+// Provjera verifikacije s pametnog ugovora na Sepoliji
+async function checkOnChainVerification() {
+    if (!window.ethereum) return;
+    try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const userAddress = await signer.getAddress();
 
+        const VERIFICATION_CONTRACT_ADDRESS = "0xBceD6293Cb21f19DFC507042a0642d7241305Eb0";
+        const VERIFICATION_ABI = ["function isVerified(address _user) view returns (bool)"];
+
+        const contract = new ethers.Contract(VERIFICATION_CONTRACT_ADDRESS, VERIFICATION_ABI, provider);
+        const isVerifiedOnChain = await contract.isVerified(userAddress);
+
+        const verifiedIcon = document.getElementById('verifiedBadgeIcon');
+        const sidebarVerified = document.getElementById('sidebarVerifiedStatus');
+
+        if (isVerifiedOnChain) {
+            if (verifiedIcon) verifiedIcon.style.display = 'inline-block';
+            if (sidebarVerified) sidebarVerified.innerText = 'Verified (On-Chain)';
+        } else {
+            if (verifiedIcon) verifiedIcon.style.display = 'none';
+            if (sidebarVerified) sidebarVerified.innerText = 'Unverified';
+        }
+    } catch (err) {
+        console.error("Greška pri dohvatu verifikacije:", err);
+    }
+}
         // INITIALIZATION ON DOM LOAD
         window.addEventListener('DOMContentLoaded', () => {
             loadUserProfile();
@@ -3566,7 +3593,7 @@ function checkVerification(userAddress) {
             loadBackendFeed();
             loadUserNotifications();
             loadActiveWagers();
-
+checkOnChainVerification();
             setTimeout(() => {
                 const preloader = document.getElementById('app-preloader');
                 if (preloader) {
