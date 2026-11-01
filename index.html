@@ -2032,9 +2032,10 @@ function disconnectWeb3Wallet() {
         async function claimGemTokens() {
     try {
         if (!window.ethereum) {
-            alert("Molimo instalirajte MetaMask!");
-            return;
-        }
+    alert("Please open this page in a browser (like Chrome or MetaMask app) to use your wallet.");
+    return;
+}
+
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
