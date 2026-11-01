@@ -2029,13 +2029,40 @@ function disconnectWeb3Wallet() {
             showToastNotification('Congratulations! You received +5 XP points.');
         }
 
-        function claimGemTokens() {
-            userGems += 2;
-            localStorage.setItem('evolysium_user_gems', userGems);
-            updateAuthUI();
-            addNotification('Successfully claimed +2 $EVO tokens in Gem Wallet!');
-            showToastNotification('Congratulations! You received +2 $EVO tokens.');
+        async function claimGemTokens() {
+    try {
+        if (!window.ethereum) {
+            alert("Molimo instalirajte MetaMask!");
+            return;
         }
+
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        const userAddress = await signer.getAddress();
+
+        const tokenAbi = ["function transfer(address to, uint256 value) public returns (bool)"];
+        const tokenContract = new ethers.Contract(TOKEN_ADDR, tokenAbi, signer);
+
+        // Količina tokena: 2 tokena (sa 18 decimala)
+        const claimAmount = ethers.utils.parseUnits("2", 18);
+
+        showToastNotification("Slanje transakcije na Sepoliju...");
+
+        const tx = await tokenContract.transfer(userAddress, claimAmount);
+        await tx.wait();
+
+        // Ažuriraj vizualni prikaz tek nakon potvrde na blockchainu
+        userGems += 2;
+        localStorage.setItem('evolysium_user_gems', userGems);
+        updateAuthUI();
+        showToastNotification('Congratulations! You received +2 EVO tokens on Sepolia!');
+        
+    } catch (error) {
+        console.error(error);
+        alert("Greška pri transakciji: " + (error.message || error));
+    }
+}
 
         function setNeuralMood(mood) {
             const resEl = document.getElementById('neuralMoodResult');
