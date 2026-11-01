@@ -2542,7 +2542,17 @@ function disconnectWeb3Wallet() {
             addNotification('Congratulations! Your profile has received the verified badge.');
             showToastNotification('Verified badge granted successfully!');
         }
+const VERIFICATION_CONTRACT_ADDRESS = "0xBceD6293Cb21f19DfC507042a0642d7241305EbD"; 
 
+const VERIFICATION_ABI = [
+    {
+        "inputs": [{"internalType": "address", "name": "", "type": "address"}],
+        "name": "isVerified",
+        "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
+        "stateMutability": "view",
+        "type": "function"
+    }
+];
         function updateAccountTypeUI() {
             const badgeEl = document.getElementById('navbarProfileBadge');
             const sidebarLabel = document.getElementById('sidebarProfileTypeLabel');
