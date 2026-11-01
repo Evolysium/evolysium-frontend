@@ -1927,7 +1927,7 @@
             web3WalletConnected = true;
             
             if (window.ethers) {
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const provider = new ethers.BrowserProvider(window.ethereum);
                 window.web3Signer = provider.getSigner();
             }
             checkVerification(accounts[0]);
