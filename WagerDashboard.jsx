@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
-const WAGER_CONTRACT_ADDRESS = "0xd8b934580fce35a11B58C6073aDeE468a2833fa8";
-const EVO_TOKEN_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+const WAGER_CONTRACT_ADDRESS = "0xb4ae90c48ED8173739d4962C1b6E0d2762589A7b";
+const EVO_TOKEN_ADDRESS = "0xCf04daFF98D9F92115cD6F1e188f660e764585D2";
 
 const WAGER_ABI = [
   "function createWager(uint256 _amount) external returns (uint256)",
