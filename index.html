@@ -1342,7 +1342,23 @@ h1, h2, h3, h4, h5, .brand-name {
             </div>
         </div>
     </div>
-
+<!-- Live Crypto Tips & Super Chat Widget -->
+<div class="card p-3 mt-3 social-card border-purple">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+        <h6 class="text-white fw-bold mb-0">
+            <i class="fa-solid fa-fire text-danger me-2"></i> Send Live Tip ($EVO)
+        </h6>
+        <span class="badge bg-dark border border-secondary text-info px-2 py-1" style="font-size: 0.7rem;">Instant Reward</span>
+    </div>
+    <p class="text-muted small mb-2" style="font-size: 0.8rem;">Support this creator instantly with $EVO tokens and highlight your message in the chat!</p>
+    
+    <div class="input-group input-group-sm mb-2">
+        <input type="number" class="form-control auth-input" placeholder="Amount (e.g. 5 $EVO)" id="tipAmountInput">
+        <button class="btn btn-vibe py-1 px-3" type="button" onclick="sendCryptoTip()">
+            <i class="fa-solid fa-paper-plane me-1"></i> Tip Creator
+        </button>
+    </div>
+</div>
     <!-- Sign In / Register Modal -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
