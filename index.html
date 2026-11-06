@@ -1461,7 +1461,53 @@ h1, h2, h3, h4, h5, .brand-name {
             </div>
         </div>
     </div>
+<!-- Evolysium NFT Creator Pass & AI Assistant Section -->
+<div class="row g-4 mt-2">
+    <!-- NFT Creator Pass Card -->
+    <div class="col-md-6">
+        <div class="pricing-box hot">
+            <div>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="text-white fw-bold mb-0">
+                        <i class="fa-solid fa-gem text-info me-2"></i> NFT Creator Pass
+                    </h5>
+                    <span class="badge bg-purple px-3 py-1 rounded-pill">Exclusive</span>
+                </div>
+                <p class="text-muted small mb-3">Unlock lifetime creator perks, private community channels, zero fee token transfers, and special voting rights in the ecosystem.</p>
+                <ul class="pricing-perks">
+                    <li><i class="fa-solid fa-check"></i> VIP Stream Access & Watch Parties</li>
+                    <li><i class="fa-solid fa-check"></i> 0% Fee on P2P Transfers</li>
+                    <li><i class="fa-solid fa-check"></i> Double XP Boost on All Duels</li>
+                </ul>
+            </div>
+            <button class="btn btn-vibe w-100 mt-3" type="button" onclick="mintCreatorPass()">
+                <i class="fa-solid fa-bolt me-1"></i> Mint Creator Pass (0.05 ETH)
+            </button>
+        </div>
+    </div>
 
+    <!-- AI Content Assistant Card -->
+    <div class="col-md-6">
+        <div class="pricing-box">
+            <div>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="text-white fw-bold mb-0">
+                        <i class="fa-solid fa-wand-magic-sparkles text-warning me-2"></i> AI Content Assistant
+                    </h5>
+                    <span class="badge bg-dark border border-secondary text-success px-3 py-1 rounded-pill">Smart Tool</span>
+                </div>
+                <p class="text-muted small mb-3">Stuck on what to post? Let our built-in AI generate catchy titles, engaging captions, and crypto-tags for your next drop instantly.</p>
+                
+                <div class="mb-3">
+                    <input type="text" class="form-control auth-input" placeholder="Enter post topic (e.g. crypto duels)..." id="aiTopicInput">
+                </div>
+            </div>
+            <button class="btn btn-vibe w-100 mt-3" type="button" onclick="generateAiContent()">
+                <i class="fa-solid fa-sparkles me-1"></i> Generate Post Idea ✨
+            </button>
+        </div>
+    </div>
+</div>
     <!-- Brand Story Modal -->
     <div class="modal fade" id="brandStoryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
