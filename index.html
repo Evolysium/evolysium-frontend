@@ -1100,36 +1100,38 @@ h1, h2, h3, h4, h5, .brand-name {
     <div class="row g-3">
         <!-- Badge 1 -->
         <div class="col-md-3 col-6">
-            <div class="profile-stats-card text-center p-3">
+            <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="alert('🏆 Achievement: First Trade\n\nCompleted 1st transfer. Status: Active 🚀')">
                 <div class="fs-1 mb-2">🚀</div>
                 <h6 class="text-white fw-bold mb-1 font-size-sm">First Trade</h6>
                 <span class="text-muted small" style="font-size: 0.75rem;">Completed 1st transfer</span>
             </div>
         </div>
         <!-- Badge 2 -->
-        <div class="col-md-3 col-6">
-            <div class="profile-stats-card text-center p-3">
-                <div class="fs-1 mb-2">⚔️</div>
-                <h6 class="text-white fw-bold mb-1 font-size-sm">Duelist</h6>
-                <span class="text-muted small" style="font-size: 0.75rem;">Won a crypto challenge</span>
+            <div class="col-md-3 col-6">
+                <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="alert('🏆 Achievement: Duelist\n\nWon a crypto challenge. Ready for the next duel! ⚔️')">
+                    <div class="fs-1 mb-2">⚔️</div>
+                    <h6 class="text-white fw-bold mb-1 font-size-sm">Duelist</h6>
+                    <span class="text-muted small" style="font-size: 0.75rem;">Won a crypto challenge</span>
+                </div>
             </div>
-        </div>
-        <!-- Badge 3 -->
-        <div class="col-md-3 col-6">
-            <div class="profile-stats-card text-center p-3">
-                <div class="fs-1 mb-2">🎥</div>
-                <h6 class="text-white fw-bold mb-1 font-size-sm">Host Pro</h6>
-                <span class="text-muted small" style="font-size: 0.75rem;">Hosted a watch party</span>
+
+            <!-- Badge 3 -->
+            <div class="col-md-3 col-6">
+                <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="alert('🏆 Achievement: Host Pro\n\nHosted a watch party. Community leader status! 🎥')">
+                    <div class="fs-1 mb-2">🎥</div>
+                    <h6 class="text-white fw-bold mb-1 font-size-sm">Host Pro</h6>
+                    <span class="text-muted small" style="font-size: 0.75rem;">Hosted a watch party</span>
+                </div>
             </div>
-        </div>
-        <!-- Badge 4 -->
-        <div class="col-md-3 col-6">
-            <div class="profile-stats-card text-center p-3" style="opacity: 0.5; border-style: dashed;">
-                <div class="fs-1 mb-2">🔒</div>
-                <h6 class="text-white fw-bold mb-1 font-size-sm">Diamond Pass</h6>
-                <span class="text-muted small" style="font-size: 0.75rem;">Locked (Reach 50 XP)</span>
+
+            <!-- Badge 4 -->
+            <div class="col-md-3 col-6">
+                <div class="profile-stats-card text-center p-3" style="cursor: pointer; opacity: 0.5; border-style: dashed;" onclick="alert('🏆 Achievement: Diamond Pass\n\nLocked / Reach 50 XP to unlock exclusive VIP privileges! 💎')">
+                    <div class="fs-1 mb-2">🔒</div>
+                    <h6 class="text-white fw-bold mb-1 font-size-sm">Diamond Pass</h6>
+                    <span class="text-muted small" style="font-size: 0.75rem;">Locked (Reach 50 XP)</span>
+                </div>
             </div>
-        </div>
     </div>
 </div>
     <!-- EVO-SUITE MODALS -->
@@ -3743,7 +3745,7 @@ function checkAndGrantBadges() {
     
     if (userXP >= 50) {
         userBadges.diamondPass = true;
-        const diamondBadge = document.querySelector('.profile-stats-card:has(.fs-1:contains("🔒"))');
+        const diamondBadge = document.querySelector('.profile-stats-card');
         if (diamondBadge) {
             diamondBadge.style.opacity = "1";
             diamondBadge.style.borderStyle = "solid";
