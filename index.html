@@ -3857,6 +3857,90 @@ function rewardUserXP(amount) {
     
     checkAndGrantBadges();
 }
+       // ==========================================
+// EVOLYSIUM - CORE 4 FEATURES LOGIC
+// ==========================================
+
+function checkAndGrantBadges() {
+    const userXP = parseInt(localStorage.getItem('evolysium_xp') || '12');
+    if (userXP >= 50) {
+        localStorage.setItem('evolysium_diamond_pass', 'true');
+    }
+}
+
+async function sendCryptoTip() {
+    const tipInput = document.getElementById('tipAmountInput');
+    const amount = tipInput ? tipInput.value : null;
+
+    if (!amount || amount <= 0) {
+        alert('Please enter a valid $EVO tip amount.');
+        return;
+    }
+
+    try {
+        if (typeof window.ethereum !== 'undefined') {
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const tx = await signer.sendTransaction({
+                to: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", 
+                value: ethers.parseEther((amount * 0.0001).toString())
+            });
+
+            alert(`🚀 Tip of ${amount} $EVO sent successfully! Tx Hash: ${tx.hash.substring(0, 10)}...`);
+            if (tipInput) tipInput.value = '';
+            rewardUserXP(15);
+        } else {
+            alert('Web3 Wallet not detected. Please connect Metamask.');
+        }
+    } catch (error) {
+        console.error("Tip failed:", error);
+        alert('Transaction failed or rejected.');
+    }
+}
+
+async function mintCreatorPass() {
+    try {
+        if (typeof window.ethereum !== 'undefined') {
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const tx = await signer.sendTransaction({
+                to: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+                value: ethers.parseEther("0.05")
+            });
+
+            alert(`💎 Mint Successful! You are now an Official Creator Pass Holder. Tx: ${tx.hash.substring(0, 8)}...`);
+            localStorage.setItem('evolysium_creator_pass', 'true');
+            rewardUserXP(50);
+        } else {
+            alert('Please connect your Web3 Wallet first!');
+        }
+    } catch (err) {
+        console.error("Minting error:", err);
+        alert('Minting canceled or insufficient funds.');
+    }
+}
+
+function generateAiContent() {
+    const topicInput = document.getElementById('aiTopicInput');
+    const topic = topicInput ? topicInput.value.trim() : '';
+
+    if (!topic) {
+        alert('Please enter a topic for the AI Content Assistant.');
+        return;
+    }
+
+    const templates = [
+        `🔥 Just dropped fresh insights on ${topic}! Web3 is evolving fast. What are your thoughts? #Evolysium #${topic.replace(/\s+/g, '')} #Web3`,
+        `⚡ Major breakthrough regarding ${topic}: Huge potential ahead for creators! Check it out on Evolysium. 🚀 #Crypto #${topic.replace(/\s+/g, '')}`,
+        `⚔️ Ready to challenge the community on ${topic}? Join my active crypto duel now! #${topic.replace(/\s+/g, '')} #EVO`
+    ];
+
+    const randomIdea = templates[Math.floor(Math.random() * templates.length)];
+    if (topicInput) topicInput.value = randomIdea;
+    alert('✨ AI Content Generated! Post idea updated in your input box.');
+    rewardUserXP(5);
+}
+</script> 
       </script>  
     <!-- FOOTER - Copyright & Functional Links -->
     <footer class="site-footer text-center py-4 mt-5">
