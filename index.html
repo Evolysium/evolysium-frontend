@@ -3727,6 +3727,137 @@ const VERIFICATION_ABI = [
                 onboardingModal.show();
             }
         });
+        // ==========================================
+// 1. ACHIVEEMENTS & BADGES SYSTEM
+// ==========================================
+let userBadges = {
+    firstTrade: false,
+    duelist: false,
+    hostPro: false,
+    diamondPass: false
+};
+
+function checkAndGrantBadges() {
+    // Provjera transakcija / XP-a i automatsko otključavanje bedževa
+    const userXP = parseInt(localStorage.getItem('evolysium_xp') || '12');
+    
+    if (userXP >= 50) {
+        userBadges.diamondPass = true;
+        const diamondBadge = document.querySelector('.profile-stats-card:has(.fs-1:contains("🔒"))');
+        if (diamondBadge) {
+            diamondBadge.style.opacity = "1";
+            diamondBadge.style.borderStyle = "solid";
+        }
+    }
+}
+
+// ==========================================
+// 2. LIVE CRYPTO TIPS ($EVO)
+// ==========================================
+async function sendCryptoTip() {
+    const tipInput = document.getElementById('tipAmountInput');
+    const amount = tipInput ? tipInput.value : null;
+
+    if (!amount || amount <= 0) {
+        alert('Please enter a valid $EVO tip amount.');
+        return;
+    }
+
+    try {
+        if (typeof window.ethereum !== 'undefined') {
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            
+            // Slanje transakcije na Sepolia mreži
+            // Napomena: Zamijenite s vašom adresom ugovora/kreatora
+            const tx = await signer.sendTransaction({
+                to: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", 
+                value: ethers.parseEther((amount * 0.0001).toString()) // Konverzija za testnet demo
+            });
+
+            alert(`🚀 Tip of ${amount} $EVO sent successfully! Tx Hash: ${tx.hash.substring(0, 10)}...`);
+            tipInput.value = '';
+
+            // Nagradi korisnika s XP-om za donaciju
+            rewardUserXP(10);
+            userBadges.firstTrade = true;
+        } else {
+            alert('Web3 Wallet not detected. Please connect Metamask.');
+        }
+    } catch (error) {
+        console.error("Tip failed:", error);
+        alert('Transaction failed or rejected.');
+    }
+}
+
+// ==========================================
+// 3. NFT CREATOR PASS MINTING
+// ==========================================
+async function mintCreatorPass() {
+    try {
+        if (typeof window.ethereum !== 'undefined') {
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+
+            // Interakcija s Ethers.js v6
+            const tx = await signer.sendTransaction({
+                to: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+                value: ethers.parseEther("0.05")
+            });
+
+            alert(`💎 Mint Successful! You are now an Official Creator Pass Holder. Tx: ${tx.hash.substring(0, 8)}...`);
+            
+            // Otključavanje VIP statusa u aplikaciji
+            localStorage.setItem('evolysium_creator_pass', 'true');
+            rewardUserXP(50);
+        } else {
+            alert('Please connect your Web3 Wallet first!');
+        }
+    } catch (err) {
+        console.error("Minting error:", err);
+        alert('Minting canceled or insufficient funds.');
+    }
+}
+
+// ==========================================
+// 4. AI CONTENT ASSISTANT
+// ==========================================
+function generateAiContent() {
+    const topicInput = document.getElementById('aiTopicInput');
+    const topic = topicInput ? topicInput.value.trim() : '';
+
+    if (!topic) {
+        alert('Please enter a topic for the AI Content Assistant.');
+        return;
+    }
+
+    // Generator pametnih ideja i tagova za Web3 objave
+    const templates = [
+        `🔥 Just dropped new thoughts on ${topic}! Web3 is changing the game. What do you think? #Evolysium #${topic.replace(/\s+/g, '')} #Web3`,
+        `⚡ Quick update regarding ${topic}: Huge potential ahead! Join the discussion on Evolysium. 🚀 #Crypto #${topic.replace(/\s+/g, '')}`,
+        `⚔️ Ready to challenge the community on ${topic}? Check out my latest duel! #${topic.replace(/\s+/g, '')} #EVO`
+    ];
+
+    const randomIdea = templates[Math.floor(Math.random() * templates.length)];
+    
+    // Prikaz rezultata u ulaznom polju ili modalnom prozoru
+    topicInput.value = randomIdea;
+    alert('✨ AI Content Generated! Copied idea directly to your input field.');
+}
+
+// Pomoćna funkcija za XP dodjelu
+function rewardUserXP(amount) {
+    let currentXP = parseInt(localStorage.getItem('evolysium_xp') || '12');
+    currentXP += amount;
+    localStorage.setItem('evolysium_xp', currentXP);
+    
+    // Ažuriraj UI elemente s novim XP-om
+    const xpBadge = document.querySelector('.badge:contains("XP")');
+    if (xpBadge) xpBadge.innerText = `⚡ ${currentXP} XP`;
+    
+    checkAndGrantBadges();
+}
+      </script>  
     <!-- FOOTER - Copyright & Functional Links -->
     <footer class="site-footer text-center py-4 mt-5">
         <div class="container">
