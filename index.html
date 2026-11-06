@@ -3430,27 +3430,28 @@ const VERIFICATION_ABI = [
         }
 
         // ==========================================
-// SMART CONTRACT CONFIGURATION (UPDATED)
 // ==========================================
+        // SMART CONTRACT CONFIGURATION (UPDATED)
+        // ==========================================
 
-const WAGER_ADDR = "0xb9670ef30D3C6235eB003Cf2aEb6237F52BcC218";
-const TOKEN_ADDR = "0xCF04daFF98D9F92115cD6F1e188f660e764585D2";
+        const WAGER_ADDR = "0xb9670ef30D3C6235eB003Cf2aEb6237F52BcC218";
+        const TOKEN_ADDR = "0xCF04daFF98D9F92115cD6F1e188f660e764585D2";
 
-const WAGER_ABI_JS = [
-    "function createWager() external payable",
-    "function acceptWager(uint256 _wagerId) external payable",
-    "function resolveWager(uint256 _wagerId, address winner) external",
-    "function setPlatformFee(uint256 _newFeePercent) external",
-    "function wagerCounter() view returns (uint256)",
-    "function platformFeePercent() view returns (uint256)",
-    "function owner() view returns (address)",
-    "function getContractBalance() view returns (uint256)",
-    "function wagers(uint256) view returns (address player1, address player2, uint256 amount, bool active, bool resolved)"
-];
+        const WAGER_ABI_JS = [
+            "function createWager() external payable",
+            "function acceptWager(uint256 _wagerId) external payable",
+            "function resolveWager(uint256 _wagerId, address winner) external",
+            "function setPlatformFee(uint256 _newFeePercent) external",
+            "function wagerCounter() view returns (uint256)",
+            "function platformFeePercent() view returns (uint256)",
+            "function owner() view returns (address)",
+            "function getContractBalance() view returns (uint256)",
+            "function wagers(uint256) view returns (address player1, address player2, uint256 amount, bool active, bool resolved)"
+        ];
 
-const ERC20_ABI_JS = [
-    "function approve(address spender, uint256 amount) public returns (bool)"
-];
+        const ERC20_ABI_JS = [
+            "function approve(address spender, uint256 amount) public returns (bool)"
+        ];
 
         function showStatus(msg) {
           const p = document.getElementById('p2pStatus');
@@ -3458,6 +3459,43 @@ const ERC20_ABI_JS = [
             p.style.display = 'block';
             p.innerText = msg;
           }
+        }
+
+        async function handleCreateWager() {
+            const amountInput = document.getElementById('wager-amount-input').value;
+            const statusBox = document.getElementById('p2pStatus');
+
+            if (!amountInput || amountInput <= 0) {
+                alert('Please enter a valid stake amount.');
+                return;
+            }
+
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    statusBox.style.display = 'block';
+                    statusBox.innerText = 'Connecting wallet & creating wager...';
+
+                    const provider = new ethers.BrowserProvider(window.ethereum);
+                    const signer = await provider.getSigner();
+
+                    const contract = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
+                    
+                    const tx = await contract.createWager({
+                        value: ethers.parseEther(amountInput)
+                    });
+
+                    statusBox.innerText = 'Transaction submitted! Waiting for confirmation...';
+                    await tx.wait();
+
+                    statusBox.innerText = 'Wager successfully created on Sepolia!';
+                    loadActiveWagers();
+                } catch (error) {
+                    console.error(error);
+                    statusBox.innerText = 'Transaction failed or rejected.';
+                }
+            } else {
+                alert('MetaMask is required to interact with smart contracts.');
+            }
         }
 
         async function createWagerOnChain() {
@@ -3477,7 +3515,7 @@ const ERC20_ABI_JS = [
             await tx1.wait();
 
             showStatus("Creating challenge...");
-            const tx2 = await wager.createWager(parsed);
+            const tx2 = await wager.createWager();
             await tx2.wait();
 
             showStatus("Challenge successfully created!");
@@ -3502,7 +3540,7 @@ const ERC20_ABI_JS = [
             await tx1.wait();
 
             showStatus(`Accepting challenge #${id}...`);
-            const tx2 = await wager.acceptWager(id);
+            const tx2 = await wager.acceptWager(id, { value: parsed });
             await tx2.wait();
 
             showStatus(`Challenge #${id} successfully accepted!`);
@@ -3512,159 +3550,7 @@ const ERC20_ABI_JS = [
             showStatus("Error: " + (err.reason || err.message));
           }
         }
-// Popis verificiranih adresa (stavi svoju adresu malim slovima unutar navodnika)
-const VERIFIED_ADDRESSES = [
-    "0x3ac0aa8b9...", 
-];
 
-function checkVerification(userAddress) {
-    const badge = document.getElementById('verifiedBadge');
-    if (badge) {
-        if (VERIFIED_ADDRESSES.includes(userAddress.toLowerCase())) {
-            badge.style.display = 'inline-block';
-        } else {
-            badge.style.display = 'none';
-        }
-    }
-}
-<!-- B2B PARTNER STREAMS & LIVE WAGER ARENA SECTION -->
-<section id="partner-arena" style="padding: 4rem 5%; max-width: 1200px; margin: 0 auto;">
-    
-    <!-- Section Header -->
-    <div style="text-align: center; margin-bottom: 3rem;">
-        <div style="display: inline-block; background: rgba(0, 242, 254, 0.1); border: 1px solid rgba(0, 242, 254, 0.3); color: #00f2fe; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem;">
-            B2B Partner Ecosystem
-        </div>
-        <h2 style="font-size: 2.2rem; font-weight: 800; color: #f1f5f9; margin-bottom: 0.5rem;">
-            Live Streams & Direct Peer-to-Peer Wagering
-        </h2>
-        <p style="color: #94a3b8; max-width: 650px; margin: 0 auto; font-size: 1rem;">
-            Watch verified partner channels live, challenge opponents head-to-head, and execute smart contracts with automated protocol fee distribution.
-        </p>
-    </div>
-
-    <!-- Main Grid: Stream Player + Active Wager Dashboard -->
-    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; background: #131722; border: 1px solid #1e293b; border-radius: 16px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        
-        <!-- Left Column: Video Stream Embed & Info -->
-        <div>
-            <!-- Video Player Window -->
-            <div style="position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid #1e293b;">
-                <iframe 
-                    src="https://player.twitch.tv/?channel=esl_csgo&parent=evolysium.github.io&muted=true" 
-                    height="100%" 
-                    width="100%" 
-                    allowfullscreen 
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
-                </iframe>
-                <div style="position: absolute; top: 12px; left: 12px; background: rgba(239, 68, 68, 0.9); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px; display: flex; align-items: center; gap: 5px;">
-                    <span style="width: 6px; height: 6px; background: #fff; border-radius: 50%; display: inline-block;"></span> LIVE
-                </div>
-            </div>
-
-            <!-- Stream Meta & Partner Info -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #00f2fe, #7928ca); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; font-size: 0.9rem;">
-                        ƎE
-                    </div>
-                    <div>
-                        <h4 style="color: #f1f5f9; margin: 0; font-size: 1.1rem; font-weight: 700;">Featured Gaming Arena #1</h4>
-                        <p style="color: #94a3b8; margin: 0; font-size: 0.85rem;">Partner Status: Verified Host • Smart Contract Escrow Active</p>
-                    </div>
-                </div>
-                
-                <a href="#become-partner" style="background: rgba(121, 40, 202, 0.2); border: 1px solid rgba(121, 40, 202, 0.5); color: #c084fc; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 0.85rem;">
-                    Apply for Streamer Slot
-                </a>
-            </div>
-        </div>
-
-        <!-- Right Column: Live Smart Contract Wager Controls -->
-        <div style="display: flex; flex-direction: column; justify-content: space-between; background: #0b0d14; border: 1px solid #1e293b; border-radius: 12px; padding: 1.2rem;">
-            
-            <div>
-                <h3 style="color: #f1f5f9; font-size: 1.2rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid #1e293b; padding-bottom: 0.5rem;">
-                    P2P Wager Terminal
-                </h3>
-
-                <!-- Protocol Fee Breakdown Display -->
-                <div style="background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.15); border-radius: 8px; padding: 0.8rem; margin-bottom: 1.2rem;">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.4rem;">
-                        <span>Smart Contract:</span>
-                        <span style="color: #00f2fe; font-family: monospace;">0xb967...218</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #94a3b8;">
-                        <span>Automated Platform Fee:</span>
-                        <span id="display-platform-fee" style="color: #a855f7; font-weight: 700;">3%</span>
-                    </div>
-                </div>
-
-                <!-- Input Form for Creating Wagers -->
-                <div style="margin-bottom: 1.2rem;">
-                    <label style="display: block; color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.4rem;">Wager Stake (ETH / Sepolia):</label>
-                    <input type="number" id="wager-amount-input" placeholder="0.05" step="0.01" style="width: 100%; background: #131722; border: 1px solid #1e293b; color: #fff; padding: 0.6rem 0.8rem; border-radius: 6px; box-sizing: border-box; font-size: 0.95rem;">
-                </div>
-
-                <!-- Action Button -->
-                <button onclick="handleCreateWager()" style="width: 100%; background: linear-gradient(135deg, #00f2fe, #7928ca); color: #fff; border: none; padding: 0.8rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);">
-                    Create Match Challenge
-                </button>
-            </div>
-
-            <!-- Status Message Box -->
-            <div id="p2pStatus" style="display: none; margin-top: 1rem; padding: 0.75rem; border-radius: 6px; background: rgba(0, 242, 254, 0.1); border: 1px solid #00f2fe; color: #00f2fe; font-size: 0.85rem; text-align: center;">
-            </div>
-
-            <!-- Footer Stats -->
-            <div style="border-top: 1px solid #1e293b; padding-top: 1rem; margin-top: 1rem; text-align: center;">
-                <span style="font-size: 0.8rem; color: #64748b;">Powered by Evolysium Smart Contracts</span>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<!-- Web3 Integration Script -->
-<script>
-    async function handleCreateWager() {
-        const amountInput = document.getElementById('wager-amount-input').value;
-        const statusBox = document.getElementById('p2pStatus');
-
-        if (!amountInput || amountInput <= 0) {
-            alert('Please enter a valid stake amount.');
-            return;
-        }
-
-        if (typeof window.ethereum !== 'undefined') {
-            try {
-                statusBox.style.display = 'block';
-                statusBox.innerText = 'Connecting wallet & creating wager...';
-
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
-                await provider.send("eth_requestAccounts", []);
-                const signer = provider.getSigner();
-
-                const contract = new ethers.Contract(WAGER_ADDR, WAGER_ABI_JS, signer);
-                
-                const tx = await contract.createWager({
-                    value: ethers.utils.parseEther(amountInput)
-                });
-
-                statusBox.innerText = 'Transaction submitted! Waiting for confirmation...';
-                await tx.wait();
-
-                statusBox.innerText = 'Wager successfully created on Sepolia!';
-            } catch (error) {
-                console.error(error);
-                statusBox.innerText = 'Transaction failed or rejected.';
-            }
-        } else {
-            alert('MetaMask is required to interact with smart contracts.');
-        }
-    }
-</script>
         async function loadActiveWagers() {
           try {
             if (!window.ethereum) return;
@@ -3677,14 +3563,14 @@ function checkVerification(userAddress) {
 
             for (let i = 1; i <= Number(count); i++) {
               const w = await wager.wagers(i);
-              if (!w.isAccepted && !w.isResolved) {
+              if (w.active && !w.resolved) {
                 activeFound = true;
-                const formattedAmt = ethers.formatUnits(w.amount, 18);
+                const formattedAmt = ethers.formatEther(w.amount);
                 html += `
                   <div style="display: flex; justify-content: space-between; align-items: center; background: black; border: 1px solid #27272a; padding: 10px; border-radius: 8px;">
                     <div>
                       <p style="font-size: 12px; font-weight: bold; color: #fbbf24; margin: 0;">Challenge #${i}</p>
-                      <p style="font-size: 11px; color: #a1a1aa; margin: 2px 0 0 0;">Wager: <span style="color: white; font-weight: bold;">${formattedAmt} $EVO</span></p>
+                      <p style="font-size: 11px; color: #a1a1aa; margin: 2px 0 0 0;">Wager: <span style="color: white; font-weight: bold;">${formattedAmt} ETH</span></p>
                     </div>
                     <button onclick="acceptWagerOnChain(${i}, '${formattedAmt}')" style="padding: 6px 12px; background: #9333ea; color: white; font-weight: bold; font-size: 11px; border-radius: 6px; border: none; cursor: pointer;">Accept</button>
                   </div>
@@ -3700,34 +3586,35 @@ function checkVerification(userAddress) {
             console.error(err);
           }
         }
-// Provjera verifikacije s pametnog ugovora na Sepoliji
-async function checkOnChainVerification() {
-    if (!window.ethereum) return;
-    try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        const userAddress = await signer.getAddress();
 
-        const VERIFICATION_CONTRACT_ADDRESS = "0xBceD6293Cb21f19DFC507042a0642d7241305Eb0";
-        const VERIFICATION_ABI = ["function isVerified(address _user) view returns (bool)"];
+        async function checkOnChainVerification() {
+            if (!window.ethereum) return;
+            try {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer = await provider.getSigner();
+                const userAddress = await signer.getAddress();
 
-        const contract = new ethers.Contract(VERIFICATION_CONTRACT_ADDRESS, VERIFICATION_ABI, provider);
-        const isVerifiedOnChain = await contract.isVerified(userAddress);
+                const VERIFICATION_CONTRACT_ADDRESS = "0xBceD6293Cb21f19DFC507042a0642d7241305Eb0";
+                const VERIFICATION_ABI = ["function isVerified(address _user) view returns (bool)"];
 
-        const verifiedIcon = document.getElementById('verifiedBadgeIcon');
-        const sidebarVerified = document.getElementById('sidebarVerifiedStatus');
+                const contract = new ethers.Contract(VERIFICATION_CONTRACT_ADDRESS, VERIFICATION_ABI, provider);
+                const isVerifiedOnChain = await contract.isVerified(userAddress);
 
-        if (isVerifiedOnChain) {
-            if (verifiedIcon) verifiedIcon.style.display = 'inline-block';
-            if (sidebarVerified) sidebarVerified.innerText = 'Verified (On-Chain)';
-        } else {
-            if (verifiedIcon) verifiedIcon.style.display = 'none';
-            if (sidebarVerified) sidebarVerified.innerText = 'Unverified';
+                const verifiedIcon = document.getElementById('verifiedBadgeIcon');
+                const sidebarVerified = document.getElementById('sidebarVerifiedStatus');
+
+                if (isVerifiedOnChain) {
+                    if (verifiedIcon) verifiedIcon.style.display = 'inline-block';
+                    if (sidebarVerified) sidebarVerified.innerText = 'Verified (On-Chain)';
+                } else {
+                    if (verifiedIcon) verifiedIcon.style.display = 'none';
+                    if (sidebarVerified) sidebarVerified.innerText = 'Unverified';
+                }
+            } catch (err) {
+                console.error("Greška pri dohvatu verifikacije:", err);
+            }
         }
-    } catch (err) {
-        console.error("Greška pri dohvatu verifikacije:", err);
-    }
-}
+
         // INITIALIZATION ON DOM LOAD
         window.addEventListener('DOMContentLoaded', () => {
             loadUserProfile();
@@ -3737,7 +3624,8 @@ async function checkOnChainVerification() {
             loadBackendFeed();
             loadUserNotifications();
             loadActiveWagers();
-checkOnChainVerification();
+            checkOnChainVerification();
+            
             setTimeout(() => {
                 const preloader = document.getElementById('app-preloader');
                 if (preloader) {
