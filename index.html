@@ -1098,40 +1098,40 @@ h1, h2, h3, h4, h5, .brand-name {
     <p class="text-muted small mb-3">Unlock platform milestones, complete crypto duels, and host watch parties to earn rare badges and bonus XP.</p>
     
     <div class="row g-3">
-        <!-- Badge 1 -->
-        <div class="col-md-3 col-6">
-            <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="alert('🏆 Achievement: First Trade\n\nCompleted 1st transfer. Status: Active 🚀')">
-                <div class="fs-1 mb-2">🚀</div>
-                <h6 class="text-white fw-bold mb-1 font-size-sm">First Trade</h6>
-                <span class="text-muted small" style="font-size: 0.75rem;">Completed 1st transfer</span>
-            </div>
+    <!-- Badge 1: First Trade -->
+    <div class="col-md-3 col-6">
+        <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="executeFirstTrade()">
+            <div class="fs-1 mb-2">🚀</div>
+            <h6 class="text-white fw-bold mb-1 font-size-sm">First Trade</h6>
+            <span class="text-muted small" style="font-size: 0.75rem;">Completed 1st transfer</span>
         </div>
-        <!-- Badge 2 -->
-            <div class="col-md-3 col-6">
-                <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="alert('🏆 Achievement: Duelist\n\nWon a crypto challenge. Ready for the next duel! ⚔️')">
-                    <div class="fs-1 mb-2">⚔️</div>
-                    <h6 class="text-white fw-bold mb-1 font-size-sm">Duelist</h6>
-                    <span class="text-muted small" style="font-size: 0.75rem;">Won a crypto challenge</span>
-                </div>
-            </div>
+    </div>
 
-            <!-- Badge 3 -->
-            <div class="col-md-3 col-6">
-                <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="alert('🏆 Achievement: Host Pro\n\nHosted a watch party. Community leader status! 🎥')">
-                    <div class="fs-1 mb-2">🎥</div>
-                    <h6 class="text-white fw-bold mb-1 font-size-sm">Host Pro</h6>
-                    <span class="text-muted small" style="font-size: 0.75rem;">Hosted a watch party</span>
-                </div>
-            </div>
+    <!-- Badge 2: Duelist -->
+    <div class="col-md-3 col-6">
+        <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="openCryptoDuel()">
+            <div class="fs-1 mb-2">⚔️</div>
+            <h6 class="text-white fw-bold mb-1 font-size-sm">Duelist</h6>
+            <span class="text-muted small" style="font-size: 0.75rem;">Won a crypto challenge</span>
+        </div>
+    </div>
 
-            <!-- Badge 4 -->
-            <div class="col-md-3 col-6">
-                <div class="profile-stats-card text-center p-3" style="cursor: pointer; opacity: 0.5; border-style: dashed;" onclick="alert('🏆 Achievement: Diamond Pass\n\nLocked / Reach 50 XP to unlock exclusive VIP privileges! 💎')">
-                    <div class="fs-1 mb-2">🔒</div>
-                    <h6 class="text-white fw-bold mb-1 font-size-sm">Diamond Pass</h6>
-                    <span class="text-muted small" style="font-size: 0.75rem;">Locked (Reach 50 XP)</span>
-                </div>
-            </div>
+    <!-- Badge 3: Host Pro -->
+    <div class="col-md-3 col-6">
+        <div class="profile-stats-card text-center p-3" style="cursor: pointer;" onclick="hostWatchParty()">
+            <div class="fs-1 mb-2">🎥</div>
+            <h6 class="text-white fw-bold mb-1 font-size-sm">Host Pro</h6>
+            <span class="text-muted small" style="font-size: 0.75rem;">Hosted a watch party</span>
+        </div>
+    </div>
+
+    <!-- Badge 4: Diamond Pass -->
+    <div class="col-md-3 col-6">
+        <div class="profile-stats-card text-center p-3" style="cursor: pointer; opacity: 0.8; border-style: solid;" onclick="mintCreatorPass()">
+            <div class="fs-1 mb-2">💎</div>
+            <h6 class="text-white fw-bold mb-1 font-size-sm">Diamond Pass</h6>
+            <span class="text-muted small" style="font-size: 0.75rem;">VIP Access / Mint Pass</span>
+        </div>
     </div>
 </div>
     <!-- EVO-SUITE MODALS -->
@@ -3942,8 +3942,33 @@ function generateAiContent() {
     alert('✨ AI Content Generated! Post idea updated in your input box.');
     rewardUserXP(5);
 }
-</script> 
-      </script>  
+function executeFirstTrade() {
+    const targetInput = document.getElementById('tipAmountInput') || document.querySelector('input');
+    if (targetInput) {
+        targetInput.focus();
+        alert('🚀 First Trade: Unesite iznos i pokrenite brzu transakciju preko $EVO tip sustava!');
+    } else {
+        sendCryptoTip();
+    }
+}
+
+function openCryptoDuel() {
+    const action = confirm('⚔️ Kripto Dvoboj: Želite li izazvati nasumičnog kreatora u duel i osvojiti dodatne XP bodove?');
+    if (action) {
+        rewardUserXP(20);
+        alert('🔥 Uspješno ste ušli u dvoboj! +20 XP bodova dodano.');
+    }
+}
+
+function hostWatchParty() {
+    const title = prompt('🎥 Unesite naziv vaše nove Watch Party sobe (stream / događaj):', 'Evolysium Live Stream #1');
+    if (title) {
+        alert(`✅ Soba "${title}" je uspješno kreirana i aktivna za zajednicu!`);
+        rewardUserXP(25);
+    }
+}
+    </script> 
+        
     <!-- FOOTER - Copyright & Functional Links -->
     <footer class="site-footer text-center py-4 mt-5">
         <div class="container">
