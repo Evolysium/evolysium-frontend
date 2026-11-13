@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium (ƎE) — Global Financial Operations & Treasury Management</title>
+    <title>Evolysium (ƎE) — Global Financial Operations & Payments</title>
 
     <meta name="title" content="Evolysium — Global Financial Operations">
-    <meta name="description" content="Secure international settlements, milestone agreements, and transparent corporate treasury management.">
+    <meta name="description" content="Secure international settlements, milestone agreements, and corporate account management.">
     
     <!-- PWA Web App Manifest -->
     <link rel="manifest" href='data:application/manifest+json,{
@@ -372,7 +372,7 @@
 </head>
 <body>
 
-    <!-- Preloader (Clean & Professional) -->
+    <!-- Preloader -->
     <div id="enterprise-preloader">
         <div class="brand-mark fs-4 mb-3" style="width: 56px; height: 56px;">ƎE</div>
         <h5 class="fw-bold text-white mb-0">Evolysium</h5>
@@ -395,7 +395,7 @@
 
             <div class="d-flex align-items-center gap-2 nav-actions-wrap">
                 <!-- System Status -->
-                <div class="nav-pill-btn d-none d-xl-inline-flex" title="All systems fully operational">
+                <div class="nav-pill-btn d-none d-xl-inline-flex" title="All systems operational">
                     <span class="status-dot online"></span>
                     <span class="font-mono" style="font-size: 0.75rem;">SYSTEM ACTIVE</span>
                 </div>
@@ -497,15 +497,11 @@
     <!-- Main Workspace -->
     <main class="container py-4">
         
-        <!-- Welcome Banner (Human & Professional Copywriting) -->
+        <!-- Welcome Banner (Uklonjeni su suvišni bedževi s vrha) -->
         <div class="corp-card p-4 mb-4">
             <div class="row align-items-center">
                 <div class="col-lg-8">
-                    <div class="d-flex align-items-center gap-2 mb-2">
-                        <span class="badge-corp bg-primary bg-opacity-25 text-info border border-primary border-opacity-25 font-mono">GLOBAL INFRASTRUCTURE</span>
-                        <span class="badge-corp bg-success bg-opacity-25 text-success border border-success border-opacity-25 font-mono">DIRECT CLEARING</span>
-                    </div>
-                    <h2 class="fw-bold text-white mb-2">Global Payments & Treasury Management</h2>
+                    <h2 class="fw-bold text-white mb-2">Global Payments & Financial Management</h2>
                     <p class="text-secondary small mb-0" style="max-width: 680px; line-height: 1.6;">
                         Manage international corporate payouts, protect milestone deliverables with secure agreements, and maintain complete transparency across your financial operations in one unified workspace.
                     </p>
@@ -521,16 +517,16 @@
             </div>
         </div>
 
-        <!-- Clean KPI Metrics (Combined & Refined) -->
+        <!-- Clean KPI Metrics -->
         <div class="row g-3 mb-4">
             <div class="col-md-4 col-sm-12">
                 <div class="kpi-card">
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="kpi-label">Available Treasury Balance</span>
+                        <span class="kpi-label">Available Balance</span>
                         <i class="fa-solid fa-wallet text-info"></i>
                     </div>
                     <div class="kpi-value font-mono" id="kpiLiquidity">0.00</div>
-                    <span class="small text-success font-mono" style="font-size: 0.75rem;"><i class="fa-solid fa-arrow-up me-1"></i>EUR / USDC Liquidity</span>
+                    <span class="small text-success font-mono" style="font-size: 0.75rem;"><i class="fa-solid fa-arrow-up me-1"></i>EUR / USDC Accounts</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -550,7 +546,7 @@
                         <i class="fa-solid fa-shield-check text-success"></i>
                     </div>
                     <div class="kpi-value" style="font-size: 1.35rem; padding-top: 4px;" id="kpiComplianceStatus">Standard Client</div>
-                    <span class="small text-info font-mono" style="font-size: 0.75rem;"><span class="status-dot online me-1"></span>99.99% Uptime Operational</span>
+                    <span class="small text-info font-mono" style="font-size: 0.75rem;"><span class="status-dot online me-1"></span>99.99% Operational Uptime</span>
                 </div>
             </div>
         </div>
@@ -708,7 +704,7 @@
             <div class="col-md-4">
                 <div class="corp-card p-4 h-100">
                     <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-globe"></i></div>
-                    <h6 class="fw-bold text-white mb-2">Borderless Clearing</h6>
+                    <h6 class="fw-bold text-white mb-2">Global Settlements</h6>
                     <p class="small text-secondary mb-0" style="line-height: 1.6;">
                         Eliminate correspondent banking delays and excessive FX spreads. Settle invoices globally in seconds.
                     </p>
@@ -729,7 +725,7 @@
 
     <!-- MODALS -->
 
-    <!-- 1. Client Portal Sign In Modal -->
+    <!-- 1. Client Sign In Modal -->
     <div class="modal fade" id="corpAuthModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
@@ -767,12 +763,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-vault text-info me-2"></i>Treasury & Balance Overview</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-vault text-info me-2"></i>Balance & Account Overview</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <div class="p-3 rounded-3 mb-3 text-center" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
-                        <span class="kpi-label d-block">Available Liquidity</span>
+                        <span class="kpi-label d-block">Available Balance</span>
                         <h3 class="fw-bold text-white font-mono my-1" id="modalTreasuryDisplay">0.00 EUR</h3>
                         <span class="badge bg-success bg-opacity-25 text-success font-mono" style="font-size: 0.7rem;">SETTLEMENT READY</span>
                     </div>
@@ -832,7 +828,7 @@
                 </div>
                 <div class="modal-body p-4">
                     <p class="small text-secondary mb-3">
-                        Connect Evolysium settlement rails directly into your ERP or treasury management system via REST API.
+                        Connect Evolysium settlement rails directly into your ERP or financial management system via REST API.
                     </p>
                     <div class="mb-3">
                         <label class="kpi-label d-block mb-1">Production / Sandbox Access Key</label>
@@ -854,76 +850,73 @@
     </div>
 
     <!-- 5. Service Plans Modal -->
-<div class="modal fade" id="enterprisePricingModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content modal-content-corp">
-            <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                <h5 class="fw-bold mb-0">Transparent Plans & Pricing</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body p-4">
-                <div class="row g-4">
-                    <!-- Essential Plan -->
-                    <div class="col-md-4">
-                        <div class="tier-card">
-                            <div>
-                                <span class="badge-corp bg-secondary bg-opacity-25 text-secondary font-mono">ESSENTIAL</span>
-                                <h4 class="fw-bold text-white mt-2">Essential</h4>
-                                <h3 class="fw-bold font-mono my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                <p class="small text-secondary">Ideal for growing teams handling routine supplier payouts and invoices.</p>
-                                <ul class="tier-list">
-                                    <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly transfer volume</li>
-                                    <li><i class="fa-solid fa-check"></i> Standard API access for your software</li>
-                                    <li><i class="fa-solid fa-check"></i> Clean CSV transaction exports</li>
-                                    <li><i class="fa-solid fa-check"></i> Responsive email support (24h SLA)</li>
-                                </ul>
+    <div class="modal fade" id="enterprisePricingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content modal-content-corp">
+                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
+                    <h5 class="fw-bold mb-0">Transparent Service Plans & Pricing</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="tier-card">
+                                <div>
+                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary font-mono">ESSENTIAL</span>
+                                    <h4 class="fw-bold text-white mt-2">Essential</h4>
+                                    <h3 class="fw-bold font-mono my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                    <p class="small text-secondary">Ideal for growing teams handling routine supplier payouts and invoices.</p>
+                                    <ul class="tier-list">
+                                        <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly transfer volume</li>
+                                        <li><i class="fa-solid fa-check"></i> Standard API access for your software</li>
+                                        <li><i class="fa-solid fa-check"></i> Clean CSV transaction exports</li>
+                                        <li><i class="fa-solid fa-check"></i> Responsive email support (24h SLA)</li>
+                                    </ul>
+                                </div>
+                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('essential')">Select Essential Plan</button>
                             </div>
-                            <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('essential')">Select Essential Plan</button>
                         </div>
-                    </div>
 
-                    <!-- Professional Plan -->
-                    <div class="col-md-4">
-                        <div class="tier-card featured">
-                            <div>
-                                <span class="badge-corp bg-primary text-white font-mono">MOST POPULAR</span>
-                                <h4 class="fw-bold text-white mt-2">Professional</h4>
-                                <h3 class="fw-bold font-mono my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                <p class="small text-secondary">Complete milestone agreement protection and multi-currency treasury tools.</p>
-                                <ul class="tier-list">
-                                    <li><i class="fa-solid fa-check"></i> Unlimited transfer and settlement volume</li>
-                                    <li><i class="fa-solid fa-check"></i> Secure agreement milestone protection</li>
-                                    <li><i class="fa-solid fa-check"></i> Advanced multi-user permissions</li>
-                                    <li><i class="fa-solid fa-check"></i> Dedicated account manager</li>
-                                </ul>
+                        <div class="col-md-4">
+                            <div class="tier-card featured">
+                                <div>
+                                    <span class="badge-corp bg-primary text-white font-mono">MOST POPULAR</span>
+                                    <h4 class="fw-bold text-white mt-2">Professional</h4>
+                                    <h3 class="fw-bold font-mono my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                    <p class="small text-secondary">Complete milestone agreement protection and multi-currency tools.</p>
+                                    <ul class="tier-list">
+                                        <li><i class="fa-solid fa-check"></i> Unlimited transfer and settlement volume</li>
+                                        <li><i class="fa-solid fa-check"></i> Secure agreement milestone protection</li>
+                                        <li><i class="fa-solid fa-check"></i> Advanced multi-user permissions</li>
+                                        <li><i class="fa-solid fa-check"></i> Dedicated account manager</li>
+                                    </ul>
+                                </div>
+                                <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('professional')">Select Professional Plan</button>
                             </div>
-                            <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('professional')">Select Professional Plan</button>
                         </div>
-                    </div>
 
-                    <!-- Enterprise Custom Plan -->
-                    <div class="col-md-4">
-                        <div class="tier-card">
-                            <div>
-                                <span class="badge-corp bg-warning bg-opacity-25 text-warning font-mono">CUSTOM SETUP</span>
-                                <h4 class="fw-bold text-white mt-2">Enterprise Custom</h4>
-                                <h3 class="fw-bold font-mono my-3">€1,199 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                <p class="small text-secondary">Fully customized infrastructure deployed directly on your domain.</p>
-                                <ul class="tier-list">
-                                    <li><i class="fa-solid fa-check"></i> Custom domain and organization branding</li>
-                                    <li><i class="fa-solid fa-check"></i> Tailored smart contract auditing</li>
-                                    <li><i class="fa-solid fa-check"></i> Direct banking gateway integrations</li>
-                                    <li><i class="fa-solid fa-check"></i> Priority 24/7 dedicated support</li>
-                                </ul>
+                        <div class="col-md-4">
+                            <div class="tier-card">
+                                <div>
+                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning font-mono">CUSTOM SETUP</span>
+                                    <h4 class="fw-bold text-white mt-2">Enterprise Custom</h4>
+                                    <h3 class="fw-bold font-mono my-3">€1,199 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                    <p class="small text-secondary">Fully customized infrastructure deployed directly on your domain.</p>
+                                    <ul class="tier-list">
+                                        <li><i class="fa-solid fa-check"></i> Custom domain and organization branding</li>
+                                        <li><i class="fa-solid fa-check"></i> Tailored smart contract auditing</li>
+                                        <li><i class="fa-solid fa-check"></i> Direct banking gateway integrations</li>
+                                        <li><i class="fa-solid fa-check"></i> Priority 24/7 dedicated support</li>
+                                    </ul>
+                                </div>
+                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('enterprise')">Contact for Enterprise</button>
                             </div>
-                            <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('enterprise')">Contact for Enterprise</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- 6. Partnership Inquiry Modal -->
     <div class="modal fade" id="proposalInquiryModal" tabindex="-1" aria-hidden="true">
@@ -935,7 +928,7 @@
                 </div>
                 <div class="modal-body p-4">
                     <p class="small text-secondary mb-3">
-                        Submit your organization's requirements. Our solutions architecture team responds within one business day.
+                        Submit your organization's requirements. Our client relations team responds within one business day.
                     </p>
                     <form onsubmit="submitEnterpriseInquiry(event)">
                         <div class="mb-3">
@@ -991,7 +984,7 @@
                         <span class="fw-bold text-white">Evolysium</span>
                     </div>
                     <p class="small text-secondary mb-0">
-                        Secure Global Financial Operations & Clearing Systems.<br>
+                        Secure Global Financial Operations & Payments.<br>
                         Direct Inquiries: <a href="mailto:office.evolysium@gmail.com" class="text-info text-decoration-none font-mono">office.evolysium@gmail.com</a>
                     </p>
                 </div>
@@ -1219,7 +1212,7 @@
             }
 
             if (amount > treasuryBalance) {
-                notifyCorp('Available liquidity is insufficient for this transfer.');
+                notifyCorp('Available balance is insufficient for this transfer.');
                 return;
             }
 
@@ -1294,7 +1287,7 @@
                 const newEscrowRecord = {
                     id: 'ESC-' + Math.floor(1000 + Math.random() * 9000),
                     timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
-                    entity: 'Protected Escrow',
+                    entity: 'Protected Agreement',
                     category: 'escrow',
                     reference: title,
                     amount: `${amountVal} EUR`,
@@ -1383,8 +1376,8 @@
             treasuryBalance += 1000.00;
             localStorage.setItem('evo_treasury_bal', treasuryBalance.toString());
             refreshDashboardUI();
-            pushSystemAlert('Provisioned +1,000.00 EUR test liquidity.');
-            notifyCorp('Added +1,000.00 EUR test liquidity to your treasury.');
+            pushSystemAlert('Provisioned +1,000.00 EUR test balance.');
+            notifyCorp('Added +1,000.00 EUR test funds to your balance.');
             const modal = bootstrap.Modal.getInstance(document.getElementById('treasuryModal'));
             if (modal) modal.hide();
         }
