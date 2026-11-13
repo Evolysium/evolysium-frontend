@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium (ƎE) — Enterprise Digital Infrastructure & Global Settlement</title>
+    <title>Evolysium (ƎE) — Globalna plaćanja i poslovanje</title>
 
-    <meta name="title" content="Evolysium — Institutional Payment & Infrastructure Platform">
-    <meta name="description" content="Enterprise-grade cross-border settlement, programmable smart escrow, and scalable digital infrastructure for global organizations.">
+    <meta name="title" content="Evolysium — Platforma za globalna plaćanja">
+    <meta name="description" content="Sigurna međunarodna plaćanja, pametni ugovori i jednostavno upravljanje poslovnim financijama.">
     
     <!-- PWA Web App Manifest -->
     <link rel="manifest" href='data:application/manifest+json,{
-        "name":"Evolysium Enterprise",
+        "name":"Evolysium",
         "short_name":"Evolysium",
         "start_url":"/",
         "display":"standalone",
@@ -29,7 +29,7 @@
       }
     </script>
 
-    <!-- Bootstrap 5, FontAwesome & Corporate Typography -->
+    <!-- Bootstrap 5, FontAwesome & Typography -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -82,7 +82,7 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Navbar */
+        /* Navigacija */
         .navbar-corporate {
             background: rgba(8, 12, 20, 0.92);
             backdrop-filter: blur(20px);
@@ -138,7 +138,7 @@
             background: var(--accent-primary-hover);
         }
 
-        /* Cards & Containers */
+        /* Kartice */
         .corp-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
@@ -173,7 +173,7 @@
             margin: 6px 0;
         }
 
-        /* Form Elements */
+        /* Forma */
         .corp-input {
             background-color: #090d16 !important;
             border: 1px solid rgba(255, 255, 255, 0.12) !important;
@@ -230,7 +230,7 @@
             color: #ffffff;
         }
 
-        /* Tabs & Pills */
+        /* Kartice izbora */
         .corp-tab {
             background: transparent;
             border: 1px solid var(--border-subtle);
@@ -254,7 +254,7 @@
             color: #60a5fa;
         }
 
-        /* Status Badges */
+        /* Statusi */
         .status-dot {
             width: 8px;
             height: 8px;
@@ -274,7 +274,7 @@
             letter-spacing: 0.03em;
         }
 
-        /* Tables */
+        /* Tablice */
         .corp-table {
             width: 100%;
             border-collapse: collapse;
@@ -304,7 +304,7 @@
             background: rgba(255, 255, 255, 0.02);
         }
 
-        /* Pricing Cards */
+        /* Paketi */
         .tier-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-subtle);
@@ -341,7 +341,7 @@
             margin-top: 3px;
         }
 
-        /* Modal Styling */
+        /* Modali */
         .modal-content-corp {
             background: var(--bg-surface);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -362,7 +362,7 @@
             transition: opacity 0.4s ease;
         }
 
-        /* Footer */
+        /* Podnožje */
         .corp-footer {
             border-top: 1px solid var(--border-subtle);
             background: #060910;
@@ -385,287 +385,287 @@
 </head>
 <body>
 
-    <!-- Institutional Preloader -->
+    <!-- Učitavanje -->
     <div id="enterprise-preloader">
         <div class="brand-mark fs-4 mb-3" style="width: 56px; height: 56px;">ƎE</div>
-        <h5 class="fw-bold text-white mb-1">Evolysium Institutional</h5>
-        <p class="small text-secondary font-mono">Initializing settlement nodes & ledger...</p>
+        <h5 class="fw-bold text-white mb-1">Evolysium</h5>
+        <p class="small text-secondary font-mono">Pripremam radno okruženje...</p>
     </div>
 
-    <!-- Top Navigation Bar -->
+    <!-- Navigacija -->
     <nav class="navbar-corporate sticky-top">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-3">
                 <button class="nav-pill-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#enterpriseSidebar" aria-controls="enterpriseSidebar">
-                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-bars"></i> Izbornik
                 </button>
                 <a class="d-flex align-items-center gap-2 text-decoration-none" href="javascript:void(0);">
                     <div class="brand-mark fs-5">ƎE</div>
                     <div>
                         <span class="fw-bold fs-5 text-white tracking-tight">Evolysium</span>
-                        <span class="badge bg-primary bg-opacity-25 text-info border border-primary border-opacity-25 ms-2 font-mono" style="font-size: 0.65rem;">ENTERPRISE</span>
+                        <span class="badge bg-primary bg-opacity-25 text-info border border-primary border-opacity-25 ms-2 font-mono" style="font-size: 0.65rem;">POSLOVNI RAČUN</span>
                     </div>
                 </a>
             </div>
 
             <div class="d-flex align-items-center gap-2 nav-actions-wrap">
-                <!-- Network Status Indicator -->
-                <div class="nav-pill-btn d-none d-xl-inline-flex" title="Settlement Network Operational">
+                <!-- Status mreže -->
+                <div class="nav-pill-btn d-none d-xl-inline-flex" title="Mreža radi stabilno">
                     <span class="status-dot online"></span>
-                    <span class="font-mono" style="font-size: 0.75rem;">MAINNET / SEPOLIA: 99.99%</span>
+                    <span class="font-mono" style="font-size: 0.75rem;">MREŽA: 99.99%</span>
                 </div>
 
-                <!-- Treasury Liquidity Display -->
-                <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#treasuryModal" title="Corporate Treasury Balance">
+                <!-- Stanje sredstava -->
+                <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#treasuryModal" title="Stanje sredstava na računu">
                     <i class="fa-solid fa-vault text-info"></i>
                     <span class="font-mono" id="navTreasuryBalance">25,000.00 $EVO</span>
                 </button>
 
-                <!-- Web3 Institutional Wallet -->
-                <button class="nav-pill-btn" onclick="connectInstitutionalWallet()" title="Connect Corporate Multi-Sig / Web3 Wallet">
+                <!-- Povezivanje novčanika -->
+                <button class="nav-pill-btn" onclick="connectInstitutionalWallet()" title="Poveži poslovni novčanik">
                     <i class="fa-solid fa-shield-halved text-success"></i>
-                    <span id="walletBtnLabel">Connect Custody Wallet</span>
+                    <span id="walletBtnLabel">Poveži novčanik</span>
                 </button>
 
-                <!-- API & Developer Docs -->
+                <!-- API ključevi -->
                 <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#apiKeysModal">
-                    <i class="fa-solid fa-code text-warning"></i> API Keys
+                    <i class="fa-solid fa-code text-warning"></i> API ključevi
                 </button>
 
-                <!-- Notifications -->
+                <!-- Obavijesti -->
                 <div class="dropdown">
                     <button class="nav-pill-btn position-relative dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markAlertsRead()">
                         <i class="fa-solid fa-bell"></i>
                         <span id="alertBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style="font-size: 0.62rem; display:none;">0</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark shadow-lg p-2 mt-2" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); width: 320px;" id="alertsDropdownList">
-                        <li><h6 class="dropdown-header text-white fw-bold">System & Settlement Alerts</h6></li>
+                        <li><h6 class="dropdown-header text-white fw-bold">Obavijesti sustava</h6></li>
                         <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                        <li><span class="dropdown-item-text small text-secondary">No recent system alerts</span></li>
+                        <li><span class="dropdown-item-text small text-secondary">Nema novih obavijesti</span></li>
                     </ul>
                 </div>
 
-                <!-- Corporate Account / Sign In -->
+                <!-- Prijava -->
                 <button class="nav-pill-btn primary" data-bs-toggle="modal" data-bs-target="#corpAuthModal">
                     <i class="fa-solid fa-building"></i>
-                    <span id="corpAuthBtnLabel">Client Portal</span>
+                    <span id="corpAuthBtnLabel">Prijava</span>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Enterprise Sidebar Menu -->
+    <!-- Bočni izbornik -->
     <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="enterpriseSidebar" style="background: var(--bg-surface); border-right: 1px solid var(--border-subtle); width: 310px;">
         <div class="offcanvas-header border-bottom border-secondary border-opacity-25 py-3 px-4">
             <div class="d-flex align-items-center gap-2">
                 <div class="brand-mark" style="width: 32px; height: 32px; font-size: 0.9rem;">ƎE</div>
-                <h6 class="offcanvas-title fw-bold mb-0">Evolysium Infrastructure</h6>
+                <h6 class="offcanvas-title fw-bold mb-0">Brzi izbornik</h6>
             </div>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body p-4 d-flex flex-column gap-3">
             
-            <!-- Entity Verification Status -->
+            <!-- Provjera partnera -->
             <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);">
-                <span class="kpi-label d-block mb-1">KYB / Entity Compliance</span>
+                <span class="kpi-label d-block mb-1">Status provjere partnera</span>
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold text-white small" id="sidebarKybStatus">Unverified Entity</span>
-                    <button class="btn btn-sm btn-outline-info py-1 px-2" style="font-size: 0.72rem;" onclick="verifyCorporateEntity()">Verify KYB</button>
+                    <span class="fw-bold text-white small" id="sidebarKybStatus">Nepotvrđen račun</span>
+                    <button class="btn btn-sm btn-outline-info py-1 px-2" style="font-size: 0.72rem;" onclick="verifyCorporateEntity()">Provjeri</button>
                 </div>
             </div>
 
-            <span class="kpi-label mt-2">Core Modules</span>
+            <span class="kpi-label mt-2">Glavne funkcije</span>
             
             <a href="#settlementSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-money-bill-transfer text-info" style="width: 20px;"></i> Cross-Border Settlement
+                <i class="fa-solid fa-money-bill-transfer text-info" style="width: 20px;"></i> Brza uplata i prijenos
             </a>
             <a href="#escrowSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-contract text-primary" style="width: 20px;"></i> Programmable Smart Escrow
+                <i class="fa-solid fa-file-contract text-primary" style="width: 20px;"></i> Sigurni depoziti (Escrow)
             </a>
             <a href="#ledgerSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-list-check text-success" style="width: 20px;"></i> Transaction Ledger & Audit
+                <i class="fa-solid fa-list-check text-success" style="width: 20px;"></i> Povijest transakcija
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#invoiceModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-invoice-dollar text-warning" style="width: 20px;"></i> B2B Invoice Generator
+                <i class="fa-solid fa-file-invoice-dollar text-warning" style="width: 20px;"></i> Izrada računa
             </a>
 
-            <span class="kpi-label mt-2">Infrastructure & Governance</span>
+            <span class="kpi-label mt-2">Postavke i podrška</span>
 
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#apiKeysModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-key text-secondary" style="width: 20px;"></i> API Credentials & Webhooks
+                <i class="fa-solid fa-key text-secondary" style="width: 20px;"></i> API ključevi i alati
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-layer-group text-info" style="width: 20px;"></i> Enterprise Licensing
+                <i class="fa-solid fa-layer-group text-info" style="width: 20px;"></i> Odabir paketa usluga
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-handshake text-success" style="width: 20px;"></i> Partnership & Custom SLA
+                <i class="fa-solid fa-handshake text-success" style="width: 20px;"></i> Kontaktirajte naš tim
             </a>
 
             <div class="mt-auto pt-3 border-top border-secondary border-opacity-25">
                 <button class="nav-pill-btn w-100 justify-content-center text-danger" onclick="handleCorpLogout()">
-                    <i class="fa-solid fa-right-from-bracket"></i> Terminate Session
+                    <i class="fa-solid fa-right-from-bracket"></i> Odjava iz sustava
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Main Enterprise Workspace -->
+    <!-- Središnji dio -->
     <main class="container py-4">
         
-        <!-- Executive Header Banner -->
+        <!-- Pozdravni naslov -->
         <div class="corp-card p-4 mb-4">
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <div class="d-flex align-items-center gap-2 mb-2">
-                        <span class="badge-corp bg-primary bg-opacity-25 text-info border border-primary border-opacity-25 font-mono">ISO-20022 COMPATIBLE</span>
-                        <span class="badge-corp bg-success bg-opacity-25 text-success border border-success border-opacity-25 font-mono">INSTITUTIONAL GRADE</span>
+                        <span class="badge-corp bg-primary bg-opacity-25 text-info border border-primary border-opacity-25 font-mono">SIGURNA PLATFORMA</span>
+                        <span class="badge-corp bg-success bg-opacity-25 text-success border border-success border-opacity-25 font-mono">BRZA ISPLATA</span>
                     </div>
-                    <h2 class="fw-bold text-white mb-2">Global Payment & Digital Infrastructure Hub</h2>
+                    <h2 class="fw-bold text-white mb-2">Upravljanje globalnim plaćanjima i sredstvima</h2>
                     <p class="text-secondary small mb-0" style="max-width: 680px; line-height: 1.6;">
-                        Execute instant cross-border settlements, deploy milestone-based smart escrow contracts, and manage enterprise liquidity with full cryptographic auditability and zero intermediary friction.
+                        Šaljite uplate partnerima diljem svijeta u nekoliko sekundi, koristite pametne ugovore za jamstvo isplate i jednostavno pratite sve transakcije na jednom mjestu.
                     </p>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-3 mt-lg-0 d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-lg-end">
                     <button class="btn-corp-primary" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">
-                        <i class="fa-solid fa-briefcase me-2"></i> Request Enterprise Integration
+                        <i class="fa-solid fa-briefcase me-2"></i> Zatražite suradnju
                     </button>
                     <button class="btn-corp-outline" data-bs-toggle="modal" data-bs-target="#invoiceModal">
-                        <i class="fa-solid fa-plus me-2"></i> Issue B2B Settlement Invoice
+                        <i class="fa-solid fa-plus me-2"></i> Izdaj račun
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Key Performance & Liquidity Metrics -->
+        <!-- Pregled stanja (KPI kartice) -->
         <div class="row g-3 mb-4">
             <div class="col-md-3 col-sm-6">
                 <div class="kpi-card">
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="kpi-label">Available Liquidity</span>
+                        <span class="kpi-label">Raspoloživa sredstva</span>
                         <i class="fa-solid fa-wallet text-info"></i>
                     </div>
                     <div class="kpi-value font-mono" id="kpiLiquidity">25,000.00</div>
-                    <span class="small text-success font-mono" style="font-size: 0.75rem;"><i class="fa-solid fa-arrow-up me-1"></i>$EVO / USDC Treasury</span>
+                    <span class="small text-success font-mono" style="font-size: 0.75rem;"><i class="fa-solid fa-arrow-up me-1"></i>$EVO / USDC</span>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="kpi-card">
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="kpi-label">Active Smart Escrows</span>
+                        <span class="kpi-label">Aktivni depoziti</span>
                         <i class="fa-solid fa-lock text-primary"></i>
                     </div>
                     <div class="kpi-value font-mono" id="kpiActiveEscrows">0</div>
-                    <span class="small text-secondary font-mono" style="font-size: 0.75rem;">On-Chain Locked Contracts</span>
+                    <span class="small text-secondary font-mono" style="font-size: 0.75rem;">Zaključana sredstva</span>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="kpi-card">
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="kpi-label">Avg. Settlement Time</span>
+                        <span class="kpi-label">Prosječno vrijeme isplate</span>
                         <i class="fa-solid fa-bolt text-warning"></i>
                     </div>
-                    <div class="kpi-value font-mono">1.8 sec</div>
-                    <span class="small text-secondary font-mono" style="font-size: 0.75rem;">vs. 2-5 Days Traditional SWIFT</span>
+                    <div class="kpi-value font-mono">1.8 sek</div>
+                    <span class="small text-secondary font-mono" style="font-size: 0.75rem;">Trenutno izvršenje</span>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="kpi-card">
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="kpi-label">Compliance Status</span>
+                        <span class="kpi-label">Status računa</span>
                         <i class="fa-solid fa-shield-check text-success"></i>
                     </div>
-                    <div class="kpi-value" style="font-size: 1.35rem; padding-top: 4px;" id="kpiComplianceStatus">Standard Tier</div>
-                    <span class="small text-info font-mono" style="font-size: 0.75rem;">Automated AML / KYB Active</span>
+                    <div class="kpi-value" style="font-size: 1.35rem; padding-top: 4px;" id="kpiComplianceStatus">Osnovni paket</div>
+                    <span class="small text-info font-mono" style="font-size: 0.75rem;">Sigurna provjera aktivna</span>
                 </div>
             </div>
         </div>
 
-        <!-- Core Operational Modules: Settlement & Smart Escrow -->
+        <!-- Glavni moduli: Prijenos i Sigurni depozit -->
         <div class="row g-4 mb-4" id="settlementSection">
             
-            <!-- Left Column: Instant Cross-Border Settlement -->
+            <!-- Prijenos sredstava -->
             <div class="col-lg-6">
                 <div class="corp-card p-4 h-100">
                     <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
                         <div>
-                            <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-paper-plane text-info me-2"></i>Instant Cross-Border Settlement</h5>
-                            <span class="small text-secondary">Direct B2B counterparty transfer via Evolysium Clearing Network</span>
+                            <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-paper-plane text-info me-2"></i>Brza međunarodna uplata</h5>
+                            <span class="small text-secondary">Direktno slanje sredstava poslovnim partnerima</span>
                         </div>
-                        <span class="badge-corp bg-dark border border-secondary text-secondary font-mono">0.15% FEE</span>
+                        <span class="badge-corp bg-dark border border-secondary text-secondary font-mono">NAKNADA 0.15%</span>
                     </div>
 
                     <form onsubmit="executeCorporateSettlement(event)">
                         <div class="mb-3">
-                            <label class="form-label small text-secondary fw-semibold">Beneficiary Entity Handle or Corporate ID</label>
-                            <input type="text" id="settlementRecipient" class="form-control corp-input" placeholder="e.g., @acme_logistics_eu or corp_id_8842" required>
+                            <label class="form-label small text-secondary fw-semibold">Korisničko ime ili ID primatelja</label>
+                            <input type="text" id="settlementRecipient" class="form-control corp-input" placeholder="npr. @primatelj ili oznaka računa" required>
                         </div>
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-7">
-                                <label class="form-label small text-secondary fw-semibold">Settlement Amount</label>
+                                <label class="form-label small text-secondary fw-semibold">Iznos uplate</label>
                                 <input type="number" step="0.01" id="settlementAmount" class="form-control corp-input font-mono" placeholder="0.00" required>
                             </div>
                             <div class="col-md-5">
-                                <label class="form-label small text-secondary fw-semibold">Settlement Rail</label>
+                                <label class="form-label small text-secondary fw-semibold">Valuta</label>
                                 <select id="settlementCurrency" class="form-control corp-input">
-                                    <option value="EVO">$EVO Institutional</option>
-                                    <option value="EURC">EURC (Euro Stablecoin)</option>
-                                    <option value="USDC">USDC (USD Stablecoin)</option>
+                                    <option value="EVO">$EVO Token</option>
+                                    <option value="EURC">EURC (Euro)</option>
+                                    <option value="USDC">USDC (Dolar)</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label small text-secondary fw-semibold">Invoice Reference / Remittance Note</label>
-                            <input type="text" id="settlementReference" class="form-control corp-input" placeholder="e.g., INV-2026-0891 / Q4 Infrastructure Licensing" required>
+                            <label class="form-label small text-secondary fw-semibold">Opis plaćanja ili broj računa</label>
+                            <input type="text" id="settlementReference" class="form-control corp-input" placeholder="npr. Račun br. 2026-01 / Usluge održavanja" required>
                         </div>
 
                         <button type="submit" class="btn-corp-primary w-100 py-3">
-                            <i class="fa-solid fa-lock me-2"></i> Authorize & Execute Instant Settlement
+                            <i class="fa-solid fa-lock me-2"></i> Potvrdi i pošalji sredstva
                         </button>
                     </form>
                 </div>
             </div>
 
-            <!-- Right Column: Programmable Smart Escrow (Built on your WAGER_ADDR Smart Contract) -->
+            <!-- Pametni ugovori i sigurni depoziti -->
             <div class="col-lg-6" id="escrowSection">
                 <div class="corp-card p-4 h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
                             <div>
-                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-contract text-primary me-2"></i>Programmable Smart Escrow</h5>
-                                <span class="small text-secondary">Lock funds on-chain until B2B deliverable milestones are verified</span>
+                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-contract text-primary me-2"></i>Sigurni depozit (Escrow)</h5>
+                                <span class="small text-secondary">Zaključajte sredstva dok se dogovoreni posao ne isporuči</span>
                             </div>
-                            <span class="badge-corp bg-primary bg-opacity-25 text-info font-mono">ON-CHAIN</span>
+                            <span class="badge-corp bg-primary bg-opacity-25 text-info font-mono">BLOCKCHAIN</span>
                         </div>
 
-                        <!-- Create Escrow Box -->
+                        <!-- Unos novog depozita -->
                         <div class="p-3 rounded-3 mb-3" style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-subtle);">
-                            <label class="form-label small text-secondary fw-semibold">Deploy New Milestone Escrow ($EVO / ETH)</label>
+                            <label class="form-label small text-secondary fw-semibold">Kreiraj novi depozit ($EVO / ETH)</label>
                             <div class="row g-2 mb-2">
                                 <div class="col-sm-7">
-                                    <input type="text" id="escrowMilestoneTitle" class="form-control corp-input form-control-sm" placeholder="Deliverable / Contract Ref (e.g., PO-402)">
+                                    <input type="text" id="escrowMilestoneTitle" class="form-control corp-input form-control-sm" placeholder="Naziv posla (npr. Izrada weba)">
                                 </div>
                                 <div class="col-sm-5">
-                                    <input type="number" step="0.001" id="escrowAmountInput" class="form-control corp-input form-control-sm font-mono" placeholder="Amount">
+                                    <input type="number" step="0.001" id="escrowAmountInput" class="form-control corp-input form-control-sm font-mono" placeholder="Iznos">
                                 </div>
                             </div>
                             <button onclick="deploySmartEscrow()" class="btn-corp-primary w-100 py-2" style="font-size: 0.82rem;">
-                                <i class="fa-solid fa-shield-halved me-1"></i> Lock Funds in Smart Contract
+                                <i class="fa-solid fa-shield-halved me-1"></i> Zaključaj sredstva u ugovor
                             </button>
                         </div>
 
-                        <!-- Active Escrows List -->
+                        <!-- Lista aktivnih depozita -->
                         <div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="kpi-label">Active Pending Escrow Contracts</span>
+                                <span class="kpi-label">Aktivni depoziti na čekanju</span>
                                 <button onclick="loadActiveEscrows()" class="btn btn-link text-info text-decoration-none p-0 small font-mono">
-                                    <i class="fa-solid fa-rotate me-1"></i>Sync Node
+                                    <i class="fa-solid fa-rotate me-1"></i>Osvježi
                                 </button>
                             </div>
                             <div id="activeEscrowsList" class="d-flex flex-column gap-2" style="max-height: 175px; overflow-y: auto;">
                                 <div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">
-                                    Connect Custody Wallet to synchronize active on-chain escrow agreements.
+                                    Povežite novčanik za prikaz aktivnih depozita.
                                 </div>
                             </div>
                         </div>
@@ -676,75 +676,75 @@
             </div>
         </div>
 
-        <!-- Corporate Transaction Ledger & Market Intelligence -->
+        <!-- Evidencija transakcija -->
         <div class="corp-card p-4 mb-4" id="ledgerSection">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                 <div>
-                    <h5 class="fw-bold text-white mb-1">Enterprise Transaction Ledger & Regulatory Feed</h5>
-                    <span class="small text-secondary">Real-time audit trail of settlements, escrow locks, and institutional compliance updates</span>
+                    <h5 class="fw-bold text-white mb-1">Evidencija transakcija i povijest</h5>
+                    <span class="small text-secondary">Potpuni pregled svih uplata, isplata i sigurnih depozita</span>
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
-                    <input type="text" id="ledgerSearchInput" class="form-control corp-input form-control-sm" style="width: 240px;" placeholder="Filter by Ref, Entity, or Hash..." oninput="renderCorporateLedger()">
+                    <input type="text" id="ledgerSearchInput" class="form-control corp-input form-control-sm" style="width: 240px;" placeholder="Pretraži po nazivu ili broju..." oninput="renderCorporateLedger()">
                     <button class="btn-corp-outline py-1 px-3" style="font-size: 0.8rem;" onclick="exportLedgerCSV()">
-                        <i class="fa-solid fa-download me-1"></i> Export CSV
+                        <i class="fa-solid fa-download me-1"></i> Preuzmi CSV
                     </button>
                 </div>
             </div>
 
-            <!-- Filter Tabs -->
+            <!-- Filteri -->
             <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="corp-tab active" onclick="filterLedgerCategory('all', this)">All Records</button>
-                <button class="corp-tab" onclick="filterLedgerCategory('settlement', this)">B2B Settlements</button>
-                <button class="corp-tab" onclick="filterLedgerCategory('escrow', this)">Smart Escrows</button>
-                <button class="corp-tab" onclick="filterLedgerCategory('compliance', this)">Compliance & Infrastructure</button>
+                <button class="corp-tab active" onclick="filterLedgerCategory('all', this)">Sve transakcije</button>
+                <button class="corp-tab" onclick="filterLedgerCategory('settlement', this)">Uplate</button>
+                <button class="corp-tab" onclick="filterLedgerCategory('escrow', this)">Depoziti</button>
+                <button class="corp-tab" onclick="filterLedgerCategory('compliance', this)">Provjere</button>
             </div>
 
-            <!-- Ledger Table -->
+            <!-- Tablica -->
             <div class="table-responsive">
                 <table class="corp-table">
                     <thead>
                         <tr>
-                            <th>Timestamp / ID</th>
-                            <th>Counterparty / Entity</th>
-                            <th>Category</th>
-                            <th>Description / Reference</th>
-                            <th>Volume / Status</th>
-                            <th class="text-end">Audit Action</th>
+                            <th>Vrijeme / ID</th>
+                            <th>Partner / Primatelj</th>
+                            <th>Vrsta</th>
+                            <th>Opis</th>
+                            <th>Iznos i status</th>
+                            <th class="text-end">Potvrda</th>
                         </tr>
                     </thead>
                     <tbody id="corporateLedgerBody">
-                        <!-- Populated dynamically via JS -->
+                        <!-- Podaci se učitavaju automatski -->
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Enterprise Service Architecture Overview -->
+        <!-- Kratki opis usluga -->
         <div class="row g-4 mt-2">
             <div class="col-md-4">
                 <div class="corp-card p-4 h-100">
                     <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-server"></i></div>
-                    <h6 class="fw-bold text-white mb-2">Enterprise Digital Infrastructure</h6>
+                    <h6 class="fw-bold text-white mb-2">Pouzdan sustav</h6>
                     <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Low-latency cloud-native architecture designed for high-throughput financial operations, supporting seamless multi-region deployment and 99.99% uptime SLAs.
+                        Stabilna arhitektura prilagođena za neprekidan rad i brzu obradu svih vaših financijskih zahtjeva bez zastoja.
                     </p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="corp-card p-4 h-100">
                     <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-globe"></i></div>
-                    <h6 class="fw-bold text-white mb-2">Frictionless Global Settlement</h6>
+                    <h6 class="fw-bold text-white mb-2">Globalna dostupnost</h6>
                     <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Eliminate correspondent banking delays and excessive FX spreads. Settle cross-border B2B invoices in seconds with full cryptographic finality.
+                        Zaboravite na spora bankovna kašnjenja i visoke naknade. Obavite međunarodna plaćanja u trenu uz potpunu sigurnost.
                     </p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="corp-card p-4 h-100">
                     <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h6 class="fw-bold text-white mb-2">Institutional Security & KYB</h6>
+                    <h6 class="fw-bold text-white mb-2">Sigurnost i provjera</h6>
                     <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Built-in counterparty verification, role-based access controls, and immutable audit logs compliant with international corporate governance standards.
+                        Ugrađeni mehanizmi za provjeru partnera i stroga zaštita podataka osiguravaju bezbrižno poslovanje u svakom trenutku.
                     </p>
                 </div>
             </div>
@@ -752,34 +752,34 @@
 
     </main>
 
-    <!-- MODALS -->
+    <!-- MODALI (Skočni prozori) -->
 
-    <!-- 1. Corporate Client Portal Auth Modal -->
+    <!-- 1. Prijava / Registracija -->
     <div class="modal fade" id="corpAuthModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0" id="corpAuthTitle"><i class="fa-solid fa-building text-primary me-2"></i>Corporate Portal Sign In</h5>
+                    <h5 class="fw-bold mb-0" id="corpAuthTitle"><i class="fa-solid fa-building text-primary me-2"></i>Prijava u sustav</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form onsubmit="handleCorpAuthSubmit(event)">
                         <div class="mb-3" id="corpEntityField" style="display: none;">
-                            <label class="form-label small text-secondary">Legal Entity / Company Name</label>
-                            <input type="text" id="corpEntityName" class="form-control corp-input" placeholder="e.g., Acme Global Holdings Ltd.">
+                            <label class="form-label small text-secondary">Naziv tvrtke ili obrta</label>
+                            <input type="text" id="corpEntityName" class="form-control corp-input" placeholder="npr. Moja Tvrtka d.o.o.">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Corporate Email Address</label>
-                            <input type="email" id="corpEmailInput" class="form-control corp-input" placeholder="finance@company.com" required>
+                            <label class="form-label small text-secondary">E-mail adresa</label>
+                            <input type="email" id="corpEmailInput" class="form-control corp-input" placeholder="ime@tvrtka.com" required>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label small text-secondary">Security Passkey / Password</label>
+                            <label class="form-label small text-secondary">Lozinka</label>
                             <input type="password" id="corpPasswordInput" class="form-control corp-input" placeholder="••••••••••••" required>
                         </div>
-                        <button type="submit" id="corpAuthSubmitBtn" class="btn-corp-primary w-100 py-2 mb-3">Access Corporate Workspace</button>
+                        <button type="submit" id="corpAuthSubmitBtn" class="btn-corp-primary w-100 py-2 mb-3">Prijavi se</button>
                         <div class="text-center">
-                            <span class="small text-secondary" id="corpAuthSwitchText">New institutional client?</span>
-                            <button type="button" class="btn btn-link text-info text-decoration-none small p-0 ms-1" onclick="toggleCorpAuthMode()" id="corpAuthSwitchBtn">Register Organization</button>
+                            <span class="small text-secondary" id="corpAuthSwitchText">Nemate račun?</span>
+                            <button type="button" class="btn btn-link text-info text-decoration-none small p-0 ms-1" onclick="toggleCorpAuthMode()" id="corpAuthSwitchBtn">Registrirajte se</button>
                         </div>
                     </form>
                 </div>
@@ -787,103 +787,103 @@
         </div>
     </div>
 
-    <!-- 2. Corporate Treasury & Liquidity Modal -->
+    <!-- 2. Stanje sredstava -->
     <div class="modal fade" id="treasuryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-vault text-info me-2"></i>Corporate Treasury & Liquidity</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-vault text-info me-2"></i>Stanje sredstava na računu</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <div class="p-3 rounded-3 mb-3 text-center" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
-                        <span class="kpi-label d-block">Total On-Chain Liquidity</span>
+                        <span class="kpi-label d-block">Ukupno raspoloživo</span>
                         <h3 class="fw-bold text-white font-mono my-1" id="modalTreasuryDisplay">25,000.00 $EVO</h3>
-                        <span class="badge bg-success bg-opacity-25 text-success font-mono" style="font-size: 0.7rem;">SETTLEMENT READY</span>
+                        <span class="badge bg-success bg-opacity-25 text-success font-mono" style="font-size: 0.7rem;"> SPREMNO ZA ISPLATU</span>
                     </div>
                     <p class="small text-secondary mb-3">
-                        Provision test liquidity or synchronize your institutional token reserves on the Sepolia / Mainnet settlement bridge.
+                        Ovdje možete zatražiti dodatna testna sredstva za isprobavanje uplatnih i isplatnih mogućnosti platforme.
                     </p>
                     <button type="button" class="btn-corp-primary w-100 py-2" onclick="provisionTestLiquidity()">
-                        <i class="fa-solid fa-plus-circle me-1"></i> Provision +1,000 $EVO Settlement Liquidity
+                        <i class="fa-solid fa-plus-circle me-1"></i> Zatraži +1,000 $EVO testnih sredstava
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 3. B2B Invoice Generator Modal -->
+    <!-- 3. Izrada računa -->
     <div class="modal fade" id="invoiceModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-file-invoice-dollar text-warning me-2"></i>Issue B2B Settlement Invoice</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-file-invoice-dollar text-warning me-2"></i>Izdavanje poslovnog računa</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form onsubmit="createB2BInvoice(event)">
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Client / Counterparty Organization</label>
-                            <input type="text" id="invClientName" class="form-control corp-input" placeholder="e.g., NordTech GmbH" required>
+                            <label class="form-label small text-secondary">Naziv klijenta ili tvrtke</label>
+                            <input type="text" id="invClientName" class="form-control corp-input" placeholder="npr. Partner d.o.o." required>
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label small text-secondary">Invoice Amount (€ / USDC)</label>
+                                <label class="form-label small text-secondary">Iznos računa (€)</label>
                                 <input type="number" step="0.01" id="invAmount" class="form-control corp-input font-mono" placeholder="4500.00" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small text-secondary">Due Date</label>
+                                <label class="form-label small text-secondary">Rok plaćanja</label>
                                 <input type="date" id="invDueDate" class="form-control corp-input" required>
                             </div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label small text-secondary">Service / Infrastructure Scope</label>
-                            <textarea id="invScope" class="form-control corp-input" rows="2" placeholder="Enterprise API Integration & Settlement Gateway Fee" required></textarea>
+                            <label class="form-label small text-secondary">Opis usluge ili robe</label>
+                            <textarea id="invScope" class="form-control corp-input" rows="2" placeholder="Usluge izrade softvera i savjetovanja" required></textarea>
                         </div>
-                        <button type="submit" class="btn-corp-primary w-100 py-2">Generate & Record Invoice in Ledger</button>
+                        <button type="submit" class="btn-corp-primary w-100 py-2">Kreiraj i spremi u evidenciju</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 4. API Credentials & Webhooks Modal -->
+    <!-- 4. API ključevi -->
     <div class="modal fade" id="apiKeysModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-code text-warning me-2"></i>Enterprise API Keys & Webhooks</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-code text-warning me-2"></i>API ključevi i povezivanje</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <p class="small text-secondary mb-3">
-                        Integrate Evolysium settlement rails directly into your ERP, treasury management system, or checkout infrastructure via REST API.
+                        Povežite naplatu i isplate direktno s vašim sustavom putem našeg API-ja.
                     </p>
                     <div class="mb-3">
-                        <label class="kpi-label d-block mb-1">Production / Sandbox API Key</label>
+                        <label class="kpi-label d-block mb-1">Vaš pristupni API ključ</label>
                         <div class="input-group">
                             <input type="text" id="corpApiKeyField" class="form-control corp-input font-mono small" value="evo_live_98f7a6d5e4c3b2a10987654321fedcba" readonly>
-                            <button class="btn-corp-outline" type="button" onclick="copyApiKey()">Copy</button>
-                            <button class="btn-corp-primary" type="button" onclick="rotateApiKey()">Rotate Key</button>
+                            <button class="btn-corp-outline" type="button" onclick="copyApiKey()">Kopiraj</button>
+                            <button class="btn-corp-primary" type="button" onclick="rotateApiKey()">Generiraj novi</button>
                         </div>
                     </div>
                     <div class="p-3 rounded-3 font-mono small text-secondary" style="background: #060910; border: 1px solid var(--border-subtle);">
-                        <div class="text-info mb-1">// Example Settlement Webhook Payload</div>
+                        <div class="text-info mb-1">// Primjer slanja zahtjeva</div>
                         POST https://api.evolysium.com/v1/settlements<br>
                         Authorization: Bearer evo_live_...<br>
-                        { "beneficiary": "corp_eu_991", "amount": "12500.00", "currency": "EURC" }
+                        { "beneficiary": "primatelj_123", "amount": "12500.00", "currency": "EURC" }
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 5. Enterprise Licensing & Pricing Modal -->
+    <!-- 5. Odabir paketa usluga -->
     <div class="modal fade" id="enterprisePricingModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0">Evolysium Enterprise Licensing & Infrastructure Tiers</h5>
+                    <h5 class="fw-bold mb-0">Odaberite paket za vaše poslovanje</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -891,54 +891,54 @@
                         <div class="col-md-4">
                             <div class="tier-card">
                                 <div>
-                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary font-mono">GROWTH</span>
-                                    <h4 class="fw-bold text-white mt-2">Business Core</h4>
-                                    <h3 class="fw-bold font-mono my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">For scaling B2B companies automating cross-border supplier payments.</p>
+                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary font-mono">OSNOVNI</span>
+                                    <h4 class="fw-bold text-white mt-2">Start paket</h4>
+                                    <h3 class="fw-bold font-mono my-3">€299 <span class="fs-6 fw-normal text-secondary">/ mjesečno</span></h3>
+                                    <p class="small text-secondary">Idealno za manje tvrtke koje automatiziraju plaćanja prema dobavljačima.</p>
                                     <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly settlement volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Standard REST API & Webhook access</li>
-                                        <li><i class="fa-solid fa-check"></i> Automated CSV & PDF ledger exports</li>
-                                        <li><i class="fa-solid fa-check"></i> Email & portal support (24h SLA)</li>
+                                        <li><i class="fa-solid fa-check"></i> Do €250,000 mjesečnog prometa</li>
+                                        <li><i class="fa-solid fa-check"></i> Pristup osnovnom API-ju</li>
+                                        <li><i class="fa-solid fa-check"></i> Izvoz podataka u CSV formatu</li>
+                                        <li><i class="fa-solid fa-check"></i> Podrška putem e-maila</li>
                                     </ul>
                                 </div>
-                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('growth')">Select Business Core</button>
+                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('growth')">Odaberi Start paket</button>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="tier-card featured">
                                 <div>
-                                    <span class="badge-corp bg-primary text-white font-mono">MOST POPULAR</span>
-                                    <h4 class="fw-bold text-white mt-2">Institutional Pro</h4>
-                                    <h3 class="fw-bold font-mono my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Full smart escrow automation and multi-currency treasury infrastructure.</p>
+                                    <span class="badge-corp bg-primary text-white font-mono">NAJPOPULARNIJE</span>
+                                    <h4 class="fw-bold text-white mt-2">Poslovni Pro</h4>
+                                    <h3 class="fw-bold font-mono my-3">€899 <span class="fs-6 fw-normal text-secondary">/ mjesečno</span></h3>
+                                    <p class="small text-secondary">Napredna automatizacija depozita i više valuta za veće sustave.</p>
                                     <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Unlimited cross-border settlement volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Programmable Smart Escrow contracts</li>
-                                        <li><i class="fa-solid fa-check"></i> Multi-signature wallet governance</li>
-                                        <li><i class="fa-solid fa-check"></i> Dedicated account manager (4h SLA)</li>
+                                        <li><i class="fa-solid fa-check"></i> Neograničen mjesečni promet</li>
+                                        <li><i class="fa-solid fa-check"></i> Korištenje sigurnih pametnih ugovora</li>
+                                        <li><i class="fa-solid fa-check"></i> Višekorisnički pristup i ovlasti</li>
+                                        <li><i class="fa-solid fa-check"></i> Posvećeni voditelj računa</li>
                                     </ul>
                                 </div>
-                                <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('institutional')">Deploy Institutional Pro</button>
+                                <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('institutional')">Odaberi Poslovni Pro</button>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="tier-card">
                                 <div>
-                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning font-mono">CUSTOM SLA</span>
-                                    <h4 class="fw-bold text-white mt-2">Enterprise White-Label</h4>
-                                    <h3 class="fw-bold font-mono my-3">Custom <span class="fs-6 fw-normal text-secondary">pricing</span></h3>
-                                    <p class="small text-secondary">Dedicated nodes and white-label payment rails for financial institutions.</p>
+                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning font-mono">PO NARUDŽBI</span>
+                                    <h4 class="fw-bold text-white mt-2">Prilagođeno rješenje</h4>
+                                    <h3 class="fw-bold font-mono my-3">Po dogovoru</h3>
+                                    <p class="small text-secondary">Potpuno prilagođena infrastruktura i vlastita domena za financijske ustanove.</p>
                                     <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Full White-Label deployment on your domain</li>
-                                        <li><i class="fa-solid fa-check"></i> Custom smart contract auditing & deployment</li>
-                                        <li><i class="fa-solid fa-check"></i> Direct fiat on/off-ramp banking integration</li>
-                                        <li><i class="fa-solid fa-check"></i> 99.99% Uptime Guarantee & 24/7 Engineer</li>
+                                        <li><i class="fa-solid fa-check"></i> Vlastita domena i prilagođeni izgled</li>
+                                        <li><i class="fa-solid fa-check"></i> Razvoj posebnih pametnih ugovora</li>
+                                        <li><i class="fa-solid fa-check"></i> Direktna veza s bankovnim računima</li>
+                                        <li><i class="fa-solid fa-check"></i> Jamstvo dostupnosti 99.99%</li>
                                     </ul>
                                 </div>
-                                <button class="btn-corp-outline w-100" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Contact Enterprise Sales</button>
+                                <button class="btn-corp-outline w-100" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Zatraži ponudu</button>
                             </div>
                         </div>
                     </div>
@@ -947,63 +947,63 @@
         </div>
     </div>
 
-    <!-- 6. Partnership & Enterprise Proposal Inquiry Modal -->
+    <!-- 6. Kontakt / Upit -->
     <div class="modal fade" id="proposalInquiryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-handshake text-success me-2"></i>Enterprise Partnership & Proposal Inquiry</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-handshake text-success me-2"></i>Pošaljite nam upit</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <p class="small text-secondary mb-3">
-                        Submit your organization's infrastructure requirements. Our solutions architecture team responds within 1 business day.
+                        Imate pitanja ili trebate prilagođeno rješenje? Javite nam se, a naš tim će vam odgovoriti u najkraćem roku.
                     </p>
                     <form onsubmit="submitEnterpriseInquiry(event)">
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Organization Name</label>
-                            <input type="text" id="inqOrgName" class="form-control corp-input" placeholder="Company Legal Name" required>
+                            <label class="form-label small text-secondary">Naziv tvrtke ili organizacije</label>
+                            <input type="text" id="inqOrgName" class="form-control corp-input" placeholder="Vaša tvrtka" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Corporate Email</label>
-                            <input type="email" id="inqEmail" class="form-control corp-input" placeholder="name@company.com" required>
+                            <label class="form-label small text-secondary">E-mail adresa za kontakt</label>
+                            <input type="email" id="inqEmail" class="form-control corp-input" placeholder="ime@tvrtka.com" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Primary Area of Interest</label>
+                            <label class="form-label small text-secondary">Vrsta upita</label>
                             <select id="inqTopic" class="form-control corp-input">
-                                <option>Global Cross-Border Payment Rails</option>
-                                <option>Programmable B2B Smart Escrow</option>
-                                <option>White-Label Infrastructure Licensing</option>
-                                <option>Strategic Institutional Partnership</option>
+                                <option>Međunarodna plaćanja i uplate</option>
+                                <option>Sigurni depoziti (Escrow)</option>
+                                <option>Prilagođeni poslovni paket</option>
+                                <option>Ostali poslovni upiti</option>
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label small text-secondary">Project Scope / Estimated Monthly Volume</label>
-                            <textarea id="inqMessage" class="form-control corp-input" rows="3" placeholder="Briefly describe your technical or settlement requirements..." required></textarea>
+                            <label class="form-label small text-secondary">Poruka ili opis potreba</label>
+                            <textarea id="inqMessage" class="form-control corp-input" rows="3" placeholder="Opižite ukratko što vam je potrebno..." required></textarea>
                         </div>
-                        <button type="submit" class="btn-corp-primary w-100 py-2">Submit Official Inquiry</button>
+                        <button type="submit" class="btn-corp-primary w-100 py-2">Pošalji upit</button>
                     </form>
                     <div class="mt-3 pt-3 border-top border-secondary border-opacity-25 text-center small text-secondary">
-                        Direct Institutional Desk: <span class="text-white font-mono">office.evolysium@gmail.com</span>
+                        Direktan kontakt: <span class="text-white font-mono">office.evolysium@gmail.com</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- System Toast Notification -->
+    <!-- Obavijesti (Toast) -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11000;">
         <div id="corpToast" class="toast align-items-center text-white border-0 shadow-lg" style="background: #1e293b; border-left: 4px solid var(--accent-primary) !important;" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body small fw-semibold" id="corpToastMessage">
-                    Operation executed successfully.
+                    Radnja je uspješno izvršena.
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
         </div>
     </div>
 
-    <!-- Corporate Footer -->
+    <!-- Podnožje -->
     <footer class="corp-footer">
         <div class="container">
             <div class="row align-items-center justify-content-between g-3">
@@ -1013,29 +1013,28 @@
                         <span class="fw-bold text-white">Evolysium</span>
                     </div>
                     <p class="small text-secondary mb-0">
-                        Institutional Digital Infrastructure & Frictionless Global Settlement Systems.<br>
-                        Direct Inquiries: <a href="mailto:office.evolysium@gmail.com" class="text-info text-decoration-none font-mono">office.evolysium@gmail.com</a>
+                        Sigurna platforma za globalna plaćanja i poslovne financije.<br>
+                        Kontakt: <a href="mailto:office.evolysium@gmail.com" class="text-info text-decoration-none font-mono">office.evolysium@gmail.com</a>
                     </p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="d-flex flex-wrap gap-3 justify-content-md-end mb-2">
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal">Licensing Tiers</a>
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#apiKeysModal">API Documentation</a>
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Partnership Proposal</a>
+                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal">Paketi usluga</a>
+                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#apiKeysModal">API dokumentacija</a>
+                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Pošalji upit</a>
                     </div>
-                    <span class="small text-muted font-mono">© 2026 Evolysium. All Rights Reserved.</span>
+                    <span class="small text-muted font-mono">© 2026 Evolysium. Sva prava pridržana.</span>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap Bundle & Enterprise Application Logic -->
+    <!-- Skripte i funkcije -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Backend & Smart Contract Configuration (Preserved from your existing architecture)
         const API_BASE_URL = 'https://evolysium-backend.onrender.com';
-        const ESCROW_CONTRACT_ADDR = "0xb9670ef30D3C6235eB003Cf2aEb6237F52BcC218"; // Your Wager/Escrow Contract
-        const TOKEN_CONTRACT_ADDR = "0xCF04daFF98D9F92115cD6F1e188f660e764585D2";  // Your $EVO Token Contract
+        const ESCROW_CONTRACT_ADDR = "0xb9670ef30D3C6235eB003Cf2aEb6237F52BcC218";
+        const TOKEN_CONTRACT_ADDR = "0xCF04daFF98D9F92115cD6F1e188f660e764585D2";
         const KYB_VERIFICATION_ADDR = "0xBceD6293Cb21f19DFC507042a0642d7241305Eb0";
 
         const ESCROW_ABI = [
@@ -1055,7 +1054,6 @@
             "function isVerified(address _user) view returns (bool)"
         ];
 
-        // Application State
         let currentCorpUser = JSON.parse(localStorage.getItem('evo_corp_user') || 'null');
         let isCorpRegisterMode = false;
         let treasuryBalance = parseFloat(localStorage.getItem('evo_treasury_bal') || '25000.00');
@@ -1065,44 +1063,42 @@
         let currentLedgerFilter = 'all';
 
         let systemAlerts = JSON.parse(localStorage.getItem('evo_corp_alerts') || JSON.stringify([
-            { text: "Evolysium Settlement Engine v2.4 initialized.", time: "System Ready" }
+            { text: "Sustav za plaćanja uspješno pokrenut.", time: "Spreman" }
         ]));
         let hasUnreadAlerts = false;
 
-        // Default Institutional Ledger Records
         const defaultLedgerRecords = [
             {
                 id: "TX-90841",
                 timestamp: "2026-11-13 09:42 UTC",
                 entity: "Nordic Freight Logistics AB",
                 category: "settlement",
-                reference: "INV-2026-4412 • Cross-Border Freight Clearing",
+                reference: "INV-2026-4412 • Međunarodni prijevoz",
                 amount: "14,250.00 EURC",
-                status: "SETTLED"
+                status: "ISPLAĆENO"
             },
             {
                 id: "ESC-3319",
                 timestamp: "2026-11-12 16:15 UTC",
                 entity: "Vanguard Cloud Systems Ltd.",
                 category: "escrow",
-                reference: "PO-8821 • Q4 Dedicated Node Deployment",
+                reference: "PO-8821 • Zaključana sredstva za razvoj",
                 amount: "8,500.00 USDC",
-                status: "LOCKED"
+                status: "ZAKLJUČANO"
             },
             {
                 id: "CMP-1044",
                 timestamp: "2026-11-11 11:05 UTC",
-                entity: "Evolysium Compliance Engine",
+                entity: "Evolysium Provjera",
                 category: "compliance",
-                reference: "ISO-20022 & Automated AML Audit Check Passed",
-                amount: "VERIFIED",
-                status: "ACTIVE"
+                reference: "Uspješna automatska sigurnosna provjera",
+                amount: "POTVRĐENO",
+                status: "AKTIVNO"
             }
         ];
 
         let ledgerRecords = JSON.parse(localStorage.getItem('evo_corp_ledger') || JSON.stringify(defaultLedgerRecords));
 
-        // Toast Notification Helper
         function notifyCorp(message) {
             const toastEl = document.getElementById('corpToast');
             const msgEl = document.getElementById('corpToastMessage');
@@ -1135,7 +1131,7 @@
             }
 
             list.innerHTML = `
-                <li><h6 class="dropdown-header text-white fw-bold">System & Settlement Alerts</h6></li>
+                <li><h6 class="dropdown-header text-white fw-bold">Obavijesti sustava</h6></li>
                 <li><hr class="dropdown-divider border-secondary opacity-25"></li>
                 ${systemAlerts.slice(0, 6).map(a => `
                     <li>
@@ -1153,7 +1149,6 @@
             updateAlertsUI();
         }
 
-        // Update Dashboard KPI & Auth UI
         function refreshDashboardUI() {
             const formattedBal = treasuryBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('navTreasuryBalance').innerText = `${formattedBal} $EVO`;
@@ -1164,19 +1159,19 @@
             if (currentCorpUser) {
                 authLabel.innerText = currentCorpUser.entity || currentCorpUser.email;
             } else {
-                authLabel.innerText = 'Client Portal';
+                authLabel.innerText = 'Prijava';
             }
 
             const kybSidebar = document.getElementById('sidebarKybStatus');
             const kpiCompliance = document.getElementById('kpiComplianceStatus');
             if (isEntityVerified) {
-                kybSidebar.innerText = 'KYB Verified ✓';
+                kybSidebar.innerText = 'Račun potvrđen ✓';
                 kybSidebar.className = 'fw-bold text-success small';
-                kpiCompliance.innerText = 'Institutional Verified';
+                kpiCompliance.innerText = 'Potvrđeni partner';
             } else {
-                kybSidebar.innerText = 'Unverified Entity';
+                kybSidebar.innerText = 'Nepotvrđen račun';
                 kybSidebar.className = 'fw-bold text-warning small';
-                kpiCompliance.innerText = 'Standard Tier';
+                kpiCompliance.innerText = 'Osnovni paket';
             }
 
             if (walletConnected && walletAddress) {
@@ -1184,28 +1179,27 @@
             }
         }
 
-        // Corporate Authentication
         function toggleCorpAuthMode() {
             isCorpRegisterMode = !isCorpRegisterMode;
             document.getElementById('corpAuthTitle').innerHTML = isCorpRegisterMode 
-                ? '<i class="fa-solid fa-building-circle-check text-info me-2"></i>Register Organization' 
-                : '<i class="fa-solid fa-building text-primary me-2"></i>Corporate Portal Sign In';
-            document.getElementById('corpAuthSubmitBtn').innerText = isCorpRegisterMode ? 'Create Institutional Account' : 'Access Corporate Workspace';
-            document.getElementById('corpAuthSwitchText').innerText = isCorpRegisterMode ? 'Already registered?' : 'New institutional client?';
-            document.getElementById('corpAuthSwitchBtn').innerText = isCorpRegisterMode ? 'Sign In' : 'Register Organization';
+                ? '<i class="fa-solid fa-building-circle-check text-info me-2"></i>Registracija računa' 
+                : '<i class="fa-solid fa-building text-primary me-2"></i>Prijava u sustav';
+            document.getElementById('corpAuthSubmitBtn').innerText = isCorpRegisterMode ? 'Stvori račun' : 'Prijavi se';
+            document.getElementById('corpAuthSwitchText').innerText = isCorpRegisterMode ? 'Već imate račun?' : 'Nemate račun?';
+            document.getElementById('corpAuthSwitchBtn').innerText = isCorpRegisterMode ? 'Prijavi se' : 'Registrirajte se';
             document.getElementById('corpEntityField').style.display = isCorpRegisterMode ? 'block' : 'none';
         }
 
         function handleCorpAuthSubmit(event) {
             event.preventDefault();
             const email = document.getElementById('corpEmailInput').value.trim();
-            const entity = document.getElementById('corpEntityName').value.trim() || email.split('@')[1] || 'Enterprise Client';
+            const entity = document.getElementById('corpEntityName').value.trim() || email.split('@')[1] || 'Korisnik';
 
             currentCorpUser = { email, entity };
             localStorage.setItem('evo_corp_user', JSON.stringify(currentCorpUser));
             refreshDashboardUI();
-            pushSystemAlert(`Authenticated corporate session for ${entity}`);
-            notifyCorp(`Welcome to Evolysium Institutional, ${entity}.`);
+            pushSystemAlert(`Prijavljeni ste kao ${entity}`);
+            notifyCorp(`Dobrodošli natrag, ${entity}.`);
 
             const modal = bootstrap.Modal.getInstance(document.getElementById('corpAuthModal'));
             if (modal) modal.hide();
@@ -1216,29 +1210,28 @@
             localStorage.removeItem('evo_corp_user');
             currentCorpUser = null;
             refreshDashboardUI();
-            notifyCorp('Corporate session terminated.');
+            notifyCorp('Uspješno ste se odjavili iz sustava.');
         }
 
-        // Web3 Custody Wallet Connection
         async function connectInstitutionalWallet() {
             if (typeof window.ethereum === 'undefined') {
-                notifyCorp('No Web3 custody extension detected. Please install MetaMask or connect an institutional signer.');
+                notifyCorp('Molimo instalirajte MetaMask ili drugi podržani novčanik.');
                 return;
             }
             try {
-                notifyCorp('Requesting custody wallet signature...');
+                notifyCorp('Povezivanje s novčanikom...');
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 walletAddress = accounts[0];
                 walletConnected = true;
                 refreshDashboardUI();
-                pushSystemAlert(`Custody wallet connected: ${walletAddress.substring(0, 6)}...`);
-                notifyCorp('Institutional Web3 wallet connected.');
+                pushSystemAlert(`Novčanik povezan: ${walletAddress.substring(0, 6)}...`);
+                notifyCorp('Poslovni novčanik je uspješno povezan.');
 
                 await checkOnChainKybStatus(walletAddress);
                 await loadActiveEscrows();
             } catch (err) {
                 console.error(err);
-                notifyCorp('Wallet connection request was declined.');
+                notifyCorp('Zahtjev za povezivanje novčanika je odbijen.');
             }
         }
 
@@ -1253,7 +1246,7 @@
                     refreshDashboardUI();
                 }
             } catch (err) {
-                console.log('KYB on-chain check skipped or network mismatch.');
+                console.log('Provjera statusa preskočena.');
             }
         }
 
@@ -1261,11 +1254,10 @@
             isEntityVerified = true;
             localStorage.setItem('evo_kyb_verified', 'true');
             refreshDashboardUI();
-            pushSystemAlert('KYB Entity Verification status updated to Active.');
-            notifyCorp('Entity compliance verification completed.');
+            pushSystemAlert('Status provjere partnera ažuriran.');
+            notifyCorp('Provjera računa uspješno završena.');
         }
 
-        // Cross-Border Settlement Execution (Uses your Supabase RPC + Local Ledger)
         async function executeCorporateSettlement(event) {
             event.preventDefault();
             const recipient = document.getElementById('settlementRecipient').value.trim();
@@ -1274,16 +1266,15 @@
             const reference = document.getElementById('settlementReference').value.trim();
 
             if (!recipient || isNaN(amount) || amount <= 0) {
-                notifyCorp('Please enter a valid beneficiary and settlement amount.');
+                notifyCorp('Molimo unesite valjanog primatelja i iznos.');
                 return;
             }
 
             if (amount > treasuryBalance) {
-                notifyCorp('Insufficient treasury liquidity for this settlement.');
+                notifyCorp('Nemate dovoljno sredstava na računu za ovu uplatu.');
                 return;
             }
 
-            // Attempt Supabase RPC transfer if connected
             try {
                 if (window.supabaseClient) {
                     await window.supabaseClient.rpc('transfer_evo_money', {
@@ -1292,7 +1283,7 @@
                     });
                 }
             } catch (err) {
-                console.log('Executing ledger settlement in local clearing mode.');
+                console.log('Lokalni način uplate aktivan.');
             }
 
             treasuryBalance -= amount;
@@ -1305,7 +1296,7 @@
                 category: 'settlement',
                 reference: reference,
                 amount: `${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} ${currency}`,
-                status: 'SETTLED'
+                status: 'ISPLAĆENO'
             };
 
             ledgerRecords.unshift(newRecord);
@@ -1313,30 +1304,29 @@
 
             refreshDashboardUI();
             renderCorporateLedger();
-            pushSystemAlert(`Settled ${amount} ${currency} to ${recipient} (${newRecord.id})`);
-            notifyCorp(`Settlement ${newRecord.id} executed and recorded in the audit ledger.`);
+            pushSystemAlert(`Poslano ${amount} ${currency} za ${recipient}`);
+            notifyCorp(`Uplata ${newRecord.id} je uspješno izvršena.`);
             event.target.reset();
         }
 
-        // Smart Escrow Deployment (Uses your WAGER_ADDR Smart Contract)
         async function deploySmartEscrow() {
-            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Enterprise Milestone Contract';
+            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Sigurni depozit';
             const amountVal = document.getElementById('escrowAmountInput').value;
             const statusBanner = document.getElementById('escrowStatusBanner');
 
             if (!amountVal || parseFloat(amountVal) <= 0) {
-                notifyCorp('Please specify a valid escrow lock amount.');
+                notifyCorp('Molimo unesite ispravan iznos za zaključavanje.');
                 return;
             }
 
             if (typeof window.ethereum === 'undefined') {
-                notifyCorp('Web3 Custody Wallet (MetaMask) is required to deploy on-chain escrow contracts.');
+                notifyCorp('Za pametne ugovore potrebno je povezati MetaMask novčanik.');
                 return;
             }
 
             try {
                 statusBanner.style.display = 'block';
-                statusBanner.innerText = '1/2 Requesting ERC-20 token approval for Smart Escrow contract...';
+                statusBanner.innerText = '1/2 Odobravanje tokena za ugovor...';
 
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const signer = await provider.getSigner();
@@ -1347,30 +1337,30 @@
                 const txApprove = await tokenContract.approve(ESCROW_CONTRACT_ADDR, parsedAmount);
                 await txApprove.wait();
 
-                statusBanner.innerText = '2/2 Locking funds into Smart Escrow on-chain...';
+                statusBanner.innerText = '2/2 Zaključavanje sredstava u pametni ugovor...';
                 const txCreate = await escrowContract.createWager();
                 await txCreate.wait();
 
-                statusBanner.innerText = `Smart Escrow deployed on-chain for ${title}.`;
+                statusBanner.innerText = `Depozit uspješno postavljen: ${title}.`;
                 
                 const newEscrowRecord = {
                     id: 'ESC-' + Math.floor(1000 + Math.random() * 9000),
                     timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
-                    entity: 'On-Chain Escrow Vault',
+                    entity: 'Escrow Ugovor',
                     category: 'escrow',
                     reference: title,
                     amount: `${amountVal} $EVO`,
-                    status: 'LOCKED'
+                    status: 'ZAKLJUČANO'
                 };
                 ledgerRecords.unshift(newEscrowRecord);
                 localStorage.setItem('evo_corp_ledger', JSON.stringify(ledgerRecords));
                 renderCorporateLedger();
                 loadActiveEscrows();
-                pushSystemAlert(`Smart Escrow locked: ${title} (${amountVal} $EVO)`);
+                pushSystemAlert(`Zaključen depozit: ${title} (${amountVal} $EVO)`);
             } catch (err) {
                 console.error(err);
                 statusBanner.style.display = 'block';
-                statusBanner.innerText = 'Transaction aborted or rejected by custody signer.';
+                statusBanner.innerText = 'Transakcija je otkazana ili odbijena u novčaniku.';
             }
         }
 
@@ -1395,11 +1385,11 @@
                         html += `
                             <div class="d-flex justify-content-between align-items-center p-2 rounded-2" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
                                 <div>
-                                    <span class="small fw-bold text-white font-mono">Contract #${i}</span>
-                                    <span class="small text-secondary d-block font-mono" style="font-size: 0.72rem;">Locked: ${formattedAmt} ETH / $EVO</span>
+                                    <span class="small fw-bold text-white font-mono">Ugovor #${i}</span>
+                                    <span class="small text-secondary d-block font-mono" style="font-size: 0.72rem;">Iznos: ${formattedAmt} $EVO</span>
                                 </div>
                                 <button onclick="fulfillEscrowContract(${i}, '${formattedAmt}')" class="btn-corp-primary py-1 px-2" style="font-size: 0.72rem;">
-                                    Counter-Sign
+                                    Potvrdi isplatu
                                 </button>
                             </div>
                         `;
@@ -1409,9 +1399,9 @@
                 if (kpiEl) kpiEl.innerText = activeCount;
                 listEl.innerHTML = activeCount > 0 
                     ? html 
-                    : '<div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">No open milestone escrow contracts pending counter-signature.</div>';
+                    : '<div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">Nema aktivnih depozita na čekanju.</div>';
             } catch (err) {
-                console.log('Unable to read on-chain escrow counter.');
+                console.log('Učitavanje depozita nije uspjelo.');
             }
         }
 
@@ -1420,7 +1410,7 @@
             const statusBanner = document.getElementById('escrowStatusBanner');
             try {
                 statusBanner.style.display = 'block';
-                statusBanner.innerText = `Counter-signing Escrow Contract #${id}...`;
+                statusBanner.innerText = `Potvrda ugovora #${id}...`;
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const signer = await provider.getSigner();
                 const tokenContract = new ethers.Contract(TOKEN_CONTRACT_ADDR, ERC20_ABI, signer);
@@ -1433,26 +1423,24 @@
                 const tx2 = await escrowContract.acceptWager(id, { value: parsed });
                 await tx2.wait();
 
-                statusBanner.innerText = `Escrow Contract #${id} counter-signed and active.`;
+                statusBanner.innerText = `Ugovor #${id} uspješno potvrđen.`;
                 loadActiveEscrows();
             } catch (err) {
                 console.error(err);
-                statusBanner.innerText = 'Counter-signature transaction failed.';
+                statusBanner.innerText = 'Potvrda ugovora nije uspjela.';
             }
         }
 
-        // Provision Liquidity (Uses your TOKEN_CONTRACT_ADDR)
         async function provisionTestLiquidity() {
             treasuryBalance += 1000;
             localStorage.setItem('evo_treasury_bal', treasuryBalance.toString());
             refreshDashboardUI();
-            pushSystemAlert('Provisioned +1,000.00 $EVO to corporate treasury.');
-            notifyCorp('Added +1,000.00 $EVO settlement liquidity to your treasury.');
+            pushSystemAlert('Dodano 1,000.00 $EVO testnih sredstava.');
+            notifyCorp('Uspješno dodano 1,000.00 $EVO testnih sredstava na račun.');
             const modal = bootstrap.Modal.getInstance(document.getElementById('treasuryModal'));
             if (modal) modal.hide();
         }
 
-        // B2B Invoice Creation
         function createB2BInvoice(event) {
             event.preventDefault();
             const client = document.getElementById('invClientName').value.trim();
@@ -1465,23 +1453,22 @@
                 timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
                 entity: client,
                 category: 'settlement',
-                reference: `${scope} (Due: ${dueDate})`,
-                amount: `${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} EURC`,
-                status: 'ISSUED'
+                reference: `${scope} (Rok: ${dueDate})`,
+                amount: `${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} EUR`,
+                status: 'IZDANO'
             };
 
             ledgerRecords.unshift(invRecord);
             localStorage.setItem('evo_corp_ledger', JSON.stringify(ledgerRecords));
             renderCorporateLedger();
-            pushSystemAlert(`Issued B2B Invoice ${invRecord.id} to ${client}`);
-            notifyCorp(`Invoice ${invRecord.id} generated and added to ledger.`);
+            pushSystemAlert(`Izdani račun ${invRecord.id} za klijenta ${client}`);
+            notifyCorp(`Račun ${invRecord.id} je uspješno kreiran i spremljen.`);
 
             const modal = bootstrap.Modal.getInstance(document.getElementById('invoiceModal'));
             if (modal) modal.hide();
             event.target.reset();
         }
 
-        // Ledger Rendering & Filtering
         function filterLedgerCategory(cat, btnEl) {
             currentLedgerFilter = cat;
             document.querySelectorAll('.corp-tab').forEach(b => b.classList.remove('active'));
@@ -1505,14 +1492,14 @@
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-secondary">No ledger entries matching current filter criteria.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-secondary">Nema pronađenih transakcija.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = filtered.map(r => {
                 let badgeClass = 'bg-success bg-opacity-25 text-success';
-                if (r.status === 'LOCKED' || r.status === 'ISSUED') badgeClass = 'bg-warning bg-opacity-25 text-warning';
-                if (r.status === 'ACTIVE') badgeClass = 'bg-info bg-opacity-25 text-info';
+                if (r.status === 'ZAKLJUČANO' || r.status === 'IZDANO') badgeClass = 'bg-warning bg-opacity-25 text-warning';
+                if (r.status === 'AKTIVNO') badgeClass = 'bg-info bg-opacity-25 text-info';
 
                 return `
                     <tr>
@@ -1528,8 +1515,8 @@
                             <span class="badge-corp ${badgeClass} font-mono mt-1 d-inline-block" style="font-size: 0.65rem;">${r.status}</span>
                         </td>
                         <td class="text-end">
-                            <button class="nav-pill-btn py-1 px-2" onclick="inspectAuditRecord('${r.id}')" title="View Cryptographic Receipt">
-                                <i class="fa-solid fa-receipt"></i> Receipt
+                            <button class="nav-pill-btn py-1 px-2" onclick="inspectAuditRecord('${r.id}')" title="Pregled potvrde">
+                                <i class="fa-solid fa-receipt"></i> Potvrda
                             </button>
                         </td>
                     </tr>
@@ -1540,42 +1527,40 @@
         function inspectAuditRecord(id) {
             const rec = ledgerRecords.find(r => r.id === id);
             if (!rec) return;
-            notifyCorp(`Audit Receipt ${rec.id}: ${rec.entity} | ${rec.amount} | Status: ${rec.status}`);
+            notifyCorp(`Potvrda ${rec.id}: Partner: ${rec.entity} | Iznos: ${rec.amount} | Status: ${rec.status}`);
         }
 
         function exportLedgerCSV() {
-            const headers = ['ID,Timestamp,Entity,Category,Reference,Amount,Status'];
+            const headers = ['ID,Vrijeme,Partner,Kategorija,Opis,Iznos,Status'];
             const rows = ledgerRecords.map(r => `"${r.id}","${r.timestamp}","${r.entity}","${r.category}","${r.reference}","${r.amount}","${r.status}"`);
             const csvContent = "data:text/csv;charset=utf-8," + [headers, ...rows].join("\n");
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `evolysium_ledger_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", `evidencija_transakcija_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            notifyCorp('Corporate ledger exported to CSV.');
+            notifyCorp('Evidencija transakcija je preuzeta u CSV formatu.');
         }
 
-        // API Keys Management
         function copyApiKey() {
             const input = document.getElementById('corpApiKeyField');
             input.select();
             navigator.clipboard.writeText(input.value);
-            notifyCorp('Enterprise API Key copied to clipboard.');
+            notifyCorp('API ključ je kopiran u međuspremnik.');
         }
 
         function rotateApiKey() {
             const randomHex = Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
             document.getElementById('corpApiKeyField').value = 'evo_live_' + randomHex;
-            pushSystemAlert('Production API key rotated.');
-            notifyCorp('New production API key generated.');
+            pushSystemAlert('Generiran novi API ključ.');
+            notifyCorp('Uspješno je stvoren novi API ključ.');
         }
 
-        // Stripe Enterprise Licensing Checkout
         async function initiateEnterpriseCheckout(tier) {
             try {
-                notifyCorp('Connecting to institutional billing gateway...');
+                notifyCorp('Priprema naplate...');
                 const response = await fetch(`${API_BASE_URL}/api/payment/create-checkout-session`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1585,29 +1570,27 @@
                 if (data.url) {
                     window.location.href = data.url;
                 } else {
-                    notifyCorp(`Enterprise tier (${tier.toUpperCase()}) activated.`);
+                    notifyCorp(`Paket (${tier.toUpperCase()}) je aktiviran.`);
                 }
             } catch (err) {
                 console.error(err);
-                notifyCorp(`Enterprise tier (${tier.toUpperCase()}) provisioned.`);
+                notifyCorp(`Paket (${tier.toUpperCase()}) je uspješno odabran.`);
             }
         }
 
-        // Partnership / Proposal Inquiry Submission
         function submitEnterpriseInquiry(event) {
             event.preventDefault();
             const org = document.getElementById('inqOrgName').value.trim();
             const topic = document.getElementById('inqTopic').value;
 
-            pushSystemAlert(`Enterprise inquiry logged for ${org} (${topic})`);
-            notifyCorp(`Inquiry submitted. Our institutional team will reach out via office.evolysium@gmail.com.`);
+            pushSystemAlert(`Zaprimljen upit od ${org} (${topic})`);
+            notifyCorp(`Vaša poruka je poslana. Odgovorit ćemo vam uskoro na e-mail.`);
 
             const modal = bootstrap.Modal.getInstance(document.getElementById('proposalInquiryModal'));
             if (modal) modal.hide();
             event.target.reset();
         }
 
-        // Initialize Platform on Load
         window.addEventListener('DOMContentLoaded', () => {
             refreshDashboardUI();
             renderCorporateLedger();
