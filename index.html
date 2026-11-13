@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium (ƎE) — Global Financial Operations & Payments</title>
+    <title>Evolysium (ƎE) — Global Corporate Payments & Accounts</title>
 
-    <meta name="title" content="Evolysium — Global Financial Operations">
-    <meta name="description" content="Secure international settlements, milestone agreements, and corporate account management.">
+    <meta name="title" content="Evolysium — Corporate Financial Management">
+    <meta name="description" content="Secure international payouts, agreement tracking, and corporate treasury management.">
     
     <!-- PWA Web App Manifest -->
     <link rel="manifest" href='data:application/manifest+json,{
@@ -32,7 +32,7 @@
     <!-- Bootstrap 5, FontAwesome & Typography -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Ethers.js v6 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
@@ -74,10 +74,6 @@
         }
 
         main { flex: 1; }
-
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
 
         /* Navigation */
         .navbar-corporate {
@@ -395,26 +391,26 @@
 
             <div class="d-flex align-items-center gap-2 nav-actions-wrap">
                 <!-- System Status -->
-                <div class="nav-pill-btn d-none d-xl-inline-flex" title="Platform online">
+                <div class="nav-pill-btn d-none d-xl-inline-flex" title="System active">
                     <span class="status-dot online"></span>
-                    <span class="font-mono" style="font-size: 0.75rem;">ONLINE</span>
+                    <span style="font-size: 0.75rem; font-weight: 600;">ACTIVE</span>
                 </div>
 
                 <!-- Account Balance -->
-                <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#treasuryModal" title="View account balance">
-                    <i class="fa-solid fa-vault text-info"></i>
-                    <span class="font-mono" id="navTreasuryBalance">0.00 EUR</span>
+                <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#treasuryModal" title="View balance">
+                    <i class="fa-solid fa-wallet text-info"></i>
+                    <span id="navTreasuryBalance">0.00 EUR</span>
                 </button>
 
-                <!-- Secure Key / Sign In -->
-                <button class="nav-pill-btn" onclick="connectInstitutionalWallet()" title="Link security key">
+                <!-- Security Key -->
+                <button class="nav-pill-btn" onclick="connectInstitutionalWallet()" title="Connect key">
                     <i class="fa-solid fa-shield-halved text-success"></i>
-                    <span id="walletBtnLabel">Link Security Key</span>
+                    <span id="walletBtnLabel">Connect Key</span>
                 </button>
 
-                <!-- Developer Tools -->
+                <!-- API Access -->
                 <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#apiKeysModal">
-                    <i class="fa-solid fa-code text-warning"></i> Developer Tools
+                    <i class="fa-solid fa-code text-warning"></i> API Access
                 </button>
 
                 <!-- Notifications -->
@@ -462,25 +458,25 @@
             <span class="kpi-label mt-2">Core Services</span>
             
             <a href="#settlementSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-money-bill-transfer text-info" style="width: 20px;"></i> Direct Transfer & Payout
+                <i class="fa-solid fa-money-bill-transfer text-info" style="width: 20px;"></i> Direct Payouts
             </a>
             <a href="#escrowSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-contract text-primary" style="width: 20px;"></i> Milestone Agreements
+                <i class="fa-solid fa-file-contract text-primary" style="width: 20px;"></i> Contract Agreements
             </a>
             <a href="#ledgerSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-list-check text-success" style="width: 20px;"></i> Transaction Records
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#invoiceModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-invoice-dollar text-warning" style="width: 20px;"></i> Generate Invoice
+                <i class="fa-solid fa-file-invoice-dollar text-warning" style="width: 20px;"></i> Create Invoice
             </a>
 
             <span class="kpi-label mt-2">Support & Settings</span>
 
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#apiKeysModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-key text-secondary" style="width: 20px;"></i> Integration Tools
+                <i class="fa-solid fa-key text-secondary" style="width: 20px;"></i> API Access
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-layer-group text-info" style="width: 20px;"></i> Service Plans
+                <i class="fa-solid fa-layer-group text-info" style="width: 20px;"></i> Pricing Plans
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-handshake text-success" style="width: 20px;"></i> Contact Support
@@ -501,9 +497,9 @@
         <div class="corp-card p-4 mb-4">
             <div class="row align-items-center">
                 <div class="col-lg-8">
-                    <h2 class="fw-bold text-white mb-2">Global Payments & Financial Management</h2>
+                    <h2 class="fw-bold text-white mb-2">Corporate Payments & Financial Management</h2>
                     <p class="text-secondary small mb-0" style="max-width: 680px; line-height: 1.6;">
-                        Manage international corporate payouts, protect milestone deliverables with secure agreements, and maintain complete transparency across your financial operations in one unified workspace.
+                        Easily manage international payouts, protect contract deliverables with secure agreements, and maintain complete oversight of your funds in one professional workspace.
                     </p>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-3 mt-lg-0 d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-lg-end">
@@ -525,8 +521,8 @@
                         <span class="kpi-label">Available Balance</span>
                         <i class="fa-solid fa-wallet text-info"></i>
                     </div>
-                    <div class="kpi-value font-mono" id="kpiLiquidity">0.00</div>
-                    <span class="small text-success font-mono" style="font-size: 0.75rem;"><i class="fa-solid fa-arrow-up me-1"></i>EUR / USDC Accounts</span>
+                    <div class="kpi-value" id="kpiLiquidity">0.00</div>
+                    <span class="small text-success" style="font-size: 0.75rem;"><i class="fa-solid fa-arrow-up me-1"></i>EUR / USDC Accounts</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -535,8 +531,8 @@
                         <span class="kpi-label">Active Agreements</span>
                         <i class="fa-solid fa-lock text-primary"></i>
                     </div>
-                    <div class="kpi-value font-mono" id="kpiActiveEscrows">0</div>
-                    <span class="small text-secondary font-mono" style="font-size: 0.75rem;">Active Contracts</span>
+                    <div class="kpi-value" id="kpiActiveEscrows">0</div>
+                    <span class="small text-secondary" style="font-size: 0.75rem;">Active Contracts</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -546,7 +542,7 @@
                         <i class="fa-solid fa-shield-check text-success"></i>
                     </div>
                     <div class="kpi-value" style="font-size: 1.35rem; padding-top: 4px;" id="kpiComplianceStatus">Standard Client</div>
-                    <span class="small text-info font-mono" style="font-size: 0.75rem;"><span class="status-dot online me-1"></span>Platform Operational</span>
+                    <span class="small text-info" style="font-size: 0.75rem;"><span class="status-dot online me-1"></span>System Active</span>
                 </div>
             </div>
         </div>
@@ -562,7 +558,7 @@
                             <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-paper-plane text-info me-2"></i>Direct Corporate Transfer</h5>
                             <span class="small text-secondary">Send funds securely to verified business partners</span>
                         </div>
-                        <span class="badge-corp bg-dark border border-secondary text-secondary font-mono">FEE 0.15%</span>
+                        <span class="badge-corp bg-dark border border-secondary text-secondary">FEE 0.15%</span>
                     </div>
 
                     <form onsubmit="executeCorporateSettlement(event)">
@@ -574,7 +570,7 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-7">
                                 <label class="form-label small text-secondary fw-semibold">Transfer Amount</label>
-                                <input type="number" step="0.01" id="settlementAmount" class="form-control corp-input font-mono" placeholder="0.00" required>
+                                <input type="number" step="0.01" id="settlementAmount" class="form-control corp-input" placeholder="0.00" required>
                             </div>
                             <div class="col-md-5">
                                 <label class="form-label small text-secondary fw-semibold">Currency</label>
@@ -598,16 +594,16 @@
                 </div>
             </div>
 
-            <!-- Milestone Agreements -->
+            <!-- Agreement Protection -->
             <div class="col-lg-6" id="escrowSection">
                 <div class="corp-card p-4 h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
                             <div>
-                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-contract text-primary me-2"></i>Milestone Agreements</h5>
-                                <span class="small text-secondary">Lock funds in a secured agreement until milestones are approved</span>
+                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-contract text-primary me-2"></i>Contract Agreements</h5>
+                                <span class="small text-secondary">Lock funds in a secured agreement until deliverables are approved</span>
                             </div>
-                            <span class="badge-corp bg-primary bg-opacity-25 text-info font-mono">SECURE</span>
+                            <span class="badge-corp bg-primary bg-opacity-25 text-info">SECURE</span>
                         </div>
 
                         <!-- Create Agreement Box -->
@@ -615,10 +611,10 @@
                             <label class="form-label small text-secondary fw-semibold">Create New Agreement (EUR / USDC)</label>
                             <div class="row g-2 mb-2">
                                 <div class="col-sm-7">
-                                    <input type="text" id="escrowMilestoneTitle" class="form-control corp-input form-control-sm" placeholder="Milestone / Contract Ref (e.g., PO-402)">
+                                    <input type="text" id="escrowMilestoneTitle" class="form-control corp-input form-control-sm" placeholder="Contract Ref (e.g., PO-402)">
                                 </div>
                                 <div class="col-sm-5">
-                                    <input type="number" step="0.001" id="escrowAmountInput" class="form-control corp-input form-control-sm font-mono" placeholder="Amount">
+                                    <input type="number" step="0.001" id="escrowAmountInput" class="form-control corp-input form-control-sm" placeholder="Amount">
                                 </div>
                             </div>
                             <button onclick="deploySmartEscrow()" class="btn-corp-primary w-100 py-2" style="font-size: 0.82rem;">
@@ -630,19 +626,19 @@
                         <div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="kpi-label">Active Pending Agreements</span>
-                                <button onclick="loadActiveEscrows()" class="btn btn-link text-info text-decoration-none p-0 small font-mono">
+                                <button onclick="loadActiveEscrows()" class="btn btn-link text-info text-decoration-none p-0 small">
                                     <i class="fa-solid fa-rotate me-1"></i>Refresh List
                                 </button>
                             </div>
                             <div id="activeEscrowsList" class="d-flex flex-column gap-2" style="max-height: 175px; overflow-y: auto;">
                                 <div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">
-                                    Link your security key to view active agreement contracts.
+                                    Connect your security key to view active agreement contracts.
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="escrowStatusBanner" class="mt-3 p-2 rounded-2 small font-mono text-info" style="background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); display: none;"></div>
+                    <div id="escrowStatusBanner" class="mt-3 p-2 rounded-2 small text-info" style="background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); display: none;"></div>
                 </div>
             </div>
         </div>
@@ -706,7 +702,7 @@
                     <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-globe"></i></div>
                     <h6 class="fw-bold text-white mb-2">Global Settlements</h6>
                     <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Eliminate correspondent banking delays and excessive FX spreads. Settle invoices globally in seconds.
+                        Eliminate banking delays and excessive FX spreads. Settle invoices globally in seconds.
                     </p>
                 </div>
             </div>
@@ -715,7 +711,7 @@
                     <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-shield-halved"></i></div>
                     <h6 class="fw-bold text-white mb-2">Corporate Security</h6>
                     <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Role-based permissions, automated compliance checks, and fully auditable records meeting international standards.
+                        Role-based permissions, automated verification checks, and fully transparent records meeting international standards.
                     </p>
                 </div>
             </div>
@@ -769,11 +765,11 @@
                 <div class="modal-body p-4">
                     <div class="p-3 rounded-3 mb-3 text-center" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
                         <span class="kpi-label d-block">Available Balance</span>
-                        <h3 class="fw-bold text-white font-mono my-1" id="modalTreasuryDisplay">0.00 EUR</h3>
-                        <span class="badge bg-success bg-opacity-25 text-success font-mono" style="font-size: 0.7rem;">SETTLEMENT READY</span>
+                        <h3 class="fw-bold text-white my-1" id="modalTreasuryDisplay">0.00 EUR</h3>
+                        <span class="badge bg-success bg-opacity-25 text-success" style="font-size: 0.7rem;">READY FOR SETTLEMENT</span>
                     </div>
                     <p class="small text-secondary mb-3">
-                        Provision test funds to evaluate transfer execution and agreement protection features in sandbox mode.
+                        Provision test funds to evaluate transfer execution and contract agreement features in sandbox mode.
                     </p>
                     <button type="button" class="btn-corp-primary w-100 py-2" onclick="provisionTestLiquidity()">
                         <i class="fa-solid fa-plus-circle me-1"></i> Provision +1,000.00 EUR Test Funds
@@ -800,7 +796,7 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label small text-secondary">Amount (€ / USDC)</label>
-                                <input type="number" step="0.01" id="invAmount" class="form-control corp-input font-mono" placeholder="4500.00" required>
+                                <input type="number" step="0.01" id="invAmount" class="form-control corp-input" placeholder="4500.00" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-secondary">Due Date</label>
@@ -818,27 +814,27 @@
         </div>
     </div>
 
-    <!-- 4. Developer Tools Modal -->
+    <!-- 4. API Access Modal -->
     <div class="modal fade" id="apiKeysModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-code text-warning me-2"></i>Integration & Developer Tools</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-code text-warning me-2"></i>API Access & Integration</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <p class="small text-secondary mb-3">
-                        Connect Evolysium settlement rails directly into your ERP or financial management system via REST API.
+                        Connect Evolysium settlement rails directly into your ERP or financial management software via REST API.
                     </p>
                     <div class="mb-3">
                         <label class="kpi-label d-block mb-1">Production / Sandbox Access Key</label>
                         <div class="input-group">
-                            <input type="text" id="corpApiKeyField" class="form-control corp-input font-mono small" value="evo_live_98f7a6d5e4c3b2a10987654321fedcba" readonly>
+                            <input type="text" id="corpApiKeyField" class="form-control corp-input small" value="evo_live_98f7a6d5e4c3b2a10987654321fedcba" readonly>
                             <button class="btn-corp-outline" type="button" onclick="copyApiKey()">Copy</button>
                             <button class="btn-corp-primary" type="button" onclick="rotateApiKey()">Rotate Key</button>
                         </div>
                     </div>
-                    <div class="p-3 rounded-3 font-mono small text-secondary" style="background: #060910; border: 1px solid var(--border-subtle);">
+                    <div class="p-3 rounded-3 small text-secondary" style="background: #060910; border: 1px solid var(--border-subtle);">
                         <div class="text-info mb-1">// Example Integration Request</div>
                         POST https://api.evolysium.com/v1/settlements<br>
                         Authorization: Bearer evo_live_...<br>
@@ -854,7 +850,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0">Transparent Service Plans & Pricing</h5>
+                    <h5 class="fw-bold mb-0">Transparent Pricing Plans</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -862,9 +858,9 @@
                         <div class="col-md-4">
                             <div class="tier-card">
                                 <div>
-                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary font-mono">ESSENTIAL</span>
+                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary">ESSENTIAL</span>
                                     <h4 class="fw-bold text-white mt-2">Essential</h4>
-                                    <h3 class="fw-bold font-mono my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                    <h3 class="fw-bold my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
                                     <p class="small text-secondary">Ideal for growing teams handling routine supplier payouts and invoices.</p>
                                     <ul class="tier-list">
                                         <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly transfer volume</li>
@@ -880,13 +876,13 @@
                         <div class="col-md-4">
                             <div class="tier-card featured">
                                 <div>
-                                    <span class="badge-corp bg-primary text-white font-mono">MOST POPULAR</span>
+                                    <span class="badge-corp bg-primary text-white">MOST POPULAR</span>
                                     <h4 class="fw-bold text-white mt-2">Professional</h4>
-                                    <h3 class="fw-bold font-mono my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Complete milestone agreement protection and multi-currency tools.</p>
+                                    <h3 class="fw-bold my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                    <p class="small text-secondary">Complete contract agreement protection and multi-currency tools.</p>
                                     <ul class="tier-list">
                                         <li><i class="fa-solid fa-check"></i> Unlimited transfer and settlement volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Milestone agreement protection</li>
+                                        <li><i class="fa-solid fa-check"></i> Contract agreement protection</li>
                                         <li><i class="fa-solid fa-check"></i> Advanced multi-user permissions</li>
                                         <li><i class="fa-solid fa-check"></i> Dedicated account manager</li>
                                     </ul>
@@ -898,9 +894,9 @@
                         <div class="col-md-4">
                             <div class="tier-card">
                                 <div>
-                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning font-mono">CUSTOM SETUP</span>
+                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning">CUSTOM SETUP</span>
                                     <h4 class="fw-bold text-white mt-2">Enterprise Custom</h4>
-                                    <h3 class="fw-bold font-mono my-3">€1,199 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                    <h3 class="fw-bold my-3">€1,199 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
                                     <p class="small text-secondary">Fully customized infrastructure deployed directly on your domain.</p>
                                     <ul class="tier-list">
                                         <li><i class="fa-solid fa-check"></i> Custom domain and organization branding</li>
@@ -923,7 +919,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-handshake text-success me-2"></i>Partnership & Consultation Inquiry</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-handshake text-success me-2"></i>Consultation Inquiry</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -943,8 +939,8 @@
                             <label class="form-label small text-secondary">Primary Area of Interest</label>
                             <select id="inqTopic" class="form-control corp-input">
                                 <option>Global Cross-Border Settlements</option>
-                                <option>Milestone Agreements</option>
-                                <option>White-Label Infrastructure Licensing</option>
+                                <option>Contract Agreements</option>
+                                <option>Custom Infrastructure Licensing</option>
                                 <option>Strategic Partnership</option>
                             </select>
                         </div>
@@ -955,7 +951,7 @@
                         <button type="submit" class="btn-corp-primary w-100 py-2">Submit Official Inquiry</button>
                     </form>
                     <div class="mt-3 pt-3 border-top border-secondary border-opacity-25 text-center small text-secondary">
-                        Direct Corporate Desk: <span class="text-white font-mono">office.evolysium@gmail.com</span>
+                        Direct Corporate Desk: <span class="text-white">office.evolysium@gmail.com</span>
                     </div>
                 </div>
             </div>
@@ -984,17 +980,17 @@
                         <span class="fw-bold text-white">Evolysium</span>
                     </div>
                     <p class="small text-secondary mb-0">
-                        Secure Global Financial Operations & Payments.<br>
-                        Direct Inquiries: <a href="mailto:office.evolysium@gmail.com" class="text-info text-decoration-none font-mono">office.evolysium@gmail.com</a>
+                        Secure Global Corporate Payments & Operations.<br>
+                        Direct Inquiries: <a href="mailto:office.evolysium@gmail.com" class="text-info text-decoration-none">office.evolysium@gmail.com</a>
                     </p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="d-flex flex-wrap gap-3 justify-content-md-end mb-2">
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal">Service Plans</a>
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#apiKeysModal">Integration Tools</a>
+                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal">Pricing Plans</a>
+                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#apiKeysModal">API Access</a>
                         <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Consultation</a>
                     </div>
-                    <span class="small text-muted font-mono">© 2026 Evolysium. All Rights Reserved.</span>
+                    <span class="small text-muted">© 2026 Evolysium. All Rights Reserved.</span>
                 </div>
             </div>
         </div>
@@ -1078,7 +1074,7 @@
                     <li>
                         <div class="dropdown-item-text py-2 border-bottom border-secondary border-opacity-10">
                             <div class="small text-white">${a.text}</div>
-                            <span class="font-mono text-secondary" style="font-size: 0.68rem;">${a.time}</span>
+                            <span class="text-secondary" style="font-size: 0.68rem;">${a.time}</span>
                         </div>
                     </li>
                 `).join('')}
@@ -1160,19 +1156,19 @@
                 return;
             }
             try {
-                notifyCorp('Requesting security key authorization...');
+                notifyCorp('Requesting security key connection...');
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 walletAddress = accounts[0];
                 walletConnected = true;
                 refreshDashboardUI();
-                pushSystemAlert(`Security key linked: ${walletAddress.substring(0, 6)}...`);
-                notifyCorp('Security authorization established.');
+                pushSystemAlert(`Security key connected: ${walletAddress.substring(0, 6)}...`);
+                notifyCorp('Security key successfully connected.');
 
                 await checkOnChainKybStatus(walletAddress);
                 await loadActiveEscrows();
             } catch (err) {
                 console.error(err);
-                notifyCorp('Authorization request was declined.');
+                notifyCorp('Connection request was declined.');
             }
         }
 
@@ -1251,7 +1247,7 @@
         }
 
         async function deploySmartEscrow() {
-            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Agreement Contract';
+            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Contract Agreement';
             const amountVal = document.getElementById('escrowAmountInput').value;
             const statusBanner = document.getElementById('escrowStatusBanner');
 
@@ -1261,7 +1257,7 @@
             }
 
             if (typeof window.ethereum === 'undefined') {
-                notifyCorp('A security key extension is required to lock agreements.');
+                notifyCorp('A security key is required to lock agreements.');
                 return;
             }
 
@@ -1287,7 +1283,7 @@
                 const newEscrowRecord = {
                     id: 'ESC-' + Math.floor(1000 + Math.random() * 9000),
                     timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
-                    entity: 'Agreement Contract',
+                    entity: 'Contract Agreement',
                     category: 'escrow',
                     reference: title,
                     amount: `${amountVal} EUR`,
@@ -1326,8 +1322,8 @@
                         html += `
                             <div class="d-flex justify-content-between align-items-center p-2 rounded-2" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
                                 <div>
-                                    <span class="small fw-bold text-white font-mono">Agreement #${i}</span>
-                                    <span class="small text-secondary d-block font-mono" style="font-size: 0.72rem;">Secured: ${formattedAmt} EUR</span>
+                                    <span class="small fw-bold text-white">Agreement #${i}</span>
+                                    <span class="small text-secondary d-block" style="font-size: 0.72rem;">Secured: ${formattedAmt} EUR</span>
                                 </div>
                                 <button onclick="fulfillEscrowContract(${i}, '${formattedAmt}')" class="btn-corp-primary py-1 px-2" style="font-size: 0.72rem;">
                                     Release Funds
@@ -1445,15 +1441,15 @@
                 return `
                     <tr>
                         <td>
-                            <div class="fw-bold font-mono text-white">${r.id}</div>
-                            <div class="small text-secondary font-mono" style="font-size: 0.72rem;">${r.timestamp}</div>
+                            <div class="fw-bold text-white">${r.id}</div>
+                            <div class="small text-secondary" style="font-size: 0.72rem;">${r.timestamp}</div>
                         </td>
                         <td class="fw-semibold">${r.entity}</td>
-                        <td><span class="badge-corp bg-dark border border-secondary text-secondary text-uppercase font-mono">${r.category}</span></td>
+                        <td><span class="badge-corp bg-dark border border-secondary text-secondary text-uppercase">${r.category}</span></td>
                         <td class="small text-secondary">${r.reference}</td>
                         <td>
-                            <div class="fw-bold font-mono text-white">${r.amount}</div>
-                            <span class="badge-corp ${badgeClass} font-mono mt-1 d-inline-block" style="font-size: 0.65rem;">${r.status}</span>
+                            <div class="fw-bold text-white">${r.amount}</div>
+                            <span class="badge-corp ${badgeClass} mt-1 d-inline-block" style="font-size: 0.65rem;">${r.status}</span>
                         </td>
                         <td class="text-end">
                             <button class="nav-pill-btn py-1 px-2" onclick="inspectAuditRecord('${r.id}')" title="View Receipt">
@@ -1499,7 +1495,7 @@
         function rotateApiKey() {
             const randomHex = Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
             document.getElementById('corpApiKeyField').value = 'evo_live_' + randomHex;
-            pushSystemAlert('Integration access key rotated.');
+            pushSystemAlert('API access key rotated.');
             notifyCorp('New access key generated.');
         }
 
@@ -1515,11 +1511,11 @@
                 if (data.url) {
                     window.location.href = data.url;
                 } else {
-                    notifyCorp(`Selected service tier (${tier.toUpperCase()}) activated.`);
+                    notifyCorp(`Selected service plan activated.`);
                 }
             } catch (err) {
                 console.error(err);
-                notifyCorp(`Selected service tier (${tier.toUpperCase()}) provisioned.`);
+                notifyCorp(`Selected service plan provisioned.`);
             }
         }
 
