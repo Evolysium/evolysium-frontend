@@ -75,20 +75,35 @@
 
         main { flex: 1; }
 
-        /* Navigation */
-        .navbar-corporate {
-            background: rgba(8, 12, 20, 0.92);
+        /* Floating Talentir-style Pill Header */
+        .floating-header-wrap {
+            position: sticky;
+            top: 16px;
+            z-index: 1000;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 15px;
+            width: 100%;
+        }
+
+        .floating-nav {
+            background: rgba(15, 22, 36, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-subtle);
-            padding: 14px 0;
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            padding: 10px 18px 10px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
         }
 
         .brand-mark {
             background: linear-gradient(135deg, #1e3a8a, #2563eb);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -103,7 +118,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-subtle);
             color: var(--text-secondary);
-            border-radius: 8px;
+            border-radius: 999px;
             padding: 7px 14px;
             font-size: 0.82rem;
             font-weight: 600;
@@ -129,6 +144,119 @@
 
         .nav-pill-btn.primary:hover {
             background: var(--accent-primary-hover);
+        }
+
+        /* Talentir-style Orbital Hub */
+        .orbital-container {
+            position: relative;
+            width: 100%;
+            max-width: 680px;
+            height: 340px;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orbital-center-card {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 0 40px rgba(37, 99, 235, 0.65);
+            z-index: 10;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            width: 310px;
+            height: 310px;
+            border: 1px dashed rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            animation: spin 35s linear infinite;
+        }
+
+        @keyframes spin { 
+            100% { transform: rotate(360deg); } 
+        }
+
+        .orbit-item {
+            position: absolute;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 7px 13px;
+            border-radius: 99px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: border-color 0.2s;
+        }
+
+        .orbit-item:hover { border-color: var(--border-highlight); }
+
+        .item-1 { top: 8%; left: 15%; }
+        .item-2 { top: 4%; right: 18%; }
+        .item-3 { bottom: 12%; left: 10%; }
+        .item-4 { bottom: 8%; right: 15%; }
+        .item-5 { top: 44%; left: -2%; }
+        .item-6 { top: 40%; right: -2%; }
+
+        /* Trust & Compliance Card (Talentir Style) */
+        .trust-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .trust-shield-icon {
+            width: 68px;
+            height: 68px;
+            background: var(--bg-card);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #60a5fa;
+            margin: 0 auto 1.25rem;
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.25);
+        }
+
+        .trust-badges-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 1.75rem;
+        }
+
+        .trust-badge {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #34d399;
+            padding: 7px 16px;
+            border-radius: 99px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         /* Cards */
@@ -357,10 +485,12 @@
         }
 
         @media (max-width: 992px) {
-            .navbar-corporate .container {
+            .floating-nav {
                 flex-direction: column;
                 align-items: stretch !important;
                 gap: 12px;
+                border-radius: 20px;
+                padding: 15px;
             }
             .nav-actions-wrap { flex-wrap: wrap; gap: 8px !important; }
         }
@@ -374,9 +504,9 @@
         <h5 class="fw-bold text-white mb-0">Evolysium</h5>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar-corporate sticky-top">
-        <div class="container d-flex justify-content-between align-items-center">
+    <!-- Floating Talentir-style Pill Header -->
+    <div class="floating-header-wrap">
+        <header class="floating-nav">
             <div class="d-flex align-items-center gap-3">
                 <button class="nav-pill-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#enterpriseSidebar" aria-controls="enterpriseSidebar">
                     <i class="fa-solid fa-bars"></i> Menu
@@ -432,8 +562,8 @@
                     <span id="corpAuthBtnLabel">Sign In</span>
                 </button>
             </div>
-        </div>
-    </nav>
+        </header>
+    </div>
 
     <!-- Sidebar Menu -->
     <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="enterpriseSidebar" style="background: var(--bg-surface); border-right: 1px solid var(--border-subtle); width: 310px;">
@@ -491,27 +621,43 @@
     </div>
 
     <!-- Main Workspace -->
-    <main class="container py-4">
+    <main class="container py-4 mt-3">
         
-        <!-- Welcome Banner -->
-        <div class="corp-card p-4 mb-4">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h2 class="fw-bold text-white mb-2">Corporate Payments & Financial Management</h2>
-                    <p class="text-secondary small mb-0" style="max-width: 680px; line-height: 1.6;">
-                        Easily manage international payouts, protect contract deliverables with secure agreements, and maintain complete oversight of your funds in one professional workspace.
-                    </p>
-                </div>
-                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0 d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-lg-end">
-                    <button class="btn-corp-primary" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">
-                        <i class="fa-solid fa-briefcase me-2"></i> Request Consultation
-                    </button>
-                    <button class="btn-corp-outline" data-bs-toggle="modal" data-bs-target="#invoiceModal">
-                        <i class="fa-solid fa-plus me-2"></i> Create Invoice
-                    </button>
-                </div>
+        <!-- Welcome Banner & Orbital Ecosystem Hub -->
+        <div class="corp-card p-4 mb-4 text-center">
+            <h2 class="fw-bold text-white mb-2">Corporate Payouts. <span style="background: linear-gradient(135deg, #60a5fa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Solved.</span></h2>
+            <p class="text-secondary small mx-auto mb-3" style="max-width: 680px; line-height: 1.6;">
+                Evolysium runs global payouts, carries full compliance liability, and makes international settlements instant and secure.
+            </p>
+
+            <!-- Talentir Style Orbital Hub -->
+            <div class="orbital-container">
+                <div class="orbit-ring"></div>
+                <div class="orbital-center-card">ƎE</div>
+                
+                <div class="orbit-item item-1">💶 EUR Settlements</div>
+                <div class="orbit-item item-2">🪙 USDC Rails</div>
+                <div class="orbit-item item-3">🛡️ Smart Escrow</div>
+                <div class="orbit-item item-4">📊 B2B Invoices</div>
+                <div class="orbit-item item-5">🔗 REST API</div>
+                <div class="orbit-item item-6">⚡ Instant Sync</div>
             </div>
         </div>
+
+        <!-- Trust & Compliance Card (Talentir Style) -->
+        <section class="trust-section mb-4" id="compliance">
+            <div class="trust-shield-icon">🛡️</div>
+            <h3 class="fw-bold text-white mb-2">Institutional Liability &amp; Protection</h3>
+            <p class="text-secondary small mx-auto mb-0" style="max-width: 620px; line-height: 1.6;">
+                When payouts are triggered, Evolysium assumes full counterparty liability. Complete compliance oversight built right into every transaction.
+            </p>
+            <div class="trust-badges-row">
+                <span class="trust-badge">✓ Tax Verified</span>
+                <span class="trust-badge">✓ KYC Checked</span>
+                <span class="trust-badge">✓ AML Compliant</span>
+                <span class="trust-badge">✓ Zero Liability Risk</span>
+            </div>
+        </section>
 
         <!-- Clean KPI Metrics -->
         <div class="row g-3 mb-4">
