@@ -6,7 +6,7 @@
     <title>Evolysium (ƎE) — Global Corporate Payments & Accounts</title>
 
     <meta name="title" content="Evolysium — Corporate Financial Management">
-    <meta name="description" content="Secure international payouts, agreement tracking, and corporate treasury management.">
+    <meta name="description" content="Effortless international business payouts, protected project agreements, and transparent financial management.">
     
     <!-- PWA Web App Manifest -->
     <link rel="manifest" href='data:application/manifest+json,{
@@ -14,8 +14,8 @@
         "short_name":"Evolysium",
         "start_url":"/",
         "display":"standalone",
-        "background_color":"#080c14",
-        "theme_color":"#080c14"
+        "background_color":"#050810",
+        "theme_color":"#050810"
     }'>
 
     <!-- Supabase Client -->
@@ -39,17 +39,15 @@
 
     <style>
         :root {
-            --bg-main: #080c14;
-            --bg-surface: #0f1623;
-            --bg-card: #131c2e;
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-active: rgba(59, 130, 246, 0.45);
+            --bg-main: #050810;
+            --bg-surface: #0a0f1d;
+            --bg-card: #0f172a;
+            --bg-elevated: #141e33;
+            --border-subtle: rgba(255, 255, 255, 0.07);
+            --border-highlight: rgba(59, 130, 246, 0.35);
             --accent-primary: #2563eb;
             --accent-primary-hover: #1d4ed8;
-            --accent-secondary: #0ea5e9;
-            --status-success: #10b981;
-            --status-warning: #f59e0b;
-            --status-danger: #ef4444;
+            --accent-secondary: #38bdf8;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
@@ -66,8 +64,8 @@
             display: flex;
             flex-direction: column;
             background-image: 
-                radial-gradient(circle at 10% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 90% 100%, rgba(14, 165, 233, 0.06) 0%, transparent 45%);
+                radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 90% 95%, rgba(56, 189, 248, 0.05) 0%, transparent 50%);
             background-attachment: fixed;
             overflow-x: hidden;
             margin: 0;
@@ -75,35 +73,35 @@
 
         main { flex: 1; }
 
-        /* Floating Talentir-style Pill Header */
+        /* Floating Larvin AI + Talentir Navigation Pill */
         .floating-header-wrap {
             position: sticky;
-            top: 16px;
-            z-index: 1000;
-            max-width: 1320px;
+            top: 14px;
+            z-index: 1030;
+            max-width: 1260px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 16px;
             width: 100%;
         }
 
         .floating-nav {
-            background: rgba(15, 22, 36, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-subtle);
+            background: rgba(10, 15, 29, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 999px;
-            padding: 10px 18px 10px 22px;
+            padding: 8px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
         }
 
         .brand-mark {
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            width: 38px;
-            height: 38px;
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -111,7 +109,8 @@
             font-weight: 800;
             color: #ffffff;
             letter-spacing: -1px;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+            flex-shrink: 0;
         }
 
         .nav-pill-btn {
@@ -124,14 +123,15 @@
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
             transition: all 0.2s ease;
             cursor: pointer;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .nav-pill-btn:hover {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
             border-color: rgba(255, 255, 255, 0.2);
         }
@@ -140,47 +140,84 @@
             background: var(--accent-primary);
             border-color: var(--accent-primary);
             color: #ffffff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
         }
 
         .nav-pill-btn.primary:hover {
             background: var(--accent-primary-hover);
+            transform: translateY(-1px);
         }
 
-        /* Talentir-style Orbital Hub */
+        /* Modern Stacking & Overlapping Layers (Larvin AI + Talentir Style) */
+        .stack-layer {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 26px;
+            box-shadow: 0 -15px 45px rgba(0, 0, 0, 0.7), 0 20px 50px rgba(0, 0, 0, 0.4);
+            transition: border-color 0.3s ease;
+        }
+
+        .stack-layer:hover {
+            border-color: rgba(59, 130, 246, 0.25);
+        }
+
+        @media (min-width: 992px) {
+            .sticky-stack-1 { position: sticky; top: 82px; z-index: 10; }
+            .sticky-stack-2 { position: sticky; top: 102px; z-index: 20; }
+            .sticky-stack-3 { position: relative; z-index: 30; }
+            .sticky-stack-4 { position: relative; z-index: 40; }
+        }
+
+        /* Hero & Orbital Elements */
+        .hero-pill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
         .orbital-container {
             position: relative;
             width: 100%;
-            max-width: 680px;
-            height: 340px;
-            margin: 2rem auto;
+            max-width: 660px;
+            height: 300px;
+            margin: 1.5rem auto 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .orbital-center-card {
-            width: 85px;
-            height: 85px;
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, #1e3a8a, #2563eb);
             border: 2px solid rgba(255, 255, 255, 0.25);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            font-weight: 900;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: #fff;
-            box-shadow: 0 0 40px rgba(37, 99, 235, 0.65);
+            box-shadow: 0 0 45px rgba(37, 99, 235, 0.5);
             z-index: 10;
         }
 
         .orbit-ring {
             position: absolute;
-            width: 310px;
-            height: 310px;
-            border: 1px dashed rgba(59, 130, 246, 0.3);
+            width: 280px;
+            height: 280px;
+            border: 1px dashed rgba(59, 130, 246, 0.25);
             border-radius: 50%;
-            animation: spin 35s linear infinite;
+            animation: spin 45s linear infinite;
         }
 
         @keyframes spin { 
@@ -189,98 +226,106 @@
 
         .orbit-item {
             position: absolute;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            padding: 7px 13px;
-            border-radius: 99px;
-            font-size: 0.76rem;
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            padding: 8px 15px;
+            border-radius: 999px;
+            font-size: 0.8rem;
             font-weight: 600;
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            transition: border-color 0.2s;
+            gap: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            white-space: nowrap;
         }
 
-        .orbit-item:hover { border-color: var(--border-highlight); }
+        .orbit-item i { color: #60a5fa; }
 
-        .item-1 { top: 8%; left: 15%; }
-        .item-2 { top: 4%; right: 18%; }
-        .item-3 { bottom: 12%; left: 10%; }
-        .item-4 { bottom: 8%; right: 15%; }
-        .item-5 { top: 44%; left: -2%; }
-        .item-6 { top: 40%; right: -2%; }
+        .item-1 { top: 6%; left: 8%; }
+        .item-2 { top: 6%; right: 8%; }
+        .item-3 { bottom: 8%; left: 8%; }
+        .item-4 { bottom: 8%; right: 8%; }
+        .item-5 { top: 43%; left: -2%; }
+        .item-6 { top: 43%; right: -2%; }
 
-        /* Trust & Compliance Card (Talentir Style) */
+        @media (max-width: 767px) {
+            .orbital-container { height: auto; flex-direction: column; gap: 14px; padding: 10px 0; }
+            .orbit-ring { display: none; }
+            .orbital-center-card { width: 64px; height: 64px; font-size: 1.4rem; margin-bottom: 4px; }
+            .mobile-orbit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
+            .orbit-item { position: static; justify-content: center; font-size: 0.75rem; padding: 8px 10px; }
+        }
+
+        /* Trust & Support Card (Human & Professional) */
         .trust-section {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
-            padding: 3rem 2rem;
+            background: linear-gradient(180deg, #111a30 0%, #0a1020 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 26px;
+            padding: 2.75rem 2rem;
             text-align: center;
-            position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 -18px 45px rgba(0, 0, 0, 0.65);
         }
 
         .trust-shield-icon {
-            width: 68px;
-            height: 68px;
-            background: var(--bg-card);
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            border-radius: 18px;
+            width: 60px;
+            height: 60px;
+            background: rgba(37, 99, 235, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #60a5fa;
-            margin: 0 auto 1.25rem;
-            box-shadow: 0 0 30px rgba(37, 99, 235, 0.25);
+            margin: 0 auto 1.2rem;
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.2);
         }
 
         .trust-badges-row {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-top: 1.75rem;
+            margin-top: 1.5rem;
         }
 
         .trust-badge {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.25);
-            color: #34d399;
-            padding: 7px 16px;
-            border-radius: 99px;
-            font-size: 0.82rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            color: #e2e8f0;
+            padding: 7px 15px;
+            border-radius: 999px;
+            font-size: 0.81rem;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
         }
 
-        /* Cards */
+        .trust-badge i { color: #60a5fa; }
+
+        /* Cards & KPIs */
         .corp-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 14px;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 20px;
+            transition: border-color 0.2s ease;
         }
 
-        .corp-card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-        }
+        .corp-card:hover { border-color: rgba(255, 255, 255, 0.15); }
 
         .kpi-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 22px;
             height: 100%;
         }
 
         .kpi-label {
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
             color: var(--text-secondary);
@@ -288,7 +333,7 @@
         }
 
         .kpi-value {
-            font-size: 1.65rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: var(--text-primary);
             margin: 6px 0;
@@ -296,11 +341,11 @@
 
         /* Forms */
         .corp-input {
-            background-color: #090d16 !important;
+            background-color: #070b14 !important;
             border: 1px solid rgba(255, 255, 255, 0.12) !important;
             color: var(--text-primary) !important;
-            border-radius: 8px;
-            padding: 11px 14px;
+            border-radius: 12px;
+            padding: 12px 15px;
             font-size: 0.9rem;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
@@ -319,8 +364,8 @@
             color: #ffffff;
             font-weight: 600;
             font-size: 0.88rem;
-            padding: 11px 20px;
-            border-radius: 8px;
+            padding: 12px 22px;
+            border-radius: 12px;
             transition: all 0.2s ease;
             cursor: pointer;
         }
@@ -329,23 +374,24 @@
             background: var(--accent-primary-hover);
             border-color: var(--accent-primary-hover);
             color: #ffffff;
+            transform: translateY(-1px);
         }
 
         .btn-corp-outline {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: var(--text-primary);
             font-weight: 600;
             font-size: 0.88rem;
-            padding: 11px 20px;
-            border-radius: 8px;
+            padding: 12px 22px;
+            border-radius: 12px;
             transition: all 0.2s ease;
             cursor: pointer;
         }
 
         .btn-corp-outline:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.3);
             color: #ffffff;
         }
 
@@ -355,8 +401,8 @@
             border: 1px solid var(--border-subtle);
             color: var(--text-secondary);
             padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 0.84rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -368,28 +414,16 @@
         }
 
         .corp-tab.active {
-            background: rgba(37, 99, 235, 0.15);
+            background: rgba(37, 99, 235, 0.18);
             border-color: var(--accent-primary);
-            color: #60a5fa;
-        }
-
-        /* Statuses */
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .status-dot.online {
-            background-color: var(--status-success);
-            box-shadow: 0 0 8px var(--status-success);
+            color: #93c5fd;
         }
 
         .badge-corp {
             font-size: 0.7rem;
             font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 5px 11px;
+            border-radius: 999px;
             letter-spacing: 0.03em;
         }
 
@@ -405,7 +439,7 @@
             padding: 12px 16px;
             color: var(--text-secondary);
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             border-bottom: 1px solid var(--border-subtle);
@@ -425,7 +459,7 @@
         .tier-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-subtle);
-            border-radius: 14px;
+            border-radius: 18px;
             padding: 28px;
             height: 100%;
             display: flex;
@@ -435,7 +469,7 @@
 
         .tier-card.featured {
             border-color: var(--accent-primary);
-            background: linear-gradient(180deg, rgba(37, 99, 235, 0.08) 0%, var(--bg-surface) 100%);
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.1) 0%, var(--bg-surface) 100%);
         }
 
         .tier-list {
@@ -459,7 +493,7 @@
         .modal-content-corp {
             background: var(--bg-surface);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
+            border-radius: 20px;
             color: var(--text-primary);
         }
 
@@ -479,20 +513,11 @@
         /* Footer */
         .corp-footer {
             border-top: 1px solid var(--border-subtle);
-            background: #060910;
+            background: #03050a;
             margin-top: 80px;
             padding: 40px 0;
-        }
-
-        @media (max-width: 992px) {
-            .floating-nav {
-                flex-direction: column;
-                align-items: stretch !important;
-                gap: 12px;
-                border-radius: 20px;
-                padding: 15px;
-            }
-            .nav-actions-wrap { flex-wrap: wrap; gap: 8px !important; }
+            position: relative;
+            z-index: 50;
         }
     </style>
 </head>
@@ -504,61 +529,53 @@
         <h5 class="fw-bold text-white mb-0">Evolysium</h5>
     </div>
 
-    <!-- Floating Talentir-style Pill Header -->
+    <!-- Floating Navigation Bar -->
     <div class="floating-header-wrap">
         <header class="floating-nav">
-            <div class="d-flex align-items-center gap-3">
-                <button class="nav-pill-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#enterpriseSidebar" aria-controls="enterpriseSidebar">
-                    <i class="fa-solid fa-bars"></i> Menu
+            <div class="d-flex align-items-center gap-2 gap-md-3">
+                <button class="nav-pill-btn px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#enterpriseSidebar" aria-controls="enterpriseSidebar">
+                    <i class="fa-solid fa-bars"></i> <span class="d-none d-sm-inline">Menu</span>
                 </button>
                 <a class="d-flex align-items-center gap-2 text-decoration-none" href="javascript:void(0);">
-                    <div class="brand-mark fs-5">ƎE</div>
-                    <div>
-                        <span class="fw-bold fs-5 text-white tracking-tight">Evolysium</span>
-                    </div>
+                    <div class="brand-mark fs-6">ƎE</div>
+                    <span class="fw-bold fs-5 text-white tracking-tight">Evolysium</span>
                 </a>
             </div>
 
-            <div class="d-flex align-items-center gap-2 nav-actions-wrap">
-                <!-- System Status -->
-                <div class="nav-pill-btn d-none d-xl-inline-flex" title="System active">
-                    <span class="status-dot online"></span>
-                    <span style="font-size: 0.75rem; font-weight: 600;">ACTIVE</span>
-                </div>
-
+            <div class="d-flex align-items-center gap-2">
                 <!-- Account Balance -->
-                <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#treasuryModal" title="View balance">
+                <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#treasuryModal" title="Account balance">
                     <i class="fa-solid fa-wallet text-info"></i>
                     <span id="navTreasuryBalance">0.00 EUR</span>
                 </button>
 
-                <!-- Security Key -->
-                <button class="nav-pill-btn" onclick="connectInstitutionalWallet()" title="Connect key">
-                    <i class="fa-solid fa-shield-halved text-success"></i>
+                <!-- Security Key (Desktop) -->
+                <button class="nav-pill-btn d-none d-lg-inline-flex" onclick="connectInstitutionalWallet()" title="Connect security key">
+                    <i class="fa-solid fa-key text-info"></i>
                     <span id="walletBtnLabel">Connect Key</span>
                 </button>
 
-                <!-- API Access -->
-                <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#apiKeysModal">
-                    <i class="fa-solid fa-code text-warning"></i> API Access
+                <!-- API Access (Desktop) -->
+                <button class="nav-pill-btn d-none d-xl-inline-flex" data-bs-toggle="modal" data-bs-target="#apiKeysModal">
+                    <i class="fa-solid fa-code text-warning"></i> API
                 </button>
 
                 <!-- Notifications -->
-                <div class="dropdown">
-                    <button class="nav-pill-btn position-relative dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markAlertsRead()">
+                <div class="dropdown d-none d-sm-block">
+                    <button class="nav-pill-btn position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markAlertsRead()" title="Notifications">
                         <i class="fa-solid fa-bell"></i>
                         <span id="alertBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style="font-size: 0.62rem; display:none;">0</span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-dark shadow-lg p-2 mt-2" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); width: 320px;" id="alertsDropdownList">
-                        <li><h6 class="dropdown-header text-white fw-bold">Recent Notifications</h6></li>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-lg p-2 mt-2" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); width: 320px;" id="alertsDropdownList">
+                        <li><h6 class="dropdown-header text-white fw-bold">Updates &amp; Activity</h6></li>
                         <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                        <li><span class="dropdown-item-text small text-secondary">No new notifications</span></li>
+                        <li><span class="dropdown-item-text small text-secondary">No new updates</span></li>
                     </ul>
                 </div>
 
                 <!-- Client Sign In -->
                 <button class="nav-pill-btn primary" data-bs-toggle="modal" data-bs-target="#corpAuthModal">
-                    <i class="fa-solid fa-building"></i>
+                    <i class="fa-regular fa-user"></i>
                     <span id="corpAuthBtnLabel">Sign In</span>
                 </button>
             </div>
@@ -570,46 +587,50 @@
         <div class="offcanvas-header border-bottom border-secondary border-opacity-25 py-3 px-4">
             <div class="d-flex align-items-center gap-2">
                 <div class="brand-mark" style="width: 32px; height: 32px; font-size: 0.9rem;">ƎE</div>
-                <h6 class="offcanvas-title fw-bold mb-0">Menu</h6>
+                <h6 class="offcanvas-title fw-bold mb-0">Workspace Menu</h6>
             </div>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body p-4 d-flex flex-column gap-3">
             
-            <!-- Verification Status -->
+            <!-- Membership Status -->
             <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);">
-                <span class="kpi-label d-block mb-1">Account Status</span>
+                <span class="kpi-label d-block mb-1">Account Standing</span>
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold text-white small" id="sidebarKybStatus">Standard Client</span>
+                    <span class="fw-bold text-white small" id="sidebarKybStatus">Standard Member</span>
                     <button class="btn btn-sm btn-outline-info py-1 px-2" style="font-size: 0.72rem;" onclick="verifyCorporateEntity()">Verify</button>
                 </div>
             </div>
 
-            <span class="kpi-label mt-2">Core Services</span>
+            <button class="nav-pill-btn w-100 justify-content-start py-2" onclick="connectInstitutionalWallet()" data-bs-dismiss="offcanvas">
+                <i class="fa-solid fa-key text-info" style="width: 20px;"></i> <span id="sidebarWalletLabel">Connect Security Key</span>
+            </button>
+
+            <span class="kpi-label mt-2">Payments &amp; Agreements</span>
             
             <a href="#settlementSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-money-bill-transfer text-info" style="width: 20px;"></i> Direct Payouts
+                <i class="fa-solid fa-paper-plane text-info" style="width: 20px;"></i> Send Payment
             </a>
             <a href="#escrowSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-contract text-primary" style="width: 20px;"></i> Contract Agreements
+                <i class="fa-solid fa-file-signature text-primary" style="width: 20px;"></i> Project Agreements
             </a>
             <a href="#ledgerSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-list-check text-success" style="width: 20px;"></i> Transaction Records
+                <i class="fa-solid fa-clock-rotate-left text-info" style="width: 20px;"></i> Payment History
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#invoiceModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-invoice-dollar text-warning" style="width: 20px;"></i> Create Invoice
+                <i class="fa-solid fa-file-invoice text-warning" style="width: 20px;"></i> Create Invoice
             </a>
 
-            <span class="kpi-label mt-2">Support & Settings</span>
+            <span class="kpi-label mt-2">Tools &amp; Support</span>
 
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#apiKeysModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-key text-secondary" style="width: 20px;"></i> API Access
+                <i class="fa-solid fa-code text-secondary" style="width: 20px;"></i> Developer API
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-layer-group text-info" style="width: 20px;"></i> Pricing Plans
+                <i class="fa-solid fa-layer-group text-info" style="width: 20px;"></i> Membership Plans
             </a>
             <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-handshake text-success" style="width: 20px;"></i> Contact Support
+                <i class="fa-solid fa-headset text-info" style="width: 20px;"></i> Talk to Our Team
             </a>
 
             <div class="mt-auto pt-3 border-top border-secondary border-opacity-25">
@@ -620,209 +641,231 @@
         </div>
     </div>
 
-    <!-- Main Workspace -->
-    <main class="container py-4 mt-3">
+    <!-- Main Workspace with Layered Overlapping Cards -->
+    <main class="container py-4 mt-2">
         
-        <!-- Welcome Banner & Orbital Ecosystem Hub -->
-        <div class="corp-card p-4 mb-4 text-center">
-            <h2 class="fw-bold text-white mb-2">Corporate Payouts. <span style="background: linear-gradient(135deg, #60a5fa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Solved.</span></h2>
-            <p class="text-secondary small mx-auto mb-3" style="max-width: 680px; line-height: 1.6;">
-                Evolysium runs global payouts, carries full compliance liability, and makes international settlements instant and secure.
+        <!-- Layer 1: Hero & Ecosystem Hub -->
+        <section class="stack-layer sticky-stack-1 p-4 p-md-5 mb-4 text-center">
+            <div class="hero-pill-tag">
+                <i class="fa-solid fa-sparkles"></i> Built for modern finance teams
+            </div>
+            
+            <h1 class="fw-extrabold text-white mb-3" style="font-size: clamp(2rem, 4.5vw, 3.25rem); letter-spacing: -0.03em; line-height: 1.15;">
+                Global Corporate Payments, <br class="d-none d-md-inline">
+                <span style="background: linear-gradient(135deg, #60a5fa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Simplified.</span>
+            </h1>
+            
+            <p class="text-secondary mx-auto mb-4" style="max-width: 620px; font-size: 1.02rem; line-height: 1.65;">
+                Pay partners across borders in seconds, protect deliverables with milestone agreements, and keep every invoice organized in one calm workspace.
             </p>
 
-            <!-- Talentir Style Orbital Hub -->
+            <div class="d-flex justify-content-center gap-2 flex-wrap mb-3">
+                <a href="#settlementSection" class="btn-corp-primary text-decoration-none px-4">
+                    Send a Payment
+                </a>
+                <button class="btn-corp-outline px-4" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">
+                    Speak with an Advisor
+                </button>
+            </div>
+
+            <!-- Orbital Ecosystem Hub -->
             <div class="orbital-container">
                 <div class="orbit-ring"></div>
                 <div class="orbital-center-card">ƎE</div>
                 
-                <div class="orbit-item item-1">💶 EUR Settlements</div>
-                <div class="orbit-item item-2">🪙 USDC Rails</div>
-                <div class="orbit-item item-3">🛡️ Smart Escrow</div>
-                <div class="orbit-item item-4">📊 B2B Invoices</div>
-                <div class="orbit-item item-5">🔗 REST API</div>
-                <div class="orbit-item item-6">⚡ Instant Sync</div>
-            </div>
-        </div>
-
-        <!-- Trust & Compliance Card (Talentir Style) -->
-        <section class="trust-section mb-4" id="compliance">
-            <div class="trust-shield-icon">🛡️</div>
-            <h3 class="fw-bold text-white mb-2">Institutional Liability &amp; Protection</h3>
-            <p class="text-secondary small mx-auto mb-0" style="max-width: 620px; line-height: 1.6;">
-                When payouts are triggered, Evolysium assumes full counterparty liability. Complete compliance oversight built right into every transaction.
-            </p>
-            <div class="trust-badges-row">
-                <span class="trust-badge">✓ Tax Verified</span>
-                <span class="trust-badge">✓ KYC Checked</span>
-                <span class="trust-badge">✓ AML Compliant</span>
-                <span class="trust-badge">✓ Zero Liability Risk</span>
+                <div class="mobile-orbit-grid">
+                    <div class="orbit-item item-1"><i class="fa-solid fa-euro-sign"></i> Direct EUR Transfers</div>
+                    <div class="orbit-item item-2"><i class="fa-solid fa-dollar-sign"></i> Digital USD Support</div>
+                    <div class="orbit-item item-3"><i class="fa-solid fa-shield-heart"></i> Protected Milestones</div>
+                    <div class="orbit-item item-4"><i class="fa-solid fa-file-invoice"></i> Instant B2B Invoices</div>
+                    <div class="orbit-item item-5"><i class="fa-solid fa-plug"></i> Easy Software Sync</div>
+                    <div class="orbit-item item-6"><i class="fa-solid fa-bolt"></i> Real-Time Clarity</div>
+                </div>
             </div>
         </section>
 
-        <!-- Clean KPI Metrics -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-4 col-sm-12">
-                <div class="kpi-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="kpi-label">Available Balance</span>
-                        <i class="fa-solid fa-wallet text-info"></i>
-                    </div>
-                    <div class="kpi-value" id="kpiLiquidity">0.00</div>
-                    <span class="small text-success" style="font-size: 0.75rem;"><i class="fa-solid fa-arrow-up me-1"></i>EUR / USDC Accounts</span>
-                </div>
+        <!-- Layer 2: Overlapping Trust & Support Card -->
+        <section class="trust-section sticky-stack-2 mb-4" id="compliance">
+            <div class="trust-shield-icon"><i class="fa-solid fa-shield-heart"></i></div>
+            <h2 class="fw-bold text-white mb-2" style="font-size: clamp(1.5rem, 3vw, 2.1rem);">Complete Peace of Mind on Every Payment</h2>
+            <p class="text-secondary mx-auto mb-0" style="max-width: 600px; font-size: 0.96rem; line-height: 1.65;">
+                Every partner and payout is carefully reviewed in the background so your finance team can approve transfers with confidence and zero guesswork.
+            </p>
+            <div class="trust-badges-row">
+                <span class="trust-badge"><i class="fa-solid fa-circle-check"></i> Tax Documentation Ready</span>
+                <span class="trust-badge"><i class="fa-solid fa-circle-check"></i> Verified Business Partners</span>
+                <span class="trust-badge"><i class="fa-solid fa-circle-check"></i> Full Regulatory Alignment</span>
+                <span class="trust-badge"><i class="fa-solid fa-circle-check"></i> Dedicated Account Support</span>
             </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="kpi-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="kpi-label">Active Agreements</span>
-                        <i class="fa-solid fa-lock text-primary"></i>
+        </section>
+
+        <!-- Layer 3: Interactive Workspace & Metrics -->
+        <section class="stack-layer sticky-stack-3 p-4 p-md-5 mb-4">
+            <!-- Clean KPI Metrics -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4 col-sm-12">
+                    <div class="kpi-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="kpi-label">Available Funds</span>
+                            <i class="fa-solid fa-wallet text-info"></i>
+                        </div>
+                        <div class="kpi-value" id="kpiLiquidity">0.00</div>
+                        <span class="small text-secondary" style="font-size: 0.78rem;">Ready for immediate payout</span>
                     </div>
-                    <div class="kpi-value" id="kpiActiveEscrows">0</div>
-                    <span class="small text-secondary" style="font-size: 0.75rem;">Active Contracts</span>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="kpi-card">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="kpi-label">Account & System Status</span>
-                        <i class="fa-solid fa-shield-check text-success"></i>
+                <div class="col-md-4 col-sm-6">
+                    <div class="kpi-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="kpi-label">Active Agreements</span>
+                            <i class="fa-solid fa-handshake text-primary"></i>
+                        </div>
+                        <div class="kpi-value" id="kpiActiveEscrows">0</div>
+                        <span class="small text-secondary" style="font-size: 0.78rem;">Projects currently in progress</span>
                     </div>
-                    <div class="kpi-value" style="font-size: 1.35rem; padding-top: 4px;" id="kpiComplianceStatus">Standard Client</div>
-                    <span class="small text-info" style="font-size: 0.75rem;"><span class="status-dot online me-1"></span>System Active</span>
                 </div>
-            </div>
-        </div>
-
-        <!-- Core Modules: Transfer & Agreement Protection -->
-        <div class="row g-4 mb-4" id="settlementSection">
-            
-            <!-- Transfer Funds -->
-            <div class="col-lg-6">
-                <div class="corp-card p-4 h-100">
-                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
-                        <div>
-                            <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-paper-plane text-info me-2"></i>Direct Corporate Transfer</h5>
-                            <span class="small text-secondary">Send funds securely to verified business partners</span>
+                <div class="col-md-4 col-sm-6">
+                    <div class="kpi-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="kpi-label">Account Standing</span>
+                            <i class="fa-solid fa-award text-info"></i>
                         </div>
-                        <span class="badge-corp bg-dark border border-secondary text-secondary">FEE 0.15%</span>
+                        <div class="kpi-value" style="font-size: 1.35rem; padding-top: 6px;" id="kpiComplianceStatus">Standard Member</div>
+                        <span class="small text-info" style="font-size: 0.78rem;">All services available</span>
                     </div>
-
-                    <form onsubmit="executeCorporateSettlement(event)">
-                        <div class="mb-3">
-                            <label class="form-label small text-secondary fw-semibold">Recipient ID or Account Handle</label>
-                            <input type="text" id="settlementRecipient" class="form-control corp-input" placeholder="e.g., @partner_corp or account_id" required>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-7">
-                                <label class="form-label small text-secondary fw-semibold">Transfer Amount</label>
-                                <input type="number" step="0.01" id="settlementAmount" class="form-control corp-input" placeholder="0.00" required>
-                            </div>
-                            <div class="col-md-5">
-                                <label class="form-label small text-secondary fw-semibold">Currency</label>
-                                <select id="settlementCurrency" class="form-control corp-input">
-                                    <option value="EUR">EUR (Euro)</option>
-                                    <option value="USDC">USDC (USD Stablecoin)</option>
-                                    <option value="EVO">EVO Credits</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label small text-secondary fw-semibold">Reference / Invoice Number</label>
-                            <input type="text" id="settlementReference" class="form-control corp-input" placeholder="e.g., INV-2026-089 / Professional Services" required>
-                        </div>
-
-                        <button type="submit" class="btn-corp-primary w-100 py-3">
-                            <i class="fa-solid fa-lock me-2"></i> Authorize & Execute Transfer
-                        </button>
-                    </form>
                 </div>
             </div>
 
-            <!-- Agreement Protection -->
-            <div class="col-lg-6" id="escrowSection">
-                <div class="corp-card p-4 h-100 d-flex flex-column justify-content-between">
-                    <div>
+            <!-- Core Modules: Transfer & Agreement Protection -->
+            <div class="row g-4" id="settlementSection">
+                
+                <!-- Transfer Funds -->
+                <div class="col-lg-6">
+                    <div class="kpi-card p-4 h-100">
                         <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
                             <div>
-                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-contract text-primary me-2"></i>Contract Agreements</h5>
-                                <span class="small text-secondary">Lock funds in a secured agreement until deliverables are approved</span>
+                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-paper-plane text-info me-2"></i>Send a Direct Payment</h5>
+                                <span class="small text-secondary">Transfer funds to verified business partners worldwide</span>
                             </div>
-                            <span class="badge-corp bg-primary bg-opacity-25 text-info">SECURE</span>
+                            <span class="badge-corp bg-dark border border-secondary text-secondary">0.15% FEE</span>
                         </div>
 
-                        <!-- Create Agreement Box -->
-                        <div class="p-3 rounded-3 mb-3" style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-subtle);">
-                            <label class="form-label small text-secondary fw-semibold">Create New Agreement (EUR / USDC)</label>
-                            <div class="row g-2 mb-2">
-                                <div class="col-sm-7">
-                                    <input type="text" id="escrowMilestoneTitle" class="form-control corp-input form-control-sm" placeholder="Contract Ref (e.g., PO-402)">
+                        <form onsubmit="executeCorporateSettlement(event)">
+                            <div class="mb-3">
+                                <label class="form-label small text-secondary fw-semibold">Recipient Name or Account ID</label>
+                                <input type="text" id="settlementRecipient" class="form-control corp-input" placeholder="e.g., @partner_studio or client_id" required>
+                            </div>
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-7">
+                                    <label class="form-label small text-secondary fw-semibold">Amount</label>
+                                    <input type="number" step="0.01" id="settlementAmount" class="form-control corp-input" placeholder="0.00" required>
                                 </div>
-                                <div class="col-sm-5">
-                                    <input type="number" step="0.001" id="escrowAmountInput" class="form-control corp-input form-control-sm" placeholder="Amount">
+                                <div class="col-md-5">
+                                    <label class="form-label small text-secondary fw-semibold">Currency</label>
+                                    <select id="settlementCurrency" class="form-control corp-input">
+                                        <option value="EUR">EUR (Euro)</option>
+                                        <option value="USDC">USDC (Digital USD)</option>
+                                        <option value="EVO">EVO Credits</option>
+                                    </select>
                                 </div>
                             </div>
-                            <button onclick="deploySmartEscrow()" class="btn-corp-primary w-100 py-2" style="font-size: 0.82rem;">
-                                <i class="fa-solid fa-shield-halved me-1"></i> Lock Funds in Agreement
+
+                            <div class="mb-4">
+                                <label class="form-label small text-secondary fw-semibold">Payment Note / Invoice Reference</label>
+                                <input type="text" id="settlementReference" class="form-control corp-input" placeholder="e.g., Invoice #2026-089 — Design Retainer" required>
+                            </div>
+
+                            <button type="submit" class="btn-corp-primary w-100 py-3">
+                                <i class="fa-solid fa-check-circle me-2"></i> Confirm &amp; Send Payment
                             </button>
-                        </div>
+                        </form>
+                    </div>
+                </div>
 
-                        <!-- Active Agreements List -->
+                <!-- Agreement Protection -->
+                <div class="col-lg-6" id="escrowSection">
+                    <div class="kpi-card p-4 h-100 d-flex flex-column justify-content-between">
                         <div>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="kpi-label">Active Pending Agreements</span>
-                                <button onclick="loadActiveEscrows()" class="btn btn-link text-info text-decoration-none p-0 small">
-                                    <i class="fa-solid fa-rotate me-1"></i>Refresh List
+                            <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                                <div>
+                                    <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-signature text-primary me-2"></i>Protected Agreements</h5>
+                                    <span class="small text-secondary">Hold funds safely until project milestones are approved</span>
+                                </div>
+                                <span class="badge-corp bg-primary bg-opacity-25 text-info">PROTECTED</span>
+                            </div>
+
+                            <!-- Create Agreement Box -->
+                            <div class="p-3 rounded-4 mb-3" style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-subtle);">
+                                <label class="form-label small text-secondary fw-semibold">Start a New Milestone Agreement</label>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-sm-7">
+                                        <input type="text" id="escrowMilestoneTitle" class="form-control corp-input form-control-sm" placeholder="Project Name (e.g., Q4 Campaign)">
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input type="number" step="0.001" id="escrowAmountInput" class="form-control corp-input form-control-sm" placeholder="Amount">
+                                    </div>
+                                </div>
+                                <button onclick="deploySmartEscrow()" class="btn-corp-primary w-100 py-2" style="font-size: 0.84rem;">
+                                    <i class="fa-solid fa-lock me-1"></i> Reserve Funds for Project
                                 </button>
                             </div>
-                            <div id="activeEscrowsList" class="d-flex flex-column gap-2" style="max-height: 175px; overflow-y: auto;">
-                                <div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">
-                                    Connect your security key to view active agreement contracts.
+
+                            <!-- Active Agreements List -->
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="kpi-label">Ongoing Agreements</span>
+                                    <button onclick="loadActiveEscrows()" class="btn btn-link text-info text-decoration-none p-0 small">
+                                        <i class="fa-solid fa-rotate me-1"></i>Refresh
+                                    </button>
+                                </div>
+                                <div id="activeEscrowsList" class="d-flex flex-column gap-2" style="max-height: 175px; overflow-y: auto;">
+                                    <div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">
+                                        Connect your security key in the menu to view ongoing agreements.
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="escrowStatusBanner" class="mt-3 p-2 rounded-2 small text-info" style="background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); display: none;"></div>
+                        <div id="escrowStatusBanner" class="mt-3 p-2 rounded-3 small text-info" style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); display: none;"></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Transaction Records Ledger -->
-        <div class="corp-card p-4 mb-4" id="ledgerSection">
+        <!-- Layer 4: Payment History & Advantages -->
+        <section class="stack-layer sticky-stack-4 p-4 p-md-5 mb-4" id="ledgerSection">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                 <div>
-                    <h5 class="fw-bold text-white mb-1">Transaction Records & History</h5>
-                    <span class="small text-secondary">Complete history of transfers, agreements, and corporate updates</span>
+                    <h5 class="fw-bold text-white mb-1">Payment History &amp; Statements</h5>
+                    <span class="small text-secondary">Clear, downloadable records of all transfers, invoices, and agreements</span>
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
-                    <input type="text" id="ledgerSearchInput" class="form-control corp-input form-control-sm" style="width: 240px;" placeholder="Search records..." oninput="renderCorporateLedger()">
+                    <input type="text" id="ledgerSearchInput" class="form-control corp-input form-control-sm" style="width: 230px;" placeholder="Search history..." oninput="renderCorporateLedger()">
                     <button class="btn-corp-outline py-1 px-3" style="font-size: 0.8rem;" onclick="exportLedgerCSV()">
-                        <i class="fa-solid fa-download me-1"></i> Export CSV
+                        <i class="fa-solid fa-download me-1"></i> Download CSV
                     </button>
                 </div>
             </div>
 
             <!-- Filter Tabs -->
             <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="corp-tab active" onclick="filterLedgerCategory('all', this)">All Records</button>
-                <button class="corp-tab" onclick="filterLedgerCategory('settlement', this)">Transfers</button>
+                <button class="corp-tab active" onclick="filterLedgerCategory('all', this)">All Activity</button>
+                <button class="corp-tab" onclick="filterLedgerCategory('settlement', this)">Payments</button>
                 <button class="corp-tab" onclick="filterLedgerCategory('escrow', this)">Agreements</button>
-                <button class="corp-tab" onclick="filterLedgerCategory('compliance', this)">Verifications</button>
+                <button class="corp-tab" onclick="filterLedgerCategory('compliance', this)">Account Updates</button>
             </div>
 
             <!-- Ledger Table -->
-            <div class="table-responsive">
+            <div class="table-responsive mb-5">
                 <table class="corp-table">
                     <thead>
                         <tr>
-                            <th>Timestamp / ID</th>
-                            <th>Partner / Entity</th>
-                            <th>Category</th>
-                            <th>Description / Reference</th>
-                            <th>Volume / Status</th>
-                            <th class="text-end">Receipt</th>
+                            <th>Date / Reference ID</th>
+                            <th>Partner / Client</th>
+                            <th>Type</th>
+                            <th>Details</th>
+                            <th>Amount / Status</th>
+                            <th class="text-end">Summary</th>
                         </tr>
                     </thead>
                     <tbody id="corporateLedgerBody">
@@ -830,38 +873,38 @@
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        <!-- Core Advantages -->
-        <div class="row g-4 mt-2">
-            <div class="col-md-4">
-                <div class="corp-card p-4 h-100">
-                    <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-server"></i></div>
-                    <h6 class="fw-bold text-white mb-2">High Availability</h6>
-                    <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Engineered for reliable, high-throughput financial operations with continuous uptime and zero maintenance lag.
-                    </p>
+            <!-- Why Teams Choose Evolysium -->
+            <div class="row g-4 pt-3 border-top border-secondary border-opacity-25">
+                <div class="col-md-4">
+                    <div class="kpi-card p-4 h-100">
+                        <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-clock"></i></div>
+                        <h6 class="fw-bold text-white mb-2">Always Available</h6>
+                        <p class="small text-secondary mb-0" style="line-height: 1.65;">
+                            Initiate and review payments whenever your business needs to move, without waiting on traditional banking hours.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="kpi-card p-4 h-100">
+                        <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-globe"></i></div>
+                        <h6 class="fw-bold text-white mb-2">Borderless Clarity</h6>
+                        <p class="small text-secondary mb-0" style="line-height: 1.65;">
+                            Avoid hidden exchange markups and multi-day wire delays when working with international suppliers and contractors.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="kpi-card p-4 h-100">
+                        <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-user-shield"></i></div>
+                        <h6 class="fw-bold text-white mb-2">Human-First Security</h6>
+                        <p class="small text-secondary mb-0" style="line-height: 1.65;">
+                            Clear approval steps, clean accounting exports, and real people ready to assist your finance team every step of the way.
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="corp-card p-4 h-100">
-                    <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-globe"></i></div>
-                    <h6 class="fw-bold text-white mb-2">Global Settlements</h6>
-                    <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Eliminate banking delays and excessive FX spreads. Settle invoices globally in seconds.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="corp-card p-4 h-100">
-                    <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h6 class="fw-bold text-white mb-2">Corporate Security</h6>
-                    <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Role-based permissions, automated verification checks, and fully transparent records meeting international standards.
-                    </p>
-                </div>
-            </div>
-        </div>
+        </section>
 
     </main>
 
@@ -878,21 +921,21 @@
                 <div class="modal-body p-4">
                     <form onsubmit="handleCorpAuthSubmit(event)">
                         <div class="mb-3" id="corpEntityField" style="display: none;">
-                            <label class="form-label small text-secondary">Organization / Company Legal Name</label>
-                            <input type="text" id="corpEntityName" class="form-control corp-input" placeholder="e.g., Acme Global Holdings Ltd.">
+                            <label class="form-label small text-secondary">Company or Organization Name</label>
+                            <input type="text" id="corpEntityName" class="form-control corp-input" placeholder="e.g., Acme Studio Ltd.">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Corporate Email Address</label>
+                            <label class="form-label small text-secondary">Work Email Address</label>
                             <input type="email" id="corpEmailInput" class="form-control corp-input" placeholder="finance@company.com" required>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label small text-secondary">Security Password</label>
+                            <label class="form-label small text-secondary">Password</label>
                             <input type="password" id="corpPasswordInput" class="form-control corp-input" placeholder="••••••••••••" required>
                         </div>
-                        <button type="submit" id="corpAuthSubmitBtn" class="btn-corp-primary w-100 py-2 mb-3">Access Secure Workspace</button>
+                        <button type="submit" id="corpAuthSubmitBtn" class="btn-corp-primary w-100 py-2 mb-3">Open Workspace</button>
                         <div class="text-center">
-                            <span class="small text-secondary" id="corpAuthSwitchText">New corporate client?</span>
-                            <button type="button" class="btn btn-link text-info text-decoration-none small p-0 ms-1" onclick="toggleCorpAuthMode()" id="corpAuthSwitchBtn">Register Organization</button>
+                            <span class="small text-secondary" id="corpAuthSwitchText">New to Evolysium?</span>
+                            <button type="button" class="btn btn-link text-info text-decoration-none small p-0 ms-1" onclick="toggleCorpAuthMode()" id="corpAuthSwitchBtn">Create an Account</button>
                         </div>
                     </form>
                 </div>
@@ -905,20 +948,20 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-vault text-info me-2"></i>Balance & Account Overview</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-wallet text-info me-2"></i>Account Balance</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="p-3 rounded-3 mb-3 text-center" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
+                    <div class="p-3 rounded-4 mb-3 text-center" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
                         <span class="kpi-label d-block">Available Balance</span>
                         <h3 class="fw-bold text-white my-1" id="modalTreasuryDisplay">0.00 EUR</h3>
-                        <span class="badge bg-success bg-opacity-25 text-success" style="font-size: 0.7rem;">READY FOR SETTLEMENT</span>
+                        <span class="badge bg-primary bg-opacity-25 text-info" style="font-size: 0.72rem;">READY TO SEND</span>
                     </div>
                     <p class="small text-secondary mb-3">
-                        Provision test funds to evaluate transfer execution and contract agreement features in sandbox mode.
+                        Add demo funds to try out sending payments and creating protected project agreements.
                     </p>
                     <button type="button" class="btn-corp-primary w-100 py-2" onclick="provisionTestLiquidity()">
-                        <i class="fa-solid fa-plus-circle me-1"></i> Provision +1,000.00 EUR Test Funds
+                        <i class="fa-solid fa-plus-circle me-1"></i> Add +1,000.00 EUR Demo Funds
                     </button>
                 </div>
             </div>
@@ -930,13 +973,13 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-file-invoice-dollar text-warning me-2"></i>Generate B2B Invoice</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-file-invoice text-warning me-2"></i>Create Client Invoice</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form onsubmit="createB2BInvoice(event)">
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Client Organization Name</label>
+                            <label class="form-label small text-secondary">Client Company Name</label>
                             <input type="text" id="invClientName" class="form-control corp-input" placeholder="e.g., NordTech GmbH" required>
                         </div>
                         <div class="row g-3 mb-3">
@@ -950,10 +993,10 @@
                             </div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label small text-secondary">Scope of Services</label>
-                            <textarea id="invScope" class="form-control corp-input" rows="2" placeholder="Enterprise Integration & Gateway Settlement Fee" required></textarea>
+                            <label class="form-label small text-secondary">Description of Work</label>
+                            <textarea id="invScope" class="form-control corp-input" rows="2" placeholder="Consulting & Project Delivery" required></textarea>
                         </div>
-                        <button type="submit" class="btn-corp-primary w-100 py-2">Create & Record in Ledger</button>
+                        <button type="submit" class="btn-corp-primary w-100 py-2">Save &amp; Record Invoice</button>
                     </form>
                 </div>
             </div>
@@ -965,23 +1008,23 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-code text-warning me-2"></i>API Access & Integration</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-code text-warning me-2"></i>Developer API Access</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <p class="small text-secondary mb-3">
-                        Connect Evolysium settlement rails directly into your ERP or financial management software via REST API.
+                        Connect Evolysium directly to your accounting software or internal tools using your personal API key.
                     </p>
                     <div class="mb-3">
-                        <label class="kpi-label d-block mb-1">Production / Sandbox Access Key</label>
+                        <label class="kpi-label d-block mb-1">Your API Key</label>
                         <div class="input-group">
                             <input type="text" id="corpApiKeyField" class="form-control corp-input small" value="evo_live_98f7a6d5e4c3b2a10987654321fedcba" readonly>
                             <button class="btn-corp-outline" type="button" onclick="copyApiKey()">Copy</button>
-                            <button class="btn-corp-primary" type="button" onclick="rotateApiKey()">Rotate Key</button>
+                            <button class="btn-corp-primary" type="button" onclick="rotateApiKey()">Refresh Key</button>
                         </div>
                     </div>
-                    <div class="p-3 rounded-3 small text-secondary" style="background: #060910; border: 1px solid var(--border-subtle);">
-                        <div class="text-info mb-1">// Example Integration Request</div>
+                    <div class="p-3 rounded-3 small text-secondary" style="background: #050810; border: 1px solid var(--border-subtle);">
+                        <div class="text-info mb-1">// Quick Integration Example</div>
                         POST https://api.evolysium.com/v1/settlements<br>
                         Authorization: Bearer evo_live_...<br>
                         { "beneficiary": "corp_eu_991", "amount": "12500.00", "currency": "EUR" }
@@ -996,7 +1039,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0">Transparent Pricing Plans</h5>
+                    <h5 class="fw-bold mb-0">Simple, Transparent Plans</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -1004,18 +1047,18 @@
                         <div class="col-md-4">
                             <div class="tier-card">
                                 <div>
-                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary">ESSENTIAL</span>
+                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary">STARTER</span>
                                     <h4 class="fw-bold text-white mt-2">Essential</h4>
                                     <h3 class="fw-bold my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Ideal for growing teams handling routine supplier payouts and invoices.</p>
+                                    <p class="small text-secondary">Great for growing businesses managing regular supplier payouts and invoices.</p>
                                     <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly transfer volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Standard API access for your software</li>
-                                        <li><i class="fa-solid fa-check"></i> Clean CSV transaction exports</li>
-                                        <li><i class="fa-solid fa-check"></i> Responsive email support (24h SLA)</li>
+                                        <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly payment volume</li>
+                                        <li><i class="fa-solid fa-check"></i> Standard software API access</li>
+                                        <li><i class="fa-solid fa-check"></i> Clean CSV accounting exports</li>
+                                        <li><i class="fa-solid fa-check"></i> Friendly email support within 24 hours</li>
                                     </ul>
                                 </div>
-                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('essential')">Select Essential Plan</button>
+                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('essential')">Choose Essential</button>
                             </div>
                         </div>
 
@@ -1025,33 +1068,33 @@
                                     <span class="badge-corp bg-primary text-white">MOST POPULAR</span>
                                     <h4 class="fw-bold text-white mt-2">Professional</h4>
                                     <h3 class="fw-bold my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Complete contract agreement protection and multi-currency tools.</p>
+                                    <p class="small text-secondary">Full milestone protection and multi-currency tools for active teams.</p>
                                     <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Unlimited transfer and settlement volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Contract agreement protection</li>
-                                        <li><i class="fa-solid fa-check"></i> Advanced multi-user permissions</li>
-                                        <li><i class="fa-solid fa-check"></i> Dedicated account manager</li>
+                                        <li><i class="fa-solid fa-check"></i> Unlimited monthly payment volume</li>
+                                        <li><i class="fa-solid fa-check"></i> Protected milestone agreements</li>
+                                        <li><i class="fa-solid fa-check"></i> Team roles &amp; approval permissions</li>
+                                        <li><i class="fa-solid fa-check"></i> Dedicated account specialist</li>
                                     </ul>
                                 </div>
-                                <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('professional')">Select Professional Plan</button>
+                                <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('professional')">Choose Professional</button>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="tier-card">
                                 <div>
-                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning">CUSTOM SETUP</span>
-                                    <h4 class="fw-bold text-white mt-2">Enterprise Custom</h4>
+                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning">TAILORED</span>
+                                    <h4 class="fw-bold text-white mt-2">Custom</h4>
                                     <h3 class="fw-bold my-3">€1,199 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Fully customized infrastructure deployed directly on your domain.</p>
+                                    <p class="small text-secondary">Custom setup branded for your organization and tailored to your workflow.</p>
                                     <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Custom domain and organization branding</li>
-                                        <li><i class="fa-solid fa-check"></i> Tailored contract architecture</li>
-                                        <li><i class="fa-solid fa-check"></i> Direct banking gateway integrations</li>
-                                        <li><i class="fa-solid fa-check"></i> Priority 24/7 dedicated support</li>
+                                        <li><i class="fa-solid fa-check"></i> Custom domain &amp; company branding</li>
+                                        <li><i class="fa-solid fa-check"></i> Custom agreement workflows</li>
+                                        <li><i class="fa-solid fa-check"></i> Direct ERP &amp; banking connections</li>
+                                        <li><i class="fa-solid fa-check"></i> Priority 24/7 personal support</li>
                                     </ul>
                                 </div>
-                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('enterprise')">Contact for Enterprise</button>
+                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('enterprise')">Talk to Us</button>
                             </div>
                         </div>
                     </div>
@@ -1065,39 +1108,39 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-corp">
                 <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-handshake text-success me-2"></i>Consultation Inquiry</h5>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-headset text-info me-2"></i>Speak with Our Team</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <p class="small text-secondary mb-3">
-                        Submit your organization's requirements. Our client relations team responds within one business day.
+                        Tell us a bit about your company and how we can help. A real specialist will reply within one business day.
                     </p>
                     <form onsubmit="submitEnterpriseInquiry(event)">
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Organization Name</label>
-                            <input type="text" id="inqOrgName" class="form-control corp-input" placeholder="Company Legal Name" required>
+                            <label class="form-label small text-secondary">Company Name</label>
+                            <input type="text" id="inqOrgName" class="form-control corp-input" placeholder="Your Company Name" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Corporate Email</label>
-                            <input type="email" id="inqEmail" class="form-control corp-input" placeholder="name@company.com" required>
+                            <label class="form-label small text-secondary">Work Email</label>
+                            <input type="email" id="inqEmail" class="form-control corp-input" placeholder="you@company.com" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small text-secondary">Primary Area of Interest</label>
+                            <label class="form-label small text-secondary">How can we help?</label>
                             <select id="inqTopic" class="form-control corp-input">
-                                <option>Global Cross-Border Settlements</option>
-                                <option>Contract Agreements</option>
-                                <option>Custom Infrastructure Licensing</option>
-                                <option>Strategic Partnership</option>
+                                <option>International Partner Payouts</option>
+                                <option>Protected Project Agreements</option>
+                                <option>Custom Company Setup</option>
+                                <option>General Question</option>
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label small text-secondary">Project Scope / Monthly Volume Estimate</label>
-                            <textarea id="inqMessage" class="form-control corp-input" rows="3" placeholder="Briefly describe your settlement or integration requirements..." required></textarea>
+                            <label class="form-label small text-secondary">Message</label>
+                            <textarea id="inqMessage" class="form-control corp-input" rows="3" placeholder="Share a few details about your team or payment needs..." required></textarea>
                         </div>
-                        <button type="submit" class="btn-corp-primary w-100 py-2">Submit Official Inquiry</button>
+                        <button type="submit" class="btn-corp-primary w-100 py-2">Send Message</button>
                     </form>
                     <div class="mt-3 pt-3 border-top border-secondary border-opacity-25 text-center small text-secondary">
-                        Direct Corporate Desk: <span class="text-white">office.evolysium@gmail.com</span>
+                        Or write to us anytime at <span class="text-white">office.evolysium@gmail.com</span>
                     </div>
                 </div>
             </div>
@@ -1109,7 +1152,7 @@
         <div id="corpToast" class="toast align-items-center text-white border-0 shadow-lg" style="background: #1e293b; border-left: 4px solid var(--accent-primary) !important;" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body small fw-semibold" id="corpToastMessage">
-                    Operation executed successfully.
+                    Done.
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
@@ -1126,15 +1169,15 @@
                         <span class="fw-bold text-white">Evolysium</span>
                     </div>
                     <p class="small text-secondary mb-0">
-                        Secure Global Corporate Payments & Operations.<br>
-                        Direct Inquiries: <a href="mailto:office.evolysium@gmail.com" class="text-info text-decoration-none">office.evolysium@gmail.com</a>
+                        Global Corporate Payments &amp; Account Management.<br>
+                        Contact us: <a href="mailto:office.evolysium@gmail.com" class="text-info text-decoration-none">office.evolysium@gmail.com</a>
                     </p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="d-flex flex-wrap gap-3 justify-content-md-end mb-2">
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal">Pricing Plans</a>
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#apiKeysModal">API Access</a>
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Consultation</a>
+                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal">Plans</a>
+                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#apiKeysModal">Developer API</a>
+                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Contact</a>
                     </div>
                     <span class="small text-muted">© 2026 Evolysium. All Rights Reserved.</span>
                 </div>
@@ -1176,7 +1219,7 @@
         let currentLedgerFilter = 'all';
 
         let systemAlerts = JSON.parse(localStorage.getItem('evo_corp_alerts') || JSON.stringify([
-            { text: "Secure payment gateway ready.", time: "Operational" }
+            { text: "Your workspace is ready.", time: "Today" }
         ]));
         let hasUnreadAlerts = false;
 
@@ -1214,7 +1257,7 @@
             }
 
             list.innerHTML = `
-                <li><h6 class="dropdown-header text-white fw-bold">Recent Notifications</h6></li>
+                <li><h6 class="dropdown-header text-white fw-bold">Updates &amp; Activity</h6></li>
                 <li><hr class="dropdown-divider border-secondary opacity-25"></li>
                 ${systemAlerts.slice(0, 6).map(a => `
                     <li>
@@ -1247,42 +1290,44 @@
             const kpiCompliance = document.getElementById('kpiComplianceStatus');
             if (kybSidebar && kpiCompliance) {
                 if (isEntityVerified) {
-                    kybSidebar.innerText = 'Verified Account ✓';
-                    kybSidebar.className = 'fw-bold text-success small';
+                    kybSidebar.innerText = 'Verified Partner ✓';
+                    kybSidebar.className = 'fw-bold text-info small';
                     kpiCompliance.innerText = 'Verified Partner';
                 } else {
-                    kybSidebar.innerText = 'Standard Client';
-                    kybSidebar.className = 'fw-bold text-warning small';
-                    kpiCompliance.innerText = 'Standard Client';
+                    kybSidebar.innerText = 'Standard Member';
+                    kybSidebar.className = 'fw-bold text-white small';
+                    kpiCompliance.innerText = 'Standard Member';
                 }
             }
 
-            if (walletConnected && walletAddress && document.getElementById('walletBtnLabel')) {
-                document.getElementById('walletBtnLabel').innerText = `${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`;
+            if (walletConnected && walletAddress) {
+                const shortAddr = `${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`;
+                if (document.getElementById('walletBtnLabel')) document.getElementById('walletBtnLabel').innerText = shortAddr;
+                if (document.getElementById('sidebarWalletLabel')) document.getElementById('sidebarWalletLabel').innerText = `Connected: ${shortAddr}`;
             }
         }
 
         function toggleCorpAuthMode() {
             isCorpRegisterMode = !isCorpRegisterMode;
             document.getElementById('corpAuthTitle').innerHTML = isCorpRegisterMode 
-                ? '<i class="fa-solid fa-building-circle-check text-info me-2"></i>Register New Organization' 
+                ? '<i class="fa-solid fa-building-circle-check text-info me-2"></i>Create Business Account' 
                 : '<i class="fa-solid fa-building text-primary me-2"></i>Client Sign In';
-            document.getElementById('corpAuthSubmitBtn').innerText = isCorpRegisterMode ? 'Create Account' : 'Access Secure Workspace';
-            document.getElementById('corpAuthSwitchText').innerText = isCorpRegisterMode ? 'Already registered?' : 'New corporate client?';
-            document.getElementById('corpAuthSwitchBtn').innerText = isCorpRegisterMode ? 'Sign In' : 'Register Organization';
+            document.getElementById('corpAuthSubmitBtn').innerText = isCorpRegisterMode ? 'Create Account' : 'Open Workspace';
+            document.getElementById('corpAuthSwitchText').innerText = isCorpRegisterMode ? 'Already have an account?' : 'New to Evolysium?';
+            document.getElementById('corpAuthSwitchBtn').innerText = isCorpRegisterMode ? 'Sign In' : 'Create an Account';
             document.getElementById('corpEntityField').style.display = isCorpRegisterMode ? 'block' : 'none';
         }
 
         function handleCorpAuthSubmit(event) {
             event.preventDefault();
             const email = document.getElementById('corpEmailInput').value.trim();
-            const entity = document.getElementById('corpEntityName').value.trim() || email.split('@')[1] || 'Corporate Client';
+            const entity = document.getElementById('corpEntityName').value.trim() || email.split('@')[1] || 'Client';
 
             currentCorpUser = { email, entity };
             localStorage.setItem('evo_corp_user', JSON.stringify(currentCorpUser));
             refreshDashboardUI();
-            pushSystemAlert(`Secure session established for ${entity}`);
-            notifyCorp(`Welcome to Evolysium, ${entity}.`);
+            pushSystemAlert(`Signed in as ${entity}`);
+            notifyCorp(`Welcome back, ${entity}.`);
 
             const modal = bootstrap.Modal.getInstance(document.getElementById('corpAuthModal'));
             if (modal) modal.hide();
@@ -1293,28 +1338,28 @@
             localStorage.removeItem('evo_corp_user');
             currentCorpUser = null;
             refreshDashboardUI();
-            notifyCorp('Secure session terminated.');
+            notifyCorp('You have been signed out.');
         }
 
         async function connectInstitutionalWallet() {
             if (typeof window.ethereum === 'undefined') {
-                notifyCorp('No secure browser key or wallet extension detected.');
+                notifyCorp('Please open in a browser with a security key or wallet extension.');
                 return;
             }
             try {
-                notifyCorp('Requesting security key connection...');
+                notifyCorp('Connecting your security key...');
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 walletAddress = accounts[0];
                 walletConnected = true;
                 refreshDashboardUI();
                 pushSystemAlert(`Security key connected: ${walletAddress.substring(0, 6)}...`);
-                notifyCorp('Security key successfully connected.');
+                notifyCorp('Security key connected.');
 
                 await checkOnChainKybStatus(walletAddress);
                 await loadActiveEscrows();
             } catch (err) {
                 console.error(err);
-                notifyCorp('Connection request was declined.');
+                notifyCorp('Connection was cancelled.');
             }
         }
 
@@ -1337,8 +1382,8 @@
             isEntityVerified = true;
             localStorage.setItem('evo_kyb_verified', 'true');
             refreshDashboardUI();
-            pushSystemAlert('Account verification status updated to Verified.');
-            notifyCorp('Verification completed successfully.');
+            pushSystemAlert('Your business profile is now verified.');
+            notifyCorp('Your account has been verified.');
         }
 
         async function executeCorporateSettlement(event) {
@@ -1349,12 +1394,12 @@
             const reference = document.getElementById('settlementReference').value.trim();
 
             if (!recipient || isNaN(amount) || amount <= 0) {
-                notifyCorp('Please provide a valid recipient ID and amount.');
+                notifyCorp('Please enter a valid recipient and amount.');
                 return;
             }
 
             if (amount > treasuryBalance) {
-                notifyCorp('Available balance is insufficient for this transfer.');
+                notifyCorp('Your available balance is too low for this payment.');
                 return;
             }
 
@@ -1373,13 +1418,13 @@
             localStorage.setItem('evo_treasury_bal', treasuryBalance.toString());
 
             const newRecord = {
-                id: 'TX-' + Math.floor(10000 + Math.random() * 90000),
-                timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
+                id: 'PAY-' + Math.floor(10000 + Math.random() * 90000),
+                timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
                 entity: recipient,
                 category: 'settlement',
                 reference: reference,
                 amount: `${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} ${currency}`,
-                status: 'SETTLED'
+                status: 'COMPLETED'
             };
 
             ledgerRecords.unshift(newRecord);
@@ -1387,29 +1432,29 @@
 
             refreshDashboardUI();
             renderCorporateLedger();
-            pushSystemAlert(`Transferred ${amount} ${currency} to ${recipient}`);
-            notifyCorp(`Transfer ${newRecord.id} executed and recorded.`);
+            pushSystemAlert(`Sent ${amount} ${currency} to ${recipient}`);
+            notifyCorp(`Payment ${newRecord.id} sent successfully.`);
             event.target.reset();
         }
 
         async function deploySmartEscrow() {
-            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Contract Agreement';
+            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Project Milestone';
             const amountVal = document.getElementById('escrowAmountInput').value;
             const statusBanner = document.getElementById('escrowStatusBanner');
 
             if (!amountVal || parseFloat(amountVal) <= 0) {
-                notifyCorp('Please specify a valid agreement amount.');
+                notifyCorp('Please enter a valid project amount.');
                 return;
             }
 
             if (typeof window.ethereum === 'undefined') {
-                notifyCorp('A security key is required to lock agreements.');
+                notifyCorp('Please connect your security key first.');
                 return;
             }
 
             try {
                 statusBanner.style.display = 'block';
-                statusBanner.innerText = '1/2 Authorizing agreement lock...';
+                statusBanner.innerText = 'Step 1 of 2: Approving agreement amount...';
 
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const signer = await provider.getSigner();
@@ -1420,30 +1465,30 @@
                 const txApprove = await tokenContract.approve(ESCROW_CONTRACT_ADDR, parsedAmount);
                 await txApprove.wait();
 
-                statusBanner.innerText = '2/2 Securing funds in agreement...';
+                statusBanner.innerText = 'Step 2 of 2: Saving protected agreement...';
                 const txCreate = await escrowContract.createWager();
                 await txCreate.wait();
 
-                statusBanner.innerText = `Agreement secured for ${title}.`;
+                statusBanner.innerText = `Funds reserved safely for ${title}.`;
                 
                 const newEscrowRecord = {
-                    id: 'ESC-' + Math.floor(1000 + Math.random() * 9000),
-                    timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
-                    entity: 'Contract Agreement',
+                    id: 'AGR-' + Math.floor(1000 + Math.random() * 9000),
+                    timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                    entity: 'Protected Agreement',
                     category: 'escrow',
                     reference: title,
                     amount: `${amountVal} EUR`,
-                    status: 'SECURED'
+                    status: 'RESERVED'
                 };
                 ledgerRecords.unshift(newEscrowRecord);
                 localStorage.setItem('evo_corp_ledger', JSON.stringify(ledgerRecords));
                 renderCorporateLedger();
                 loadActiveEscrows();
-                pushSystemAlert(`Agreement secured: ${title} (${amountVal} EUR)`);
+                pushSystemAlert(`Agreement created: ${title} (${amountVal} EUR)`);
             } catch (err) {
                 console.error(err);
                 statusBanner.style.display = 'block';
-                statusBanner.innerText = 'Agreement authorization was declined.';
+                statusBanner.innerText = 'Agreement setup was cancelled.';
             }
         }
 
@@ -1466,13 +1511,13 @@
                         activeCount++;
                         const formattedAmt = ethers.formatEther(item.amount);
                         html += `
-                            <div class="d-flex justify-content-between align-items-center p-2 rounded-2" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
+                            <div class="d-flex justify-content-between align-items-center p-2 rounded-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
                                 <div>
                                     <span class="small fw-bold text-white">Agreement #${i}</span>
-                                    <span class="small text-secondary d-block" style="font-size: 0.72rem;">Secured: ${formattedAmt} EUR</span>
+                                    <span class="small text-secondary d-block" style="font-size: 0.72rem;">Reserved: ${formattedAmt} EUR</span>
                                 </div>
                                 <button onclick="fulfillEscrowContract(${i}, '${formattedAmt}')" class="btn-corp-primary py-1 px-2" style="font-size: 0.72rem;">
-                                    Release Funds
+                                    Approve &amp; Release
                                 </button>
                             </div>
                         `;
@@ -1482,7 +1527,7 @@
                 if (kpiEl) kpiEl.innerText = activeCount;
                 listEl.innerHTML = activeCount > 0 
                     ? html 
-                    : '<div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">No active agreements pending confirmation.</div>';
+                    : '<div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">No ongoing agreements awaiting approval.</div>';
             } catch (err) {
                 console.log('Agreement list loading skipped.');
             }
@@ -1493,7 +1538,7 @@
             const statusBanner = document.getElementById('escrowStatusBanner');
             try {
                 statusBanner.style.display = 'block';
-                statusBanner.innerText = `Releasing agreement #${id}...`;
+                statusBanner.innerText = `Releasing funds for agreement #${id}...`;
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const signer = await provider.getSigner();
                 const tokenContract = new ethers.Contract(TOKEN_CONTRACT_ADDR, ERC20_ABI, signer);
@@ -1506,11 +1551,11 @@
                 const tx2 = await escrowContract.acceptWager(id, { value: parsed });
                 await tx2.wait();
 
-                statusBanner.innerText = `Agreement #${id} successfully settled.`;
+                statusBanner.innerText = `Agreement #${id} completed and released.`;
                 loadActiveEscrows();
             } catch (err) {
                 console.error(err);
-                statusBanner.innerText = 'Agreement release failed.';
+                statusBanner.innerText = 'Could not release agreement funds.';
             }
         }
 
@@ -1518,8 +1563,8 @@
             treasuryBalance += 1000.00;
             localStorage.setItem('evo_treasury_bal', treasuryBalance.toString());
             refreshDashboardUI();
-            pushSystemAlert('Provisioned +1,000.00 EUR test balance.');
-            notifyCorp('Added +1,000.00 EUR test funds to your balance.');
+            pushSystemAlert('Added +1,000.00 EUR demo balance.');
+            notifyCorp('Added +1,000.00 EUR to your available balance.');
             const modal = bootstrap.Modal.getInstance(document.getElementById('treasuryModal'));
             if (modal) modal.hide();
         }
@@ -1533,19 +1578,19 @@
 
             const invRecord = {
                 id: 'INV-' + Math.floor(1000 + Math.random() * 9000),
-                timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
+                timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
                 entity: client,
                 category: 'settlement',
                 reference: `${scope} (Due: ${dueDate})`,
                 amount: `${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} EUR`,
-                status: 'ISSUED'
+                status: 'SENT'
             };
 
             ledgerRecords.unshift(invRecord);
             localStorage.setItem('evo_corp_ledger', JSON.stringify(ledgerRecords));
             renderCorporateLedger();
-            pushSystemAlert(`Generated invoice ${invRecord.id} for ${client}`);
-            notifyCorp(`Invoice ${invRecord.id} recorded in ledger.`);
+            pushSystemAlert(`Created invoice ${invRecord.id} for ${client}`);
+            notifyCorp(`Invoice ${invRecord.id} saved to your history.`);
 
             const modal = bootstrap.Modal.getInstance(document.getElementById('invoiceModal'));
             if (modal) modal.hide();
@@ -1575,14 +1620,13 @@
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-secondary">No records match your search criteria. Create an invoice or transfer to populate records.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-secondary">No activity found yet. Send a payment or create an invoice to see it here.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = filtered.map(r => {
-                let badgeClass = 'bg-success bg-opacity-25 text-success';
-                if (r.status === 'SECURED' || r.status === 'ISSUED') badgeClass = 'bg-warning bg-opacity-25 text-warning';
-                if (r.status === 'ACTIVE') badgeClass = 'bg-info bg-opacity-25 text-info';
+                let badgeClass = 'bg-primary bg-opacity-25 text-info';
+                if (r.status === 'RESERVED' || r.status === 'SENT') badgeClass = 'bg-warning bg-opacity-25 text-warning';
 
                 return `
                     <tr>
@@ -1598,8 +1642,8 @@
                             <span class="badge-corp ${badgeClass} mt-1 d-inline-block" style="font-size: 0.65rem;">${r.status}</span>
                         </td>
                         <td class="text-end">
-                            <button class="nav-pill-btn py-1 px-2" onclick="inspectAuditRecord('${r.id}')" title="View Receipt">
-                                <i class="fa-solid fa-receipt"></i> Receipt
+                            <button class="nav-pill-btn py-1 px-2" onclick="inspectAuditRecord('${r.id}')" title="View Details">
+                                <i class="fa-solid fa-receipt"></i> Details
                             </button>
                         </td>
                     </tr>
@@ -1610,44 +1654,44 @@
         function inspectAuditRecord(id) {
             const rec = ledgerRecords.find(r => r.id === id);
             if (!rec) return;
-            notifyCorp(`Receipt ${rec.id}: ${rec.entity} | ${rec.amount} | Status: ${rec.status}`);
+            notifyCorp(`${rec.id}: ${rec.entity} — ${rec.amount} (${rec.status})`);
         }
 
         function exportLedgerCSV() {
             if (ledgerRecords.length === 0) {
-                notifyCorp('No records available to export.');
+                notifyCorp('There are no records to download yet.');
                 return;
             }
-            const headers = ['ID,Timestamp,Entity,Category,Reference,Amount,Status'];
+            const headers = ['ID,Date,Partner,Type,Details,Amount,Status'];
             const rows = ledgerRecords.map(r => `"${r.id}","${r.timestamp}","${r.entity}","${r.category}","${r.reference}","${r.amount}","${r.status}"`);
             const csvContent = "data:text/csv;charset=utf-8," + [headers, ...rows].join("\n");
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `transaction_records_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", `evolysium_history_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            notifyCorp('Transaction records exported to CSV.');
+            notifyCorp('History downloaded as CSV.');
         }
 
         function copyApiKey() {
             const input = document.getElementById('corpApiKeyField');
             input.select();
             navigator.clipboard.writeText(input.value);
-            notifyCorp('Access key copied to clipboard.');
+            notifyCorp('API key copied.');
         }
 
         function rotateApiKey() {
             const randomHex = Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
             document.getElementById('corpApiKeyField').value = 'evo_live_' + randomHex;
-            pushSystemAlert('API access key rotated.');
-            notifyCorp('New access key generated.');
+            pushSystemAlert('API key refreshed.');
+            notifyCorp('New API key generated.');
         }
 
         async function initiateEnterpriseCheckout(tier) {
             try {
-                notifyCorp('Connecting to billing gateway...');
+                notifyCorp('Opening checkout...');
                 const response = await fetch(`${API_BASE_URL}/api/payment/create-checkout-session`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1657,11 +1701,11 @@
                 if (data.url) {
                     window.location.href = data.url;
                 } else {
-                    notifyCorp(`Selected service plan activated.`);
+                    notifyCorp(`Plan selected successfully.`);
                 }
             } catch (err) {
                 console.error(err);
-                notifyCorp(`Selected service plan provisioned.`);
+                notifyCorp(`Plan selected successfully.`);
             }
         }
 
@@ -1670,8 +1714,8 @@
             const org = document.getElementById('inqOrgName').value.trim();
             const topic = document.getElementById('inqTopic').value;
 
-            pushSystemAlert(`Inquiry submitted by ${org} (${topic})`);
-            notifyCorp(`Inquiry received. Our client relations team will contact you shortly.`);
+            pushSystemAlert(`Message sent by ${org} (${topic})`);
+            notifyCorp(`Thank you! Our team will be in touch shortly.`);
 
             const modal = bootstrap.Modal.getInstance(document.getElementById('proposalInquiryModal'));
             if (modal) modal.hide();
