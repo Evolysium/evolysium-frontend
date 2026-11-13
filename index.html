@@ -854,73 +854,76 @@
     </div>
 
     <!-- 5. Service Plans Modal -->
-    <div class="modal fade" id="enterprisePricingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content modal-content-corp">
-                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0">Corporate Service Tiers & Licensing</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="row g-4">
-                        <div class="col-md-4">
-                            <div class="tier-card">
-                                <div>
-                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary font-mono">GROWTH</span>
-                                    <h4 class="fw-bold text-white mt-2">Business Core</h4>
-                                    <h3 class="fw-bold font-mono my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">For growing companies automating cross-border supplier payouts.</p>
-                                    <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Standard REST API access</li>
-                                        <li><i class="fa-solid fa-check"></i> Automated CSV ledger exports</li>
-                                        <li><i class="fa-solid fa-check"></i> Standard email support (24h SLA)</li>
-                                    </ul>
-                                </div>
-                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('growth')">Select Business Core</button>
+<div class="modal fade" id="enterprisePricingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content modal-content-corp">
+            <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
+                <h5 class="fw-bold mb-0">Transparent Plans & Pricing</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row g-4">
+                    <!-- Essential Plan -->
+                    <div class="col-md-4">
+                        <div class="tier-card">
+                            <div>
+                                <span class="badge-corp bg-secondary bg-opacity-25 text-secondary font-mono">ESSENTIAL</span>
+                                <h4 class="fw-bold text-white mt-2">Essential</h4>
+                                <h3 class="fw-bold font-mono my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                <p class="small text-secondary">Ideal for growing teams handling routine supplier payouts and invoices.</p>
+                                <ul class="tier-list">
+                                    <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly transfer volume</li>
+                                    <li><i class="fa-solid fa-check"></i> Standard API access for your software</li>
+                                    <li><i class="fa-solid fa-check"></i> Clean CSV transaction exports</li>
+                                    <li><i class="fa-solid fa-check"></i> Responsive email support (24h SLA)</li>
+                                </ul>
                             </div>
+                            <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('essential')">Select Essential Plan</button>
                         </div>
+                    </div>
 
-                        <div class="col-md-4">
-                            <div class="tier-card featured">
-                                <div>
-                                    <span class="badge-corp bg-primary text-white font-mono">RECOMMENDED</span>
-                                    <h4 class="fw-bold text-white mt-2">Institutional Pro</h4>
-                                    <h3 class="fw-bold font-mono my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Full agreement automation and multi-currency treasury infrastructure.</p>
-                                    <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Unlimited transfer and settlement volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Secure milestone agreement contracts</li>
-                                        <li><i class="fa-solid fa-check"></i> Multi-signature key governance</li>
-                                        <li><i class="fa-solid fa-check"></i> Dedicated account manager (4h SLA)</li>
-                                    </ul>
-                                </div>
-                                <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('institutional')">Deploy Institutional Pro</button>
+                    <!-- Professional Plan -->
+                    <div class="col-md-4">
+                        <div class="tier-card featured">
+                            <div>
+                                <span class="badge-corp bg-primary text-white font-mono">MOST POPULAR</span>
+                                <h4 class="fw-bold text-white mt-2">Professional</h4>
+                                <h3 class="fw-bold font-mono my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                <p class="small text-secondary">Complete milestone agreement protection and multi-currency treasury tools.</p>
+                                <ul class="tier-list">
+                                    <li><i class="fa-solid fa-check"></i> Unlimited transfer and settlement volume</li>
+                                    <li><i class="fa-solid fa-check"></i> Secure agreement milestone protection</li>
+                                    <li><i class="fa-solid fa-check"></i> Advanced multi-user permissions</li>
+                                    <li><i class="fa-solid fa-check"></i> Dedicated account manager</li>
+                                </ul>
                             </div>
+                            <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('professional')">Select Professional Plan</button>
                         </div>
+                    </div>
 
-                        <div class="col-md-4">
-                            <div class="tier-card">
-                                <div>
-                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning font-mono">CUSTOM SLA</span>
-                                    <h4 class="fw-bold text-white mt-2">White-Label Solution</h4>
-                                    <h3 class="fw-bold font-mono my-3">Custom <span class="fs-6 fw-normal text-secondary">pricing</span></h3>
-                                    <p class="small text-secondary">Dedicated infrastructure and custom domains for financial institutions.</p>
-                                    <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Full deployment on your organization's domain</li>
-                                        <li><i class="fa-solid fa-check"></i> Custom agreement contract auditing</li>
-                                        <li><i class="fa-solid fa-check"></i> Direct banking gateway integrations</li>
-                                        <li><i class="fa-solid fa-check"></i> 99.99% Uptime Guarantee & 24/7 Support</li>
-                                    </ul>
-                                </div>
-                                <button class="btn-corp-outline w-100" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Contact Sales</button>
+                    <!-- Enterprise Custom Plan -->
+                    <div class="col-md-4">
+                        <div class="tier-card">
+                            <div>
+                                <span class="badge-corp bg-warning bg-opacity-25 text-warning font-mono">CUSTOM SETUP</span>
+                                <h4 class="fw-bold text-white mt-2">Enterprise Custom</h4>
+                                <h3 class="fw-bold font-mono my-3">€1,199 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
+                                <p class="small text-secondary">Fully customized infrastructure deployed directly on your domain.</p>
+                                <ul class="tier-list">
+                                    <li><i class="fa-solid fa-check"></i> Custom domain and organization branding</li>
+                                    <li><i class="fa-solid fa-check"></i> Tailored smart contract auditing</li>
+                                    <li><i class="fa-solid fa-check"></i> Direct banking gateway integrations</li>
+                                    <li><i class="fa-solid fa-check"></i> Priority 24/7 dedicated support</li>
+                                </ul>
                             </div>
+                            <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('enterprise')">Contact for Enterprise</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- 6. Partnership Inquiry Modal -->
     <div class="modal fade" id="proposalInquiryModal" tabindex="-1" aria-hidden="true">
