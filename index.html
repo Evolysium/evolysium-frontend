@@ -395,9 +395,9 @@
 
             <div class="d-flex align-items-center gap-2 nav-actions-wrap">
                 <!-- System Status -->
-                <div class="nav-pill-btn d-none d-xl-inline-flex" title="All systems operational">
+                <div class="nav-pill-btn d-none d-xl-inline-flex" title="Platform online">
                     <span class="status-dot online"></span>
-                    <span class="font-mono" style="font-size: 0.75rem;">SYSTEM ACTIVE</span>
+                    <span class="font-mono" style="font-size: 0.75rem;">ONLINE</span>
                 </div>
 
                 <!-- Account Balance -->
@@ -407,9 +407,9 @@
                 </button>
 
                 <!-- Secure Key / Sign In -->
-                <button class="nav-pill-btn" onclick="connectInstitutionalWallet()" title="Link secure key">
+                <button class="nav-pill-btn" onclick="connectInstitutionalWallet()" title="Link security key">
                     <i class="fa-solid fa-shield-halved text-success"></i>
-                    <span id="walletBtnLabel">Link Secure Key</span>
+                    <span id="walletBtnLabel">Link Security Key</span>
                 </button>
 
                 <!-- Developer Tools -->
@@ -465,7 +465,7 @@
                 <i class="fa-solid fa-money-bill-transfer text-info" style="width: 20px;"></i> Direct Transfer & Payout
             </a>
             <a href="#escrowSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-contract text-primary" style="width: 20px;"></i> Secure Agreement Protection
+                <i class="fa-solid fa-file-contract text-primary" style="width: 20px;"></i> Milestone Agreements
             </a>
             <a href="#ledgerSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
                 <i class="fa-solid fa-list-check text-success" style="width: 20px;"></i> Transaction Records
@@ -497,7 +497,7 @@
     <!-- Main Workspace -->
     <main class="container py-4">
         
-        <!-- Welcome Banner (Uklonjeni su suvišni bedževi s vrha) -->
+        <!-- Welcome Banner -->
         <div class="corp-card p-4 mb-4">
             <div class="row align-items-center">
                 <div class="col-lg-8">
@@ -536,7 +536,7 @@
                         <i class="fa-solid fa-lock text-primary"></i>
                     </div>
                     <div class="kpi-value font-mono" id="kpiActiveEscrows">0</div>
-                    <span class="small text-secondary font-mono" style="font-size: 0.75rem;">Protected Contracts</span>
+                    <span class="small text-secondary font-mono" style="font-size: 0.75rem;">Active Contracts</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -546,7 +546,7 @@
                         <i class="fa-solid fa-shield-check text-success"></i>
                     </div>
                     <div class="kpi-value" style="font-size: 1.35rem; padding-top: 4px;" id="kpiComplianceStatus">Standard Client</div>
-                    <span class="small text-info font-mono" style="font-size: 0.75rem;"><span class="status-dot online me-1"></span>99.99% Operational Uptime</span>
+                    <span class="small text-info font-mono" style="font-size: 0.75rem;"><span class="status-dot online me-1"></span>Platform Operational</span>
                 </div>
             </div>
         </div>
@@ -581,7 +581,7 @@
                                 <select id="settlementCurrency" class="form-control corp-input">
                                     <option value="EUR">EUR (Euro)</option>
                                     <option value="USDC">USDC (USD Stablecoin)</option>
-                                    <option value="EVO">$EVO Utility</option>
+                                    <option value="EVO">EVO Credits</option>
                                 </select>
                             </div>
                         </div>
@@ -598,16 +598,16 @@
                 </div>
             </div>
 
-            <!-- Secure Agreement Protection -->
+            <!-- Milestone Agreements -->
             <div class="col-lg-6" id="escrowSection">
                 <div class="corp-card p-4 h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
                             <div>
-                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-contract text-primary me-2"></i>Secure Milestone Agreement</h5>
-                                <span class="small text-secondary">Lock funds in a protected agreement until milestones are approved</span>
+                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-contract text-primary me-2"></i>Milestone Agreements</h5>
+                                <span class="small text-secondary">Lock funds in a secured agreement until milestones are approved</span>
                             </div>
-                            <span class="badge-corp bg-primary bg-opacity-25 text-info font-mono">PROTECTED</span>
+                            <span class="badge-corp bg-primary bg-opacity-25 text-info font-mono">SECURE</span>
                         </div>
 
                         <!-- Create Agreement Box -->
@@ -631,12 +631,12 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="kpi-label">Active Pending Agreements</span>
                                 <button onclick="loadActiveEscrows()" class="btn btn-link text-info text-decoration-none p-0 small font-mono">
-                                    <i class="fa-solid fa-rotate me-1"></i>Sync Status
+                                    <i class="fa-solid fa-rotate me-1"></i>Refresh List
                                 </button>
                             </div>
                             <div id="activeEscrowsList" class="d-flex flex-column gap-2" style="max-height: 175px; overflow-y: auto;">
                                 <div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">
-                                    Link your secure key to synchronize active agreement contracts.
+                                    Link your security key to view active agreement contracts.
                                 </div>
                             </div>
                         </div>
@@ -651,8 +651,8 @@
         <div class="corp-card p-4 mb-4" id="ledgerSection">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                 <div>
-                    <h5 class="fw-bold text-white mb-1">Transaction Records & Audit Trail</h5>
-                    <span class="small text-secondary">Complete history of transfers, protected agreements, and system updates</span>
+                    <h5 class="fw-bold text-white mb-1">Transaction Records & History</h5>
+                    <span class="small text-secondary">Complete history of transfers, agreements, and corporate updates</span>
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
                     <input type="text" id="ledgerSearchInput" class="form-control corp-input form-control-sm" style="width: 240px;" placeholder="Search records..." oninput="renderCorporateLedger()">
@@ -697,7 +697,7 @@
                     <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-server"></i></div>
                     <h6 class="fw-bold text-white mb-2">High Availability</h6>
                     <p class="small text-secondary mb-0" style="line-height: 1.6;">
-                        Engineered for reliable, high-throughput financial operations with 99.99% uptime and zero maintenance lag.
+                        Engineered for reliable, high-throughput financial operations with continuous uptime and zero maintenance lag.
                     </p>
                 </div>
             </div>
@@ -773,7 +773,7 @@
                         <span class="badge bg-success bg-opacity-25 text-success font-mono" style="font-size: 0.7rem;">SETTLEMENT READY</span>
                     </div>
                     <p class="small text-secondary mb-3">
-                        Provision test liquidity to test transfer execution and agreement protection features in sandbox mode.
+                        Provision test funds to evaluate transfer execution and agreement protection features in sandbox mode.
                     </p>
                     <button type="button" class="btn-corp-primary w-100 py-2" onclick="provisionTestLiquidity()">
                         <i class="fa-solid fa-plus-circle me-1"></i> Provision +1,000.00 EUR Test Funds
@@ -886,7 +886,7 @@
                                     <p class="small text-secondary">Complete milestone agreement protection and multi-currency tools.</p>
                                     <ul class="tier-list">
                                         <li><i class="fa-solid fa-check"></i> Unlimited transfer and settlement volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Secure agreement milestone protection</li>
+                                        <li><i class="fa-solid fa-check"></i> Milestone agreement protection</li>
                                         <li><i class="fa-solid fa-check"></i> Advanced multi-user permissions</li>
                                         <li><i class="fa-solid fa-check"></i> Dedicated account manager</li>
                                     </ul>
@@ -904,7 +904,7 @@
                                     <p class="small text-secondary">Fully customized infrastructure deployed directly on your domain.</p>
                                     <ul class="tier-list">
                                         <li><i class="fa-solid fa-check"></i> Custom domain and organization branding</li>
-                                        <li><i class="fa-solid fa-check"></i> Tailored smart contract auditing</li>
+                                        <li><i class="fa-solid fa-check"></i> Tailored contract architecture</li>
                                         <li><i class="fa-solid fa-check"></i> Direct banking gateway integrations</li>
                                         <li><i class="fa-solid fa-check"></i> Priority 24/7 dedicated support</li>
                                     </ul>
@@ -943,7 +943,7 @@
                             <label class="form-label small text-secondary">Primary Area of Interest</label>
                             <select id="inqTopic" class="form-control corp-input">
                                 <option>Global Cross-Border Settlements</option>
-                                <option>Secure Milestone Agreements</option>
+                                <option>Milestone Agreements</option>
                                 <option>White-Label Infrastructure Licensing</option>
                                 <option>Strategic Partnership</option>
                             </select>
@@ -1160,13 +1160,13 @@
                 return;
             }
             try {
-                notifyCorp('Requesting secure key authorization...');
+                notifyCorp('Requesting security key authorization...');
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 walletAddress = accounts[0];
                 walletConnected = true;
                 refreshDashboardUI();
-                pushSystemAlert(`Secure key linked: ${walletAddress.substring(0, 6)}...`);
-                notifyCorp('Secure authorization established.');
+                pushSystemAlert(`Security key linked: ${walletAddress.substring(0, 6)}...`);
+                notifyCorp('Security authorization established.');
 
                 await checkOnChainKybStatus(walletAddress);
                 await loadActiveEscrows();
@@ -1251,23 +1251,23 @@
         }
 
         async function deploySmartEscrow() {
-            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Protected Agreement';
+            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Agreement Contract';
             const amountVal = document.getElementById('escrowAmountInput').value;
             const statusBanner = document.getElementById('escrowStatusBanner');
 
             if (!amountVal || parseFloat(amountVal) <= 0) {
-                notifyCorp('Please specify a valid protection amount.');
+                notifyCorp('Please specify a valid agreement amount.');
                 return;
             }
 
             if (typeof window.ethereum === 'undefined') {
-                notifyCorp('A secure key extension is required to protect agreements.');
+                notifyCorp('A security key extension is required to lock agreements.');
                 return;
             }
 
             try {
                 statusBanner.style.display = 'block';
-                statusBanner.innerText = '1/2 Authorizing secure agreement lock...';
+                statusBanner.innerText = '1/2 Authorizing agreement lock...';
 
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const signer = await provider.getSigner();
@@ -1278,26 +1278,26 @@
                 const txApprove = await tokenContract.approve(ESCROW_CONTRACT_ADDR, parsedAmount);
                 await txApprove.wait();
 
-                statusBanner.innerText = '2/2 Locking funds in agreement contract...';
+                statusBanner.innerText = '2/2 Securing funds in agreement...';
                 const txCreate = await escrowContract.createWager();
                 await txCreate.wait();
 
-                statusBanner.innerText = `Agreement protected for ${title}.`;
+                statusBanner.innerText = `Agreement secured for ${title}.`;
                 
                 const newEscrowRecord = {
                     id: 'ESC-' + Math.floor(1000 + Math.random() * 9000),
                     timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
-                    entity: 'Protected Agreement',
+                    entity: 'Agreement Contract',
                     category: 'escrow',
                     reference: title,
                     amount: `${amountVal} EUR`,
-                    status: 'LOCKED'
+                    status: 'SECURED'
                 };
                 ledgerRecords.unshift(newEscrowRecord);
                 localStorage.setItem('evo_corp_ledger', JSON.stringify(ledgerRecords));
                 renderCorporateLedger();
                 loadActiveEscrows();
-                pushSystemAlert(`Agreement locked: ${title} (${amountVal} EUR)`);
+                pushSystemAlert(`Agreement secured: ${title} (${amountVal} EUR)`);
             } catch (err) {
                 console.error(err);
                 statusBanner.style.display = 'block';
@@ -1327,7 +1327,7 @@
                             <div class="d-flex justify-content-between align-items-center p-2 rounded-2" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
                                 <div>
                                     <span class="small fw-bold text-white font-mono">Agreement #${i}</span>
-                                    <span class="small text-secondary d-block font-mono" style="font-size: 0.72rem;">Protected: ${formattedAmt} EUR</span>
+                                    <span class="small text-secondary d-block font-mono" style="font-size: 0.72rem;">Secured: ${formattedAmt} EUR</span>
                                 </div>
                                 <button onclick="fulfillEscrowContract(${i}, '${formattedAmt}')" class="btn-corp-primary py-1 px-2" style="font-size: 0.72rem;">
                                     Release Funds
@@ -1342,7 +1342,7 @@
                     ? html 
                     : '<div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">No active agreements pending confirmation.</div>';
             } catch (err) {
-                console.log('Agreement synchronization skipped.');
+                console.log('Agreement list loading skipped.');
             }
         }
 
@@ -1439,7 +1439,7 @@
 
             tbody.innerHTML = filtered.map(r => {
                 let badgeClass = 'bg-success bg-opacity-25 text-success';
-                if (r.status === 'LOCKED' || r.status === 'ISSUED') badgeClass = 'bg-warning bg-opacity-25 text-warning';
+                if (r.status === 'SECURED' || r.status === 'ISSUED') badgeClass = 'bg-warning bg-opacity-25 text-warning';
                 if (r.status === 'ACTIVE') badgeClass = 'bg-info bg-opacity-25 text-info';
 
                 return `
@@ -1456,7 +1456,7 @@
                             <span class="badge-corp ${badgeClass} font-mono mt-1 d-inline-block" style="font-size: 0.65rem;">${r.status}</span>
                         </td>
                         <td class="text-end">
-                            <button class="nav-pill-btn py-1 px-2" onclick="inspectAuditRecord('${r.id}')" title="View Audit Receipt">
+                            <button class="nav-pill-btn py-1 px-2" onclick="inspectAuditRecord('${r.id}')" title="View Receipt">
                                 <i class="fa-solid fa-receipt"></i> Receipt
                             </button>
                         </td>
