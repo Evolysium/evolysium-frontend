@@ -1,1741 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolysium (ƎE) — Global Corporate Payments & Accounts</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evolysium: global business payments</title>
+<meta name="description" content="Pay partners, hold project funds until approval, and keep every invoice in one workspace.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#050810;--surface:#0a0f1d;--card:#0f172a;--line:#ffffff14;--ink:#f8fafc;--mute:#94a3b8;--acc:#2563eb;--acc2:#38bdf8;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;background:var(--bg) radial-gradient(circle at 50% -20%,#2563eb26,transparent 60%) fixed no-repeat;color:var(--ink);font:15px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+.wrap{max-width:1180px;margin:0 auto;padding:0 14px}
+.notice{background:#f59e0b1f;border-bottom:1px solid #f59e0b55;color:#fcd34d;text-align:center;padding:8px 14px;font-size:.82rem}
 
-    <meta name="title" content="Evolysium — Corporate Financial Management">
-    <meta name="description" content="Effortless international business payouts, protected project agreements, and transparent financial management.">
-    
-    <!-- PWA Web App Manifest -->
-    <link rel="manifest" href='data:application/manifest+json,{
-        "name":"Evolysium",
-        "short_name":"Evolysium",
-        "start_url":"/",
-        "display":"standalone",
-        "background_color":"#050810",
-        "theme_color":"#050810"
-    }'>
+/* Floating pill navigation */
+.nav-wrap{position:sticky;top:12px;z-index:50;padding:0 12px;margin-top:12px}
+.nav{position:relative;max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0a0f1dd9;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid #ffffff1a;border-radius:999px;padding:8px 8px 8px 14px;box-shadow:0 18px 40px #0009}
+.brand{display:flex;gap:10px;align-items:center;font-weight:800;font-size:1.1rem;color:var(--ink);text-decoration:none}
+.mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);display:grid;place-items:center;font-size:.9rem;box-shadow:0 4px 16px #2563eb59}
+.menu{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;gap:4px;background:#0a0f1df5;border:1px solid #ffffff1a;border-radius:22px;padding:10px}
+.menu.open{display:flex}
+.menu a{color:var(--mute);text-decoration:none;font-weight:600;padding:10px 14px;border-radius:999px}
+.menu a:hover{color:var(--ink);background:#ffffff0f}
+.right{display:flex;gap:8px;align-items:center}
+@media(min-width:760px){.menu{display:flex;position:static;flex-direction:row;background:none;border:0;padding:0}#menuBtn{display:none}}
 
-    <!-- Supabase Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-      if (typeof window.supabaseClient === 'undefined') {
-        window.supabaseClient = window.supabase.createClient(
-          'https://bpndsntpdpukkjebrfnz.supabase.co', 
-          'sb_publishable_lPudOW-mBnBKB-E9OEbWZQ_HzFuoZk6'
-        );
-      }
-    </script>
+/* Controls */
+button,.btn{font:inherit;font-weight:600;cursor:pointer;border-radius:999px;border:1px solid #ffffff26;background:#ffffff08;color:var(--ink);padding:9px 16px;text-decoration:none;display:inline-block;transition:background .15s}
+button:hover,.btn:hover{background:#ffffff16}
+.p{background:var(--acc)!important;border-color:var(--acc)!important}
+.p:hover{background:#1d4ed8!important}
+button:focus-visible,.btn:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
+input,select,textarea{width:100%;background:#070b14;border:1px solid #ffffff1f;color:var(--ink);border-radius:12px;padding:11px 13px;font:inherit;margin:4px 0 12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.split{display:flex;gap:10px}.split>div{flex:1;min-width:0}
+.lbl{font-size:.8rem;color:var(--mute);font-weight:600}
+.sub{color:var(--mute);margin:0 0 14px;font-size:.9rem}
+h1{font-size:clamp(2rem,5.2vw,3.5rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 14px;font-weight:800}
+h2{font-size:clamp(1.3rem,3vw,2rem);letter-spacing:-.02em;margin:0 0 8px}
+h3{font-size:1.05rem;margin:0 0 4px}
 
-    <!-- Bootstrap 5, FontAwesome & Typography -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Ethers.js v6 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+/* Stacked layers */
+.layer{position:relative;background:var(--card);border:1px solid #ffffff14;border-radius:28px;padding:clamp(20px,4vw,48px);box-shadow:0 -16px 44px #000b,0 20px 50px #0006;margin:20px 0}
+.tag{display:inline-block;background:#3b82f61a;border:1px solid #3b82f640;color:#93c5fd;padding:6px 16px;border-radius:999px;font-size:.82rem;font-weight:600;margin-bottom:16px}
+@media(min-width:992px) and (min-height:760px){.s1{position:sticky;top:84px;z-index:1}.s2{position:sticky;top:100px;z-index:2}.s3{z-index:3}.s4{z-index:4}}
+.hero{text-align:center}
+.hero .sub{max-width:600px;margin:0 auto 22px;font-size:1.02rem}
 
-    <style>
-        :root {
-            --bg-main: #050810;
-            --bg-surface: #0a0f1d;
-            --bg-card: #0f172a;
-            --bg-elevated: #141e33;
-            --border-subtle: rgba(255, 255, 255, 0.07);
-            --border-highlight: rgba(59, 130, 246, 0.35);
-            --accent-primary: #2563eb;
-            --accent-primary-hover: #1d4ed8;
-            --accent-secondary: #38bdf8;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            color-scheme: dark;
-        }
+/* Orbital hub */
+.orbit{position:relative;max-width:680px;height:300px;margin:28px auto 0;display:grid;place-items:center}
+.ring{position:absolute;width:280px;height:280px;border:1px dashed #3b82f64d;border-radius:50%;animation:spin 45s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.ring{animation:none}html{scroll-behavior:auto}}
+.core{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#1e3a8a,#2563eb);border:2px solid #ffffff40;display:grid;place-items:center;font-weight:800;font-size:1.5rem;box-shadow:0 0 45px #2563eb80;z-index:2}
+.chips{display:contents}
+.chip{position:absolute;background:#0f172af2;border:1px solid #ffffff17;padding:8px 14px;border-radius:999px;font-size:.8rem;font-weight:600;white-space:nowrap;box-shadow:0 10px 25px #0006}
+.chip::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--acc2);margin-right:8px}
+.c1{top:6%;left:6%}.c2{top:6%;right:6%}.c3{bottom:6%;left:6%}.c4{bottom:6%;right:6%}.c5{top:43%;left:-1%}.c6{top:43%;right:-1%}
+@media(max-width:767px){.orbit{height:auto;display:flex;flex-direction:column;gap:14px}.ring{display:none}.chips{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}.chip{position:static;text-align:center;white-space:normal}}
 
-        * { box-sizing: border-box; }
+/* Trust layer */
+.trust{text-align:center;background:linear-gradient(180deg,#111a30,#0a1020)}
+.trust .sub{max-width:600px;margin:0 auto}
+.badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+.badge{background:#ffffff08;border:1px solid #ffffff17;padding:8px 16px;border-radius:999px;font-size:.84rem;font-weight:600}
 
-        body {
-            background-color: var(--bg-main) !important;
-            color: var(--text-primary);
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-image: 
-                radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.12) 0%, transparent 60%),
-                radial-gradient(circle at 90% 95%, rgba(56, 189, 248, 0.05) 0%, transparent 50%);
-            background-attachment: fixed;
-            overflow-x: hidden;
-            margin: 0;
-        }
-
-        main { flex: 1; }
-
-        /* Floating Larvin AI + Talentir Navigation Pill */
-        .floating-header-wrap {
-            position: sticky;
-            top: 14px;
-            z-index: 1030;
-            max-width: 1260px;
-            margin: 0 auto;
-            padding: 0 16px;
-            width: 100%;
-        }
-
-        .floating-nav {
-            background: rgba(10, 15, 29, 0.85);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            padding: 8px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
-        }
-
-        .brand-mark {
-            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -1px;
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
-            flex-shrink: 0;
-        }
-
-        .nav-pill-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-            border-radius: 999px;
-            padding: 7px 14px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .nav-pill-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-primary);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .nav-pill-btn.primary {
-            background: var(--accent-primary);
-            border-color: var(--accent-primary);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-        }
-
-        .nav-pill-btn.primary:hover {
-            background: var(--accent-primary-hover);
-            transform: translateY(-1px);
-        }
-
-        /* Modern Stacking & Overlapping Layers (Larvin AI + Talentir Style) */
-        .stack-layer {
-            position: relative;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 26px;
-            box-shadow: 0 -15px 45px rgba(0, 0, 0, 0.7), 0 20px 50px rgba(0, 0, 0, 0.4);
-            transition: border-color 0.3s ease;
-        }
-
-        .stack-layer:hover {
-            border-color: rgba(59, 130, 246, 0.25);
-        }
-
-        @media (min-width: 992px) {
-            .sticky-stack-1 { position: sticky; top: 82px; z-index: 10; }
-            .sticky-stack-2 { position: sticky; top: 102px; z-index: 20; }
-            .sticky-stack-3 { position: relative; z-index: 30; }
-            .sticky-stack-4 { position: relative; z-index: 40; }
-        }
-
-        /* Hero & Orbital Elements */
-        .hero-pill-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.25);
-            color: #93c5fd;
-            padding: 6px 16px;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
-        }
-
-        .orbital-container {
-            position: relative;
-            width: 100%;
-            max-width: 660px;
-            height: 300px;
-            margin: 1.5rem auto 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .orbital-center-card {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            border: 2px solid rgba(255, 255, 255, 0.25);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #fff;
-            box-shadow: 0 0 45px rgba(37, 99, 235, 0.5);
-            z-index: 10;
-        }
-
-        .orbit-ring {
-            position: absolute;
-            width: 280px;
-            height: 280px;
-            border: 1px dashed rgba(59, 130, 246, 0.25);
-            border-radius: 50%;
-            animation: spin 45s linear infinite;
-        }
-
-        @keyframes spin { 
-            100% { transform: rotate(360deg); } 
-        }
-
-        .orbit-item {
-            position: absolute;
-            background: rgba(15, 23, 42, 0.94);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            padding: 8px 15px;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            white-space: nowrap;
-        }
-
-        .orbit-item i { color: #60a5fa; }
-
-        .item-1 { top: 6%; left: 8%; }
-        .item-2 { top: 6%; right: 8%; }
-        .item-3 { bottom: 8%; left: 8%; }
-        .item-4 { bottom: 8%; right: 8%; }
-        .item-5 { top: 43%; left: -2%; }
-        .item-6 { top: 43%; right: -2%; }
-
-        @media (max-width: 767px) {
-            .orbital-container { height: auto; flex-direction: column; gap: 14px; padding: 10px 0; }
-            .orbit-ring { display: none; }
-            .orbital-center-card { width: 64px; height: 64px; font-size: 1.4rem; margin-bottom: 4px; }
-            .mobile-orbit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
-            .orbit-item { position: static; justify-content: center; font-size: 0.75rem; padding: 8px 10px; }
-        }
-
-        /* Trust & Support Card (Human & Professional) */
-        .trust-section {
-            background: linear-gradient(180deg, #111a30 0%, #0a1020 100%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 26px;
-            padding: 2.75rem 2rem;
-            text-align: center;
-            box-shadow: 0 -18px 45px rgba(0, 0, 0, 0.65);
-        }
-
-        .trust-shield-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(37, 99, 235, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #60a5fa;
-            margin: 0 auto 1.2rem;
-            box-shadow: 0 0 25px rgba(37, 99, 235, 0.2);
-        }
-
-        .trust-badges-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-        }
-
-        .trust-badge {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            color: #e2e8f0;
-            padding: 7px 15px;
-            border-radius: 999px;
-            font-size: 0.81rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        .trust-badge i { color: #60a5fa; }
-
-        /* Cards & KPIs */
-        .corp-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
-            transition: border-color 0.2s ease;
-        }
-
-        .corp-card:hover { border-color: rgba(255, 255, 255, 0.15); }
-
-        .kpi-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            padding: 22px;
-            height: 100%;
-        }
-
-        .kpi-label {
-            font-size: 0.74rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .kpi-value {
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin: 6px 0;
-        }
-
-        /* Forms */
-        .corp-input {
-            background-color: #070b14 !important;
-            border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            color: var(--text-primary) !important;
-            border-radius: 12px;
-            padding: 12px 15px;
-            font-size: 0.9rem;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .corp-input:focus {
-            border-color: var(--accent-primary) !important;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2) !important;
-            outline: none;
-        }
-
-        .corp-input::placeholder { color: var(--text-muted); }
-
-        .btn-corp-primary {
-            background: var(--accent-primary);
-            border: 1px solid var(--accent-primary);
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 0.88rem;
-            padding: 12px 22px;
-            border-radius: 12px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .btn-corp-primary:hover {
-            background: var(--accent-primary-hover);
-            border-color: var(--accent-primary-hover);
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
-
-        .btn-corp-outline {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 0.88rem;
-            padding: 12px 22px;
-            border-radius: 12px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .btn-corp-outline:hover {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-        }
-
-        /* Tabs */
-        .corp-tab {
-            background: transparent;
-            border: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-            padding: 8px 16px;
-            border-radius: 999px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .corp-tab:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .corp-tab.active {
-            background: rgba(37, 99, 235, 0.18);
-            border-color: var(--accent-primary);
-            color: #93c5fd;
-        }
-
-        .badge-corp {
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 5px 11px;
-            border-radius: 999px;
-            letter-spacing: 0.03em;
-        }
-
-        /* Tables */
-        .corp-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.86rem;
-        }
-
-        .corp-table th {
-            text-align: left;
-            padding: 12px 16px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 0.74rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid var(--border-subtle);
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .corp-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--border-subtle);
-            color: var(--text-primary);
-            vertical-align: middle;
-        }
-
-        .corp-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
-
-        /* Pricing Tiers */
-        .tier-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: 18px;
-            padding: 28px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .tier-card.featured {
-            border-color: var(--accent-primary);
-            background: linear-gradient(180deg, rgba(37, 99, 235, 0.1) 0%, var(--bg-surface) 100%);
-        }
-
-        .tier-list {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-
-        .tier-list li {
-            font-size: 0.86rem;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .tier-list li i { color: var(--accent-secondary); margin-top: 3px; }
-
-        /* Modals */
-        .modal-content-corp {
-            background: var(--bg-surface);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 20px;
-            color: var(--text-primary);
-        }
-
-        /* Preloader */
-        #enterprise-preloader {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-main);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.4s ease;
-        }
-
-        /* Footer */
-        .corp-footer {
-            border-top: 1px solid var(--border-subtle);
-            background: #03050a;
-            margin-top: 80px;
-            padding: 40px 0;
-            position: relative;
-            z-index: 50;
-        }
-    </style>
+/* Cards, grids, tables */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.kpis{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));margin-bottom:20px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px}
+.val{font-size:1.5rem;font-weight:700}
+.ag{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;padding:10px;border:1px solid var(--line);border-radius:12px;margin-top:8px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:560px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-size:.8rem;font-weight:600}
+.tab.on{background:#2563eb2e;border-color:var(--acc);color:#93c5fd}
+.neg{color:#fca5a5}.pos{color:#86efac}
+.plan.feat{border-color:var(--acc);background:linear-gradient(180deg,#2563eb1a,var(--surface))}
+dialog{background:#0a0f1d;color:var(--ink);border:1px solid #ffffff1f;border-radius:20px;padding:24px;width:min(420px,92vw)}
+dialog::backdrop{background:#000a}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1e293b;border-left:4px solid var(--acc);padding:12px 16px;border-radius:12px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;z-index:99}
+#toast.on{opacity:1}
+footer{margin:48px 0 32px;color:var(--mute);font-size:.85rem;text-align:center}
+.hidden{display:none!important}
+</style>
 </head>
 <body>
+<div class="notice">Test mode: pay with Stripe test cards such as 4242 4242 4242 4242. Remove this banner when you switch to live keys.</div>
 
-    <!-- Preloader -->
-    <div id="enterprise-preloader">
-        <div class="brand-mark fs-4 mb-3" style="width: 56px; height: 56px;">ƎE</div>
-        <h5 class="fw-bold text-white mb-0">Evolysium</h5>
+<div class="nav-wrap"><div class="nav">
+  <a class="brand" href="#top"><span class="mark">ƎE</span>Evolysium</a>
+  <nav class="menu" id="menu" aria-label="Main">
+    <a href="#workspace">Workspace</a><a href="#plans">Plans</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="right">
+    <button id="menuBtn" aria-expanded="false" aria-controls="menu">Menu</button>
+    <button class="p" id="authBtn">Sign in</button>
+  </div>
+</div></div>
+
+<main class="wrap" id="top">
+  <!-- Layer 1: hero and orbital hub -->
+  <section class="layer s1 hero">
+    <span class="tag">Built for finance teams that work across borders</span>
+    <h1>Global business payments, simplified.</h1>
+    <p class="sub">Pay partners by card, hold project funds until you approve the milestone, and keep every invoice in one calm workspace.</p>
+    <div class="row" style="justify-content:center">
+      <a class="btn p" href="#workspace">Open workspace</a><a class="btn" href="#contact">Talk to us</a>
+    </div>
+    <div class="orbit" aria-hidden="true">
+      <div class="ring"></div><div class="core">ƎE</div>
+      <div class="chips">
+        <div class="chip c1">EUR payments</div><div class="chip c2">Stripe payouts</div>
+        <div class="chip c3">Milestone escrow</div><div class="chip c4">Client invoices</div>
+        <div class="chip c5">CSV exports</div><div class="chip c6">Monthly plans</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Layer 2: trust -->
+  <section class="layer s2 trust">
+    <h2>A clear record and a clear approval step on every payment.</h2>
+    <p class="sub">Stripe processes the card payments and verifies each recipient. You approve milestones, and everything lands in your history.</p>
+    <div class="badges">
+      <span class="badge">Card payments by Stripe</span><span class="badge">Funds held until approval</span>
+      <span class="badge">Recipients verified by Stripe</span><span class="badge">Exportable records</span>
+    </div>
+  </section>
+
+  <!-- Layer 3: workspace -->
+  <section class="layer s3" id="workspace">
+    <div id="out" class="hero" style="padding:24px 0">
+      <h2>Your workspace</h2>
+      <p class="sub">Sign in to send payments, start milestone agreements and record invoices.</p>
+      <button class="p" id="outBtn">Sign in or create an account</button>
     </div>
 
-    <!-- Floating Navigation Bar -->
-    <div class="floating-header-wrap">
-        <header class="floating-nav">
-            <div class="d-flex align-items-center gap-2 gap-md-3">
-                <button class="nav-pill-btn px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#enterpriseSidebar" aria-controls="enterpriseSidebar">
-                    <i class="fa-solid fa-bars"></i> <span class="d-none d-sm-inline">Menu</span>
-                </button>
-                <a class="d-flex align-items-center gap-2 text-decoration-none" href="javascript:void(0);">
-                    <div class="brand-mark fs-6">ƎE</div>
-                    <span class="fw-bold fs-5 text-white tracking-tight">Evolysium</span>
-                </a>
+    <div id="app" class="hidden">
+      <div class="kpis">
+        <div class="box"><div class="lbl">Payout account</div><div class="val" id="kPayout" style="font-size:1.2rem">Checking…</div><div class="lbl" id="kHandle"></div></div>
+        <div class="box"><div class="lbl">Open agreements</div><div class="val" id="kAg">0</div></div>
+        <div class="box"><div class="lbl">Plan</div><div class="val" id="kPlan" style="font-size:1.2rem">No plan</div></div>
+      </div>
+
+      <div class="grid">
+        <form class="box" id="payForm">
+          <h3>Send a payment</h3><p class="sub">Pay another Evolysium account by card through Stripe.</p>
+          <label class="lbl" for="to">Recipient handle</label>
+          <input id="to" required maxlength="30" autocomplete="off" placeholder="partner_studio4f2a1">
+          <label class="lbl" for="amt">Amount (EUR)</label>
+          <input id="amt" type="number" inputmode="decimal" step="0.01" min="0.50" required placeholder="0.00">
+          <label class="lbl" for="note">Reference</label>
+          <input id="note" required maxlength="200" placeholder="Invoice 2026-089, design retainer">
+          <button class="p" style="width:100%">Continue to payment</button>
+        </form>
+
+        <div class="box">
+          <h3>Milestone agreements</h3><p class="sub">You pay now through Stripe. Funds reach the recipient when you approve.</p>
+          <form id="agForm">
+            <label class="lbl" for="agTo">Recipient handle</label>
+            <input id="agTo" required maxlength="30" autocomplete="off">
+            <div class="split">
+              <div><label class="lbl" for="agTitle">Project</label><input id="agTitle" required maxlength="120" placeholder="Q4 campaign"></div>
+              <div><label class="lbl" for="agAmt">Amount</label><input id="agAmt" type="number" inputmode="decimal" step="0.01" min="0.50" required></div>
             </div>
+            <button class="p">Reserve funds</button>
+          </form>
+          <div id="agList"></div>
+        </div>
 
-            <div class="d-flex align-items-center gap-2">
-                <!-- Account Balance -->
-                <button class="nav-pill-btn" data-bs-toggle="modal" data-bs-target="#treasuryModal" title="Account balance">
-                    <i class="fa-solid fa-wallet text-info"></i>
-                    <span id="navTreasuryBalance">0.00 EUR</span>
-                </button>
+        <form class="box" id="invForm">
+          <h3>Record an invoice</h3><p class="sub">Saved to your history. It does not move money.</p>
+          <label class="lbl" for="invClient">Client</label><input id="invClient" required maxlength="120">
+          <div class="split">
+            <div><label class="lbl" for="invAmt">Amount (EUR)</label><input id="invAmt" type="number" inputmode="decimal" step="0.01" min="0.01" required></div>
+            <div><label class="lbl" for="invDue">Due date</label><input id="invDue" type="date" required></div>
+          </div>
+          <label class="lbl" for="invDesc">Work delivered</label><input id="invDesc" required maxlength="150">
+          <button class="p">Save invoice</button>
+        </form>
 
-                <!-- Security Key (Desktop) -->
-                <button class="nav-pill-btn d-none d-lg-inline-flex" onclick="connectInstitutionalWallet()" title="Connect security key">
-                    <i class="fa-solid fa-key text-info"></i>
-                    <span id="walletBtnLabel">Connect Key</span>
-                </button>
+        <div class="box">
+          <h3>Receive payments</h3><p class="sub">Set up a payout account with Stripe to receive payments and milestone releases. Stripe verifies your business.</p>
+          <button class="p" id="onboard">Set up payouts</button>
+        </div>
+      </div>
 
-                <!-- API Access (Desktop) -->
-                <button class="nav-pill-btn d-none d-xl-inline-flex" data-bs-toggle="modal" data-bs-target="#apiKeysModal">
-                    <i class="fa-solid fa-code text-warning"></i> API
-                </button>
-
-                <!-- Notifications -->
-                <div class="dropdown d-none d-sm-block">
-                    <button class="nav-pill-btn position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markAlertsRead()" title="Notifications">
-                        <i class="fa-solid fa-bell"></i>
-                        <span id="alertBadgeCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style="font-size: 0.62rem; display:none;">0</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-lg p-2 mt-2" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); width: 320px;" id="alertsDropdownList">
-                        <li><h6 class="dropdown-header text-white fw-bold">Updates &amp; Activity</h6></li>
-                        <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                        <li><span class="dropdown-item-text small text-secondary">No new updates</span></li>
-                    </ul>
-                </div>
-
-                <!-- Client Sign In -->
-                <button class="nav-pill-btn primary" data-bs-toggle="modal" data-bs-target="#corpAuthModal">
-                    <i class="fa-regular fa-user"></i>
-                    <span id="corpAuthBtnLabel">Sign In</span>
-                </button>
-            </div>
-        </header>
+      <div class="box" style="margin-top:16px">
+        <div class="row" style="justify-content:space-between">
+          <div><h3>History</h3><p class="sub" style="margin:0">Every payment, agreement and invoice.</p></div>
+          <div class="row"><input id="q" placeholder="Search" aria-label="Search history" style="width:190px;margin:0"><button id="csv">Download CSV</button></div>
+        </div>
+        <div class="row" style="margin:14px 0" id="tabs">
+          <button class="tab on" data-f="all">All</button><button class="tab" data-f="payment">Payments</button>
+          <button class="tab" data-f="agreement">Agreements</button><button class="tab" data-f="invoice">Invoices</button>
+        </div>
+        <div class="tw"><table>
+          <thead><tr><th>Reference</th><th>Counterparty</th><th>Type</th><th>Details</th><th>Amount</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table></div>
+      </div>
     </div>
+  </section>
 
-    <!-- Sidebar Menu -->
-    <div class="offcanvas offcanvas-start text-light" tabindex="-1" id="enterpriseSidebar" style="background: var(--bg-surface); border-right: 1px solid var(--border-subtle); width: 310px;">
-        <div class="offcanvas-header border-bottom border-secondary border-opacity-25 py-3 px-4">
-            <div class="d-flex align-items-center gap-2">
-                <div class="brand-mark" style="width: 32px; height: 32px; font-size: 0.9rem;">ƎE</div>
-                <h6 class="offcanvas-title fw-bold mb-0">Workspace Menu</h6>
-            </div>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body p-4 d-flex flex-column gap-3">
-            
-            <!-- Membership Status -->
-            <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);">
-                <span class="kpi-label d-block mb-1">Account Standing</span>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold text-white small" id="sidebarKybStatus">Standard Member</span>
-                    <button class="btn btn-sm btn-outline-info py-1 px-2" style="font-size: 0.72rem;" onclick="verifyCorporateEntity()">Verify</button>
-                </div>
-            </div>
-
-            <button class="nav-pill-btn w-100 justify-content-start py-2" onclick="connectInstitutionalWallet()" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-key text-info" style="width: 20px;"></i> <span id="sidebarWalletLabel">Connect Security Key</span>
-            </button>
-
-            <span class="kpi-label mt-2">Payments &amp; Agreements</span>
-            
-            <a href="#settlementSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-paper-plane text-info" style="width: 20px;"></i> Send Payment
-            </a>
-            <a href="#escrowSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-signature text-primary" style="width: 20px;"></i> Project Agreements
-            </a>
-            <a href="#ledgerSection" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-clock-rotate-left text-info" style="width: 20px;"></i> Payment History
-            </a>
-            <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#invoiceModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-file-invoice text-warning" style="width: 20px;"></i> Create Invoice
-            </a>
-
-            <span class="kpi-label mt-2">Tools &amp; Support</span>
-
-            <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#apiKeysModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-code text-secondary" style="width: 20px;"></i> Developer API
-            </a>
-            <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-layer-group text-info" style="width: 20px;"></i> Membership Plans
-            </a>
-            <a href="javascript:void(0);" class="nav-pill-btn w-100 justify-content-start py-2" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal" data-bs-dismiss="offcanvas">
-                <i class="fa-solid fa-headset text-info" style="width: 20px;"></i> Talk to Our Team
-            </a>
-
-            <div class="mt-auto pt-3 border-top border-secondary border-opacity-25">
-                <button class="nav-pill-btn w-100 justify-content-center text-danger" onclick="handleCorpLogout()">
-                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
-                </button>
-            </div>
-        </div>
+  <!-- Layer 4: plans and contact -->
+  <section class="layer s4" id="plans">
+    <h2 style="text-align:center">Simple monthly plans</h2>
+    <p class="sub" style="text-align:center">Billed through Stripe. Cancel any time from your Stripe receipt.</p>
+    <div class="grid">
+      <div class="box plan"><h3>Essential</h3><div class="val">€299 <span class="lbl">/ month</span></div>
+        <p class="sub">For regular supplier payouts and invoices.</p><button data-plan="essential" style="width:100%">Choose Essential</button></div>
+      <div class="box plan feat"><h3>Professional</h3><div class="val">€899 <span class="lbl">/ month</span></div>
+        <p class="sub">Milestone agreements and team approvals.</p><button class="p" data-plan="professional" style="width:100%">Choose Professional</button></div>
+      <div class="box plan"><h3>Custom</h3><div class="val">€1,199 <span class="lbl">/ month</span></div>
+        <p class="sub">Branding and workflows tailored to your company.</p><button data-plan="enterprise" style="width:100%">Choose Custom</button></div>
     </div>
-
-    <!-- Main Workspace with Layered Overlapping Cards -->
-    <main class="container py-4 mt-2">
-        
-        <!-- Layer 1: Hero & Ecosystem Hub -->
-        <section class="stack-layer sticky-stack-1 p-4 p-md-5 mb-4 text-center">
-            <div class="hero-pill-tag">
-                <i class="fa-solid fa-sparkles"></i> Built for modern finance teams
-            </div>
-            
-            <h1 class="fw-extrabold text-white mb-3" style="font-size: clamp(2rem, 4.5vw, 3.25rem); letter-spacing: -0.03em; line-height: 1.15;">
-                Global Corporate Payments, <br class="d-none d-md-inline">
-                <span style="background: linear-gradient(135deg, #60a5fa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Simplified.</span>
-            </h1>
-            
-            <p class="text-secondary mx-auto mb-4" style="max-width: 620px; font-size: 1.02rem; line-height: 1.65;">
-                Pay partners across borders in seconds, protect deliverables with milestone agreements, and keep every invoice organized in one calm workspace.
-            </p>
-
-            <div class="d-flex justify-content-center gap-2 flex-wrap mb-3">
-                <a href="#settlementSection" class="btn-corp-primary text-decoration-none px-4">
-                    Send a Payment
-                </a>
-                <button class="btn-corp-outline px-4" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">
-                    Speak with an Advisor
-                </button>
-            </div>
-
-            <!-- Orbital Ecosystem Hub -->
-            <div class="orbital-container">
-                <div class="orbit-ring"></div>
-                <div class="orbital-center-card">ƎE</div>
-                
-                <div class="mobile-orbit-grid">
-                    <div class="orbit-item item-1"><i class="fa-solid fa-euro-sign"></i> Direct EUR Transfers</div>
-                    <div class="orbit-item item-2"><i class="fa-solid fa-dollar-sign"></i> Digital USD Support</div>
-                    <div class="orbit-item item-3"><i class="fa-solid fa-shield-heart"></i> Protected Milestones</div>
-                    <div class="orbit-item item-4"><i class="fa-solid fa-file-invoice"></i> Instant B2B Invoices</div>
-                    <div class="orbit-item item-5"><i class="fa-solid fa-plug"></i> Easy Software Sync</div>
-                    <div class="orbit-item item-6"><i class="fa-solid fa-bolt"></i> Real-Time Clarity</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Layer 2: Overlapping Trust & Support Card -->
-        <section class="trust-section sticky-stack-2 mb-4" id="compliance">
-            <div class="trust-shield-icon"><i class="fa-solid fa-shield-heart"></i></div>
-            <h2 class="fw-bold text-white mb-2" style="font-size: clamp(1.5rem, 3vw, 2.1rem);">Complete Peace of Mind on Every Payment</h2>
-            <p class="text-secondary mx-auto mb-0" style="max-width: 600px; font-size: 0.96rem; line-height: 1.65;">
-                Every partner and payout is carefully reviewed in the background so your finance team can approve transfers with confidence and zero guesswork.
-            </p>
-            <div class="trust-badges-row">
-                <span class="trust-badge"><i class="fa-solid fa-circle-check"></i> Tax Documentation Ready</span>
-                <span class="trust-badge"><i class="fa-solid fa-circle-check"></i> Verified Business Partners</span>
-                <span class="trust-badge"><i class="fa-solid fa-circle-check"></i> Full Regulatory Alignment</span>
-                <span class="trust-badge"><i class="fa-solid fa-circle-check"></i> Dedicated Account Support</span>
-            </div>
-        </section>
-
-        <!-- Layer 3: Interactive Workspace & Metrics -->
-        <section class="stack-layer sticky-stack-3 p-4 p-md-5 mb-4">
-            <!-- Clean KPI Metrics -->
-            <div class="row g-3 mb-4">
-                <div class="col-md-4 col-sm-12">
-                    <div class="kpi-card">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="kpi-label">Available Funds</span>
-                            <i class="fa-solid fa-wallet text-info"></i>
-                        </div>
-                        <div class="kpi-value" id="kpiLiquidity">0.00</div>
-                        <span class="small text-secondary" style="font-size: 0.78rem;">Ready for immediate payout</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="kpi-card">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="kpi-label">Active Agreements</span>
-                            <i class="fa-solid fa-handshake text-primary"></i>
-                        </div>
-                        <div class="kpi-value" id="kpiActiveEscrows">0</div>
-                        <span class="small text-secondary" style="font-size: 0.78rem;">Projects currently in progress</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="kpi-card">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="kpi-label">Account Standing</span>
-                            <i class="fa-solid fa-award text-info"></i>
-                        </div>
-                        <div class="kpi-value" style="font-size: 1.35rem; padding-top: 6px;" id="kpiComplianceStatus">Standard Member</div>
-                        <span class="small text-info" style="font-size: 0.78rem;">All services available</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Core Modules: Transfer & Agreement Protection -->
-            <div class="row g-4" id="settlementSection">
-                
-                <!-- Transfer Funds -->
-                <div class="col-lg-6">
-                    <div class="kpi-card p-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
-                            <div>
-                                <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-paper-plane text-info me-2"></i>Send a Direct Payment</h5>
-                                <span class="small text-secondary">Transfer funds to verified business partners worldwide</span>
-                            </div>
-                            <span class="badge-corp bg-dark border border-secondary text-secondary">0.15% FEE</span>
-                        </div>
-
-                        <form onsubmit="executeCorporateSettlement(event)">
-                            <div class="mb-3">
-                                <label class="form-label small text-secondary fw-semibold">Recipient Name or Account ID</label>
-                                <input type="text" id="settlementRecipient" class="form-control corp-input" placeholder="e.g., @partner_studio or client_id" required>
-                            </div>
-
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-7">
-                                    <label class="form-label small text-secondary fw-semibold">Amount</label>
-                                    <input type="number" step="0.01" id="settlementAmount" class="form-control corp-input" placeholder="0.00" required>
-                                </div>
-                                <div class="col-md-5">
-                                    <label class="form-label small text-secondary fw-semibold">Currency</label>
-                                    <select id="settlementCurrency" class="form-control corp-input">
-                                        <option value="EUR">EUR (Euro)</option>
-                                        <option value="USDC">USDC (Digital USD)</option>
-                                        <option value="EVO">EVO Credits</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label small text-secondary fw-semibold">Payment Note / Invoice Reference</label>
-                                <input type="text" id="settlementReference" class="form-control corp-input" placeholder="e.g., Invoice #2026-089 — Design Retainer" required>
-                            </div>
-
-                            <button type="submit" class="btn-corp-primary w-100 py-3">
-                                <i class="fa-solid fa-check-circle me-2"></i> Confirm &amp; Send Payment
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Agreement Protection -->
-                <div class="col-lg-6" id="escrowSection">
-                    <div class="kpi-card p-4 h-100 d-flex flex-column justify-content-between">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
-                                <div>
-                                    <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-signature text-primary me-2"></i>Protected Agreements</h5>
-                                    <span class="small text-secondary">Hold funds safely until project milestones are approved</span>
-                                </div>
-                                <span class="badge-corp bg-primary bg-opacity-25 text-info">PROTECTED</span>
-                            </div>
-
-                            <!-- Create Agreement Box -->
-                            <div class="p-3 rounded-4 mb-3" style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-subtle);">
-                                <label class="form-label small text-secondary fw-semibold">Start a New Milestone Agreement</label>
-                                <div class="row g-2 mb-2">
-                                    <div class="col-sm-7">
-                                        <input type="text" id="escrowMilestoneTitle" class="form-control corp-input form-control-sm" placeholder="Project Name (e.g., Q4 Campaign)">
-                                    </div>
-                                    <div class="col-sm-5">
-                                        <input type="number" step="0.001" id="escrowAmountInput" class="form-control corp-input form-control-sm" placeholder="Amount">
-                                    </div>
-                                </div>
-                                <button onclick="deploySmartEscrow()" class="btn-corp-primary w-100 py-2" style="font-size: 0.84rem;">
-                                    <i class="fa-solid fa-lock me-1"></i> Reserve Funds for Project
-                                </button>
-                            </div>
-
-                            <!-- Active Agreements List -->
-                            <div>
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="kpi-label">Ongoing Agreements</span>
-                                    <button onclick="loadActiveEscrows()" class="btn btn-link text-info text-decoration-none p-0 small">
-                                        <i class="fa-solid fa-rotate me-1"></i>Refresh
-                                    </button>
-                                </div>
-                                <div id="activeEscrowsList" class="d-flex flex-column gap-2" style="max-height: 175px; overflow-y: auto;">
-                                    <div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">
-                                        Connect your security key in the menu to view ongoing agreements.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="escrowStatusBanner" class="mt-3 p-2 rounded-3 small text-info" style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); display: none;"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Layer 4: Payment History & Advantages -->
-        <section class="stack-layer sticky-stack-4 p-4 p-md-5 mb-4" id="ledgerSection">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-                <div>
-                    <h5 class="fw-bold text-white mb-1">Payment History &amp; Statements</h5>
-                    <span class="small text-secondary">Clear, downloadable records of all transfers, invoices, and agreements</span>
-                </div>
-                <div class="d-flex gap-2 flex-wrap">
-                    <input type="text" id="ledgerSearchInput" class="form-control corp-input form-control-sm" style="width: 230px;" placeholder="Search history..." oninput="renderCorporateLedger()">
-                    <button class="btn-corp-outline py-1 px-3" style="font-size: 0.8rem;" onclick="exportLedgerCSV()">
-                        <i class="fa-solid fa-download me-1"></i> Download CSV
-                    </button>
-                </div>
-            </div>
-
-            <!-- Filter Tabs -->
-            <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="corp-tab active" onclick="filterLedgerCategory('all', this)">All Activity</button>
-                <button class="corp-tab" onclick="filterLedgerCategory('settlement', this)">Payments</button>
-                <button class="corp-tab" onclick="filterLedgerCategory('escrow', this)">Agreements</button>
-                <button class="corp-tab" onclick="filterLedgerCategory('compliance', this)">Account Updates</button>
-            </div>
-
-            <!-- Ledger Table -->
-            <div class="table-responsive mb-5">
-                <table class="corp-table">
-                    <thead>
-                        <tr>
-                            <th>Date / Reference ID</th>
-                            <th>Partner / Client</th>
-                            <th>Type</th>
-                            <th>Details</th>
-                            <th>Amount / Status</th>
-                            <th class="text-end">Summary</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corporateLedgerBody">
-                        <!-- Populated dynamically via JS -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Why Teams Choose Evolysium -->
-            <div class="row g-4 pt-3 border-top border-secondary border-opacity-25">
-                <div class="col-md-4">
-                    <div class="kpi-card p-4 h-100">
-                        <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-clock"></i></div>
-                        <h6 class="fw-bold text-white mb-2">Always Available</h6>
-                        <p class="small text-secondary mb-0" style="line-height: 1.65;">
-                            Initiate and review payments whenever your business needs to move, without waiting on traditional banking hours.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="kpi-card p-4 h-100">
-                        <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-globe"></i></div>
-                        <h6 class="fw-bold text-white mb-2">Borderless Clarity</h6>
-                        <p class="small text-secondary mb-0" style="line-height: 1.65;">
-                            Avoid hidden exchange markups and multi-day wire delays when working with international suppliers and contractors.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="kpi-card p-4 h-100">
-                        <div class="brand-mark mb-3" style="width: 38px; height: 38px;"><i class="fa-solid fa-user-shield"></i></div>
-                        <h6 class="fw-bold text-white mb-2">Human-First Security</h6>
-                        <p class="small text-secondary mb-0" style="line-height: 1.65;">
-                            Clear approval steps, clean accounting exports, and real people ready to assist your finance team every step of the way.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- MODALS -->
-
-    <!-- 1. Client Sign In Modal -->
-    <div class="modal fade" id="corpAuthModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-content-corp">
-                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0" id="corpAuthTitle"><i class="fa-solid fa-building text-primary me-2"></i>Client Sign In</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form onsubmit="handleCorpAuthSubmit(event)">
-                        <div class="mb-3" id="corpEntityField" style="display: none;">
-                            <label class="form-label small text-secondary">Company or Organization Name</label>
-                            <input type="text" id="corpEntityName" class="form-control corp-input" placeholder="e.g., Acme Studio Ltd.">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-secondary">Work Email Address</label>
-                            <input type="email" id="corpEmailInput" class="form-control corp-input" placeholder="finance@company.com" required>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label small text-secondary">Password</label>
-                            <input type="password" id="corpPasswordInput" class="form-control corp-input" placeholder="••••••••••••" required>
-                        </div>
-                        <button type="submit" id="corpAuthSubmitBtn" class="btn-corp-primary w-100 py-2 mb-3">Open Workspace</button>
-                        <div class="text-center">
-                            <span class="small text-secondary" id="corpAuthSwitchText">New to Evolysium?</span>
-                            <button type="button" class="btn btn-link text-info text-decoration-none small p-0 ms-1" onclick="toggleCorpAuthMode()" id="corpAuthSwitchBtn">Create an Account</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. Account Balance Modal -->
-    <div class="modal fade" id="treasuryModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-content-corp">
-                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-wallet text-info me-2"></i>Account Balance</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="p-3 rounded-4 mb-3 text-center" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
-                        <span class="kpi-label d-block">Available Balance</span>
-                        <h3 class="fw-bold text-white my-1" id="modalTreasuryDisplay">0.00 EUR</h3>
-                        <span class="badge bg-primary bg-opacity-25 text-info" style="font-size: 0.72rem;">READY TO SEND</span>
-                    </div>
-                    <p class="small text-secondary mb-3">
-                        Add demo funds to try out sending payments and creating protected project agreements.
-                    </p>
-                    <button type="button" class="btn-corp-primary w-100 py-2" onclick="provisionTestLiquidity()">
-                        <i class="fa-solid fa-plus-circle me-1"></i> Add +1,000.00 EUR Demo Funds
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. Create Invoice Modal -->
-    <div class="modal fade" id="invoiceModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-content-corp">
-                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-file-invoice text-warning me-2"></i>Create Client Invoice</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form onsubmit="createB2BInvoice(event)">
-                        <div class="mb-3">
-                            <label class="form-label small text-secondary">Client Company Name</label>
-                            <input type="text" id="invClientName" class="form-control corp-input" placeholder="e.g., NordTech GmbH" required>
-                        </div>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label small text-secondary">Amount (€ / USDC)</label>
-                                <input type="number" step="0.01" id="invAmount" class="form-control corp-input" placeholder="4500.00" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-secondary">Due Date</label>
-                                <input type="date" id="invDueDate" class="form-control corp-input" required>
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label small text-secondary">Description of Work</label>
-                            <textarea id="invScope" class="form-control corp-input" rows="2" placeholder="Consulting & Project Delivery" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-corp-primary w-100 py-2">Save &amp; Record Invoice</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. API Access Modal -->
-    <div class="modal fade" id="apiKeysModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content modal-content-corp">
-                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-code text-warning me-2"></i>Developer API Access</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <p class="small text-secondary mb-3">
-                        Connect Evolysium directly to your accounting software or internal tools using your personal API key.
-                    </p>
-                    <div class="mb-3">
-                        <label class="kpi-label d-block mb-1">Your API Key</label>
-                        <div class="input-group">
-                            <input type="text" id="corpApiKeyField" class="form-control corp-input small" value="evo_live_98f7a6d5e4c3b2a10987654321fedcba" readonly>
-                            <button class="btn-corp-outline" type="button" onclick="copyApiKey()">Copy</button>
-                            <button class="btn-corp-primary" type="button" onclick="rotateApiKey()">Refresh Key</button>
-                        </div>
-                    </div>
-                    <div class="p-3 rounded-3 small text-secondary" style="background: #050810; border: 1px solid var(--border-subtle);">
-                        <div class="text-info mb-1">// Quick Integration Example</div>
-                        POST https://api.evolysium.com/v1/settlements<br>
-                        Authorization: Bearer evo_live_...<br>
-                        { "beneficiary": "corp_eu_991", "amount": "12500.00", "currency": "EUR" }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. Service Plans Modal -->
-    <div class="modal fade" id="enterprisePricingModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content modal-content-corp">
-                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0">Simple, Transparent Plans</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="row g-4">
-                        <div class="col-md-4">
-                            <div class="tier-card">
-                                <div>
-                                    <span class="badge-corp bg-secondary bg-opacity-25 text-secondary">STARTER</span>
-                                    <h4 class="fw-bold text-white mt-2">Essential</h4>
-                                    <h3 class="fw-bold my-3">€299 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Great for growing businesses managing regular supplier payouts and invoices.</p>
-                                    <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Up to €250,000 monthly payment volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Standard software API access</li>
-                                        <li><i class="fa-solid fa-check"></i> Clean CSV accounting exports</li>
-                                        <li><i class="fa-solid fa-check"></i> Friendly email support within 24 hours</li>
-                                    </ul>
-                                </div>
-                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('essential')">Choose Essential</button>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="tier-card featured">
-                                <div>
-                                    <span class="badge-corp bg-primary text-white">MOST POPULAR</span>
-                                    <h4 class="fw-bold text-white mt-2">Professional</h4>
-                                    <h3 class="fw-bold my-3">€899 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Full milestone protection and multi-currency tools for active teams.</p>
-                                    <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Unlimited monthly payment volume</li>
-                                        <li><i class="fa-solid fa-check"></i> Protected milestone agreements</li>
-                                        <li><i class="fa-solid fa-check"></i> Team roles &amp; approval permissions</li>
-                                        <li><i class="fa-solid fa-check"></i> Dedicated account specialist</li>
-                                    </ul>
-                                </div>
-                                <button class="btn-corp-primary w-100" onclick="initiateEnterpriseCheckout('professional')">Choose Professional</button>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="tier-card">
-                                <div>
-                                    <span class="badge-corp bg-warning bg-opacity-25 text-warning">TAILORED</span>
-                                    <h4 class="fw-bold text-white mt-2">Custom</h4>
-                                    <h3 class="fw-bold my-3">€1,199 <span class="fs-6 fw-normal text-secondary">/ month</span></h3>
-                                    <p class="small text-secondary">Custom setup branded for your organization and tailored to your workflow.</p>
-                                    <ul class="tier-list">
-                                        <li><i class="fa-solid fa-check"></i> Custom domain &amp; company branding</li>
-                                        <li><i class="fa-solid fa-check"></i> Custom agreement workflows</li>
-                                        <li><i class="fa-solid fa-check"></i> Direct ERP &amp; banking connections</li>
-                                        <li><i class="fa-solid fa-check"></i> Priority 24/7 personal support</li>
-                                    </ul>
-                                </div>
-                                <button class="btn-corp-outline w-100" onclick="initiateEnterpriseCheckout('enterprise')">Talk to Us</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 6. Partnership Inquiry Modal -->
-    <div class="modal fade" id="proposalInquiryModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-content-corp">
-                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4 py-3">
-                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-headset text-info me-2"></i>Speak with Our Team</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <p class="small text-secondary mb-3">
-                        Tell us a bit about your company and how we can help. A real specialist will reply within one business day.
-                    </p>
-                    <form onsubmit="submitEnterpriseInquiry(event)">
-                        <div class="mb-3">
-                            <label class="form-label small text-secondary">Company Name</label>
-                            <input type="text" id="inqOrgName" class="form-control corp-input" placeholder="Your Company Name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-secondary">Work Email</label>
-                            <input type="email" id="inqEmail" class="form-control corp-input" placeholder="you@company.com" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-secondary">How can we help?</label>
-                            <select id="inqTopic" class="form-control corp-input">
-                                <option>International Partner Payouts</option>
-                                <option>Protected Project Agreements</option>
-                                <option>Custom Company Setup</option>
-                                <option>General Question</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label small text-secondary">Message</label>
-                            <textarea id="inqMessage" class="form-control corp-input" rows="3" placeholder="Share a few details about your team or payment needs..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn-corp-primary w-100 py-2">Send Message</button>
-                    </form>
-                    <div class="mt-3 pt-3 border-top border-secondary border-opacity-25 text-center small text-secondary">
-                        Or write to us anytime at <span class="text-white">office.evolysium@gmail.com</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11000;">
-        <div id="corpToast" class="toast align-items-center text-white border-0 shadow-lg" style="background: #1e293b; border-left: 4px solid var(--accent-primary) !important;" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body small fw-semibold" id="corpToastMessage">
-                    Done.
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="corp-footer">
-        <div class="container">
-            <div class="row align-items-center justify-content-between g-3">
-                <div class="col-md-6">
-                    <div class="d-flex align-items-center gap-2 mb-2">
-                        <div class="brand-mark" style="width: 28px; height: 28px; font-size: 0.8rem;">ƎE</div>
-                        <span class="fw-bold text-white">Evolysium</span>
-                    </div>
-                    <p class="small text-secondary mb-0">
-                        Global Corporate Payments &amp; Account Management.<br>
-                        Contact us: <a href="mailto:office.evolysium@gmail.com" class="text-info text-decoration-none">office.evolysium@gmail.com</a>
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="d-flex flex-wrap gap-3 justify-content-md-end mb-2">
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#enterprisePricingModal">Plans</a>
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#apiKeysModal">Developer API</a>
-                        <a href="javascript:void(0);" class="small text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#proposalInquiryModal">Contact</a>
-                    </div>
-                    <span class="small text-muted">© 2026 Evolysium. All Rights Reserved.</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts and Logic -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_BASE_URL = 'https://evolysium-backend.onrender.com';
-        const ESCROW_CONTRACT_ADDR = "0xb9670ef30D3C6235eB003Cf2aEb6237F52BcC218";
-        const TOKEN_CONTRACT_ADDR = "0xCF04daFF98D9F92115cD6F1e188f660e764585D2";
-        const KYB_VERIFICATION_ADDR = "0xBceD6293Cb21f19DFC507042a0642d7241305Eb0";
-
-        const ESCROW_ABI = [
-            "function createWager() external payable",
-            "function acceptWager(uint256 _wagerId) external payable",
-            "function resolveWager(uint256 _wagerId, address winner) external",
-            "function wagerCounter() view returns (uint256)",
-            "function wagers(uint256) view returns (address player1, address player2, uint256 amount, bool active, bool resolved)"
-        ];
-
-        const ERC20_ABI = [
-            "function approve(address spender, uint256 amount) public returns (bool)",
-            "function transfer(address to, uint256 value) public returns (bool)"
-        ];
-
-        const KYB_ABI = [
-            "function isVerified(address _user) view returns (bool)"
-        ];
-
-        let currentCorpUser = JSON.parse(localStorage.getItem('evo_corp_user') || 'null');
-        let isCorpRegisterMode = false;
-        let treasuryBalance = parseFloat(localStorage.getItem('evo_treasury_bal') || '0.00');
-        let isEntityVerified = JSON.parse(localStorage.getItem('evo_kyb_verified') || 'false');
-        let walletConnected = false;
-        let walletAddress = null;
-        let currentLedgerFilter = 'all';
-
-        let systemAlerts = JSON.parse(localStorage.getItem('evo_corp_alerts') || JSON.stringify([
-            { text: "Your workspace is ready.", time: "Today" }
-        ]));
-        let hasUnreadAlerts = false;
-
-        let ledgerRecords = JSON.parse(localStorage.getItem('evo_corp_ledger') || JSON.stringify([]));
-
-        function notifyCorp(message) {
-            const toastEl = document.getElementById('corpToast');
-            const msgEl = document.getElementById('corpToastMessage');
-            if (toastEl && msgEl) {
-                msgEl.innerText = message;
-                const toast = new bootstrap.Toast(toastEl);
-                toast.show();
-            } else {
-                alert(message);
-            }
-        }
-
-        function pushSystemAlert(text) {
-            systemAlerts.unshift({ text: text, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
-            localStorage.setItem('evo_corp_alerts', JSON.stringify(systemAlerts));
-            hasUnreadAlerts = true;
-            updateAlertsUI();
-        }
-
-        function updateAlertsUI() {
-            const badge = document.getElementById('alertBadgeCount');
-            const list = document.getElementById('alertsDropdownList');
-            if (!badge || !list) return;
-
-            if (hasUnreadAlerts) {
-                badge.style.display = 'inline-block';
-                badge.innerText = systemAlerts.length;
-            } else {
-                badge.style.display = 'none';
-            }
-
-            list.innerHTML = `
-                <li><h6 class="dropdown-header text-white fw-bold">Updates &amp; Activity</h6></li>
-                <li><hr class="dropdown-divider border-secondary opacity-25"></li>
-                ${systemAlerts.slice(0, 6).map(a => `
-                    <li>
-                        <div class="dropdown-item-text py-2 border-bottom border-secondary border-opacity-10">
-                            <div class="small text-white">${a.text}</div>
-                            <span class="text-secondary" style="font-size: 0.68rem;">${a.time}</span>
-                        </div>
-                    </li>
-                `).join('')}
-            `;
-        }
-
-        function markAlertsRead() {
-            hasUnreadAlerts = false;
-            updateAlertsUI();
-        }
-
-        function refreshDashboardUI() {
-            const formattedBal = treasuryBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            if (document.getElementById('navTreasuryBalance')) document.getElementById('navTreasuryBalance').innerText = `${formattedBal} EUR`;
-            if (document.getElementById('kpiLiquidity')) document.getElementById('kpiLiquidity').innerText = formattedBal;
-            if (document.getElementById('modalTreasuryDisplay')) document.getElementById('modalTreasuryDisplay').innerText = `${formattedBal} EUR`;
-
-            const authLabel = document.getElementById('corpAuthBtnLabel');
-            if (authLabel) {
-                authLabel.innerText = currentCorpUser ? (currentCorpUser.entity || currentCorpUser.email) : 'Sign In';
-            }
-
-            const kybSidebar = document.getElementById('sidebarKybStatus');
-            const kpiCompliance = document.getElementById('kpiComplianceStatus');
-            if (kybSidebar && kpiCompliance) {
-                if (isEntityVerified) {
-                    kybSidebar.innerText = 'Verified Partner ✓';
-                    kybSidebar.className = 'fw-bold text-info small';
-                    kpiCompliance.innerText = 'Verified Partner';
-                } else {
-                    kybSidebar.innerText = 'Standard Member';
-                    kybSidebar.className = 'fw-bold text-white small';
-                    kpiCompliance.innerText = 'Standard Member';
-                }
-            }
-
-            if (walletConnected && walletAddress) {
-                const shortAddr = `${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`;
-                if (document.getElementById('walletBtnLabel')) document.getElementById('walletBtnLabel').innerText = shortAddr;
-                if (document.getElementById('sidebarWalletLabel')) document.getElementById('sidebarWalletLabel').innerText = `Connected: ${shortAddr}`;
-            }
-        }
-
-        function toggleCorpAuthMode() {
-            isCorpRegisterMode = !isCorpRegisterMode;
-            document.getElementById('corpAuthTitle').innerHTML = isCorpRegisterMode 
-                ? '<i class="fa-solid fa-building-circle-check text-info me-2"></i>Create Business Account' 
-                : '<i class="fa-solid fa-building text-primary me-2"></i>Client Sign In';
-            document.getElementById('corpAuthSubmitBtn').innerText = isCorpRegisterMode ? 'Create Account' : 'Open Workspace';
-            document.getElementById('corpAuthSwitchText').innerText = isCorpRegisterMode ? 'Already have an account?' : 'New to Evolysium?';
-            document.getElementById('corpAuthSwitchBtn').innerText = isCorpRegisterMode ? 'Sign In' : 'Create an Account';
-            document.getElementById('corpEntityField').style.display = isCorpRegisterMode ? 'block' : 'none';
-        }
-
-        function handleCorpAuthSubmit(event) {
-            event.preventDefault();
-            const email = document.getElementById('corpEmailInput').value.trim();
-            const entity = document.getElementById('corpEntityName').value.trim() || email.split('@')[1] || 'Client';
-
-            currentCorpUser = { email, entity };
-            localStorage.setItem('evo_corp_user', JSON.stringify(currentCorpUser));
-            refreshDashboardUI();
-            pushSystemAlert(`Signed in as ${entity}`);
-            notifyCorp(`Welcome back, ${entity}.`);
-
-            const modal = bootstrap.Modal.getInstance(document.getElementById('corpAuthModal'));
-            if (modal) modal.hide();
-            event.target.reset();
-        }
-
-        function handleCorpLogout() {
-            localStorage.removeItem('evo_corp_user');
-            currentCorpUser = null;
-            refreshDashboardUI();
-            notifyCorp('You have been signed out.');
-        }
-
-        async function connectInstitutionalWallet() {
-            if (typeof window.ethereum === 'undefined') {
-                notifyCorp('Please open in a browser with a security key or wallet extension.');
-                return;
-            }
-            try {
-                notifyCorp('Connecting your security key...');
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                walletAddress = accounts[0];
-                walletConnected = true;
-                refreshDashboardUI();
-                pushSystemAlert(`Security key connected: ${walletAddress.substring(0, 6)}...`);
-                notifyCorp('Security key connected.');
-
-                await checkOnChainKybStatus(walletAddress);
-                await loadActiveEscrows();
-            } catch (err) {
-                console.error(err);
-                notifyCorp('Connection was cancelled.');
-            }
-        }
-
-        async function checkOnChainKybStatus(address) {
-            try {
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                const contract = new ethers.Contract(KYB_VERIFICATION_ADDR, KYB_ABI, provider);
-                const verified = await contract.isVerified(address);
-                if (verified) {
-                    isEntityVerified = true;
-                    localStorage.setItem('evo_kyb_verified', 'true');
-                    refreshDashboardUI();
-                }
-            } catch (err) {
-                console.log('Verification check skipped.');
-            }
-        }
-
-        function verifyCorporateEntity() {
-            isEntityVerified = true;
-            localStorage.setItem('evo_kyb_verified', 'true');
-            refreshDashboardUI();
-            pushSystemAlert('Your business profile is now verified.');
-            notifyCorp('Your account has been verified.');
-        }
-
-        async function executeCorporateSettlement(event) {
-            event.preventDefault();
-            const recipient = document.getElementById('settlementRecipient').value.trim();
-            const amount = parseFloat(document.getElementById('settlementAmount').value);
-            const currency = document.getElementById('settlementCurrency').value;
-            const reference = document.getElementById('settlementReference').value.trim();
-
-            if (!recipient || isNaN(amount) || amount <= 0) {
-                notifyCorp('Please enter a valid recipient and amount.');
-                return;
-            }
-
-            if (amount > treasuryBalance) {
-                notifyCorp('Your available balance is too low for this payment.');
-                return;
-            }
-
-            try {
-                if (window.supabaseClient) {
-                    await window.supabaseClient.rpc('transfer_evo_money', {
-                        receiver_username: recipient,
-                        amount: amount
-                    });
-                }
-            } catch (err) {
-                console.log('Local ledger settlement mode active.');
-            }
-
-            treasuryBalance -= amount;
-            localStorage.setItem('evo_treasury_bal', treasuryBalance.toString());
-
-            const newRecord = {
-                id: 'PAY-' + Math.floor(10000 + Math.random() * 90000),
-                timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
-                entity: recipient,
-                category: 'settlement',
-                reference: reference,
-                amount: `${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} ${currency}`,
-                status: 'COMPLETED'
-            };
-
-            ledgerRecords.unshift(newRecord);
-            localStorage.setItem('evo_corp_ledger', JSON.stringify(ledgerRecords));
-
-            refreshDashboardUI();
-            renderCorporateLedger();
-            pushSystemAlert(`Sent ${amount} ${currency} to ${recipient}`);
-            notifyCorp(`Payment ${newRecord.id} sent successfully.`);
-            event.target.reset();
-        }
-
-        async function deploySmartEscrow() {
-            const title = document.getElementById('escrowMilestoneTitle').value.trim() || 'Project Milestone';
-            const amountVal = document.getElementById('escrowAmountInput').value;
-            const statusBanner = document.getElementById('escrowStatusBanner');
-
-            if (!amountVal || parseFloat(amountVal) <= 0) {
-                notifyCorp('Please enter a valid project amount.');
-                return;
-            }
-
-            if (typeof window.ethereum === 'undefined') {
-                notifyCorp('Please connect your security key first.');
-                return;
-            }
-
-            try {
-                statusBanner.style.display = 'block';
-                statusBanner.innerText = 'Step 1 of 2: Approving agreement amount...';
-
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                const signer = await provider.getSigner();
-                const tokenContract = new ethers.Contract(TOKEN_CONTRACT_ADDR, ERC20_ABI, signer);
-                const escrowContract = new ethers.Contract(ESCROW_CONTRACT_ADDR, ESCROW_ABI, signer);
-
-                const parsedAmount = ethers.parseUnits(amountVal, 18);
-                const txApprove = await tokenContract.approve(ESCROW_CONTRACT_ADDR, parsedAmount);
-                await txApprove.wait();
-
-                statusBanner.innerText = 'Step 2 of 2: Saving protected agreement...';
-                const txCreate = await escrowContract.createWager();
-                await txCreate.wait();
-
-                statusBanner.innerText = `Funds reserved safely for ${title}.`;
-                
-                const newEscrowRecord = {
-                    id: 'AGR-' + Math.floor(1000 + Math.random() * 9000),
-                    timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
-                    entity: 'Protected Agreement',
-                    category: 'escrow',
-                    reference: title,
-                    amount: `${amountVal} EUR`,
-                    status: 'RESERVED'
-                };
-                ledgerRecords.unshift(newEscrowRecord);
-                localStorage.setItem('evo_corp_ledger', JSON.stringify(ledgerRecords));
-                renderCorporateLedger();
-                loadActiveEscrows();
-                pushSystemAlert(`Agreement created: ${title} (${amountVal} EUR)`);
-            } catch (err) {
-                console.error(err);
-                statusBanner.style.display = 'block';
-                statusBanner.innerText = 'Agreement setup was cancelled.';
-            }
-        }
-
-        async function loadActiveEscrows() {
-            const listEl = document.getElementById('activeEscrowsList');
-            const kpiEl = document.getElementById('kpiActiveEscrows');
-            if (!window.ethereum || !listEl) return;
-
-            try {
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                const escrowContract = new ethers.Contract(ESCROW_CONTRACT_ADDR, ESCROW_ABI, provider);
-                const count = await escrowContract.wagerCounter();
-                
-                let html = '';
-                let activeCount = 0;
-
-                for (let i = 1; i <= Number(count); i++) {
-                    const item = await escrowContract.wagers(i);
-                    if (item.active && !item.resolved) {
-                        activeCount++;
-                        const formattedAmt = ethers.formatEther(item.amount);
-                        html += `
-                            <div class="d-flex justify-content-between align-items-center p-2 rounded-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle);">
-                                <div>
-                                    <span class="small fw-bold text-white">Agreement #${i}</span>
-                                    <span class="small text-secondary d-block" style="font-size: 0.72rem;">Reserved: ${formattedAmt} EUR</span>
-                                </div>
-                                <button onclick="fulfillEscrowContract(${i}, '${formattedAmt}')" class="btn-corp-primary py-1 px-2" style="font-size: 0.72rem;">
-                                    Approve &amp; Release
-                                </button>
-                            </div>
-                        `;
-                    }
-                }
-
-                if (kpiEl) kpiEl.innerText = activeCount;
-                listEl.innerHTML = activeCount > 0 
-                    ? html 
-                    : '<div class="p-3 text-center rounded-3 small text-secondary" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle);">No ongoing agreements awaiting approval.</div>';
-            } catch (err) {
-                console.log('Agreement list loading skipped.');
-            }
-        }
-
-        async function fulfillEscrowContract(id, amt) {
-            if (!window.ethereum) return;
-            const statusBanner = document.getElementById('escrowStatusBanner');
-            try {
-                statusBanner.style.display = 'block';
-                statusBanner.innerText = `Releasing funds for agreement #${id}...`;
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                const signer = await provider.getSigner();
-                const tokenContract = new ethers.Contract(TOKEN_CONTRACT_ADDR, ERC20_ABI, signer);
-                const escrowContract = new ethers.Contract(ESCROW_CONTRACT_ADDR, ESCROW_ABI, signer);
-
-                const parsed = ethers.parseUnits(amt, 18);
-                const tx1 = await tokenContract.approve(ESCROW_CONTRACT_ADDR, parsed);
-                await tx1.wait();
-
-                const tx2 = await escrowContract.acceptWager(id, { value: parsed });
-                await tx2.wait();
-
-                statusBanner.innerText = `Agreement #${id} completed and released.`;
-                loadActiveEscrows();
-            } catch (err) {
-                console.error(err);
-                statusBanner.innerText = 'Could not release agreement funds.';
-            }
-        }
-
-        async function provisionTestLiquidity() {
-            treasuryBalance += 1000.00;
-            localStorage.setItem('evo_treasury_bal', treasuryBalance.toString());
-            refreshDashboardUI();
-            pushSystemAlert('Added +1,000.00 EUR demo balance.');
-            notifyCorp('Added +1,000.00 EUR to your available balance.');
-            const modal = bootstrap.Modal.getInstance(document.getElementById('treasuryModal'));
-            if (modal) modal.hide();
-        }
-
-        function createB2BInvoice(event) {
-            event.preventDefault();
-            const client = document.getElementById('invClientName').value.trim();
-            const amount = parseFloat(document.getElementById('invAmount').value);
-            const dueDate = document.getElementById('invDueDate').value;
-            const scope = document.getElementById('invScope').value.trim();
-
-            const invRecord = {
-                id: 'INV-' + Math.floor(1000 + Math.random() * 9000),
-                timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
-                entity: client,
-                category: 'settlement',
-                reference: `${scope} (Due: ${dueDate})`,
-                amount: `${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} EUR`,
-                status: 'SENT'
-            };
-
-            ledgerRecords.unshift(invRecord);
-            localStorage.setItem('evo_corp_ledger', JSON.stringify(ledgerRecords));
-            renderCorporateLedger();
-            pushSystemAlert(`Created invoice ${invRecord.id} for ${client}`);
-            notifyCorp(`Invoice ${invRecord.id} saved to your history.`);
-
-            const modal = bootstrap.Modal.getInstance(document.getElementById('invoiceModal'));
-            if (modal) modal.hide();
-            event.target.reset();
-        }
-
-        function filterLedgerCategory(cat, btnEl) {
-            currentLedgerFilter = cat;
-            document.querySelectorAll('.corp-tab').forEach(b => b.classList.remove('active'));
-            if (btnEl) btnEl.classList.add('active');
-            renderCorporateLedger();
-        }
-
-        function renderCorporateLedger() {
-            const tbody = document.getElementById('corporateLedgerBody');
-            if (!tbody) return;
-
-            const query = (document.getElementById('ledgerSearchInput')?.value || '').toLowerCase();
-
-            const filtered = ledgerRecords.filter(r => {
-                const matchCat = currentLedgerFilter === 'all' || r.category === currentLedgerFilter;
-                const matchQuery = !query || 
-                    r.id.toLowerCase().includes(query) || 
-                    r.entity.toLowerCase().includes(query) || 
-                    r.reference.toLowerCase().includes(query);
-                return matchCat && matchQuery;
-            });
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-secondary">No activity found yet. Send a payment or create an invoice to see it here.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = filtered.map(r => {
-                let badgeClass = 'bg-primary bg-opacity-25 text-info';
-                if (r.status === 'RESERVED' || r.status === 'SENT') badgeClass = 'bg-warning bg-opacity-25 text-warning';
-
-                return `
-                    <tr>
-                        <td>
-                            <div class="fw-bold text-white">${r.id}</div>
-                            <div class="small text-secondary" style="font-size: 0.72rem;">${r.timestamp}</div>
-                        </td>
-                        <td class="fw-semibold">${r.entity}</td>
-                        <td><span class="badge-corp bg-dark border border-secondary text-secondary text-uppercase">${r.category}</span></td>
-                        <td class="small text-secondary">${r.reference}</td>
-                        <td>
-                            <div class="fw-bold text-white">${r.amount}</div>
-                            <span class="badge-corp ${badgeClass} mt-1 d-inline-block" style="font-size: 0.65rem;">${r.status}</span>
-                        </td>
-                        <td class="text-end">
-                            <button class="nav-pill-btn py-1 px-2" onclick="inspectAuditRecord('${r.id}')" title="View Details">
-                                <i class="fa-solid fa-receipt"></i> Details
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function inspectAuditRecord(id) {
-            const rec = ledgerRecords.find(r => r.id === id);
-            if (!rec) return;
-            notifyCorp(`${rec.id}: ${rec.entity} — ${rec.amount} (${rec.status})`);
-        }
-
-        function exportLedgerCSV() {
-            if (ledgerRecords.length === 0) {
-                notifyCorp('There are no records to download yet.');
-                return;
-            }
-            const headers = ['ID,Date,Partner,Type,Details,Amount,Status'];
-            const rows = ledgerRecords.map(r => `"${r.id}","${r.timestamp}","${r.entity}","${r.category}","${r.reference}","${r.amount}","${r.status}"`);
-            const csvContent = "data:text/csv;charset=utf-8," + [headers, ...rows].join("\n");
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `evolysium_history_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            notifyCorp('History downloaded as CSV.');
-        }
-
-        function copyApiKey() {
-            const input = document.getElementById('corpApiKeyField');
-            input.select();
-            navigator.clipboard.writeText(input.value);
-            notifyCorp('API key copied.');
-        }
-
-        function rotateApiKey() {
-            const randomHex = Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
-            document.getElementById('corpApiKeyField').value = 'evo_live_' + randomHex;
-            pushSystemAlert('API key refreshed.');
-            notifyCorp('New API key generated.');
-        }
-
-        async function initiateEnterpriseCheckout(tier) {
-            try {
-                notifyCorp('Opening checkout...');
-                const response = await fetch(`${API_BASE_URL}/api/payment/create-checkout-session`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tier: tier })
-                });
-                const data = await response.json();
-                if (data.url) {
-                    window.location.href = data.url;
-                } else {
-                    notifyCorp(`Plan selected successfully.`);
-                }
-            } catch (err) {
-                console.error(err);
-                notifyCorp(`Plan selected successfully.`);
-            }
-        }
-
-        function submitEnterpriseInquiry(event) {
-            event.preventDefault();
-            const org = document.getElementById('inqOrgName').value.trim();
-            const topic = document.getElementById('inqTopic').value;
-
-            pushSystemAlert(`Message sent by ${org} (${topic})`);
-            notifyCorp(`Thank you! Our team will be in touch shortly.`);
-
-            const modal = bootstrap.Modal.getInstance(document.getElementById('proposalInquiryModal'));
-            if (modal) modal.hide();
-            event.target.reset();
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            refreshDashboardUI();
-            renderCorporateLedger();
-            updateAlertsUI();
-            loadActiveEscrows();
-
-            setTimeout(() => {
-                const preloader = document.getElementById('enterprise-preloader');
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => preloader.style.display = 'none', 400);
-                }
-            }, 400);
-        });
-    </script>
+  </section>
+
+  <section class="layer s4" id="contact" style="max-width:640px;margin-left:auto;margin-right:auto">
+    <h2>Talk to us</h2><p class="sub">Tell us about your payment needs and a person will reply by email.</p>
+    <form id="inqForm">
+      <input id="iCo" required maxlength="120" placeholder="Company" aria-label="Company">
+      <input id="iEm" type="email" required maxlength="200" placeholder="Work email" aria-label="Work email">
+      <select id="iTopic" aria-label="Topic"><option>Partner payouts</option><option>Milestone agreements</option><option>Other</option></select>
+      <textarea id="iMsg" rows="3" required maxlength="2000" placeholder="What do you need?" aria-label="Message"></textarea>
+      <button class="p" style="width:100%">Send message</button>
+    </form>
+  </section>
+  <footer>© 2026 Evolysium · office.evolysium@gmail.com</footer>
+</main>
+
+<dialog id="authDlg">
+  <h3 id="authTitle" style="font-size:1.3rem">Sign in</h3>
+  <form id="authForm" style="margin-top:12px">
+    <div id="coField" class="hidden"><label class="lbl" for="company">Company name</label><input id="company" maxlength="120"></div>
+    <label class="lbl" for="email">Work email</label><input id="email" type="email" required autocomplete="email">
+    <label class="lbl" for="pw">Password (10+ characters)</label><input id="pw" type="password" required minlength="10" autocomplete="current-password">
+    <button class="p" id="authSubmit" style="width:100%">Sign in</button>
+  </form>
+  <div class="row" style="justify-content:space-between;margin-top:12px">
+    <button type="button" id="authSwitch">Create an account</button><button type="button" id="authClose">Close</button>
+  </div>
+</dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const API = ''; // same origin (Flask serves this page). If you host the page elsewhere, put your backend URL here and add it to connect-src above.
+const sb = supabase.createClient('https://bpndsntpdpukkjebrfnz.supabase.co', 'sb_publishable_lPudOW-mBnBKB-E9OEbWZQ_HzFuoZk6');
+const $ = s => document.querySelector(s);
+const eur = c => new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR' }).format(c / 100);
+const toCents = v => Math.round(parseFloat(v) * 100);
+let me = null, profile = null, ledger = [], agreements = [], sub = null, filter = 'all', signup = false, tt;
+
+// Builds DOM with textContent only, so user input can never become HTML.
+function h(tag, props = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'class') e.className = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v);
+  }
+  e.append(...kids);
+  return e;
+}
+function toast(m) {
+  const t = $('#toast'); t.textContent = m; t.classList.add('on');
+  clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 4000);
+}
+
+async function api(path, body) {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) throw new Error('Please sign in first.');
+  const r = await fetch(API + path, { method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+    body: JSON.stringify(body || {}) });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error || 'Something went wrong.');
+  return d;
+}
+function goStripe(url) { // only ever leave for Stripe-owned pages
+  const u = new URL(url);
+  if (u.protocol !== 'https:' || !/(^|\.)stripe\.com$/.test(u.hostname)) throw new Error('Unexpected redirect.');
+  location.href = u.href;
+}
+async function checkout(path, body) { try { goStripe((await api(path, body)).url); } catch (e) { toast(e.message); } }
+async function act(path, ok) { try { await api(path); toast(ok); await refresh(); } catch (e) { toast(e.message); } }
+
+async function refresh() {
+  const { data: { session } } = await sb.auth.getSession();
+  me = session?.user || null;
+  $('#out').classList.toggle('hidden', !!me);
+  $('#app').classList.toggle('hidden', !me);
+  $('#authBtn').textContent = me ? 'Sign out' : 'Sign in';
+  if (!me) return;
+  const [p, l, a, s] = await Promise.all([
+    sb.from('profiles').select('*').eq('id', me.id).single(),
+    sb.from('ledger').select('*').order('created_at', { ascending: false }).limit(200),
+    sb.from('agreements').select('*').eq('status', 'funded').order('created_at', { ascending: false }),
+    sb.from('subscriptions').select('tier,status').limit(1)
+  ]);
+  profile = p.data; ledger = l.data || []; agreements = a.data || []; sub = s.data?.[0] || null;
+  render();
+}
+
+function render() {
+  if (!profile) return;
+  $('#kPayout').textContent = profile.payouts_enabled ? 'Ready to receive' : 'Setup needed';
+  $('#kHandle').textContent = 'Your handle: ' + profile.handle;
+  $('#kAg').textContent = agreements.length;
+  const live = sub && ['active', 'trialing'].includes(sub.status);
+  $('#kPlan').textContent = live ? sub.tier.charAt(0).toUpperCase() + sub.tier.slice(1) : 'No plan';
+  const list = $('#agList'); list.replaceChildren();
+  for (const a of agreements) {
+    const mine = a.payer === me.id;
+    list.append(h('div', { class: 'ag' },
+      h('div', {}, h('strong', {}, a.title), h('div', { class: 'lbl' }, `${eur(a.amount_cents)} · ${mine ? 'to ' + a.payee_handle : 'from ' + a.payer_handle}`)),
+      mine ? h('button', { class: 'p', onclick: () => act(`/api/agreements/${a.id}/release`, 'Funds released.') }, 'Approve and release')
+           : h('button', { onclick: () => act(`/api/agreements/${a.id}/refund`, 'Funds returned to the payer.') }, 'Decline and refund')));
+  }
+  if (!agreements.length) list.append(h('p', { class: 'lbl' }, 'No open agreements. Reserve funds above to start one.'));
+  renderLedger();
+}
+
+function renderLedger() {
+  const q = $('#q').value.toLowerCase(), tb = $('#rows'); tb.replaceChildren();
+  const rows = ledger.filter(r => (filter === 'all' || r.kind === filter) &&
+    (!q || [r.ref, r.counterparty, r.note].join(' ').toLowerCase().includes(q)));
+  if (!rows.length) { tb.append(h('tr', {}, h('td', { colspan: 5 }, 'No activity yet. Send a payment or record an invoice.'))); return; }
+  for (const r of rows) tb.append(h('tr', {},
+    h('td', {}, r.ref, h('div', { class: 'lbl' }, new Date(r.created_at).toLocaleString())),
+    h('td', {}, r.counterparty || ''), h('td', {}, r.kind), h('td', {}, r.note || ''),
+    h('td', { class: r.amount_cents < 0 ? 'neg' : 'pos' }, eur(r.amount_cents), h('div', { class: 'lbl' }, r.status))));
+}
+
+function exportCsv() {
+  if (!ledger.length) return toast('Nothing to download yet.');
+  const esc = v => { v = String(v ?? ''); if (/^[=+\-@\t\r]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; }; // blocks spreadsheet formulas
+  const lines = ['Reference,Date,Counterparty,Type,Details,Amount EUR,Status'].concat(ledger.map(r =>
+    [esc(r.ref), esc(r.created_at), esc(r.counterparty), esc(r.kind), esc(r.note), (r.amount_cents / 100).toFixed(2), esc(r.status)].join(',')));
+  const a = h('a', { href: URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' })), download: 'evolysium_history.csv' });
+  document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function openAuth() { $('#authDlg').showModal(); }
+function setMode(s) {
+  signup = s;
+  $('#authTitle').textContent = s ? 'Create your account' : 'Sign in';
+  $('#authSubmit').textContent = s ? 'Create account' : 'Sign in';
+  $('#authSwitch').textContent = s ? 'I already have an account' : 'Create an account';
+  $('#coField').classList.toggle('hidden', !s);
+  $('#pw').autocomplete = s ? 'new-password' : 'current-password';
+}
+const money = id => { const c = toCents($(id).value); if (!(c >= 50)) { toast('The minimum amount is €0.50.'); return 0; } return c; };
+
+$('#menuBtn').addEventListener('click', () => $('#menuBtn').setAttribute('aria-expanded', $('#menu').classList.toggle('open')));
+$('#menu').addEventListener('click', e => { if (e.target.closest('a')) { $('#menu').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded', 'false'); } });
+$('#authBtn').addEventListener('click', () => me ? sb.auth.signOut() : openAuth());
+$('#outBtn').addEventListener('click', openAuth);
+$('#authClose').addEventListener('click', () => $('#authDlg').close());
+$('#authSwitch').addEventListener('click', () => setMode(!signup));
+$('#authForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = $('#email').value.trim(), password = $('#pw').value;
+  const r = signup
+    ? await sb.auth.signUp({ email, password, options: { data: { company: $('#company').value.trim() } } })
+    : await sb.auth.signInWithPassword({ email, password });
+  if (r.error) return toast(r.error.message);
+  $('#authDlg').close(); e.target.reset();
+  toast(signup && !r.data.session ? 'Check your email to confirm your account.' : 'Signed in.');
+});
+$('#payForm').addEventListener('submit', e => {
+  e.preventDefault(); const c = money('#amt'); if (!c) return;
+  checkout('/api/pay', { payeeHandle: $('#to').value, amountCents: c, note: $('#note').value.trim() });
+});
+$('#agForm').addEventListener('submit', e => {
+  e.preventDefault(); const c = money('#agAmt'); if (!c) return;
+  checkout('/api/agreements', { payeeHandle: $('#agTo').value, title: $('#agTitle').value.trim(), amountCents: c });
+});
+$('#invForm').addEventListener('submit', async e => {
+  e.preventDefault(); const c = toCents($('#invAmt').value);
+  if (!(c > 0)) return toast('Enter an amount above zero.');
+  const { error } = await sb.rpc('create_invoice', { p_client: $('#invClient').value, p_amount: c, p_due: $('#invDue').value, p_desc: $('#invDesc').value.trim() });
+  if (error) return toast(error.message);
+  toast('Invoice saved.'); e.target.reset(); refresh();
+});
+$('#onboard').addEventListener('click', () => checkout('/api/connect/onboard'));
+document.querySelectorAll('[data-plan]').forEach(b => b.addEventListener('click', () => {
+  if (!me) { toast('Sign in to choose a plan.'); return openAuth(); }
+  checkout('/api/payment/create-checkout-session', { tier: b.dataset.plan });
+}));
+$('#csv').addEventListener('click', exportCsv);
+$('#q').addEventListener('input', renderLedger);
+$('#tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  filter = b.dataset.f;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t === b));
+  renderLedger();
+});
+$('#inqForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const { error } = await sb.from('inquiries').insert({
+    company: $('#iCo').value.trim(), email: $('#iEm').value.trim(),
+    topic: $('#iTopic').value, message: $('#iMsg').value.trim() });
+  if (error) return toast('Could not send your message. Please try again.');
+  toast('Thank you. We will reply by email.'); e.target.reset();
+});
+
+// Avoid awaiting Supabase calls inside this callback (deadlock risk), so defer.
+sb.auth.onAuthStateChange(() => setTimeout(refresh, 0));
+
+// Returning from Stripe (checkout or payout setup).
+const qs = new URLSearchParams(location.search);
+if (qs.has('connect') || qs.has('checkout')) {
+  history.replaceState({}, '', location.pathname);
+  if (qs.has('connect')) setTimeout(async () => {
+    try { await api('/api/connect/status'); await refresh(); toast('Payout account updated.'); } catch (e) { toast(e.message); }
+  }, 800);
+  else {
+    toast(qs.get('checkout') === 'success' ? 'Payment received. It appears in your history shortly.' : 'Checkout cancelled.');
+    setTimeout(refresh, 3000);
+  }
+}
+</script>
 </body>
 </html>
