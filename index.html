@@ -47,7 +47,7 @@ h3{font-size:1.05rem;margin:0 0 4px}
 /* Stacked layers */
 .layer{position:relative;background:var(--card);border:1px solid #ffffff14;border-radius:28px;padding:clamp(20px,4vw,48px);box-shadow:0 -16px 44px #000b,0 20px 50px #0006;margin:20px 0}
 .tag{display:inline-block;background:#3b82f61a;border:1px solid #3b82f640;color:#93c5fd;padding:6px 16px;border-radius:999px;font-size:.82rem;font-weight:600;margin-bottom:16px}
-@media(min-width:992px) and (min-height:760px){.s1{position:sticky;top:84px;z-index:1}.s2{position:sticky;top:100px;z-index:2}.s3{z-index:3}.s4{z-index:4}}
+@media(min-width:992px) and (min-height:760px){.s1{position:sticky;top:84px;z-index:1}.s2{position:sticky;top:100px;z-index:2}.s3{position:sticky;top:116px;z-index:3}.s4{z-index:4}.s5{z-index:5}.s6{z-index:6}}
 .hero{text-align:center}
 .hero .sub{max-width:600px;margin:0 auto 22px;font-size:1.02rem}
 
@@ -88,14 +88,45 @@ dialog::backdrop{background:#000a}
 #toast.on{opacity:1}
 footer{margin:48px 0 32px;color:var(--mute);font-size:.85rem;text-align:center}
 .hidden{display:none!important}
+
+/* v2: aurora, bento, dashboard */
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(40% 30% at 15% 10%,#2563eb33,transparent),radial-gradient(35% 30% at 90% 30%,#38bdf826,transparent),radial-gradient(40% 30% at 50% 100%,#7c3aed1f,transparent)}
+.layer{background:linear-gradient(180deg,#131d36,var(--card) 40%)}
+.steps{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));margin-top:24px;text-align:left}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+.num{width:30px;height:30px;border-radius:50%;background:#2563eb2e;color:#93c5fd;display:grid;place-items:center;font-weight:700;margin-bottom:10px}
+.bento{display:grid;gap:14px;grid-template-columns:repeat(6,1fr);margin-top:24px}
+.bento>div{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px}
+.b1,.b4{grid-column:span 4}.b2,.b3{grid-column:span 2}
+@media(max-width:760px){.bento>div{grid-column:1/-1}}
+.dash{display:grid;grid-template-columns:210px 1fr;gap:20px;align-items:start}
+.side{position:sticky;top:96px;display:flex;flex-direction:column;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:10px}
+.side button{display:flex;align-items:center;gap:10px;border:0;background:none;border-radius:12px;padding:10px 12px;color:var(--mute);text-align:left;width:100%}
+.side button.on{background:#2563eb2e;color:#93c5fd}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.view{display:none}.view.on{display:block}
+@media(max-width:860px){.dash{grid-template-columns:1fr;padding-bottom:76px}.side{position:fixed;left:8px;right:8px;bottom:8px;top:auto;z-index:60;flex-direction:row;border-radius:22px;background:#0a0f1df2;backdrop-filter:blur(18px);padding:6px}.side button{flex-direction:column;gap:2px;font-size:.68rem;padding:6px 2px;flex:1;min-width:0;align-items:center;justify-content:center}}
+.chart{width:100%;height:150px;display:block}
+.bar-in{fill:#4ade80}.bar-out{fill:#f87171}
+.prog{height:8px;border-radius:99px;background:#ffffff14;overflow:hidden;margin:8px 0 12px}.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2563eb,#38bdf8);transition:width .4s}
+.li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.chk{display:flex;gap:10px;align-items:center;padding:6px 0}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid #ffffff40;flex:none;display:grid;place-items:center;font-size:.7rem}
+.dot.ok{background:#22c55e;border-color:#22c55e}
+.feats{list-style:none;padding:0;margin:14px 0 18px;color:var(--mute);font-size:.9rem}
+.feats li{padding:4px 0 4px 24px;position:relative}
+.feats li::before{content:"";position:absolute;left:2px;top:10px;width:10px;height:6px;border-left:2px solid var(--acc2);border-bottom:2px solid var(--acc2);transform:rotate(-45deg)}
+.pop{display:inline-block;background:var(--acc);border-radius:999px;padding:3px 12px;font-size:.72rem;font-weight:700;margin-bottom:8px}
+details{border-bottom:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:600}details p{color:var(--mute);margin:8px 0 0}
 </style>
 </head>
 <body>
+<div class="notice">Test mode: pay with Stripe test cards such as 4242 4242 4242 4242. Remove this banner when you switch to live keys.</div>
 
 <div class="nav-wrap"><div class="nav">
   <a class="brand" href="#top"><span class="mark">ƎE</span>Evolysium</a>
   <nav class="menu" id="menu" aria-label="Main">
-    <a href="#workspace">Workspace</a><a href="#plans">Plans</a><a href="#contact">Contact</a>
+    <a href="#workspace">Workspace</a><a href="#plans">Plans</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
   </nav>
   <div class="right">
     <button id="menuBtn" aria-expanded="false" aria-controls="menu">Menu</button>
@@ -122,106 +153,170 @@ footer{margin:48px 0 32px;color:var(--mute);font-size:.85rem;text-align:center}
     </div>
   </section>
 
-  <!-- Layer 2: trust -->
-  <section class="layer s2 trust">
-    <h2>A clear record and a clear approval step on every payment.</h2>
-    <p class="sub">Stripe processes the card payments and verifies each recipient. You approve milestones, and everything lands in your history.</p>
-    <div class="badges">
-      <span class="badge">Card payments by Stripe</span><span class="badge">Funds held until approval</span>
-      <span class="badge">Recipients verified by Stripe</span><span class="badge">Exportable records</span>
+  <!-- Layer 2: how it works -->
+  <section class="layer s2 hero" id="how">
+    <h2>From first payment to approved milestone in three steps.</h2>
+    <p class="sub">No bank forms and no wire delays. Everything runs through Stripe and lands in your history.</p>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>Create your workspace</h3><p class="sub" style="margin:0">Sign up with your work email and set up payouts so you can receive money too.</p></div>
+      <div class="step"><div class="num">2</div><h3>Pay or reserve funds</h3><p class="sub" style="margin:0">Send a card payment straight to a partner, or reserve funds for a milestone.</p></div>
+      <div class="step"><div class="num">3</div><h3>Approve and keep records</h3><p class="sub" style="margin:0">Release funds when the work is done. Every step is saved and exportable.</p></div>
     </div>
   </section>
 
+  <!-- Layer 3: features -->
+  <section class="layer s3">
+    <h2 style="text-align:center">Everything your finance team needs, nothing it does not.</h2>
+    <div class="bento">
+      <div class="b1"><h3>Direct EUR payments</h3><p class="sub" style="margin:0">Pay any Evolysium account by card. Stripe pays the recipient out once their payout account is set up.</p></div>
+      <div class="b2"><h3>Milestone escrow</h3><p class="sub" style="margin:0">Funds are held until you approve the work.</p></div>
+      <div class="b3"><h3>Client invoices</h3><p class="sub" style="margin:0">Record invoices with due dates and find them in seconds.</p></div>
+      <div class="b4"><h3>Records you can export</h3><p class="sub" style="margin:0">Every payment, agreement and invoice is stored with a reference. Download the full history as CSV for your accountant.</p></div>
+    </div>
+    <div class="badges"><span class="badge">Card payments by Stripe</span><span class="badge">Recipients verified by Stripe</span><span class="badge">Clear approval steps</span></div>
+  </section>
+
   <!-- Layer 3: workspace -->
-  <section class="layer s3" id="workspace">
+  <section class="layer s4" id="workspace">
     <div id="out" class="hero" style="padding:24px 0">
       <h2>Your workspace</h2>
       <p class="sub">Sign in to send payments, start milestone agreements and record invoices.</p>
       <button class="p" id="outBtn">Sign in or create an account</button>
     </div>
 
-    <div id="app" class="hidden">
-      <div class="kpis">
-        <div class="box"><div class="lbl">Payout account</div><div class="val" id="kPayout" style="font-size:1.2rem">Checking…</div><div class="lbl" id="kHandle"></div></div>
-        <div class="box"><div class="lbl">Open agreements</div><div class="val" id="kAg">0</div></div>
-        <div class="box"><div class="lbl">Plan</div><div class="val" id="kPlan" style="font-size:1.2rem">No plan</div></div>
-      </div>
-
-      <div class="grid">
-        <form class="box" id="payForm">
-          <h3>Send a payment</h3><p class="sub">Pay another Evolysium account by card through Stripe.</p>
-          <label class="lbl" for="to">Recipient handle</label>
-          <input id="to" required maxlength="30" autocomplete="off" placeholder="partner_studio4f2a1">
-          <label class="lbl" for="amt">Amount (EUR)</label>
-          <input id="amt" type="number" inputmode="decimal" step="0.01" min="0.50" required placeholder="0.00">
-          <label class="lbl" for="note">Reference</label>
-          <input id="note" required maxlength="200" placeholder="Invoice 2026-089, design retainer">
-          <button class="p" style="width:100%">Continue to payment</button>
-        </form>
-
-        <div class="box">
-          <h3>Milestone agreements</h3><p class="sub">You pay now through Stripe. Funds reach the recipient when you approve.</p>
-          <form id="agForm">
-            <label class="lbl" for="agTo">Recipient handle</label>
-            <input id="agTo" required maxlength="30" autocomplete="off">
-            <div class="split">
-              <div><label class="lbl" for="agTitle">Project</label><input id="agTitle" required maxlength="120" placeholder="Q4 campaign"></div>
-              <div><label class="lbl" for="agAmt">Amount</label><input id="agAmt" type="number" inputmode="decimal" step="0.01" min="0.50" required></div>
-            </div>
-            <button class="p">Reserve funds</button>
-          </form>
-          <div id="agList"></div>
-        </div>
-
-        <form class="box" id="invForm">
-          <h3>Record an invoice</h3><p class="sub">Saved to your history. It does not move money.</p>
-          <label class="lbl" for="invClient">Client</label><input id="invClient" required maxlength="120">
-          <div class="split">
-            <div><label class="lbl" for="invAmt">Amount (EUR)</label><input id="invAmt" type="number" inputmode="decimal" step="0.01" min="0.01" required></div>
-            <div><label class="lbl" for="invDue">Due date</label><input id="invDue" type="date" required></div>
+    <div id="app" class="hidden dash">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+        <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+        <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+        <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      </defs></svg>
+      <nav class="side" aria-label="Workspace">
+        <button class="on" data-v="overview"><svg class="ico"><use href="#i-home"/></svg>Overview</button>
+        <button data-v="pay"><svg class="ico"><use href="#i-send"/></svg>Pay</button>
+        <button data-v="escrow"><svg class="ico"><use href="#i-lock"/></svg>Escrow</button>
+        <button data-v="invoices"><svg class="ico"><use href="#i-file"/></svg>Invoices</button>
+        <button data-v="history"><svg class="ico"><use href="#i-clock"/></svg>History</button>
+        <button data-v="account"><svg class="ico"><use href="#i-user"/></svg>Account</button>
+      </nav>
+      <div style="min-width:0">
+        <div class="view on" id="v-overview">
+          <h3 style="font-size:1.4rem" id="hello">Welcome</h3>
+          <p class="sub">Here is what is happening with your payments.</p>
+          <div class="kpis">
+            <div class="box"><div class="lbl">Received, last 30 days</div><div class="val pos" id="kIn">€0.00</div></div>
+            <div class="box"><div class="lbl">Sent, last 30 days</div><div class="val" id="kOut">€0.00</div></div>
+            <div class="box"><div class="lbl">Open agreements</div><div class="val" id="kAg">0</div></div>
+            <div class="box"><div class="lbl">Payout account</div><div class="val" id="kPayout" style="font-size:1.1rem">Checking…</div></div>
           </div>
-          <label class="lbl" for="invDesc">Work delivered</label><input id="invDesc" required maxlength="150">
-          <button class="p">Save invoice</button>
-        </form>
+          <div class="row" style="margin-bottom:16px">
+            <button class="p" data-go="pay">Send payment</button><button data-go="escrow">Start agreement</button><button data-go="invoices">New invoice</button>
+          </div>
+          <div class="grid">
+            <div class="box"><h3>Activity, last 14 days</h3><p class="lbl" style="margin:0 0 8px"><span class="pos">Green: money in</span> · <span class="neg">Red: money out</span></p><div id="chart"></div></div>
+            <div class="box"><h3>Getting started</h3><div class="prog"><i id="prog"></i></div><div id="check"></div></div>
+          </div>
+          <div class="box" style="margin-top:16px"><div class="row" style="justify-content:space-between"><h3>Recent activity</h3><button data-go="history">View all</button></div><div id="recent"></div></div>
+        </div>
 
-        <div class="box">
-          <h3>Receive payments</h3><p class="sub">Set up a payout account with Stripe to receive payments and milestone releases. Stripe verifies your business.</p>
-          <button class="p" id="onboard">Set up payouts</button>
-        </div>
-      </div>
+        <div class="view" id="v-pay"><div class="grid">
+          <form class="box" id="payForm">
+            <h3>Send a payment</h3><p class="sub">Pay another Evolysium account by card through Stripe.</p>
+            <label class="lbl" for="to">Recipient handle</label>
+            <input id="to" required maxlength="30" autocomplete="off" placeholder="partner_studio4f2a1">
+            <label class="lbl" for="amt">Amount (EUR, minimum 5)</label>
+            <input id="amt" type="number" inputmode="decimal" step="0.01" min="5" required placeholder="0.00">
+            <p class="lbl" id="feeNote" style="margin:-4px 0 12px;min-height:1.3em"></p>
+            <label class="lbl" for="note">Reference</label>
+            <input id="note" required maxlength="200" placeholder="Invoice 2026-089, design retainer">
+            <button class="p" style="width:100%">Continue to payment</button>
+          </form>
+          <div class="box"><h3>Recent payments</h3><div id="payList"></div></div>
+        </div></div>
 
-      <div class="box" style="margin-top:16px">
-        <div class="row" style="justify-content:space-between">
-          <div><h3>History</h3><p class="sub" style="margin:0">Every payment, agreement and invoice.</p></div>
-          <div class="row"><input id="q" placeholder="Search" aria-label="Search history" style="width:190px;margin:0"><button id="csv">Download CSV</button></div>
+        <div class="view" id="v-escrow"><div class="grid">
+          <div class="box"><h3>Reserve funds for a milestone</h3><p class="sub">You pay now through Stripe. Funds reach the recipient when you approve, minus the platform fee.</p>
+            <form id="agForm">
+              <label class="lbl" for="agTo">Recipient handle</label><input id="agTo" required maxlength="30" autocomplete="off">
+              <div class="split">
+                <div><label class="lbl" for="agTitle">Project</label><input id="agTitle" required maxlength="120" placeholder="Q4 campaign"></div>
+                <div><label class="lbl" for="agAmt">Amount (min 5)</label><input id="agAmt" type="number" inputmode="decimal" step="0.01" min="5" required></div>
+              </div>
+              <button class="p" style="width:100%">Reserve funds</button>
+            </form></div>
+          <div class="box"><h3>Open agreements</h3><div id="agList"></div></div>
+        </div></div>
+
+        <div class="view" id="v-invoices"><div class="grid">
+          <form class="box" id="invForm">
+            <h3>Record an invoice</h3><p class="sub">Saved to your history. It does not move money.</p>
+            <label class="lbl" for="invClient">Client</label><input id="invClient" required maxlength="120">
+            <div class="split">
+              <div><label class="lbl" for="invAmt">Amount (EUR)</label><input id="invAmt" type="number" inputmode="decimal" step="0.01" min="0.01" required></div>
+              <div><label class="lbl" for="invDue">Due date</label><input id="invDue" type="date" required></div>
+            </div>
+            <label class="lbl" for="invDesc">Work delivered</label><input id="invDesc" required maxlength="150">
+            <button class="p" style="width:100%">Save invoice</button>
+          </form>
+          <div class="box"><h3>Recent invoices</h3><div id="invList"></div></div>
+        </div></div>
+
+        <div class="view" id="v-history"><div class="box">
+          <div class="row" style="justify-content:space-between">
+            <div><h3>History</h3><p class="sub" style="margin:0">Every payment, agreement and invoice.</p></div>
+            <div class="row"><input id="q" placeholder="Search" aria-label="Search history" style="width:190px;margin:0"><button id="csv">Download CSV</button></div>
+          </div>
+          <div class="row" style="margin:14px 0" id="tabs">
+            <button class="tab on" data-f="all">All</button><button class="tab" data-f="payment">Payments</button>
+            <button class="tab" data-f="agreement">Agreements</button><button class="tab" data-f="invoice">Invoices</button>
+          </div>
+          <div class="tw"><table>
+            <thead><tr><th>Reference</th><th>Counterparty</th><th>Type</th><th>Details</th><th>Amount</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table></div>
+        </div></div>
+
+        <div class="view" id="v-account">
+          <h3 style="font-size:1.3rem">Account</h3>
+          <div class="grid" style="margin-top:14px">
+            <div class="box"><div class="lbl">Your payment handle</div><div class="val" id="acHandle" style="font-size:1.2rem"></div><p class="sub">Share it so partners can pay you.</p><button id="copyHandle">Copy handle</button></div>
+            <div class="box"><div class="lbl">Payout account</div><div class="val" id="acPayout" style="font-size:1.2rem"></div><p class="sub">Stripe verifies your business before you can receive money.</p><button class="p" id="onboard">Set up payouts</button></div>
+            <div class="box"><div class="lbl">Plan</div><div class="val" id="acPlan" style="font-size:1.2rem">No plan</div><p class="sub">Billed monthly through Stripe.</p><a class="btn" href="#plans">View plans</a></div>
+            <div class="box"><div class="lbl">Session</div><p class="sub">You are signed in.</p><button id="signOut">Sign out</button></div>
+          </div>
         </div>
-        <div class="row" style="margin:14px 0" id="tabs">
-          <button class="tab on" data-f="all">All</button><button class="tab" data-f="payment">Payments</button>
-          <button class="tab" data-f="agreement">Agreements</button><button class="tab" data-f="invoice">Invoices</button>
-        </div>
-        <div class="tw"><table>
-          <thead><tr><th>Reference</th><th>Counterparty</th><th>Type</th><th>Details</th><th>Amount</th></tr></thead>
-          <tbody id="rows"></tbody>
-        </table></div>
       </div>
     </div>
   </section>
 
   <!-- Layer 4: plans and contact -->
-  <section class="layer s4" id="plans">
-    <h2 style="text-align:center">Simple monthly plans</h2>
-    <p class="sub" style="text-align:center">Billed through Stripe. Cancel any time from your Stripe receipt.</p>
+  <section class="layer s5" id="plans">
+    <h2 style="text-align:center">Pick the plan that fits your team.</h2>
+    <p class="sub" style="text-align:center">Billed monthly through Stripe. Prices come straight from your Stripe account.</p>
     <div class="grid">
-      <div class="box plan"><h3>Essential</h3><div class="val">€299 <span class="lbl">/ month</span></div>
-        <p class="sub">For regular supplier payouts and invoices.</p><button data-plan="essential" style="width:100%">Choose Essential</button></div>
-      <div class="box plan feat"><h3>Professional</h3><div class="val">€899 <span class="lbl">/ month</span></div>
-        <p class="sub">Milestone agreements and team approvals.</p><button class="p" data-plan="professional" style="width:100%">Choose Professional</button></div>
-      <div class="box plan"><h3>Custom</h3><div class="val">€1,199 <span class="lbl">/ month</span></div>
-        <p class="sub">Branding and workflows tailored to your company.</p><button data-plan="enterprise" style="width:100%">Choose Custom</button></div>
+      <div class="box"><h3>Essential</h3><div class="val"><span data-price="essential">€99</span> <span class="lbl">/ month</span></div>
+        <ul class="feats"><li>Direct EUR payments</li><li>Client invoices</li><li>CSV exports</li><li>Email support</li></ul>
+        <button data-plan="essential" style="width:100%">Choose Essential</button></div>
+      <div class="box" style="border-color:var(--acc);background:linear-gradient(180deg,#2563eb1f,var(--surface))"><span class="pop">Most popular</span><h3>Professional</h3><div class="val"><span data-price="professional">€299</span> <span class="lbl">/ month</span></div>
+        <ul class="feats"><li>Everything in Essential</li><li>Milestone agreements</li><li>Priority email support</li></ul>
+        <button class="p" data-plan="professional" style="width:100%">Choose Professional</button></div>
+      <div class="box"><h3>Custom</h3><div class="val"><span data-price="enterprise">€799</span> <span class="lbl">/ month</span></div>
+        <ul class="feats"><li>Everything in Professional</li><li>Branding and workflow requests</li><li>A dedicated contact</li></ul>
+        <button data-plan="enterprise" style="width:100%">Choose Custom</button></div>
     </div>
   </section>
 
-  <section class="layer s4" id="contact" style="max-width:640px;margin-left:auto;margin-right:auto">
+  <section class="layer s6" id="faq">
+    <h2>Questions, answered.</h2>
+    <details><summary>How do payments work?</summary><p>Card payments are processed by Stripe. The recipient's share is paid out to their connected Stripe account after the platform fee.</p></details>
+    <details><summary>What is a milestone agreement?</summary><p>You pay up front and the funds are held. When you approve the work they are released to the recipient. If the recipient declines, you are refunded.</p></details>
+    <details><summary>Why must recipients set up payouts?</summary><p>Stripe verifies every recipient before they can receive money. It takes a few minutes and is done once.</p></details>
+    <details><summary>What does it cost?</summary><p>A monthly plan, plus a platform fee that is shown before you pay.</p></details>
+  </section>
+
+  <section class="layer s6" id="contact" style="max-width:640px;margin-left:auto;margin-right:auto">
     <h2>Talk to us</h2><p class="sub">Tell us about your payment needs and a person will reply by email.</p>
     <form id="inqForm">
       <input id="iCo" required maxlength="120" placeholder="Company" aria-label="Company">
@@ -279,7 +374,7 @@ async function api(path, body) {
     headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
     body: JSON.stringify(body || {}) });
   const d = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(d.error || 'Something went wrong.');
+  if (!r.ok) { const e = new Error(d.error || 'Something went wrong.'); e.code = d.code; throw e; }
   return d;
 }
 function goStripe(url) { // only ever leave for Stripe-owned pages
@@ -287,8 +382,9 @@ function goStripe(url) { // only ever leave for Stripe-owned pages
   if (u.protocol !== 'https:' || !/(^|\.)stripe\.com$/.test(u.hostname)) throw new Error('Unexpected redirect.');
   location.href = u.href;
 }
-async function checkout(path, body) { try { goStripe((await api(path, body)).url); } catch (e) { toast(e.message); } }
-async function act(path, ok) { try { await api(path); toast(ok); await refresh(); } catch (e) { toast(e.message); } }
+function onErr(e) { toast(e.message); if (e.code === 'plan_required') $('#plans').scrollIntoView(); }
+async function checkout(path, body) { try { goStripe((await api(path, body)).url); } catch (e) { onErr(e); } }
+async function act(path, ok) { try { await api(path); toast(ok); await refresh(); } catch (e) { onErr(e); } }
 
 async function refresh() {
   const { data: { session } } = await sb.auth.getSession();
@@ -310,10 +406,11 @@ async function refresh() {
 function render() {
   if (!profile) return;
   $('#kPayout').textContent = profile.payouts_enabled ? 'Ready to receive' : 'Setup needed';
-  $('#kHandle').textContent = 'Your handle: ' + profile.handle;
+  $('#acHandle').textContent = profile.handle; $('#acPayout').textContent = $('#kPayout').textContent;
+  $('#hello').textContent = 'Welcome, ' + (profile.company || profile.handle);
   $('#kAg').textContent = agreements.length;
   const live = sub && ['active', 'trialing'].includes(sub.status);
-  $('#kPlan').textContent = live ? sub.tier.charAt(0).toUpperCase() + sub.tier.slice(1) : 'No plan';
+  hasPlan = !!live; $('#acPlan').textContent = live ? sub.tier.charAt(0).toUpperCase() + sub.tier.slice(1) : 'No plan';
   const list = $('#agList'); list.replaceChildren();
   for (const a of agreements) {
     const mine = a.payer === me.id;
@@ -323,7 +420,7 @@ function render() {
            : h('button', { onclick: () => act(`/api/agreements/${a.id}/refund`, 'Funds returned to the payer.') }, 'Decline and refund')));
   }
   if (!agreements.length) list.append(h('p', { class: 'lbl' }, 'No open agreements. Reserve funds above to start one.'));
-  renderLedger();
+  renderLedger(); renderOverview();
 }
 
 function renderLedger() {
@@ -355,7 +452,7 @@ function setMode(s) {
   $('#coField').classList.toggle('hidden', !s);
   $('#pw').autocomplete = s ? 'new-password' : 'current-password';
 }
-const money = id => { const c = toCents($(id).value); if (!(c >= 50)) { toast('The minimum amount is €0.50.'); return 0; } return c; };
+const money = id => { const c = toCents($(id).value); if (!(c >= 500)) { toast('The minimum amount is €5.00.'); return 0; } return c; };
 
 $('#menuBtn').addEventListener('click', () => $('#menuBtn').setAttribute('aria-expanded', $('#menu').classList.toggle('open')));
 $('#menu').addEventListener('click', e => { if (e.target.closest('a')) { $('#menu').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded', 'false'); } });
@@ -384,8 +481,8 @@ $('#agForm').addEventListener('submit', e => {
 $('#invForm').addEventListener('submit', async e => {
   e.preventDefault(); const c = toCents($('#invAmt').value);
   if (!(c > 0)) return toast('Enter an amount above zero.');
-  const { error } = await sb.rpc('create_invoice', { p_client: $('#invClient').value, p_amount: c, p_due: $('#invDue').value, p_desc: $('#invDesc').value.trim() });
-  if (error) return toast(error.message);
+  try { await api('/api/invoices', { client: $('#invClient').value, amountCents: c, due: $('#invDue').value, description: $('#invDesc').value.trim() }); }
+  catch (err) { return onErr(err); }
   toast('Invoice saved.'); e.target.reset(); refresh();
 });
 $('#onboard').addEventListener('click', () => checkout('/api/connect/onboard'));
@@ -409,6 +506,59 @@ $('#inqForm').addEventListener('submit', async e => {
   if (error) return toast('Could not send your message. Please try again.');
   toast('Thank you. We will reply by email.'); e.target.reset();
 });
+
+// ----- dashboard views, overview, fees and live plan prices -----
+let cfg = { plans: [], fee: { rate: 0.029, fixed: 30 } }, hasPlan = false;
+const eur0 = c => new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: c % 100 ? 2 : 0 }).format(c / 100);
+const fee = c => Math.round(c * cfg.fee.rate) + cfg.fee.fixed;
+function showView(v) {
+  document.querySelectorAll('.view').forEach(x => x.classList.toggle('on', x.id === 'v-' + v));
+  document.querySelectorAll('.side button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+}
+const go = v => { showView(v); $('#workspace').scrollIntoView(); };
+document.querySelectorAll('.side button').forEach(b => b.addEventListener('click', () => go(b.dataset.v)));
+document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
+$('#copyHandle').addEventListener('click', () => navigator.clipboard?.writeText(profile.handle).then(() => toast('Handle copied.')));
+$('#signOut').addEventListener('click', () => { sb.auth.signOut(); showView('overview'); });
+function updateFee() {
+  const c = toCents($('#amt').value);
+  $('#feeNote').textContent = c >= 500 ? `Platform fee ${eur(fee(c))}. The recipient receives ${eur(c - fee(c))}.` : '';
+}
+$('#amt').addEventListener('input', updateFee);
+fetch(API + '/api/plans').then(r => r.json()).then(d => {
+  cfg = d;
+  for (const p of d.plans || []) { const el = document.querySelector(`[data-price="${p.tier}"]`); if (el) el.textContent = eur0(p.amount); }
+  updateFee();
+}).catch(() => {});
+
+const row = r => h('div', { class: 'li' },
+  h('div', {}, h('strong', {}, r.counterparty || r.kind), h('div', { class: 'lbl' }, `${r.ref} · ${r.status}`)),
+  h('div', { class: r.kind === 'invoice' ? '' : r.amount_cents < 0 ? 'neg' : 'pos' }, eur(r.amount_cents)));
+function fill(el, rows, empty) {
+  el.replaceChildren(...(rows.length ? rows.map(row) : [h('p', { class: 'lbl' }, empty)]));
+}
+function renderOverview() {
+  const now = Date.now(), day = 864e5;
+  const money = ledger.filter(r => r.kind !== 'invoice' && r.status !== 'refunded');
+  const total = f => money.filter(r => now - new Date(r.created_at) < 30 * day && f(r.amount_cents)).reduce((t, r) => t + Math.abs(r.amount_cents), 0);
+  $('#kIn').textContent = eur(total(a => a > 0)); $('#kOut').textContent = eur(total(a => a < 0));
+  const days = [...Array(14)].map((_, i) => { const d = new Date(now - (13 - i) * day); d.setHours(0, 0, 0, 0); return { t: +d, i: 0, o: 0 }; });
+  for (const r of money) {
+    const d = new Date(r.created_at); d.setHours(0, 0, 0, 0);
+    const x = days.find(y => y.t === +d);
+    if (x) { if (r.amount_cents > 0) x.i += r.amount_cents; else x.o -= r.amount_cents; }
+  }
+  const max = Math.max(1, ...days.flatMap(d => [d.i, d.o]));
+  $('#chart').innerHTML = '<svg class="chart" viewBox="0 0 280 120" preserveAspectRatio="none" role="img" aria-label="Money in and out, last 14 days">' +
+    days.map((d, i) => { const x = i * 20 + 2, a = d.i / max * 100, b = d.o / max * 100;
+      return `<rect class="bar-in" x="${x}" y="${110 - a}" width="8" height="${a}" rx="2"/><rect class="bar-out" x="${x + 9}" y="${110 - b}" width="8" height="${b}" rx="2"/>`; }).join('') + '</svg>';
+  const steps = [[profile.payouts_enabled, 'Set up payouts'], [hasPlan, 'Choose a plan'], [ledger.some(r => r.kind === 'payment'), 'Make your first payment']];
+  $('#prog').style.width = steps.filter(s => s[0]).length / 3 * 100 + '%';
+  $('#check').replaceChildren(...steps.map(([ok, t]) => h('div', { class: 'chk' }, h('span', { class: 'dot' + (ok ? ' ok' : '') }, ok ? '✓' : ''), t)));
+  fill($('#recent'), ledger.slice(0, 6), 'Nothing here yet. Send a payment or record an invoice.');
+  fill($('#payList'), ledger.filter(r => r.kind === 'payment').slice(0, 5), 'No payments yet.');
+  fill($('#invList'), ledger.filter(r => r.kind === 'invoice').slice(0, 8), 'No invoices yet.');
+}
 
 // Avoid awaiting Supabase calls inside this callback (deadlock risk), so defer.
 sb.auth.onAuthStateChange(() => setTimeout(refresh, 0));
